@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "landcover_lca"
+version = "0.1.0"
+description = "A goblin tool for the estimation of emissions from various land cover types"
+authors = ["Colm Duffy"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pandas = "^1.3.0"
+numpy = "^1.21.0"
+sqlalchemy = "^1.4.0"
+
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
