@@ -31,6 +31,7 @@ kha_to_ha = 1e3
 #############  FOREST ###########################
 #################################################
 
+
 # Organic soils
 # Drainage
 def co2_drainage_organic_soils_forest(
@@ -53,7 +54,6 @@ def co2_drainage_organic_soils_forest(
 def ch4_drainage_organic_soils_forest(
     ef_country, transition_matrix, land_use_data, past_land_use_data
 ):
-
     FOREST = Forest(
         ef_country,
         transition_matrix,
@@ -69,7 +69,6 @@ def ch4_drainage_organic_soils_forest(
 def n2o_drainage_organic_soils_forest(
     ef_country, transition_matrix, land_use_data, past_land_use_data
 ):
-
     FOREST = Forest(
         ef_country,
         transition_matrix,
@@ -106,10 +105,7 @@ def organic_soils_ch4_forest(
 
 # Mineral soils
 def mineral_soils_co2_from_cropland_to_forest(
-    land_use,
-    past_land_use_data,
-    transition_matrix_data,
-    ef_country
+    land_use, past_land_use_data, transition_matrix_data, ef_country
 ):
     soc = SOC(
         ef_country,
@@ -124,12 +120,8 @@ def mineral_soils_co2_from_cropland_to_forest(
 
 
 def mineral_soils_co2_from_grassland_to_forest(
-    land_use,
-    past_land_use_data,
-    transition_matrix_data,
-    ef_country
+    land_use, past_land_use_data, transition_matrix_data, ef_country
 ):
-
     soc = SOC(
         ef_country,
         land_use,
@@ -165,7 +157,6 @@ def mineral_soils_co2_to_forest(
 def burning_co2_forest(
     ef_country, transition_matrix, land_use_data, past_land_use_data
 ):
-
     FOREST = Forest(
         ef_country,
         transition_matrix,
@@ -181,7 +172,6 @@ def burning_co2_forest(
 def burning_ch4_forest(
     ef_country, transition_matrix, land_use_data, past_land_use_data
 ):
-
     FOREST = Forest(
         ef_country,
         transition_matrix,
@@ -197,7 +187,6 @@ def burning_ch4_forest(
 def burning_n2o_forest(
     ef_country, transition_matrix, land_use_data, past_land_use_data
 ):
-
     FOREST = Forest(
         ef_country,
         transition_matrix,
@@ -259,12 +248,12 @@ def total_n2o_emission_forest(
 #############  GRASSLAND ########################
 #################################################
 
+
 # Organic soils
 # Drainage
 def drainage_co2_organic_soils_in_grassland(
     land_use, past_land_use_data, transition_matrix, ef_country
 ):
-
     GRASSLAND = Grassland(
         ef_country,
         transition_matrix,
@@ -280,7 +269,6 @@ def drainage_co2_organic_soils_in_grassland(
 def drainage_ch4_organic_soils_in_grassland(
     land_use, past_land_use_data, transition_matrix, ef_country
 ):
-
     GRASSLAND = Grassland(
         ef_country,
         transition_matrix,
@@ -296,7 +284,6 @@ def drainage_ch4_organic_soils_in_grassland(
 def drainage_n2O_organic_soils_in_grassland(
     land_use, past_land_use_data, transition_matrix, ef_country
 ):
-
     GRASSLAND = Grassland(
         ef_country,
         transition_matrix,
@@ -313,7 +300,6 @@ def drainage_n2O_organic_soils_in_grassland(
 def rewetting_co2_organic_soils_in_grassland(
     land_use, past_land_use_data, transition_matrix, ef_country
 ):
-
     GRASSLAND = Grassland(
         ef_country,
         transition_matrix,
@@ -329,7 +315,6 @@ def rewetting_co2_organic_soils_in_grassland(
 def rewetting_ch4_organic_soils_in_grassland(
     land_use, past_land_use_data, transition_matrix, ef_country
 ):
-
     GRASSLAND = Grassland(
         ef_country,
         transition_matrix,
@@ -366,7 +351,6 @@ def mineral_soils_co2_from_cropland_to_grassland(
     transition_matrix_data,
     ef_country,
 ):
-
     soc = SOC(
         ef_country,
         land_use,
@@ -385,7 +369,6 @@ def mineral_soils_n2o_from_forest_to_grassland(
     transition_matrix_data,
     ef_country,
 ):
-
     soc = SOC(
         ef_country,
         land_use,
@@ -403,10 +386,7 @@ def mineral_soils_n2o_from_forest_to_grassland(
 
 
 # Burning
-def burning_co2_grassland(
-    ef_country, transition_matrix, land_use, past_land_use_data
-):
-
+def burning_co2_grassland(ef_country, transition_matrix, land_use, past_land_use_data):
     GRASSLAND = Grassland(
         ef_country,
         transition_matrix,
@@ -419,10 +399,7 @@ def burning_co2_grassland(
     return GRASSLAND.burning_co2_grassland() * t_to_kg
 
 
-def burning_ch4_grassland(
-    ef_country, transition_matrix, land_use, past_land_use_data
-):
-
+def burning_ch4_grassland(ef_country, transition_matrix, land_use, past_land_use_data):
     GRASSLAND = Grassland(
         ef_country,
         transition_matrix,
@@ -435,10 +412,7 @@ def burning_ch4_grassland(
     return GRASSLAND.burning_ch4_grassland() * t_to_kg
 
 
-def burning_n2o_grassland(
-    ef_country, transition_matrix, land_use, past_land_use_data
-):
-
+def burning_n2o_grassland(ef_country, transition_matrix, land_use, past_land_use_data):
     GRASSLAND = Grassland(
         ef_country,
         transition_matrix,
@@ -502,10 +476,7 @@ def total_co2_emission_grassland(
 ):
     return (
         total_co2_emission_to_grassland(
-            land_use,
-            past_land_use_data,
-            transition_matrix,
-            ef_country
+            land_use, past_land_use_data, transition_matrix, ef_country
         )
         + total_co2_emission_in_grassland(
             land_use, past_land_use_data, transition_matrix, ef_country
@@ -538,29 +509,26 @@ def total_n2o_emission_grassland(
     transition_matrix,
     ef_country,
 ):
-    return (
-        burning_n2o_grassland(
-            ef_country, transition_matrix, land_use, past_land_use_data
-        )
-        + drainage_n2O_organic_soils_in_grassland(
-            land_use, past_land_use_data, transition_matrix, ef_country
-        )
-        + mineral_soils_n2o_from_forest_to_grassland(
-            land_use,
-            past_land_use_data,
-            transition_matrix,
-            ef_country,
-        )
+    return burning_n2o_grassland(
+        ef_country, transition_matrix, land_use, past_land_use_data
+    ) + mineral_soils_n2o_from_forest_to_grassland(
+        land_use,
+        past_land_use_data,
+        transition_matrix,
+        ef_country,
     )
+    # + drainage_n2O_organic_soils_in_grassland(
+    # land_use, past_land_use_data, transition_matrix, ef_country
+    # )
 
 
 ###############################################
 #############  WETLAND ########################
 ###############################################
 
+
 # Peat extraction
 def horticulture_co2_peat_export(ef_country, year, calibration_year):
-
     data_loader_class = Loader(ef_country)
     emissions_factors = Emissions_Factors(ef_country)
     ef_offsite_carbon_conversion_nutrient_poor = (
@@ -586,7 +554,6 @@ def horticulture_co2_peat_export(ef_country, year, calibration_year):
 def biomass_co2_wetland_to_peatland(
     land_use_data, past_land_use_data, transition_matrix, ef_country
 ):
-
     WETLAND = Wetland(
         ef_country,
         transition_matrix,
@@ -603,7 +570,6 @@ def biomass_co2_wetland_to_peatland(
 def drainage_co2_organic_soils_in_wetland(
     land_use_data, past_land_use_data, transition_matrix, ef_country
 ):
-
     WETLAND = Wetland(
         ef_country,
         transition_matrix,
@@ -634,7 +600,6 @@ def drainage_ch4_organic_soils_in_wetland(
 def drainage_n2o_organic_soils_in_wetland(
     ef_country, transition_matrix, land_use_data, past_land_use_data
 ):
-
     WETLAND = Wetland(
         ef_country,
         transition_matrix,
@@ -734,6 +699,7 @@ def total_n2o_emission_wetland(
 #############  CROPLAND ########################
 #################################################
 
+
 # mineral soil
 def mineral_soils_co2_from_forest_to_cropland(
     land_use_data,
@@ -741,7 +707,6 @@ def mineral_soils_co2_from_forest_to_cropland(
     transition_matrix,
     ef_country,
 ):
-
     soc = SOC(
         ef_country,
         land_use_data,
@@ -760,7 +725,6 @@ def mineral_soils_co2_from_grassland_to_cropland(
     transition_matrix,
     ef_country,
 ):
-
     soc = SOC(
         ef_country,
         land_use_data,
@@ -781,7 +745,6 @@ def mineral_soils_co2_from_grassland_to_cropland(
 def burning_ch4_cropland(
     ef_country, transition_matrix, land_use_data, past_land_use_data
 ):
-
     CROPLAND = Cropland(
         ef_country,
         transition_matrix,
@@ -797,7 +760,6 @@ def burning_ch4_cropland(
 def burning_n2o_cropland(
     ef_country, transition_matrix, land_use_data, past_land_use_data
 ):
-
     CROPLAND = Cropland(
         ef_country,
         transition_matrix,
@@ -812,22 +774,12 @@ def burning_n2o_cropland(
 
 # Total
 def total_co2_emission_cropland(
-    land_use_data,
-    past_land_use_data,
-    transition_matrix_data,
-    ef_country
+    land_use_data, past_land_use_data, transition_matrix_data, ef_country
 ):
-
     result = mineral_soils_co2_from_forest_to_cropland(
-        land_use_data,
-        past_land_use_data,
-        transition_matrix_data,
-        ef_country
+        land_use_data, past_land_use_data, transition_matrix_data, ef_country
     ) + mineral_soils_co2_from_grassland_to_cropland(
-        land_use_data,
-        past_land_use_data,
-        transition_matrix_data,
-        ef_country
+        land_use_data, past_land_use_data, transition_matrix_data, ef_country
     )
     return result
 
@@ -851,6 +803,7 @@ def total_n2o_emission_cropland(
 ###################################################################################################################
 #############  SETTLEMENT #######################
 #################################################
+
 
 # Organic soils
 def drainage_co2_organic_soils_in_settlement(land_use, ef_country):
@@ -957,13 +910,9 @@ def total_co2_emission(
     transition_matrix_data,
     ef_country,
 ):
-
     return (
         total_co2_emission_cropland(
-            land_use_data,
-            past_land_use_data,
-            transition_matrix_data,
-            ef_country
+            land_use_data, past_land_use_data, transition_matrix_data, ef_country
         )
         + total_co2_emission_wetland(
             land_use_data, past_land_use_data, transition_matrix_data, ef_country
@@ -994,18 +943,14 @@ def total_ch4_emission(
             land_use_data, past_land_use_data, transition_matrix, ef_country
         )
         + total_ch4_emission_grassland(
-            land_use_data,
-            past_land_use_data,
-            transition_matrix,
-            ef_country
+            land_use_data, past_land_use_data, transition_matrix, ef_country
         )
-                + total_ch4_emission_cropland(
+        + total_ch4_emission_cropland(
             ef_country, transition_matrix, land_use_data, past_land_use_data
-        ) 
+        )
         + total_ch4_emission_forest(
             land_use_data, past_land_use_data, transition_matrix, ef_country
         )
-
     )
 
 

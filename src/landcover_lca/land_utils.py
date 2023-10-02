@@ -13,7 +13,6 @@ class SOC:
         current_land_use,
         past_land_use,
     ) -> None:
-
         self.data_loader_class = Loader(ef_country)
         self.ipcc_soil_class_SOC = self.data_loader_class.ipcc_soc_factors()
         self.land_use_data = land_use_data
@@ -25,7 +24,6 @@ class SOC:
         self.year_range = self.get_time_period()
 
     def get_time_period(self):
-
         years = tuple(
             (
                 self.land_use_data.__getattribute__(self.current_land_use).year,
@@ -57,11 +55,9 @@ class SOC:
             return land_use_annual_area
 
         except ZeroDivisionError:
-
             return 0
 
     def compute_emission_factor_from_mineral_soils(self, land_use_name):
-
         FLU = (
             self.land_use_features.get_landuse_features_in_land_use_features_data_base(
                 "FLU", land_use_name
@@ -126,7 +122,6 @@ class LandUse:
         past_land_use=None,
         current_land_use=None,
     ) -> None:
-
         self.data_loader_class = Loader(ef_country)
         self.current_land_use = current_land_use
         self.past_land_use = past_land_use
@@ -141,7 +136,6 @@ class LandUse:
         self.total_transition_area = self.get_total_transition_area()
 
     def get_time_period(self):
-
         years = tuple(
             (
                 self.land_use_data.__getattribute__(self.current_land_use).year,
@@ -168,17 +162,14 @@ class LandUse:
             return land_use_annual_area
 
         except ZeroDivisionError:
-
             return 0
 
     def get_total_transition_area(self):
-
         return self.transition_matrix_data.__dict__[
             f"{self.past_land_use}_to_{self.current_land_use}"
         ]
 
     def compute_total_land_use_area(self):
-
         land_use_total_area = self.land_use_data.__getattribute__(
             self.current_land_use
         ).area_ha
@@ -224,9 +215,7 @@ class Wetland(LandUse):
         carbon_sequestration = 0
 
         if self.annual_area != 0:
-
             if self.year_range <= 5:
-
                 for year in range(5):
                     carbon_sequestration += (self.annual_area * (year + 1)) * (
                         biomass_removal_factor / year + 1
@@ -234,7 +223,6 @@ class Wetland(LandUse):
 
                 return carbon_sequestration
             else:
-
                 for year in range(len(self.year_range)):
                     carbon_sequestration += (self.annual_area * (year + 1)) * (
                         biomass_removal_factor / year + 1
@@ -243,11 +231,9 @@ class Wetland(LandUse):
                 return carbon_sequestration
 
         else:
-
             return carbon_sequestration
 
     def co2_emissions_wetland_drained(self):
-
         ef_co2_wetland_drainage_on_site = (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
                 "ef_co2_wetland_drainage_on_site"
@@ -292,7 +278,6 @@ class Wetland(LandUse):
         )
 
     def drainage_n2o_organic_soils(self):
-
         ef_n2o_drainage_wetland_to_peatland = (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
                 "ef_n2o_wetland_drainage"
@@ -302,7 +287,6 @@ class Wetland(LandUse):
         return self.current_area_drained * ef_n2o_drainage_wetland_to_peatland
 
     def rewetting_co2_organic_soils(self):
-
         """
         REturn nothing for the time being as we are estimating the rewetting of grassland and not wetlands
         """
@@ -318,7 +302,6 @@ class Wetland(LandUse):
         )
 
     def rewetting_ch4_organic_soils_in_wetland(self):
-
         """
         REturn nothing for the time being as we are estimating the rewetting of grassland and not wetlands
         """
@@ -472,7 +455,6 @@ class Grassland(LandUse):
         ) * self.total_transition_area
 
     def rewetting_ch4_organic_soils_in_grassland(self):
-
         ef_ch4_grassland_rewetting = (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
                 "ef_ch4_grassland_rewetting"
@@ -639,7 +621,6 @@ class Grassland(LandUse):
         return fire_mineral_soil + fire_drained_organic_soil
 
     def burning_n2o_grassland(self):
-
         """
         For Cf (Combustion factor), it is assumed that all the available fuel is burned,
         thus the value used is 1.0.
@@ -805,15 +786,12 @@ class Forest(LandUse):
             current_land_use,
         )
 
-        
         self.drained_forest_area_exclude_over_50 = self.get_valid_area()
         self.forest_drained_area = (
-            self.land_use_data.forest.area_ha
-            * self.land_use_data.forest.share_organic
+            self.land_use_data.forest.area_ha * self.land_use_data.forest.share_organic
         )
 
     def get_valid_area(self):
-
         over_50_years = self.forest_age_data.loc[
             (self.forest_age_data["year"] == 51), "aggregate"
         ].values[0]
@@ -826,7 +804,6 @@ class Forest(LandUse):
         return forest_drained_area_valid
 
     def co2_drainage_organic_soils_forest(self):
-
         """Proportion drained, if older than 50 years, not emitting"""
 
         ef_co2_forest_drainage_off_site = (
@@ -895,7 +872,6 @@ class Forest(LandUse):
         )
 
     def n2o_drainage_organic_soils_forest(self):
-
         ef_n2o_forest_drainage_rich = (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
                 "ef_n2o_forest_drainage_rich"
@@ -1002,4 +978,3 @@ class Forest(LandUse):
             * ef_n2o_forest_Gef
             * 10**-3
         )
-

@@ -1,7 +1,7 @@
-
 import pandas as pd
 from landcover_lca.data_loader import Loader
 from landcover_lca.landcover_data_manager import ModelData
+
 
 ###########################################
 class DynamicData:
@@ -14,7 +14,6 @@ class DynamicData:
     """
 
     def __init__(self, data, defaults={}):
-
         # Set the defaults first
         for variable, value in defaults.items():
             setattr(self, variable, value)
@@ -30,7 +29,6 @@ class Land_Use_Category(DynamicData):
     """
 
     def __init__(self, data, calibration_year):
-
         defaults = {
             "farm_id": 0,
             "year": calibration_year,
@@ -41,7 +39,7 @@ class Land_Use_Category(DynamicData):
             "share_rewetted_in_organic": 0,
             "share_burnt": 0,
             "share_rewetted_in_mineral": 0,
-            "share_peat_extraction": 0
+            "share_peat_extraction": 0,
         }
 
         super().__init__(data, defaults)
@@ -55,7 +53,6 @@ class LandUseCollection(DynamicData):
     """
 
     def __init__(self, data):
-
         super().__init__(data)
 
 
@@ -67,7 +64,6 @@ class TransitionData:
     """
 
     def __init__(self, data, defaults={}):
-
         # Set the defaults first
         for variable, value in defaults.items():
             setattr(self, variable, value)
@@ -88,7 +84,6 @@ class TransitionMatrixCategory(TransitionData):
     """
 
     def __init__(self, data, ef_country, calibration_year):
-
         defaults = {
             "country": ef_country,
             "farm_id": 0,
@@ -110,7 +105,6 @@ class Emissions_Factors:
     """
 
     def __init__(self, ef_country):
-
         self.data_loader_class = Loader(ef_country)
         self.ef_country = ef_country
         self.emission_data_base = self.data_loader_class.landuse_emissions_factors()
@@ -131,7 +125,6 @@ class Land_Use_Features:
     """
 
     def __init__(self, ef_country):
-
         self.data_loader_class = Loader(ef_country)
         self.features_data_base = self.data_loader_class.land_use_features()
 
@@ -141,9 +134,7 @@ class Land_Use_Features:
         return float(self.features_data_base.get(emission_feature_name).get(land_use))
 
 
-
 def load_land_use_data(land_use_data_frame, calibration_year):
-
     data_manager_class = ModelData()
 
     cols = data_manager_class.land_use_columns
@@ -158,13 +149,12 @@ def load_land_use_data(land_use_data_frame, calibration_year):
     for _, row in land_use_data_frame.iterrows():
         data = dict([(x, row.get(x)) for x in row.keys()])
         categories.append(Land_Use_Category(data, calibration_year))
-        
+
     # 2. Aggregate the categories into collection based on the farm ID
 
     collections = {}  # farm id is the first key, with nested land use keys
 
     for category in categories:
-
         farm_id = int(category.farm_id)  # access farm_id and save to var
         land_use = category.land_use  # access land_use and save to var
 
@@ -173,34 +163,32 @@ def load_land_use_data(land_use_data_frame, calibration_year):
         else:
             collections[farm_id][land_use] = category
 
-        
     # 3. Convert the raw collection data into land use collection objects
 
     collection_objects = {}  # add all of the land uses under a single farm_id
 
     for farm_id, raw_data in collections.items():
-        
         collection_objects[farm_id] = LandUseCollection(raw_data)
 
     return collection_objects
 
 
 def print_land_use_data(land_use_data):
-
     for sc, values in land_use_data.items():
         for land_use, value in values.__dict__.items():
             for parameter, attribute in value.__dict__.items():
-                print(f"Scenario: {sc}, Land use: {land_use}, parameter: {parameter} = {attribute}")
+                print(
+                    f"Scenario: {sc}, Land use: {land_use}, parameter: {parameter} = {attribute}"
+                )
 
 
-def load_transition_matrix(transition_matrix_data_frame, ef_country, calibration_year, target_year):
-
+def load_transition_matrix(
+    transition_matrix_data_frame, ef_country, calibration_year, target_year
+):
     transition_matrix_data_frame["farm_id"] = transition_matrix_data_frame.index
 
     for column in transition_matrix_data_frame.columns[1:]:
-
         if column != "farm_id":
-
             transition_matrix_data_frame[column] = pd.to_numeric(
                 transition_matrix_data_frame[column], errors="coerce"
             )
@@ -213,10 +201,7 @@ def load_transition_matrix(transition_matrix_data_frame, ef_country, calibration
         (transition_matrix_data_frame.loc[:, "Year"] == 0), "Year"
     ] = calibration_year
     transition_matrix_data_frame.loc[
-        (
-            transition_matrix_data_frame.loc[:, "Year"]
-            != calibration_year
-        ),
+        (transition_matrix_data_frame.loc[:, "Year"] != calibration_year),
         "Year",
     ] = target_year
 
@@ -226,11 +211,7 @@ def load_transition_matrix(transition_matrix_data_frame, ef_country, calibration
     for _, row in transition_matrix_data_frame.iterrows():
         data = dict([(x, row.get(x)) for x in row.keys()])
         transition_categories.append(
-            TransitionMatrixCategory(
-                data,
-                ef_country,
-                calibration_year
-            )
+            TransitionMatrixCategory(data, ef_country, calibration_year)
         )
 
     # 2. Aggregate the land use categories into collection based on the farm ID
@@ -245,7 +226,6 @@ def load_transition_matrix(transition_matrix_data_frame, ef_country, calibration
 
 
 def print_transition_data(transition_data):
-
     for sc, values in transition_data.items():
         for land_use, value in values.__dict__.items():
             print(f"Scenario: {sc}, Land use: {land_use} = {value}")
