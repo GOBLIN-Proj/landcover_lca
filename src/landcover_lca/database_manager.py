@@ -17,7 +17,6 @@ class DataManager:
         engine_url = f"sqlite:///{database_path}"
 
         return sqa.create_engine(engine_url)
-    
 
     def get_landuse_features(self):
         table = "land_use_features"
@@ -28,7 +27,7 @@ class DataManager:
         )
 
         return dataframe
-    
+
     def get_landuse_emissions_factors(self):
         table = "emission_factors_land_use"
         dataframe = pd.read_sql(
@@ -38,7 +37,7 @@ class DataManager:
         )
 
         return dataframe
-    
+
     def get_ipcc_soc_factors(self):
         table = "ipcc_soil_class_SOC"
         dataframe = pd.read_sql(
@@ -48,17 +47,12 @@ class DataManager:
         )
 
         return dataframe
-    
-  
+
     def get_national_forest_inventory(self):
         table = "national_forest_inventory_2017"
-        dataframe = pd.read_sql(
-            "SELECT * FROM '%s'" % (table),
-            self.engine
-        )
+        dataframe = pd.read_sql("SELECT * FROM '%s'" % (table), self.engine)
 
         return dataframe
-
 
     def get_exported_peat(self):
         table = "UN_comtrade_exported_peat"
