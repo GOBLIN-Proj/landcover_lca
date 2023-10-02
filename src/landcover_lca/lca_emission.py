@@ -542,16 +542,16 @@ def total_n2o_emission_grassland(
         burning_n2o_grassland(
             ef_country, transition_matrix, land_use, past_land_use_data
         )
-        + drainage_n2O_organic_soils_in_grassland(
-            land_use, past_land_use_data, transition_matrix, ef_country
-        )
         + mineral_soils_n2o_from_forest_to_grassland(
             land_use,
             past_land_use_data,
             transition_matrix,
             ef_country,
-        )
-    )
+        ))
+                #+ drainage_n2O_organic_soils_in_grassland(
+            #land_use, past_land_use_data, transition_matrix, ef_country
+       # )
+    
 
 
 ###############################################
