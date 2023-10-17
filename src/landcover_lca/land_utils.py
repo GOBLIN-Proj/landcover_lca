@@ -1,6 +1,7 @@
 import numpy as np
 from landcover_lca.data_loader import Loader
 from landcover_lca.models import Emissions_Factors, Land_Use_Features
+from landcover_lca.landcover_data_manager import DataManager
 
 
 class SOC:
@@ -785,10 +786,16 @@ class Forest(LandUse):
             past_land_use,
             current_land_use,
         )
+        self.data_manager_class = DataManager()
+        self.poor_drained_forest_area_exclude_over_50 = self.get_valid_area()[0]
+        self.rich_drained_forest_area_exclude_over_50 = self.get_valid_area()[1]
 
-        self.drained_forest_area_exclude_over_50 = self.get_valid_area()
-        self.forest_drained_area = (
+        self.forest_poor_drained_area = (
             self.land_use_data.forest.area_ha * self.land_use_data.forest.share_organic
+        )
+
+        self.forest_rich_drained_area = (
+            self.land_use_data.forest.area_ha * self.land_use_data.forest.share_organic_mineral
         )
 
     def get_valid_area(self):
@@ -797,14 +804,23 @@ class Forest(LandUse):
         ].values[0]
         valid_area = 1 - over_50_years
 
-        forest_drained_area_valid = (
+        poor_forest_drained_area_valid = (
             self.land_use_data.forest.area_ha * valid_area
         ) * self.land_use_data.forest.share_organic
 
-        return forest_drained_area_valid
+        rich_forest_drained_area_valid = (
+            self.land_use_data.forest.area_ha * valid_area
+        ) * self.land_use_data.forest.share_organic_mineral
+
+        return poor_forest_drained_area_valid, rich_forest_drained_area_valid
+
 
     def co2_drainage_organic_soils_forest(self):
         """Proportion drained, if older than 50 years, not emitting"""
+
+        soil_depth = self.data_manager_class.organic_mineral_soil_depth
+
+        SD_eq = soil_depth/30
 
         ef_co2_forest_drainage_off_site = (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
@@ -817,9 +833,14 @@ class Forest(LandUse):
             )
         )
 
-        return (
+        co2_drainage_poor = (
             ef_co2_forest_drainage_on_site + ef_co2_forest_drainage_off_site
-        ) * self.drained_forest_area_exclude_over_50
+        ) * self.poor_drained_forest_area_exclude_over_50
+
+        co2_drainage_rich = (self.rich_drained_forest_area_exclude_over_50 * ef_co2_forest_drainage_on_site * SD_eq) + (ef_co2_forest_drainage_off_site * self.rich_drained_forest_area_exclude_over_50)
+
+        return co2_drainage_poor + co2_drainage_rich
+
 
     def ch4_drainage_organic_soils_forest(self):
         ef_ch4_forest_drainage_land = (
@@ -844,31 +865,20 @@ class Forest(LandUse):
             )
         )
 
-        share_forest_drainage_rich = (
-            self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
-                "share_forest_drainage_rich"
-            )
-        )
-        share_forest_drainage_poor = (
-            self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
-                "share_forest_drainage_poor"
-            )
-        )
+
 
         return (
             (
                 ef_ch4_forest_drainage_land * (1.0 - (frac_ditch_poor))
                 + (frac_ditch_poor) * ef_ch4_forest_drainage_ditch
             )
-            * self.forest_drained_area
-            * share_forest_drainage_poor
+            * self.forest_poor_drained_area
         ) + (
             (
                 ef_ch4_forest_drainage_land * (1.0 - (frac_ditch_rich))
                 + (frac_ditch_rich) * ef_ch4_forest_drainage_ditch
             )
-            * self.forest_drained_area
-            * share_forest_drainage_rich
+            * self.forest_rich_drained_area
         )
 
     def n2o_drainage_organic_soils_forest(self):
@@ -883,22 +893,8 @@ class Forest(LandUse):
             )
         )
 
-        share_forest_drainage_rich = (
-            self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
-                "share_forest_drainage_rich"
-            )
-        )
-        share_forest_drainage_poor = (
-            self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
-                "share_forest_drainage_poor"
-            )
-        )
-
-        area_rich = self.forest_drained_area * share_forest_drainage_rich
-        area_poor = self.forest_drained_area * share_forest_drainage_poor
-
-        return (area_rich * ef_n2o_forest_drainage_rich) + (
-            area_poor * ef_n2o_forest_drainage_poor
+        return (self.forest_rich_drained_area * ef_n2o_forest_drainage_rich) + (
+            self.forest_poor_drained_area * ef_n2o_forest_drainage_poor
         )
 
     def burning_co2_forest(self):
