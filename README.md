@@ -1,5 +1,9 @@
 # 🏘️🌳🌲🌽🍀 Land cover LCA for the GOBLIN model (Ireland only)
 
+[![license](https://img.shields.io/badge/License-MIT-red)](https://github.com/colmduff/landcover_lca/blob/0.1.0/LICENSE)
+[![python](https://img.shields.io/badge/python-3.9-blue?logo=python&logoColor=white)](https://github.com/colmduff/landcover_lca)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
  Based on the [GOBLIN](https://gmd.copernicus.org/articles/15/2239/2022/) (**G**eneral **O**verview for a **B**ackcasting approach of **L**ivestock **IN**tensification) land use tool module
 
  The package takes outputs from the landcover_assignment module (land use data and transition matrix) and produces emissions inventory for cropland, grassland, forest and wetlands 
