@@ -1,0 +1,1115 @@
+:py:mod:`lca_emission`
+======================
+
+.. py:module:: lca_emission
+
+.. autoapi-nested-parse::
+
+   Description:
+       Calculates emissions from land cover change. It imports various modules and classes related to
+       land use and emissions factors. The script defines functions to estimate carbon dioxide (CO2) and methane (CH4) Nitrous Oxide (N2O) emissions from land cover change.
+       from the various land cover types.
+
+       These functions take into account current/future and historical land use data, emission factor country, and transition matrices.
+
+   .. note:: This is part of a larger suite of tools developed for environmental data analysis and modeling.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   lca_emission.co2_drainage_organic_soils_forest
+   lca_emission.ch4_drainage_organic_soils_forest
+   lca_emission.n2o_drainage_organic_soils_forest
+   lca_emission.organic_soils_co2_forest
+   lca_emission.organic_soils_ch4_forest
+   lca_emission.mineral_soils_co2_from_cropland_to_forest
+   lca_emission.mineral_soils_co2_from_grassland_to_forest
+   lca_emission.mineral_soils_co2_to_forest
+   lca_emission.burning_co2_forest
+   lca_emission.burning_ch4_forest
+   lca_emission.burning_n2o_forest
+   lca_emission.total_co2_emission_forest
+   lca_emission.total_ch4_emission_forest
+   lca_emission.total_n2o_emission_forest
+   lca_emission.drainage_co2_organic_soils_in_grassland
+   lca_emission.drainage_ch4_organic_soils_in_grassland
+   lca_emission.drainage_n2O_organic_soils_in_grassland
+   lca_emission.rewetting_co2_organic_soils_in_grassland
+   lca_emission.rewetting_ch4_organic_soils_in_grassland
+   lca_emission.mineral_soils_co2_from_forest_to_grassland
+   lca_emission.mineral_soils_co2_from_cropland_to_grassland
+   lca_emission.mineral_soils_n2o_from_forest_to_grassland
+   lca_emission.burning_co2_grassland
+   lca_emission.burning_ch4_grassland
+   lca_emission.burning_n2o_grassland
+   lca_emission.total_co2_emission_to_grassland
+   lca_emission.total_co2_emission_in_grassland
+   lca_emission.total_ch4_emission_in_grassland
+   lca_emission.total_co2_emission_grassland
+   lca_emission.total_ch4_emission_grassland
+   lca_emission.total_n2o_emission_grassland
+   lca_emission.horticulture_co2_peat_export
+   lca_emission.biomass_co2_from_conversion_to_wetland
+   lca_emission.drainage_co2_organic_soils_in_wetland
+   lca_emission.drainage_ch4_organic_soils_in_wetland
+   lca_emission.drainage_n2o_organic_soils_in_wetland
+   lca_emission.burning_co2_wetland
+   lca_emission.burning_ch4_wetland
+   lca_emission.burning_n2o_wetland
+   lca_emission.total_co2_emission_wetland
+   lca_emission.total_ch4_emission_wetland
+   lca_emission.total_n2o_emission_wetland
+   lca_emission.mineral_soils_co2_from_forest_to_cropland
+   lca_emission.mineral_soils_co2_from_grassland_to_cropland
+   lca_emission.burning_ch4_cropland
+   lca_emission.burning_n2o_cropland
+   lca_emission.total_co2_emission_cropland
+   lca_emission.total_ch4_emission_cropland
+   lca_emission.total_n2o_emission_cropland
+   lca_emission.drainage_co2_organic_soils_in_settlement
+   lca_emission.drainage_ch4_organic_soils_in_settlement
+   lca_emission.mineral_soils_co2_from_forest_to_settlement
+   lca_emission.total_co2_settlement
+   lca_emission.total_ch4_settlement
+   lca_emission.total_co2_emission
+   lca_emission.total_ch4_emission
+   lca_emission.total_n2o_emission
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   lca_emission.t_to_kg
+   lca_emission.kt_to_kg
+   lca_emission.C_to_N
+   lca_emission.kha_to_ha
+
+
+.. py:data:: t_to_kg
+   :value: 1000.0
+
+   
+
+.. py:data:: kt_to_kg
+   :value: 1000000.0
+
+   
+
+.. py:data:: C_to_N
+
+   
+
+.. py:data:: kha_to_ha
+   :value: 1000.0
+
+   
+
+.. py:function:: co2_drainage_organic_soils_forest(ef_country, transition_matrix, land_use_data, past_land_use_data)
+
+   Estimates carbon dioxide (CO2) emissions from the drainage of organic soils in forest areas,
+   based on current and historical land use data. This function utilizes the Forest class to
+   calculate the emissions, with a focus on areas that have been drained and are not older than
+   50 years, as it is assumed these older areas do not emit CO2 due to drainage.
+
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+
+   :returns:
+
+             The estimated CO2 emissions resulting from the drainage of organic soils in
+                    forest areas. This estimation is based on current and historical land use data,
+                    and it excludes emissions from forest areas older than 50 years.
+   :rtype: float
+
+   .. note::
+
+      The function initializes an instance of the Forest class, passing in relevant data,
+      and invokes its `co2_drainage_organic_soils_forest` method to perform the emissions
+      calculation.
+
+
+.. py:function:: ch4_drainage_organic_soils_forest(ef_country, transition_matrix, land_use_data, past_land_use_data)
+
+   Calculate the CH4 emissions from drainage of organic soils in forest land.
+
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+
+   :returns: The calculated CH4 emissions from drainage of organic soils in forest land.
+   :rtype: float
+
+
+.. py:function:: n2o_drainage_organic_soils_forest(ef_country, transition_matrix, land_use_data, past_land_use_data)
+
+   Calculate the N2O emissions from drainage of organic soils in forest land use.
+
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+
+   :returns: N2O emissions from drainage of organic soils in forest land use.
+   :rtype: float
+
+
+.. py:function:: organic_soils_co2_forest(ef_country, transition_matrix, land_use_data, past_land_use_data)
+
+   Calculate CO2 emissions from organic soils in a forest.
+
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+
+   Returns:
+   float: CO2 emissions from organic soils in the forest.
+
+
+.. py:function:: organic_soils_ch4_forest(ef_country, transition_matrix, land_use_data, past_land_use_data)
+
+   Calculate CH4 emissions from organic soils in forest land use.
+
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+
+   Returns:
+   float: CH4 emissions from organic soils in forest land use.
+
+
+.. py:function:: mineral_soils_co2_from_cropland_to_forest(land_use, past_land_use_data, transition_matrix_data, ef_country)
+
+   Calculates the CO2 emissions from mineral soils during the transition from cropland to forest.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   Returns:
+   float: The computed CO2 emissions from mineral soils in the land use change.
+
+
+.. py:function:: mineral_soils_co2_from_grassland_to_forest(land_use, past_land_use_data, transition_matrix_data, ef_country)
+
+   Calculate CO2 emissions from mineral soils during land use change from grassland to forest.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   Returns:
+   float: The calculated CO2 emissions from mineral soils during land use change.
+
+
+.. py:function:: mineral_soils_co2_to_forest(land_use, past_land_use_data, transition_matrix_data, ef_country)
+
+   Calculates the CO2 from mineral soils to forest land use.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   :returns: CO2 from mineral soils to forest land use.
+   :rtype: float
+
+
+.. py:function:: burning_co2_forest(ef_country, transition_matrix, land_use_data, past_land_use_data)
+
+   Calculate the CO2 emissions from burning forests.
+
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+
+   :returns: CO2 emissions from burning forests.
+   :rtype: float
+
+
+.. py:function:: burning_ch4_forest(ef_country, transition_matrix, land_use_data, past_land_use_data)
+
+   Calculate the CH4 emissions from burning forests.
+
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+
+   Returns:
+   float: The CH4 emissions from burning forests.
+
+
+.. py:function:: burning_n2o_forest(ef_country, transition_matrix, land_use_data, past_land_use_data)
+
+   Calculate the N2O emissions from burning forests.
+
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+
+   :returns: N2O emissions from burning forests.
+   :rtype: float
+
+
+.. py:function:: total_co2_emission_forest(land_use_data, past_land_use_data, transition_matrix, ef_country)
+
+   Calculate the total CO2 emission from forest land use change.
+
+   Mineral soils are not included here as they are accounted for in the CBM model.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   :returns: Total CO2 emission from forest land use change.
+   :rtype: float
+
+
+.. py:function:: total_ch4_emission_forest(land_use_data, past_land_use_data, transition_matrix, ef_country)
+
+   Calculate the total CH4 emission from forest based on land use data, past land use data,
+   transition matrix, and emission factor for the country.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   Returns:
+   float: Total CH4 emission from forest.
+
+
+.. py:function:: total_n2o_emission_forest(land_use_data, past_land_use_data, transition_matrix, ef_country)
+
+   Calculate the total N2O emission from forest land use.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   :returns: Total N2O emission from forest land use.
+   :rtype: float
+
+
+.. py:function:: drainage_co2_organic_soils_in_grassland(land_use, past_land_use_data, transition_matrix, ef_country)
+
+   Calculate the CO2 emissions from drainage of organic soils in grassland.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   Returns:
+   - The CO2 emissions from drainage of organic soils in grassland.
+
+
+.. py:function:: drainage_ch4_organic_soils_in_grassland(land_use, past_land_use_data, transition_matrix, ef_country)
+
+   Calculate the CH4 emissions from organic soils in grassland due to drainage.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   Returns:
+   - The calculated CH4 emissions from organic soils in grassland due to drainage.
+
+
+.. py:function:: drainage_n2O_organic_soils_in_grassland(land_use, past_land_use_data, transition_matrix, ef_country)
+
+   Calculate the N2O emissions from drainage of organic soils in grassland.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   Returns:
+   - The calculated N2O emissions from drainage of organic soils in grassland.
+
+
+.. py:function:: rewetting_co2_organic_soils_in_grassland(land_use, past_land_use_data, transition_matrix, ef_country)
+
+   Calculate the CO2 emissions from rewetting organic soils in grassland.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   Returns:
+   - The calculated CO2 emissions from rewetting organic soils in grassland.
+
+
+.. py:function:: rewetting_ch4_organic_soils_in_grassland(land_use, past_land_use_data, transition_matrix, ef_country)
+
+   Calculate the CH4 emissions from rewetting organic soils in grassland.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   Returns:
+   - The CH4 emissions from rewetting organic soils in grassland.
+
+
+.. py:function:: mineral_soils_co2_from_forest_to_grassland(land_use, past_land_use_data, transition_matrix_data, ef_country)
+
+   Calculate CO2 emissions from mineral soils during land use change from forest to grassland.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   Returns:
+   - The computed CO2 emissions from mineral soils during land use change.
+
+
+.. py:function:: mineral_soils_co2_from_cropland_to_grassland(land_use, past_land_use_data, transition_matrix_data, ef_country)
+
+   Calculates the CO2 emissions from mineral soils due to land use change from cropland to grassland.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   :returns: The computed CO2 emissions from mineral soils in the land use change.
+   :rtype: float
+
+
+.. py:function:: mineral_soils_n2o_from_forest_to_grassland(land_use, past_land_use_data, transition_matrix_data, ef_country)
+
+   Calculates the N2O emissions from mineral soils due to land use change from forest to grassland.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   Returns:
+   - emissions_from_mineralization (float): The calculated N2O emissions from mineral soils.
+
+
+.. py:function:: burning_co2_grassland(ef_country, transition_matrix, land_use, past_land_use_data)
+
+   Calculate the CO2 emissions from burning grassland.
+
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+
+   :returns: CO2 emissions from burning grassland.
+   :rtype: float
+
+
+.. py:function:: burning_ch4_grassland(ef_country, transition_matrix, land_use, past_land_use_data)
+
+   Calculate the CH4 emissions from burning grassland.
+
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+
+   :returns: CH4 emissions from burning grassland.
+   :rtype: float
+
+
+.. py:function:: burning_n2o_grassland(ef_country, transition_matrix, land_use, past_land_use_data)
+
+   Calculate the N2O emissions from burning grassland.
+
+    Parameters:
+       - ef_country (string): Emission factor country.
+       - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
+       - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
+       - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
+
+   :returns: N2O emissions from burning grassland.
+   :rtype: float
+
+   :raises None:
+
+
+.. py:function:: total_co2_emission_to_grassland(land_use, past_land_use_data, transition_matrix, ef_country)
+
+   Calculates the total CO2 emission to grassland based on the given parameters. It sums mineral soils CO2
+   from forest to grassland and mineral soils CO2 from cropland to grassland.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   Returns:
+   The total CO2 emission to grassland.
+
+
+.. py:function:: total_co2_emission_in_grassland(land_use, past_land_use_data, transition_matrix, ef_country)
+
+   Calculates the total CO2 emission in grassland based on the land use, past land use data,
+   transition matrix. It sums the drainage CO2 emission from organic soils and the rewetting.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   Returns:
+   - float: The total CO2 emission in grassland.
+
+
+.. py:function:: total_ch4_emission_in_grassland(land_use, past_land_use_data, transition_matrix, ef_country)
+
+   Calculates the total CH4 emission in grassland by summing the drainage CH4 emission from organic soils
+   and the rewetting CH4 emission from organic soils.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   Returns:
+   float: The total CH4 emission in grassland.
+
+
+.. py:function:: total_co2_emission_grassland(land_use, past_land_use_data, transition_matrix, ef_country)
+
+   Calculate the total CO2 emission from grassland. Includes total CO2 emission to grassland (cropland and forest),
+   total CO2 emission in grassland (drainage and rewetting), and burning CO2 emission in grassland.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   :returns: Total CO2 emission from grassland.
+   :rtype: float
+
+
+.. py:function:: total_ch4_emission_grassland(land_use, past_land_use_data, transition_matrix, ef_country)
+
+   Calculate the total CH4 emission in grassland. Includes total CH4 emission in grassland (drainage and rewetting)
+   and burning CH4 emission in grassland.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   :returns: The total CH4 emission in grassland.
+   :rtype: float
+
+
+.. py:function:: total_n2o_emission_grassland(land_use, past_land_use_data, transition_matrix, ef_country)
+
+   Calculate the total N2O emission from grassland. Includes N2O emissons from land use change to grassland and
+   N2O emissions from burning grassland. N2O emissions from drainage and rewetting are not included as they are
+   accounted for in the Agricultural soils category in the national inventory report.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   Returns:
+   - float: Total N2O emission from grassland.
+
+
+.. py:function:: horticulture_co2_peat_export(ef_country, year, calibration_year)
+
+   Calculate the CO2 emissions from horticulture peat export.
+
+   :param ef_country: Emission factor country
+   :type ef_country: str
+   :param year: The year for which the emissions are calculated.
+   :type year: int
+   :param calibration_year: The year used for calibration.
+   :type calibration_year: int
+
+   :returns: The CO2 emissions from horticulture peat export in metric tons.
+   :rtype: float
+
+
+.. py:function:: biomass_co2_from_conversion_to_wetland(land_use_data, past_land_use_data, transition_matrix, ef_country)
+
+   Calculate the CO2 removals from conversion to wetland.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   :returns: CO2 removals from conversion to wetland.
+   :rtype: float
+
+
+.. py:function:: drainage_co2_organic_soils_in_wetland(land_use_data, past_land_use_data, transition_matrix, ef_country)
+
+   Calculate CO2 emissions from drained organic soils in wetland.
+
+   Paramters:
+       - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
+       - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
+       - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
+       - ef_country (string): Emission factor country.
+
+
+   :returns: CO2 emissions from drained organic soils in wetland.
+   :rtype: float
+
+
+.. py:function:: drainage_ch4_organic_soils_in_wetland(ef_country, transition_matrix, land_use_data, past_land_use_data)
+
+   Calculate the CH4 emissions from drainage of organic soils in wetland areas.
+
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+
+   Returns:
+   - CH4 emissions from organic soils in wetland areas.
+
+
+.. py:function:: drainage_n2o_organic_soils_in_wetland(ef_country, transition_matrix, land_use_data, past_land_use_data)
+
+   Calculate the N2O emissions from drainage of organic soils in wetland areas.
+
+     Parameters:
+       - ef_country (string): Emission factor country.
+       - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
+       - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
+       - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
+
+   Returns:
+   - The N2O emissions from organic soils in wetland areas.
+
+
+.. py:function:: burning_co2_wetland(ef_country, transition_matrix, land_use_data, past_land_use_data)
+
+   Calculate the CO2 emissions from burning wetland.
+
+    Parameters:
+       - ef_country (string): Emission factor country.
+       - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
+       - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
+       - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
+
+   :returns: CO2 emissions from burning wetland.
+   :rtype: float
+
+
+.. py:function:: burning_ch4_wetland(ef_country, transition_matrix, land_use_data, past_land_use_data)
+
+   Calculate the CH4 emissions from burning wetlands.
+
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+
+   :returns: CH4 emissions from burning wetlands.
+   :rtype: float
+
+
+.. py:function:: burning_n2o_wetland(ef_country, transition_matrix, land_use_data, past_land_use_data)
+
+   Calculate the N2O emissions from burning in wetland areas.
+
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+
+   :returns: N2O emissions from burning in wetland areas.
+   :rtype: float
+
+
+.. py:function:: total_co2_emission_wetland(land_use_data, past_land_use_data, transition_matrix, ef_country)
+
+   Calculates the total CO2 emission from wetland based on different factors. Includes CO2 emissions from drainage,
+   biomass, and burning.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   Returns:
+   float: Total CO2 emission from wetland.
+
+
+.. py:function:: total_ch4_emission_wetland(land_use_data, past_land_use_data, transition_matrix, ef_country)
+
+   Calculate the total CH4 emission from wetlands. Includes CH4 emissions from drainage and burning.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   :returns: Total CH4 emission from wetlands.
+   :rtype: float
+
+
+.. py:function:: total_n2o_emission_wetland(land_use_data, past_land_use_data, transition_matrix, ef_country)
+
+   Calculate the total N2O emission from wetland. Includes N2O emissions from drainage and burning.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   :returns: Total N2O emission from wetland.
+   :rtype: float
+
+
+.. py:function:: mineral_soils_co2_from_forest_to_cropland(land_use_data, past_land_use_data, transition_matrix, ef_country)
+
+   Calculates the CO2 emissions from mineral soils due to land use change from forest to cropland.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   :returns: CO2 emissions from mineral soils in the land use change.
+   :rtype: float
+
+
+.. py:function:: mineral_soils_co2_from_grassland_to_cropland(land_use_data, past_land_use_data, transition_matrix, ef_country)
+
+   Calculates the CO2 emissions from mineral soils due to land use change from grassland to cropland.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   :returns: CO2 emissions from mineral soils in the land use change.
+   :rtype: float
+
+
+.. py:function:: burning_ch4_cropland(ef_country, transition_matrix, land_use_data, past_land_use_data)
+
+   Calculate the CH4 emissions from burning cropland.
+
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+
+   :returns: CH4 emissions from burning cropland in kilograms.
+   :rtype: float
+
+
+.. py:function:: burning_n2o_cropland(ef_country, transition_matrix, land_use_data, past_land_use_data)
+
+   Calculate the N2O emissions from burning cropland.
+
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+
+   :returns: N2O emissions from burning cropland.
+   :rtype: float
+
+
+.. py:function:: total_co2_emission_cropland(land_use_data, past_land_use_data, transition_matrix_data, ef_country)
+
+   Calculates the total CO2 emission from cropland based on the given inputs. Includes conversion of forest to cropland
+   and conversion of grassland to cropland.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   :returns: Total CO2 emission from cropland.
+   :rtype: float
+
+
+.. py:function:: total_ch4_emission_cropland(ef_country, transition_matrix, land_use_data, past_land_use_data)
+
+   Calculate the total CH4 emissions from cropland. Burning is the only source of CH4 emissions from cropland.
+
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+
+   :returns: Total CH4 emissions from cropland.
+   :rtype: float
+
+
+.. py:function:: total_n2o_emission_cropland(ef_country, transition_matrix, land_use_data, past_land_use_data)
+
+   Calculate the total N2O emission from cropland. Burning is the only source of N2O emissions from cropland.
+
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+
+   :returns: Total N2O emission from cropland.
+   :rtype: float
+
+
+.. py:function:: drainage_co2_organic_soils_in_settlement(land_use, ef_country)
+
+   Calculate the CO2 emissions from drainage of organic soils in settlements.
+
+   This function estimates the CO2 emissions from drainage of organic soils in settlements.
+
+   See Notes.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - ef_country: The emission factor country.
+   :type - ef_country: string
+
+   :returns: The estimated CO2 emissions from drainage of organic soils in settlements.
+   :rtype: float
+
+   .. note::
+
+      The function has not been validated and is not currently used. It overestimates drainage emissions
+      because we forest is used as a reference for previous land_use of organic soil converted to settlement.
+      
+      ef_co2_forest_to_settlement_drainage include onsite and offite emissions
+
+
+.. py:function:: drainage_ch4_organic_soils_in_settlement(land_use, ef_country)
+
+   Calculate the estimated methane emissions from drainage of organic soils in settlements.
+
+   See Notes.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - ef_country: The emission factor country.
+   :type - ef_country: string
+
+   Returns:
+   - The estimated methane emissions from drainage of organic soils in settlements.
+
+   .. note::
+
+      The function has not been validated and is not currently used. This function underestimates
+      drainage emissions by using forest as a reference for previous land use of organic soil converted to settlement.
+
+
+.. py:function:: mineral_soils_co2_from_forest_to_settlement(land_use, ef_country)
+
+   Calculate the CO2 emissions from mineral soils due to forest-to-settlement conversion.
+
+   See Notes.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - ef_country: The emission factor country.
+   :type - ef_country: string
+
+   :returns: The calculated CO2 emissions from mineral soils.
+   :rtype: float
+
+   .. rubric:: Notes
+
+   The function has not been validated and is not currently used.
+
+
+.. py:function:: total_co2_settlement(land_use, ef_country)
+
+   Calculates the total CO2 emissions from settlement. Includes CO2 emissions from mineral soils and drainage.
+
+   See Notes.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - ef_country: The emission factor country.
+   :type - ef_country: string
+
+   :returns: The total CO2 emissions from settlement activities.
+   :rtype: float
+
+   .. rubric:: Notes
+
+   The function has not been validated and is not currently used.
+
+
+.. py:function:: total_ch4_settlement(land_use, ef_country)
+
+   Calculate the total CH4 emissions from settlement areas. Includes CH4 emissions from drainage.
+
+   See Notes.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - ef_country: The emission factor country.
+   :type - ef_country: string
+
+   :returns: The total CH4 emissions from settlement areas.
+   :rtype: float
+
+   .. rubric:: Notes
+
+   The function has not been validated and is not currently used.
+
+
+.. py:function:: total_co2_emission(land_use_data, past_land_use_data, transition_matrix_data, ef_country)
+
+   Calculates the total CO2 emission by summing the CO2 emissions from different land cover types.
+   Types include cropland, forest, grassland, and wetland.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   :returns: Total CO2 emission.
+   :rtype: float
+
+
+.. py:function:: total_ch4_emission(land_use_data, past_land_use_data, transition_matrix, ef_country)
+
+   Calculate the total CH4 emission by summing the CH4 emissions from different land cover types.
+   Types include cropland, forest, grassland, and wetland.
+
+   :param - land_use_data: The current/future land use data.
+   :type - land_use_data: landcover_lca.models.LandUseCollection
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: landcover_lca.models.LandUseCollection
+   :param - transition_matrix: The transition matrix.
+   :type - transition_matrix: landcover_lca.models.TransitionMatrixCategory
+   :param - ef_country: Emission factor country.
+   :type - ef_country: string
+
+   :returns: Total CH4 emission.
+   :rtype: float
+
+
+.. py:function:: total_n2o_emission(land_use_data, past_land_use_data, transition_matrix, ef_country)
+
+   Calculate the total N2O emission by summing the N2O emissions from different land cover types.
+   Types include cropland, forest, grassland, and wetland.
+
+    Parameters:
+       - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
+       - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
+       - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
+       - ef_country (string): Emission factor country.
+   :returns: Total N2O emission.
+   :rtype: float
+
+

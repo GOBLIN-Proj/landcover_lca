@@ -1,0 +1,131 @@
+:py:mod:`database_manager`
+==========================
+
+.. py:module:: database_manager
+
+.. autoapi-nested-parse::
+
+   Description:
+       This module contains the DataManager class, a tool for managing and retrieving various datasets
+       related to landcover_lca tool. The class is designed to interact with a SQL database using SQLAlchemy,
+       providing methods to fetch land use features, land use emissions factors, IPCC soil class SOC factors, national forest
+       inventory data, and exported peat data. It is optimized for ease of use and efficiency.
+
+   .. note:: This is part of a larger suite of tools developed for environmental data analysis and modeling.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   database_manager.DataManager
+
+
+
+
+.. py:class:: DataManager(ef_country)
+
+
+   A class that manages the database operations for landcover LCA.
+
+   .. attribute:: database_dir
+
+      The directory path of the database.
+
+      :type: str
+
+   .. attribute:: engine
+
+      The SQLAlchemy engine for database connection.
+
+      :type: sqlalchemy.engine.Engine
+
+   .. attribute:: ef_country
+
+      The country for which the emissions factors are retrieved.
+
+      :type: str
+
+   .. method:: __init__(ef_country)
+
+      Initializes the DataManager object.
+
+   .. method:: data_engine_creater()
+
+      Creates and returns the SQLAlchemy engine for database connection.
+
+   .. method:: get_landuse_features()
+
+      Retrieves the land use features from the database.
+
+   .. method:: get_landuse_emissions_factors()
+
+      Retrieves the land use emissions factors from the database.
+
+   .. method:: get_ipcc_soc_factors()
+
+      Retrieves the IPCC soil class SOC factors from the database.
+
+   .. method:: get_national_forest_inventory()
+
+      Retrieves the national forest inventory data from the database.
+
+   .. method:: get_exported_peat()
+
+      Retrieves the exported peat data from the database.
+      
+
+   .. py:method:: data_engine_creater()
+
+      Creates and returns the SQLAlchemy engine for database connection.
+
+      :returns: The SQLAlchemy engine for database connection.
+      :rtype: sqlalchemy.engine.Engine
+
+
+   .. py:method:: get_landuse_features()
+
+      Retrieves the land use features from the database.
+
+      :returns: The land use features data.
+      :rtype: pandas.DataFrame
+
+
+   .. py:method:: get_landuse_emissions_factors()
+
+      Retrieves the land use emissions factors from the database.
+
+      :returns: The land use emissions factors data.
+      :rtype: pandas.DataFrame
+
+
+   .. py:method:: get_ipcc_soc_factors()
+
+      Retrieves the IPCC soil class SOC factors from the database.
+
+      :returns: The IPCC soil class SOC factors data.
+      :rtype: pandas.DataFrame
+
+
+   .. py:method:: get_national_forest_inventory()
+
+      Retrieves the national forest inventory data from the database.
+
+      :returns: The national forest inventory data.
+      :rtype: pandas.DataFrame
+
+
+   .. py:method:: get_exported_peat()
+
+      Retrieves the exported peat data from the database.
+
+      :returns: The exported peat data.
+      :rtype: pandas.DataFrame
+
+
+

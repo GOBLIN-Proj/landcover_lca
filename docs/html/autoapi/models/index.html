@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>models &mdash; Landcover_LCA 0.1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=01f34227"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="data_loader" href="../data_loader/index.html" />
+    <link rel="prev" title="lca_emission" href="../lca_emission/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Landcover_LCA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../landcover_data_manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">landcover_data_manager</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lca_emission/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lca_emission</span></code></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">models</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#classes">Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../data_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">data_loader</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../land_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">land_utils</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database_manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">database_manager</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">database</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Landcover_LCA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">API Reference</a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">models</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/autoapi/models/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-models">
+<span id="models"></span><h1><a class="reference internal" href="#module-models" title="models"><code class="xref py py-mod docutils literal notranslate"><span class="pre">models</span></code></a><a class="headerlink" href="#module-models" title="Link to this heading"></a></h1>
+<dl>
+<dt>Description:</dt><dd><p>This file, part of a larger environmental analysis toolkit, contains the implementation of various models and algorithms
+central to the study and assessment of environmental impacts. These models are for simple data processing.</p>
+<p>The file is structured to provide a modular and reusable approach to
+model implementation, facilitating easy integration with other components of the toolkit.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is part of a larger suite of tools developed for environmental data analysis and modeling.</p>
+</div>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#models.DynamicData" title="models.DynamicData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DynamicData</span></code></a></p></td>
+<td><p>DynamicData is a utility class designed for managing data with an emphasis on overriding default values with real data, if available.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#models.Land_Use_Category" title="models.Land_Use_Category"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Land_Use_Category</span></code></a></p></td>
+<td><p>Land_Use_Category is a subclass of DynamicData, specialized in handling data related to land use categories.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#models.LandUseCollection" title="models.LandUseCollection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LandUseCollection</span></code></a></p></td>
+<td><p>LandUseCollection is a subclass of DynamicData, designed to handle collections of land use data. Unlike the Land_Use_Category class,</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#models.TransitionData" title="models.TransitionData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TransitionData</span></code></a></p></td>
+<td><p>TransitionData is a class similar to DynamicData, but it specifically manages transition data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#models.TransitionMatrixCategory" title="models.TransitionMatrixCategory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TransitionMatrixCategory</span></code></a></p></td>
+<td><p>TransitionMatrixCategory is a subclass of TransitionData, specifically tailored for managing transition matrix data related to different categories.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#models.Emissions_Factors" title="models.Emissions_Factors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Emissions_Factors</span></code></a></p></td>
+<td><p>Emissions_Factors is a class designed to interact with a land use database to read and retrieve emissions factors data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#models.Land_Use_Features" title="models.Land_Use_Features"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Land_Use_Features</span></code></a></p></td>
+<td><p>Land_Use_Features is a class designed to interact with a land use database to read and retrieve National Inventory soil adjustment data.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#models.load_land_use_data" title="models.load_land_use_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_land_use_data</span></code></a>(land_use_data_frame, calibration_year)</p></td>
+<td><p>Processes and organizes land use data from a given DataFrame into structured land use categories and collections.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#models.print_land_use_data" title="models.print_land_use_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">print_land_use_data</span></code></a>(land_use_data)</p></td>
+<td><p>Iterates through a nested dictionary of land use data and prints information about each item.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#models.load_transition_matrix" title="models.load_transition_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_transition_matrix</span></code></a>(transition_matrix_data_frame, ...)</p></td>
+<td><p>Processes and organizes transition matrix data from a given DataFrame into structured transition matrix categories.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#models.print_transition_data" title="models.print_transition_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">print_transition_data</span></code></a>(transition_data)</p></td>
+<td><p>Iterates through a dictionary of transition data and prints information about each item.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="models.DynamicData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.</span></span><span class="sig-name descname"><span class="pre">DynamicData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">defaults</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.DynamicData" title="Link to this definition"></a></dt>
+<dd><p>DynamicData is a utility class designed for managing data with an emphasis on overriding default values with real data, if available.
+This class is typically used as a base class for other classes such as Land_Use_Category and LandUseCollections.</p>
+<dl class="simple">
+<dt>Initialization:</dt><dd><p>DynamicData(data, defaults={})</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>dict</em>) – A dictionary containing the real data. Each key-value pair in this dictionary represents a data attribute and its value.</p></li>
+<li><p><strong>defaults</strong> (<em>dict</em><em>, </em><em>optional</em>) – A dictionary of default values. Defaults to an empty dictionary.
+Each key-value pair represents a default attribute and its value.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Description:</dt><dd><p>Upon initialization, DynamicData first sets all attributes based on the ‘defaults’ dictionary.
+If the same attributes are present in the ‘data’ dictionary, the default values are overwritten with the values from ‘data’.
+This ensures that all attributes have values, using defaults when real data is not available.</p>
+</dd>
+<dt>Usage:</dt><dd><p>The class is typically used as a superclass. Derived classes inherit the functionality of initializing and managing
+data with default and real values.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<dl class="simple">
+<dt>class Land_Use_Category(DynamicData):</dt><dd><p>pass</p>
+</dd>
+</dl>
+<p>category_data = {“name”: “Residential”, “code”: 100}
+default_values = {“name”: “Unknown”, “code”: 0}</p>
+<p>category = Land_Use_Category(category_data, default_values)</p>
+<p>In this example, Land_Use_Category inherits from DynamicData. When an instance of Land_Use_Category is created,
+it contains the real data if available; otherwise, it falls back to the default values.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="models.Land_Use_Category">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.</span></span><span class="sig-name descname"><span class="pre">Land_Use_Category</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calibration_year</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.Land_Use_Category" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#models.DynamicData" title="models.DynamicData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DynamicData</span></code></a></p>
+<p>Land_Use_Category is a subclass of DynamicData, specialized in handling data related to land use categories.
+It initializes with a set of default values for various land use attributes, and these defaults can be overridden with actual data.</p>
+<p>The class primarily deals with attributes like farm ID, year, land use type, area in hectares, and various shares related
+to land use such as mineral, organic, rewetted, burnt, and peat extraction.</p>
+<dl class="simple">
+<dt>Initialization:</dt><dd><p>Land_Use_Category(data, calibration_year)</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>dict</em>) – A dictionary containing the actual data for land use categories. Each key-value pair in this dictionary
+should correspond to a land use attribute and its value.</p></li>
+<li><p><strong>calibration_year</strong> (<em>int</em>) – The year used for calibration, which sets the default year value for land use.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Default Values:</dt><dd><p>The class initializes the following default values:
+- farm_id: 0
+- year: The year provided in calibration_year
+- land_use: ‘no’
+- area_ha: 0
+- share_mineral: 0
+- share_organic: 0
+- share_rewetted_in_organic: 0
+- share_burnt: 0
+- share_rewetted_in_mineral: 0
+- share_peat_extraction: 0</p>
+</dd>
+<dt>Usage:</dt><dd><p>This class can be used to create instances representing different land use categories, with the flexibility to
+input actual data or rely on default settings.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>land_use_data = {“farm_id”: 123, “land_use”: “agriculture”}
+category = Land_Use_Category(land_use_data, 2022)</p>
+<p>In this example, an instance of Land_Use_Category is created with specific data for a farm, and the default
+values are used for unspecified attributes.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="models.LandUseCollection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.</span></span><span class="sig-name descname"><span class="pre">LandUseCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.LandUseCollection" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#models.DynamicData" title="models.DynamicData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DynamicData</span></code></a></p>
+<p>LandUseCollection is a subclass of DynamicData, designed to handle collections of land use data. Unlike the Land_Use_Category class,
+this class does not utilize default values for its data attributes. It inherits the core functionality of DynamicData to manage
+its data attributes solely based on the input data provided.</p>
+<p>The primary use of this class, along with Land_Use_Category, is within the load_land_use_data() function, where it serves to organize
+and manage collections of land use data items.</p>
+<dl class="simple">
+<dt>Initialization:</dt><dd><p>LandUseCollection(data)</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>dict</em>) – A dictionary containing the land use data. Each key-value pair in this dictionary represents an attribute of the</p></li>
+<li><p><strong>value.</strong> (<em>land use collection and its corresponding</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Usage:</dt><dd><p>This class is intended to aggregate and manage multiple instances or items of land use data. It is particularly useful in scenarios
+where a collection of land use data items needs to be processed or manipulated as a single entity.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>land_use_items = [{“farm_id”: 1, “land_use”: “agriculture”}, {“farm_id”: 2, “land_use”: “forestry”}]
+land_use_collection = LandUseCollection(land_use_items)</p>
+<p>In this example, LandUseCollection is instantiated with a list of land use data dictionaries. Each item in the list represents
+a separate land use data point. The LandUseCollection instance manages these as a collective group of data items.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="models.TransitionData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.</span></span><span class="sig-name descname"><span class="pre">TransitionData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">defaults</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.TransitionData" title="Link to this definition"></a></dt>
+<dd><p>TransitionData is a class similar to DynamicData, but it specifically manages transition data.
+It initializes with default values and overrides them with actual data if available. The primary distinction
+lies in its handling of certain data types, specifically converting values to integers or floats as needed.</p>
+<p>This class is designed to be inherited by other classes, such as TransitionMatrixCategory, to provide a
+standardized way of handling transition data across different categories.</p>
+<dl class="simple">
+<dt>Initialization:</dt><dd><p>TransitionData(data, defaults={})</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>dict</em>) – A dictionary containing the actual transition data. Each key-value pair in this dictionary
+represents a transition attribute and its value.</p></li>
+<li><p><strong>defaults</strong> (<em>dict</em><em>, </em><em>optional</em>) – A dictionary of default values for transition data attributes. Defaults to an empty dictionary.
+Each key-value pair represents a default transition attribute and its value.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Special Handling:</dt><dd><ul class="simple">
+<li><p>If the variable is “Year” or “farm_id”, the value is converted to an integer.</p></li>
+<li><p>For other variables, values are converted to integers after being interpreted as floats.</p></li>
+</ul>
+</dd>
+<dt>Usage:</dt><dd><p>This class is intended to be used for managing transition data, where default values are provided and can
+be overridden by actual data. It’s particularly useful in scenarios requiring data type conversions for
+specific fields like “Year” and “farm_id”.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>transition_data = {“Year”: “2022”, “farm_id”: “100”, “area_ha”: “250.5”}
+default_values = {“Year”: 0, “farm_id”: 0, “area_ha”: 0}
+transition_instance = TransitionData(transition_data, default_values)</p>
+<p>In this example, a TransitionData instance is created with specific data, where numerical values are
+properly converted and defaults are used for unspecified attributes.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="models.TransitionMatrixCategory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.</span></span><span class="sig-name descname"><span class="pre">TransitionMatrixCategory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calibration_year</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.TransitionMatrixCategory" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#models.TransitionData" title="models.TransitionData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TransitionData</span></code></a></p>
+<p>TransitionMatrixCategory is a subclass of TransitionData, specifically tailored for managing transition matrix data related to different categories.
+It inherits the functionality of TransitionData, with the addition of category-specific default values.</p>
+<p>This class is primarily used for initializing transition data with a set of default values that are relevant to a particular category,
+such as country, farm_id, year, land use, and area in hectares. These defaults can be overridden with actual data.</p>
+<dl class="simple">
+<dt>Initialization:</dt><dd><p>TransitionMatrixCategory(data, ef_country, calibration_year)</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>dict</em>) – A dictionary containing the actual data for the transition matrix category.
+Each key-value pair in this dictionary represents an attribute of the category and its value.</p></li>
+<li><p><strong>ef_country</strong> (<em>str</em>) – A string representing the default value for the country attribute in the transition matrix category.</p></li>
+<li><p><strong>calibration_year</strong> (<em>int</em>) – An integer representing the default value for the Year attribute in the transition matrix category.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Default Values:</dt><dd><p>The class initializes the following default values:
+- country: The value provided in ef_country
+- farm_id: 0
+- Year: The year provided in calibration_year
+- land_use: ‘no’
+- area_ha: 0</p>
+</dd>
+<dt>Usage:</dt><dd><p>This class is used to manage transition matrix data for different categories, allowing for the easy setup of default values
+and the ability to override them with actual data. It is useful in scenarios where data consistency and type conversion
+are important for transition matrices.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>transition_category_data = {“farm_id”: 123, “land_use”: “agriculture”, “area_ha”: “250.5”}
+category = TransitionMatrixCategory(transition_category_data, “ireland”, 2022)</p>
+<p>In this example, a TransitionMatrixCategory instance is created with specific data for a farm in the ireland for the year 2022.
+The default values are used for unspecified attributes while ensuring the proper data type conversions.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="models.Emissions_Factors">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.</span></span><span class="sig-name descname"><span class="pre">Emissions_Factors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.Emissions_Factors" title="Link to this definition"></a></dt>
+<dd><p>Emissions_Factors is a class designed to interact with a land use database to read and retrieve emissions factors data.
+It is initialized with a specific country’s context and utilizes a data loading mechanism to access the emissions factors.</p>
+<p>The primary functionality of this class is to provide an interface for retrieving emissions factor values based on
+given emissions factor names, tailored to the specified country.</p>
+<dl class="simple">
+<dt>Initialization:</dt><dd><p>Emissions_Factors(ef_country)</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ef_country</strong> (<em>str</em>) – A string specifying the country context for which the emissions factors data is to be loaded and used.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.Emissions_Factors.data_loader_class">
+<span class="sig-name descname"><span class="pre">data_loader_class</span></span><a class="headerlink" href="#models.Emissions_Factors.data_loader_class" title="Link to this definition"></a></dt>
+<dd><p>An instance of the Loader class initialized with the ef_country, responsible for loading the emissions factors data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../data_loader/index.html#data_loader.Loader" title="data_loader.Loader">Loader</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.Emissions_Factors.ef_country">
+<span class="sig-name descname"><span class="pre">ef_country</span></span><a class="headerlink" href="#models.Emissions_Factors.ef_country" title="Link to this definition"></a></dt>
+<dd><p>The country context for the emissions factors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.Emissions_Factors.emission_data_base">
+<span class="sig-name descname"><span class="pre">emission_data_base</span></span><a class="headerlink" href="#models.Emissions_Factors.emission_data_base" title="Link to this definition"></a></dt>
+<dd><p>A dictionary containing emissions factors data loaded from the land use database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.Emissions_Factors.get_emission_factor_in_emission_factor_data_base">
+<span class="sig-name descname"><span class="pre">get_emission_factor_in_emission_factor_data_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">emission_factor_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.Emissions_Factors.get_emission_factor_in_emission_factor_data_base" title="Link to this definition"></a></dt>
+<dd><ul class="simple">
+<li><p>Retrieves the emission factor value for a specified emission factor name, within the context of the ef_country.</p></li>
+<li><dl class="simple">
+<dt>Parameters:</dt><dd><p>emission_factor_name (str): The name of the emission factor whose value is to be retrieved.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Returns:</dt><dd><p>float: The value of the specified emission factor for the given country.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="simple">
+<dt>Usage:</dt><dd><p>This class can be used to access and retrieve specific emissions factors from a land use database,
+particularly in environmental impact assessments or similar analyses where emissions data is crucial.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>emissions_factors = Emissions_Factors(“ireland”)
+co2_emission_factor = emissions_factors.get_emission_factor_in_emission_factor_data_base(“emission_factor_name”)</p>
+<p>In this example, an instance of Emissions_Factors is created for the ireland. The CO2 emissions factor for the ireland is then retrieved using the class method.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">get_emission_factor_in_emission_factor_data_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">emission_factor_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="models.Land_Use_Features">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.</span></span><span class="sig-name descname"><span class="pre">Land_Use_Features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.Land_Use_Features" title="Link to this definition"></a></dt>
+<dd><p>Land_Use_Features is a class designed to interact with a land use database to read and retrieve National Inventory soil adjustment data.
+It is initialized with a specific country’s context and utilizes a data loading mechanism to access the land use features.</p>
+<p>The primary functionality of this class is to provide an interface for retrieving land use feature values based on
+given land use feature names, tailored to specific land use types.</p>
+<dl class="simple">
+<dt>Initialization:</dt><dd><p>Land_Use_Features(ef_country)</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ef_country</strong> (<em>str</em>) – A string specifying the country context for which the land use features data is to be loaded and used.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.Land_Use_Features.data_loader_class">
+<span class="sig-name descname"><span class="pre">data_loader_class</span></span><a class="headerlink" href="#models.Land_Use_Features.data_loader_class" title="Link to this definition"></a></dt>
+<dd><p>An instance of the Loader class initialized with the ef_country, responsible for loading the land use features data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../data_loader/index.html#data_loader.Loader" title="data_loader.Loader">Loader</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.Land_Use_Features.features_data_base">
+<span class="sig-name descname"><span class="pre">features_data_base</span></span><a class="headerlink" href="#models.Land_Use_Features.features_data_base" title="Link to this definition"></a></dt>
+<dd><p>A dictionary containing land use features data loaded from the land use database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.Land_Use_Features.get_landuse_features_in_land_use_features_data_base">
+<span class="sig-name descname"><span class="pre">get_landuse_features_in_land_use_features_data_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">emission_feature_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">land_use</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.Land_Use_Features.get_landuse_features_in_land_use_features_data_base" title="Link to this definition"></a></dt>
+<dd><ul class="simple">
+<li><p>Retrieves the land use feature value for a specified feature name and land use type, within the context of the specified country.</p></li>
+<li><dl class="simple">
+<dt>Parameters:</dt><dd><p>emission_feature_name (str): The name of the land use feature whose value is to be retrieved.
+land_use (str): The land use type for which the feature value is relevant.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Returns:</dt><dd><p>float: The value of the specified land use feature for the given land use type.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="simple">
+<dt>Usage:</dt><dd><p>This class can be used to access and retrieve specific land use features from a land use database,
+particularly in environmental assessments or similar analyses where land use data is crucial.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>land_use_features = Land_Use_Features(“ireland”)
+soil_adjustment_factor = land_use_features.get_landuse_features_in_land_use_features_data_base(“Adjustment_factor”, “cropland”)</p>
+<p>In this example, an instance of Land_Use_Features is created for the ireland. The soil adjustment factor for cropland land use in ireland is then retrieved using the class method.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">get_landuse_features_in_land_use_features_data_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">emission_feature_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">land_use</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="models.load_land_use_data">
+<span class="sig-prename descclassname"><span class="pre">models.</span></span><span class="sig-name descname"><span class="pre">load_land_use_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">land_use_data_frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calibration_year</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.load_land_use_data" title="Link to this definition"></a></dt>
+<dd><p>Processes and organizes land use data from a given DataFrame into structured land use categories and collections.</p>
+<p>The function performs three main steps:
+1. Convert all specified columns in the DataFrame to numeric values, facilitating further calculations.
+2. Aggregate the data into individual land use categories based on the data in each row.
+3. Group these categories into collections based on farm IDs, organizing them under a unified structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>land_use_data_frame</strong> (<em>DataFrame</em>) – A pandas DataFrame containing land use data with various columns.</p></li>
+<li><p><strong>calibration_year</strong> (<em>int</em>) – The year used for calibration, influencing how data is processed and categorized.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary where each key is a farm ID and each value is a LandUseCollection object representing all land uses associated with that farm.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Numeric Conversion: Converts columns specified by the ModelData class into numeric values, handling non-numeric values gracefully.</p></li>
+<li><p>Category Creation: Iterates through the DataFrame, creating a Land_Use_Category object for each row with the provided calibration year.</p></li>
+<li><p>Collection Aggregation: Aggregates these categories into collections based on farm IDs.</p></li>
+<li><p>Collection Object Creation: Converts the raw data into LandUseCollection objects, each representing all land uses under a single farm ID.</p></li>
+</ol>
+</dd>
+<dt>Usage:</dt><dd><p>This function is used to process raw land use data, making it structured and easily manageable for further analysis or processing.
+It is particularly useful in scenarios where land use data needs to be categorized and grouped for large datasets.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>land_use_df = pd.DataFrame([…])  # a pandas DataFrame with land use data
+processed_data = load_land_use_data(land_use_df, 2022)</p>
+<p>In this example, the function takes a DataFrame of land use data and the calibration year 2022,
+and returns a dictionary of LandUseCollection objects organized by farm IDs.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="models.print_land_use_data">
+<span class="sig-prename descclassname"><span class="pre">models.</span></span><span class="sig-name descname"><span class="pre">print_land_use_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">land_use_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.print_land_use_data" title="Link to this definition"></a></dt>
+<dd><p>Iterates through a nested dictionary of land use data and prints information about each item.</p>
+<p>This function is designed to work with a data structure where the outer dictionary is keyed by scenarios (or similar identifiers),
+and each value is another dictionary containing land use categories. Each land use category object has attributes representing
+various parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>land_use_data</strong> (<em>dict</em>) – A nested dictionary where the top-level keys are scenarios or similar identifiers.
+Each corresponding value is a dictionary of land use categories with their respective data.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Output:</dt><dd><p>Prints information about each scenario, land use category, and their parameters to the console.
+The output format is “Scenario: [scenario], Land use: [land_use], parameter: [parameter] = [attribute]”.</p>
+</dd>
+<dt>Usage:</dt><dd><p>This function is useful for debugging or inspecting the land use data structure. It allows for a quick overview of the data
+contained within the structure, printed in a readable format.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="models.load_transition_matrix">
+<span class="sig-prename descclassname"><span class="pre">models.</span></span><span class="sig-name descname"><span class="pre">load_transition_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transition_matrix_data_frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calibration_year</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_year</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.load_transition_matrix" title="Link to this definition"></a></dt>
+<dd><p>Processes and organizes transition matrix data from a given DataFrame into structured transition matrix categories.</p>
+<p>The function performs the following steps:
+1. Converts the ‘farm_id’ and ‘Year’ columns and other numeric columns in the DataFrame to numeric values, facilitating further calculations.
+2. Adjusts the ‘Year’ column values based on the calibration_year and target_year.
+3. Creates TransitionMatrixCategory objects for each row in the DataFrame.
+4. Aggregates these categories into a collection based on farm IDs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>transition_matrix_data_frame</strong> (<em>DataFrame</em>) – A pandas DataFrame containing transition matrix data.</p></li>
+<li><p><strong>ef_country</strong> (<em>str</em>) – A string specifying the country context for the transition matrix data.</p></li>
+<li><p><strong>calibration_year</strong> (<em>int</em>) – The year used for calibration, influencing how data is processed and categorized.</p></li>
+<li><p><strong>target_year</strong> (<em>int</em>) – The target year for which the transition matrix data is relevant.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary where each key is a farm ID and the value is a TransitionMatrixCategory object representing the transition data for that farm.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Steps:</dt><dd><ul class="simple">
+<li><p>Numeric Conversion: Converts columns to numeric values, handling non-numeric values gracefully.</p></li>
+<li><p>Year Adjustment: Adjusts the ‘Year’ column based on the calibration and target years.</p></li>
+<li><p>Category Creation: Iterates through the DataFrame, creating a TransitionMatrixCategory object for each row.</p></li>
+<li><p>Collection Aggregation: Aggregates these categories into a dictionary keyed by farm IDs.</p></li>
+</ul>
+</dd>
+<dt>Usage:</dt><dd><p>This function is used to process raw transition matrix data, making it structured and easily manageable for further analysis or processing.
+It is particularly useful in scenarios where transition matrix data needs to be categorized and grouped for large datasets.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="models.print_transition_data">
+<span class="sig-prename descclassname"><span class="pre">models.</span></span><span class="sig-name descname"><span class="pre">print_transition_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transition_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.print_transition_data" title="Link to this definition"></a></dt>
+<dd><p>Iterates through a dictionary of transition data and prints information about each item.</p>
+<p>This function is designed to work with a data structure where the outer dictionary is keyed by scenarios (or similar identifiers),
+and each value is an object containing transition data for different land use types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>transition_data</strong> (<em>dict</em>) – A dictionary where the top-level keys are scenarios or similar identifiers.
+Each corresponding value is an object representing transition data for different land uses.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Output:</dt><dd><p>Prints information about each scenario and the corresponding transition data to the console.
+The output format is “Scenario: [scenario], Land use: [land_use] = [value]”.</p>
+</dd>
+<dt>Usage:</dt><dd><p>This function is useful for debugging or inspecting the transition data structure. It allows for a quick overview
+of the data contained within the structure, printed in a readable format.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../lca_emission/index.html" class="btn btn-neutral float-left" title="lca_emission" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../data_loader/index.html" class="btn btn-neutral float-right" title="data_loader" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Colm Duffy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
