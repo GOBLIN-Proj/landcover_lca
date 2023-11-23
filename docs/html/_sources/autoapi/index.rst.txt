@@ -1,0 +1,17 @@
+API Reference
+=============
+
+This page contains auto-generated API reference documentation [#f1]_.
+
+.. toctree::
+   :titlesonly:
+
+   /autoapi/landcover_data_manager/index
+   /autoapi/lca_emission/index
+   /autoapi/models/index
+   /autoapi/data_loader/index
+   /autoapi/land_utils/index
+   /autoapi/database_manager/index
+   /autoapi/database/index
+
+.. [#f1] Created with `sphinx-autoapi <https://github.com/readthedocs/sphinx-autoapi>`_

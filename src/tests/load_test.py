@@ -32,6 +32,8 @@ class DatasetLoadingTestCase(unittest.TestCase):
             self.transition_matrix, self.ef_country, self.baseline, self.target
         )
 
+        print(type(transition))
+
         print_transition_data(transition)
 
         land = load_land_use_data(self.land_uses, self.baseline)

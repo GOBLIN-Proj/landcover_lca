@@ -1,0 +1,105 @@
+:py:mod:`data_loader`
+=====================
+
+.. py:module:: data_loader
+
+.. autoapi-nested-parse::
+
+   Description:
+
+       This file contains the Loader class, which is responsible for loading various datasets related to land cover life cycle assessment.
+
+       The Loader class is designed to provide easy access to different types of environmental data, such as land use features, emissions factors, IPCC SOC factors, national forest inventory, and exported peat. This is achieved through an instance of the DataManager class, which manages the actual data retrieval processes.
+
+       The Loader class serves as an interface for accessing these datasets, abstracting the underlying data management complexities. It is typically used in environmental assessment and modeling projects that require comprehensive and diverse datasets related to land cover and its impact.
+
+   .. note:: This class is part of a larger suite of tools developed for environmental life cycle assessment and modeling, and it relies on the DataManager class from the landcover_lca.database_manager module for data management.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   data_loader.Loader
+
+
+
+
+.. py:class:: Loader(ef_country)
+
+
+   A class that loads data for land cover life cycle assessment.
+
+   .. attribute:: dataframes
+
+      An instance of the DataManager class for managing data.
+
+      :type: DataManager
+
+   .. method:: land_use_features
+
+      Returns the land use features.
+
+   .. method:: landuse_emissions_factors
+
+      Returns the land use emissions factors.
+
+   .. method:: ipcc_soc_factors
+
+      Returns the IPCC SOC factors.
+
+   .. method:: national_forest_inventory
+
+      Returns the national forest inventory.
+
+   .. method:: exported_peat
+
+      Returns the exported peat.
+      
+
+   .. py:method:: land_use_features()
+
+      Returns the land use features.
+
+      :returns: The land use features.
+      :rtype: pandas.DataFrame
+
+
+   .. py:method:: landuse_emissions_factors()
+
+      Returns the land use emissions factors.
+
+      :returns: The land use emissions factors.
+      :rtype: pandas.DataFrame
+
+
+   .. py:method:: ipcc_soc_factors()
+
+      Returns the IPCC SOC factors.
+
+      :returns: The IPCC SOC factors.
+      :rtype: pandas.DataFrame
+
+
+   .. py:method:: national_forest_inventory()
+
+      Returns the national forest inventory.
+
+      :returns: The national forest inventory.
+      :rtype: pandas.DataFrame
+
+
+   .. py:method:: exported_peat()
+
+      Returns the exported peat.
+
+      :returns: The exported peat.
+      :rtype: pandas.DataFrame
+
+
+

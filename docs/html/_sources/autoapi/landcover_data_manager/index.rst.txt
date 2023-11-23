@@ -1,0 +1,56 @@
+:py:mod:`landcover_data_manager`
+================================
+
+.. py:module:: landcover_data_manager
+
+.. autoapi-nested-parse::
+
+   Description:
+       This file contains classes related to managing and processing environmental or agricultural model data.
+
+   Classes:
+       DataManager: Manages and stores various data parameters essential for calibration and modeling processes, such as calibration years, target years, and organic mineral soil depth.
+
+       ModelData: Manages metadata related to land use. It maintains a list of columns relevant for land use data analysis and modeling, including identifiers and various attributes related to land use.
+
+   Usage:
+       These classes are integral to scenarios involving environmental or agricultural modeling and land use data processing. They help in standardizing and organizing the necessary parameters and metadata for efficient data handling and analysis.
+
+   .. note:: This is part of a larger suite of tools developed for environmental data analysis and modeling.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   landcover_data_manager.DataManager
+   landcover_data_manager.ModelData
+
+
+
+
+.. py:class:: DataManager(calibration_year=None, target_year=None)
+
+
+
+.. py:class:: ModelData
+
+
+   ModelData is a class designed to store and manage metadata related to land use. Primarily, it maintains a list of columns that are relevant for land use data analysis and modeling.
+
+   .. attribute:: land_use_columns
+
+      A list containing the names of columns that are important for land use data. These columns typically include identifiers and various attributes related to land use, such as area, shares of different land types, etc.
+
+      :type: list of str
+
+   Usage:
+       This class is particularly useful in scenarios involving data processing or analysis of land use, where a consistent set of columns is required to standardize data frames or databases for further analysis.
+
+
+

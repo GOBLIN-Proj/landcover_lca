@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>land_utils &mdash; Landcover_LCA 0.1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=01f34227"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="database_manager" href="../database_manager/index.html" />
+    <link rel="prev" title="data_loader" href="../data_loader/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Landcover_LCA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../landcover_data_manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">landcover_data_manager</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lca_emission/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lca_emission</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">models</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">data_loader</span></code></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">land_utils</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../database_manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">database_manager</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">database</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Landcover_LCA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">API Reference</a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">land_utils</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/autoapi/land_utils/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-land_utils">
+<span id="land-utils"></span><h1><a class="reference internal" href="#module-land_utils" title="land_utils"><code class="xref py py-mod docutils literal notranslate"><span class="pre">land_utils</span></code></a><a class="headerlink" href="#module-land_utils" title="Link to this heading"></a></h1>
+<dl class="simple">
+<dt>Description:</dt><dd><p>This file contains utility functions and classes specifically designed for handling and processing land-related data.
+It includes various utilities that aid in the analysis, manipulation, and management of data related to land cover and associated environmental impact assessments.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This file is a part of a larger suite of tools aimed at facilitating environmental research and analysis, with a focus on land cover and its implications in ecological studies.</p>
+</div>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#land_utils.SOC" title="land_utils.SOC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SOC</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#land_utils.LandUse" title="land_utils.LandUse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LandUse</span></code></a></p></td>
+<td><p>The LandUse class is designed to analyze and calculate various aspects of</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#land_utils.Wetland" title="land_utils.Wetland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Wetland</span></code></a></p></td>
+<td><p>A class representing a wetland land use.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#land_utils.Grassland" title="land_utils.Grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Grassland</span></code></a></p></td>
+<td><p>A class representing grassland land use.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#land_utils.Cropland" title="land_utils.Cropland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Cropland</span></code></a></p></td>
+<td><p>Represents a cropland land use.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#land_utils.Forest" title="land_utils.Forest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Forest</span></code></a></p></td>
+<td><p>The Forest class is specifically tailored to handle calculations and assessments</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="land_utils.SOC">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">land_utils.</span></span><span class="sig-name descname"><span class="pre">SOC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrix_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_land_use</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.SOC" title="Link to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="land_utils.SOC.get_time_period">
+<span class="sig-name descname"><span class="pre">get_time_period</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.SOC.get_time_period" title="Link to this definition"></a></dt>
+<dd><p>Calculates the time period between the current and past land use data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The time period in years.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.SOC.compute_SOC_ref_for_land_use">
+<span class="sig-name descname"><span class="pre">compute_SOC_ref_for_land_use</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.SOC.compute_SOC_ref_for_land_use" title="Link to this definition"></a></dt>
+<dd><p>Computes the reference SOC for the current land use category.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The reference SOC value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.SOC.compute_land_use_change_total_area">
+<span class="sig-name descname"><span class="pre">compute_land_use_change_total_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.SOC.compute_land_use_change_total_area" title="Link to this definition"></a></dt>
+<dd><p>Computes the total area converted from the past land use to the current land use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The annual area converted.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.SOC.compute_emission_factor_from_mineral_soils">
+<span class="sig-name descname"><span class="pre">compute_emission_factor_from_mineral_soils</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">land_use_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.SOC.compute_emission_factor_from_mineral_soils" title="Link to this definition"></a></dt>
+<dd><p>Computes the emission factor from mineral soils for a given land use category.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>land_use_name</strong> (<em>str</em>) – The name of the land use category.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The emission factor from mineral soils.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.SOC.compute_emissions_from_mineral_soils_in_land_use_change">
+<span class="sig-name descname"><span class="pre">compute_emissions_from_mineral_soils_in_land_use_change</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.SOC.compute_emissions_from_mineral_soils_in_land_use_change" title="Link to this definition"></a></dt>
+<dd><p>Computes the emissions from mineral soils during land use change.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The total emissions from mineral soils.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="land_utils.LandUse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">land_utils.</span></span><span class="sig-name descname"><span class="pre">LandUse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrix_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_land_use</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.LandUse" title="Link to this definition"></a></dt>
+<dd><p>The LandUse class is designed to analyze and calculate various aspects of
+land use and land use change, focusing on their environmental impact in
+terms of emissions and land area transitions.</p>
+<p>This class processes data related to different land use categories,
+considering both historical (past) and future (projected) land use scenarios,
+to understand the dynamics of land use changes and their environmental
+consequences.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ef_country</strong> (<em>str</em>) – The country for which the land use data is being
+analyzed. Essential for loading country-specific data
+and emission factors.</p></li>
+<li><p><strong>transition_matrix_data</strong> (<em>TransitionMatrixData</em>) – An instance of
+TransitionMatrixData class
+containing data for
+transitions between
+different land use
+categories over time.</p></li>
+<li><p><strong>land_use_data</strong> – Land use transition data for future scenarios.</p></li>
+<li><p><strong>past_land_use_data</strong> – Data representing current or past land use scenarios.</p></li>
+<li><p><strong>past_land_use</strong> (<em>str</em><em>, </em><em>optional</em>) – The past land use category. Defaults to None.</p></li>
+<li><p><strong>current_land_use</strong> (<em>str</em><em>, </em><em>optional</em>) – The current/future land use category. Defaults
+to None.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.LandUse.get_time_period">
+<span class="sig-name descname"><span class="pre">get_time_period</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.LandUse.get_time_period" title="Link to this definition"></a></dt>
+<dd><p>Calculates the time period between the current (or future) and past land
+use scenarios. This period helps in understanding the duration over which
+land use changes have occurred or are projected to occur.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The time period in years between the current (or future) and past</dt><dd><p>land use data.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.LandUse.compute_land_use_annual_area">
+<span class="sig-name descname"><span class="pre">compute_land_use_annual_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.LandUse.compute_land_use_annual_area" title="Link to this definition"></a></dt>
+<dd><p>Calculates the annual area that has been or is projected to be converted
+from the past land use to the current (or future) land use category.
+This calculation is crucial for understanding the rate of land use change
+on an annual basis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The annual area converted (in hectares) from past</dt><dd><p>to current (or future) land use, averaged over the time period.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.LandUse.get_total_transition_area">
+<span class="sig-name descname"><span class="pre">get_total_transition_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.LandUse.get_total_transition_area" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the total area that has transitioned or is projected to transition
+from the past land use category to the current (or future) land use category.
+This measure is vital for assessing the scale of land use change.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The total transition area (in hectares) between</dt><dd><p>the past and current (or future) land use categories.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.LandUse.compute_total_land_use_area">
+<span class="sig-name descname"><span class="pre">compute_total_land_use_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.LandUse.compute_total_land_use_area" title="Link to this definition"></a></dt>
+<dd><p>Computes the total area covered by the current (or future) land use category.
+This measurement provides insight into the extent of a specific land use type
+within the selected region or country.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The total area (in hectares) covered by the</dt><dd><p>current (or future) land use category.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="land_utils.Wetland">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">land_utils.</span></span><span class="sig-name descname"><span class="pre">Wetland</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrix_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_land_use</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Wetland" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#land_utils.LandUse" title="land_utils.LandUse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LandUse</span></code></a></p>
+<p>A class representing a wetland land use.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="land_utils.Wetland.ef_country">
+<span class="sig-name descname"><span class="pre">ef_country</span></span><a class="headerlink" href="#land_utils.Wetland.ef_country" title="Link to this definition"></a></dt>
+<dd><p>The country for which the emissions factors are calculated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="land_utils.Wetland.transition_matrix_data">
+<span class="sig-name descname"><span class="pre">transition_matrix_data</span></span><a class="headerlink" href="#land_utils.Wetland.transition_matrix_data" title="Link to this definition"></a></dt>
+<dd><p>The transition matrix data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>TransitionMatrixData</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="land_utils.Wetland.land_use_data">
+<span class="sig-name descname"><span class="pre">land_use_data</span></span><a class="headerlink" href="#land_utils.Wetland.land_use_data" title="Link to this definition"></a></dt>
+<dd><p>The land use data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>LandUseData</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="land_utils.Wetland.past_land_use_data">
+<span class="sig-name descname"><span class="pre">past_land_use_data</span></span><a class="headerlink" href="#land_utils.Wetland.past_land_use_data" title="Link to this definition"></a></dt>
+<dd><p>The past land use data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>PastLandUseData</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="land_utils.Wetland.past_land_use">
+<span class="sig-name descname"><span class="pre">past_land_use</span></span><a class="headerlink" href="#land_utils.Wetland.past_land_use" title="Link to this definition"></a></dt>
+<dd><p>The past land use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="land_utils.Wetland.current_land_use">
+<span class="sig-name descname"><span class="pre">current_land_use</span></span><a class="headerlink" href="#land_utils.Wetland.current_land_use" title="Link to this definition"></a></dt>
+<dd><p>The current land use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="land_utils.Wetland.current_area_drained">
+<span class="sig-name descname"><span class="pre">current_area_drained</span></span><a class="headerlink" href="#land_utils.Wetland.current_area_drained" title="Link to this definition"></a></dt>
+<dd><p>The current area drained in hectares.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Wetland.co2_removals">
+<span class="sig-name descname"><span class="pre">co2_removals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Wetland.co2_removals" title="Link to this definition"></a></dt>
+<dd><p>Calculates the carbon removals from the wetland.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Wetland.co2_emissions_wetland_drained">
+<span class="sig-name descname"><span class="pre">co2_emissions_wetland_drained</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Wetland.co2_emissions_wetland_drained" title="Link to this definition"></a></dt>
+<dd><p>Calculates the CO2 emissions from wetland drainage.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Wetland.drainage_ch4_organic_soils">
+<span class="sig-name descname"><span class="pre">drainage_ch4_organic_soils</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Wetland.drainage_ch4_organic_soils" title="Link to this definition"></a></dt>
+<dd><p>Calculates the CH4 emissions from organic soils due to drainage.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Wetland.drainage_n2o_organic_soils">
+<span class="sig-name descname"><span class="pre">drainage_n2o_organic_soils</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Wetland.drainage_n2o_organic_soils" title="Link to this definition"></a></dt>
+<dd><p>Calculates the N2O emissions from organic soils due to drainage.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Wetland.rewetting_co2_organic_soils">
+<span class="sig-name descname"><span class="pre">rewetting_co2_organic_soils</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Wetland.rewetting_co2_organic_soils" title="Link to this definition"></a></dt>
+<dd><p>Estimates the CO2 emissions from rewetting of wetland (not implemented).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Wetland.rewetting_ch4_organic_soils_in_wetland">
+<span class="sig-name descname"><span class="pre">rewetting_ch4_organic_soils_in_wetland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Wetland.rewetting_ch4_organic_soils_in_wetland" title="Link to this definition"></a></dt>
+<dd><p>Estimates the CH4 emissions from rewetting of wetland (not implemented).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Wetland.burning_co2_wetland">
+<span class="sig-name descname"><span class="pre">burning_co2_wetland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Wetland.burning_co2_wetland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the CO2 emissions from burning of wetland.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Wetland.burning_ch4_wetland">
+<span class="sig-name descname"><span class="pre">burning_ch4_wetland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Wetland.burning_ch4_wetland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the CH4 emissions from burning of wetland.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Wetland.burning_n2o_wetland">
+<span class="sig-name descname"><span class="pre">burning_n2o_wetland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Wetland.burning_n2o_wetland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the N2O emissions from burning of wetland.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">co2_removals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd><p>Calculate the amount of CO2 removals per year for a given area.
+return 0.6t C per year for 5 years for area drained.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The total amount of CO2 removals over the specified year range.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">co2_emissions_wetland_drained</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd><p>Calculates the carbon dioxide (CO2) emissions resulting from the drainage of wetlands.
+Wetland drainage can lead to significant CO2 emissions, primarily due to the exposure
+and decomposition of organic matter that was previously submerged and preserved
+under waterlogged conditions.</p>
+<p>This method calculates CO2 emissions by considering two main emission factors:
+emissions from the drainage site itself and emissions due to dissolved organic carbon
+(DOC). DOC refers to organic carbon released into water bodies as a result of wetland
+drainage.</p>
+<p>Emission factors are sourced from a country-specific database (<cite>ef_country</cite>) of
+emission factors, considering the unique characteristics of wetlands in different
+regions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated CO2 emissions (in a suitable unit like kg or tonnes) from</dt><dd><p>wetland drainage. The calculation is based on the current area of drained
+wetland and the sum of the two emission factors, one for on-site emissions
+and the other for emissions due to DOC.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_co2_wetland_drainage_on_site</cite> refers to the emission factor for on-site</p></li>
+</ul>
+<p>CO2 emissions due to wetland drainage.
+- <cite>ef_co2_wetland_drainage_DOC</cite> refers to the emission factor for CO2 emissions
+related to dissolved organic carbon due to wetland drainage.
+- <cite>current_area_drained</cite> is determined based on the data of wetland
+area and the proportion used for peat extraction, which contributes to the
+drainage.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">drainage_ch4_organic_soils</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd><p>Calculates the methane (CH4) emissions resulting from the drainage of organic soils,
+such as peatlands. Drainage of such soils can significantly increase methane
+emissions, a potent greenhouse gas, due to the exposure of previously waterlogged
+organic matter to aerobic conditions, leading to its decomposition.</p>
+<p>The method considers different emission factors for peatland that is drained
+for land use (e.g., agriculture) and for drainage via ditches.</p>
+<p>Emission factors are retrieved from a database of emission factors specific
+to the country (<cite>ef_country</cite>) provided at the class initialization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated CH4 emissions from organic soils due to drainage.</dt><dd><p>This is based on the current area of drained land, the proportion of land drained by ditches,
+and the respective emission factors for each type of drainage.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_ch4_drainage_peatland_land</cite> refers to the emission factor for peatland</p></li>
+</ul>
+<p>drained for land use.
+- <cite>ef_ch4_drainage_peatland_ditch</cite> refers to the emission factor for peatland
+drained via ditches.
+- <cite>frac_ditch</cite> represents the fraction of the total drained area that is
+drained by ditches.
+- <cite>self.current_area_drained</cite> is the total current area of drained organic soil.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">drainage_n2o_organic_soils</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd><p>Calculates the nitrous oxide (N2O) emissions resulting from the drainage of organic
+soils. N2O, a potent greenhouse gas, is often released in significant amounts when
+wetlands, especially peatlands, are drained. The drainage process alters the soil
+conditions, promoting conditions favorable for N2O production.</p>
+<p>This method calculates N2O emissions specifically for the drainage of wetland.</p>
+<p>The emission factor is obtained from a country-specific database of emission
+factors, ensuring the calculation is tailored to the regional characteristics
+of the land use change.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The calculated N2O emissions resulting from the drainage of organic soils.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">rewetting_co2_organic_soils</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd><p>REturn nothing for the time being as we are estimating the rewetting of grassland and not wetlands</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">rewetting_ch4_organic_soils_in_wetland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd><p>REturn nothing for the time being as we are estimating the rewetting of grassland and not wetlands</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">burning_co2_wetland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<dd><p>Calculates the carbon dioxide (CO2) emissions resulting from the burning of wetland
+vegetation and organic matter. This method focuses on CO2 emissions due to the
+combustion of wetland biomass, which can occur in various scenarios, such as
+land management practices or wildfires.</p>
+<p>The calculation incorporates two key emission factors: one for the burning of
+wetland fuels (biomass) and another that represents the emission factors
+(Gef) for CO2 emissions from wetland burning. These factors are sourced from
+a country-specific database, reflecting regional variations in wetland
+composition and burning practices.</p>
+<p>The total CO2 emissions are estimated by multiplying the total combined area
+of the wetland, the proportion of the wetland that is burnt, and the product
+of the two emission factors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated CO2 emissions (in tonnes) from the burning of wetlands.</dt><dd><p>The calculation is based on the combined wetland area, the share of
+wetlands burnt, and the specific emission factors for wetland fuel
+burning and general CO2 emissions.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_wetland_fuel_burning</cite> refers to the emission factor for the burning</p></li>
+</ul>
+<p>of wetland fuels.
+- <cite>ef_co2_wetland_Gef</cite> is the emission factor for CO2 emissions from
+wetland burning.
+- <cite>self.combined_area</cite> is the total area of wetlands being considered.
+- <cite>self.land_use_data.wetland.share_burnt</cite> indicates the proportion of the
+wetland area that undergoes burning.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">burning_ch4_wetland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id7" title="Link to this definition"></a></dt>
+<dd><p>Calculates the methane (CH4) emissions resulting from the burning of wetland
+vegetation and organic matter. This method assesses CH4 emissions, a potent
+greenhouse gas, released during the combustion of wetland biomass, which can
+occur due to natural fires, agricultural burning, or other human activities.</p>
+<p>The calculation involves two primary emission factors: one for the combustion
+of wetland fuels (biomass) and another representing the emission factor
+(Gef) for CH4 emissions specifically from wetland burning. These emission factors
+are sourced from a country-specific database to account for regional differences
+in wetland burning characteristics and fuel types.</p>
+<p>The total CH4 emissions are estimated by multiplying the combined wetland area,
+the proportion of wetland that is burnt, and the product of the two emission
+factors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated CH4 emissions (in tonnes) from the burning of wetlands.</dt><dd><p>This is determined by considering the combined wetland area, the share
+of wetlands burnt, and the specific emission factors for wetland fuel
+burning and general CH4 emissions.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_wetland_fuel_burning</cite> refers to the emission factor for the burning</p></li>
+</ul>
+<p>of wetland fuels in terms of CH4.
+- <cite>ef_ch4_wetland_Gef</cite> is the emission factor for CH4 emissions from
+wetland burning.
+- <cite>self.combined_area</cite> represents the total area of wetlands being analyzed.
+- <cite>self.land_use_data.wetland.share_burnt</cite> indicates the fraction of the
+wetland area that undergoes burning.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">burning_n2o_wetland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id8" title="Link to this definition"></a></dt>
+<dd><p>Calculates the nitrous oxide (N2O) emissions resulting from the burning of wetland
+vegetation and organic matter. Wetland burning can be a significant source of N2O,
+a potent greenhouse gas, especially when it involves the combustion of peat and
+other nitrogen-rich organic materials.</p>
+<p>This method incorporates two emission factors: one for the combustion of wetland
+fuels (biomass) and another for the emission factor (Gef) specific to N2O
+emissions from wetland burning. These emission factors are obtained from a
+country-specific database, which accounts for variations in wetland types and
+burning practices across different regions.</p>
+<p>The total N2O emissions are estimated by multiplying the combined area of the
+wetland, the proportion of the wetland that is burnt, and the product of the two
+emission factors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated N2O emissions (in tonnes) from the burning of wetlands.</dt><dd><p>The computation takes into account the combined wetland area, the
+proportion of wetlands burnt, and the respective emission factors for
+wetland fuel burning and general N2O emissions.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_wetland_fuel_burning</cite> refers to the emission factor for the burning</p></li>
+</ul>
+<p>of wetland fuels in terms of N2O.
+- <cite>ef_n2o_wetland_Gef</cite> is the emission factor for N2O emissions from
+wetland burning.
+- <cite>self.combined_area</cite> is the total area of wetlands being considered in the
+calculation.
+- <cite>self.land_use_data.wetland.share_burnt</cite> represents the percentage of the
+wetland area that undergoes burning.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="land_utils.Grassland">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">land_utils.</span></span><span class="sig-name descname"><span class="pre">Grassland</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrix_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_land_use</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Grassland" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#land_utils.LandUse" title="land_utils.LandUse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LandUse</span></code></a></p>
+<p>A class representing grassland land use.</p>
+<p>Attributes:
+- ef_country: The country-specific emission factors.
+- transition_matrix_data: The transition matrix data.
+- land_use_data: The land use data.
+- past_land_use_data: The past land use data.
+- past_land_use: The past land use.
+- current_land_use: The current land use.
+- current_area: The current area of grassland.
+- current_area_drained: The current area of drained grassland.</p>
+<p>Methods:
+- drainage_co2_organic_soils_in_grassland: Calculate CO2 emissions from drainage of organic soils in grassland.
+- drainage_ch4_organic_soils_in_grassland: Calculate CH4 emissions from drainage of organic soils in grassland.
+- drainage_n2O_organic_soils_in_grassland: Calculate N2O emissions from drainage of organic soils in grassland.
+- rewetting_co2_organic_soils_in_grassland: Calculate CO2 emissions from rewetting of organic soils in grassland.
+- rewetting_ch4_organic_soils_in_grassland: Calculate CH4 emissions from rewetting of organic soils in grassland.
+- burning_co2_grassland: Calculate CO2 emissions from burning of grassland.
+- burning_ch4_grassland: Calculate CH4 emissions from burning of grassland.
+- burning_n2o_grassland: Calculate N2O emissions from burning of grassland.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Grassland.drainage_co2_organic_soils_in_grassland">
+<span class="sig-name descname"><span class="pre">drainage_co2_organic_soils_in_grassland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Grassland.drainage_co2_organic_soils_in_grassland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the carbon dioxide (CO2) emissions resulting from the drainage of organic
+soils in grassland areas. Draining organic soils can lead to significant CO2 emissions.
+This process exposes previously waterlogged organic matter to oxygen, accelerating its
+decomposition and releasing stored carbon into the atmosphere.</p>
+<p>This method focuses specifically on CO2 emissions from on-site sources in grasslands
+where organic soils have been drained. The emission factor used for this calculation
+is tailored to the specific conditions of drained grasslands, reflecting the typical
+rate of CO2 emissions per unit area for such land use change.</p>
+<p>The emission factor is obtained from a country-specific database of emission factors,
+ensuring the calculation is representative of regional characteristics and land
+management practices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated CO2 emissions resulting from the drainage of organic soils</dt><dd><p>in grassland areas. The emissions are based on the current area of drained
+land and the specific emission factor for CO2 emissions from grassland drainage.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_co2_grassland_drainage_on_site</cite> refers to the emission factor for CO2</p></li>
+</ul>
+<p>emissions specific to the drainage of organic soils in grassland areas.
+- <cite>self.current_area_drained</cite> indicates the total area of organic soils in
+grasslands that have been drained, which is used in the emissions calculation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Grassland.drainage_ch4_organic_soils_in_grassland">
+<span class="sig-name descname"><span class="pre">drainage_ch4_organic_soils_in_grassland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Grassland.drainage_ch4_organic_soils_in_grassland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the methane (CH4) emissions resulting from the drainage of organic soils
+in grassland areas. The drainage of organic soils can significantly
+increase CH4 emissions due to the exposure of previously waterlogged organic matter
+to conditions that promote methane production.</p>
+<p>This method estimates CH4 emissions for two types of drainage in grasslands: direct
+land drainage and drainage through ditches. Each type of drainage has its own emission
+factor, reflecting the different conditions and methane production rates associated
+with these drainage methods.</p>
+<p>Emission factors are sourced from a country-specific database, ensuring that the
+emissions estimation is relevant to the regional characteristics of grassland drainage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The calculated CH4 emissions from organic soils in grassland areas.
+The emissions are based on the current area of drained land and a combination
+of the emission factors for land drainage and ditch drainage.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_ch4_grassland_drainage_land</cite> refers to the emission factor for CH4</p></li>
+</ul>
+<p>emissions from direct land drainage in grasslands.
+- <cite>ef_ch4_grassland_drainage_ditch</cite> refers to the emission factor for CH4
+emissions from drainage through ditches in grasslands.
+- <cite>frac_ditch</cite> is the fraction of the drained area in grasslands that is
+drained through ditches, used to weight the emission factors appropriately.
+- <cite>self.current_area_drained</cite> indicates the total area of organic soils in
+grasslands that have been drained.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Grassland.drainage_n2O_organic_soils_in_grassland">
+<span class="sig-name descname"><span class="pre">drainage_n2O_organic_soils_in_grassland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Grassland.drainage_n2O_organic_soils_in_grassland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the nitrous oxide (N2O) emissions resulting from the drainage of organic
+soils in grassland areas. Drainage of organic soils in grasslands can lead to increased N2O emissions.
+This is due to the changes in soil conditions that promote nitrification and denitrification processes,
+which are major sources of N2O emissions.</p>
+<p>This method estimates N2O emissions by applying an emission factor specific to
+grassland drainage.</p>
+<p>The emission factor is obtained from a country-specific database of emission factors,
+ensuring the calculation takes into account regional variations in soil types,
+grassland management practices, and climatic conditions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The calculated N2O emissionsresulting from the drainage of organic soils in grassland areas.
+The emissions are based on the current area of drained land and the specific emission factor for
+N2O emissions from grassland drainage.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_n2o_grassland_drainage</cite> refers to the emission factor for N2O emissions</p></li>
+</ul>
+<p>from the drainage of organic soils in grassland areas.
+- <cite>self.current_area_drained</cite> is the total area of organic soils in grasslands
+that have been drained, which is used in the calculation for estimating the
+total N2O emissions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Grassland.rewetting_co2_organic_soils_in_grassland">
+<span class="sig-name descname"><span class="pre">rewetting_co2_organic_soils_in_grassland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Grassland.rewetting_co2_organic_soils_in_grassland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the carbon dioxide (CO2) emissions reductions resulting from the rewetting
+of drained organic soils in grassland areas. Rewetting previously drained organic
+soils can significantly reduce CO2 emissions by restoring waterlogged conditions,
+which slow down the decomposition of organic matter and carbon release.</p>
+<p>This method considers two key emission reduction factors: the reduction of direct
+on-site CO2 emissions due to rewetting and the reduction of CO2 emissions related
+to dissolved organic carbon (DOC). The latter factor accounts for the decrease in
+carbon released into water bodies as a result of rewetting.</p>
+<p>The emission reduction factors are sourced from a country-specific database, ensuring
+that the calculation is tailored to the regional characteristics of grassland
+management and soil types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The calculated CO2 emissions reductions resulting from the rewetting of
+organic soils in grassland areas. The reductions are based on the total area
+undergoing transition from drained to rewetted conditions and the sum of the two emission reduction
+factors for on-site emissions and DOC-related emissions.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_co2_grassland_rewetting_on_site</cite> refers to the emission reduction factor</p></li>
+</ul>
+<p>for direct on-site CO2 emissions due to grassland rewetting.
+- <cite>ef_co2_grassland_rewetting_DOC</cite> refers to the emission reduction factor for
+CO2 emissions related to dissolved organic carbon due to grassland rewetting.
+- <cite>self.total_transition_area</cite> is the total area of grasslands undergoing
+transition from drained to rewetted conditions, used in the calculation for
+estimating total CO2 emissions reductions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Grassland.rewetting_ch4_organic_soils_in_grassland">
+<span class="sig-name descname"><span class="pre">rewetting_ch4_organic_soils_in_grassland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Grassland.rewetting_ch4_organic_soils_in_grassland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the methane (CH4) emissions resulting from the rewetting of drained
+organic soils in grassland areas. Rewetting such soils, particularly in areas
+previously used as peatlands or other wetlands, can lead to an increase in CH4
+emissions. This is due to the creation of anaerobic conditions favorable for
+methanogenesis (methane production) in waterlogged soils.</p>
+<p>This method utilizes an emission factor that specifically quantifies the rate
+of CH4 emissions per unit area resulting from the rewetting of organic soils in
+grassland environments. The emission factor is sourced from a country-specific
+database, accounting for variations in soil types, previous land use practices,
+and climatic conditions.</p>
+<p>The total CH4 emissions are estimated based on the total area of grasslands
+undergoing transition from drained to rewetted conditions and the emission
+factor for grassland rewetting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The calculated CH4 emissions resulting from the rewetting of organic
+soils in grassland areas.
+The emissions are based on the total transition area and the specific
+emission factor for CH4 emissions from grassland rewetting.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_ch4_grassland_rewetting</cite> refers to the emission factor for CH4 emissions</p></li>
+</ul>
+<p>from the rewetting of organic soils in grassland areas.
+- <cite>self.total_transition_area</cite> is the total area of grasslands undergoing
+transition from drained to rewetted conditions, used in the emissions
+calculation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Grassland.burning_co2_grassland">
+<span class="sig-name descname"><span class="pre">burning_co2_grassland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Grassland.burning_co2_grassland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the carbon dioxide (CO2) emissions resulting from the burning of grasslands.
+This method assesses CO2 emissions from two types of soil in grasslands: mineral soils
+and drained organic soils. The emission calculation is based on the formula
+𝐿𝑓𝑖𝑟𝑒 = 𝐴 ∙ 𝑀𝐵 ∙ 𝐶𝑓 ∙ 𝐺𝑒𝑓 ∙ 10^−3, where A is the area, MB is the biomass,
+Cf is the combustion factor, and Gef is the emission factor.</p>
+<p>The combustion factor (Cf) is assumed to be 1.0, indicating that all available fuel
+(biomass) is burned. The method involves multiplying the area of grassland burned by
+the emission factors for CO2 emissions from both mineral and drained organic soils.</p>
+<p>Emission factors are sourced from a country-specific database, reflecting regional
+variations in grassland composition and burning characteristics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated CO2 emissions (in tonnes) from the burning of grasslands,</dt><dd><p>including both mineral soils and drained organic soils. The calculation
+considers the area of each soil type that is burned and their respective
+emission factors.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_wildfire_GEF_co2_mineral</cite> and <cite>ef_wildfire_GEF_co2_drained</cite> are the emission factors for CO2 emissions</p></li>
+</ul>
+<p>from the burning of mineral soils and drained organic soils in grasslands, respectively.</p>
+<ul class="simple">
+<li><p>The area calculations for each soil type are based on the proportion of grassland</p></li>
+</ul>
+<p>area that is burnt and the share of each soil type in the grassland area.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Grassland.burning_ch4_grassland">
+<span class="sig-name descname"><span class="pre">burning_ch4_grassland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Grassland.burning_ch4_grassland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the methane (CH4) emissions resulting from the burning of grasslands.
+This method evaluates CH4 emissions from two types of soil in grasslands: mineral
+soils and drained organic soils. The calculation formula used is
+𝐿𝑓𝑖𝑟𝑒 = 𝐴 ∙ 𝑀𝐵 ∙ 𝐶𝑓 ∙ 𝐺𝑒𝑓 ∙ 10^−3, where A represents the area, MB is the biomass,
+Cf is the combustion factor, and Gef is the emission factor.</p>
+<p>The combustion factor (Cf) is assumed to be 1.0, signifying that all available
+fuel (biomass) is burned. The method involves multiplying the area of grassland
+burned by the emission factors for CH4 emissions from both mineral and drained
+organic soils.</p>
+<p>Emission factors are obtained from a country-specific database, which takes into
+account regional differences in grassland composition and burning characteristics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated CH4 emissions (in tonnes) from the burning of grasslands,</dt><dd><p>comprising both mineral soils and drained organic soils. The calculation
+involves considering the area of each soil type that is burned and their
+respective emission factors.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_wildfire_GEF_ch4_mineral</cite> and <cite>ef_wildfire_GEF_ch4_drained</cite> are the emission</p></li>
+</ul>
+<p>factors for CH4 emissions from the burning of mineral soils and drained organic soils
+in grasslands, respectively.
+- The area calculations for each soil type are derived from the proportion of
+grassland area that is burnt and the share of each soil type within the
+grassland area.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Grassland.burning_n2o_grassland">
+<span class="sig-name descname"><span class="pre">burning_n2o_grassland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Grassland.burning_n2o_grassland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the nitrous oxide (N2O) emissions resulting from the burning of grasslands.
+This method assesses N2O emissions from two types of soil in grasslands: mineral soils
+and drained organic soils. The combustion factor (Cf) is assumed to be 1.0, signifying
+that all available fuel (biomass) is burned.</p>
+<p>Emission factors for N2O emissions are applied to both mineral and drained organic soils
+in grasslands. These factors are obtained from a country-specific database, reflecting
+regional variations in grassland composition and burning characteristics.</p>
+<p>The method involves calculating the N2O emissions by multiplying the area of grassland
+burned by the emission factors for N2O emissions from both soil types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated N2O emissions (in tonnes) from the burning of grasslands,</dt><dd><p>including both mineral soils and drained organic soils. The calculation
+involves considering the area of each soil type that is burned and their
+respective emission factors.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_wildfire_GEF_n2o_grassland_mineral</cite> and <cite>ef_wildfire_GEF_n2o_grassland_drained</cite> are the emission factors</p></li>
+</ul>
+<p>for N2O emissions from the burning of mineral soils and
+drained organic soils in grasslands, respectively.
+- The area calculations for each soil type are based on the proportion of grassland
+area that is burnt and the share of each soil type within the grassland area.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="land_utils.Cropland">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">land_utils.</span></span><span class="sig-name descname"><span class="pre">Cropland</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrix_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_land_use</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Cropland" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#land_utils.LandUse" title="land_utils.LandUse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LandUse</span></code></a></p>
+<p>Represents a cropland land use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ef_country</strong> (<em>str</em>) – The country for which the emissions factors are calculated.</p></li>
+<li><p><strong>transition_matrix_data</strong> (<em>dict</em>) – The transition matrix data.</p></li>
+<li><p><strong>land_use_data</strong> (<em>dict</em>) – The land use data.</p></li>
+<li><p><strong>past_land_use_data</strong> (<em>dict</em>) – The past land use data.</p></li>
+<li><p><strong>past_land_use</strong> (<em>str</em><em>, </em><em>optional</em>) – The past land use. Defaults to None.</p></li>
+<li><p><strong>current_land_use</strong> (<em>str</em><em>, </em><em>optional</em>) – The current land use. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="land_utils.Cropland.current_land_use">
+<span class="sig-name descname"><span class="pre">current_land_use</span></span><a class="headerlink" href="#land_utils.Cropland.current_land_use" title="Link to this definition"></a></dt>
+<dd><p>The current land use, set to “cropland”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="land_utils.Cropland.current_area">
+<span class="sig-name descname"><span class="pre">current_area</span></span><a class="headerlink" href="#land_utils.Cropland.current_area" title="Link to this definition"></a></dt>
+<dd><p>The current area of cropland in hectares.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="land_utils.Cropland.current_area_drained">
+<span class="sig-name descname"><span class="pre">current_area_drained</span></span><a class="headerlink" href="#land_utils.Cropland.current_area_drained" title="Link to this definition"></a></dt>
+<dd><p>The current area of drained cropland in hectares.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Cropland.burning_ch4_cropland">
+<span class="sig-name descname"><span class="pre">burning_ch4_cropland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Cropland.burning_ch4_cropland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the CH4 emissions from burning cropland.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Cropland.burning_n2o_cropland">
+<span class="sig-name descname"><span class="pre">burning_n2o_cropland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Cropland.burning_n2o_cropland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the N2O emissions from burning cropland.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">burning_ch4_cropland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id9" title="Link to this definition"></a></dt>
+<dd><p>Calculates the methane (CH4) emissions resulting from the burning of cropland.
+This method assesses CH4 emissions specifically from cropland areas where
+crop residues and other biomass are burnt, a practice that can significantly
+contribute to CH4 emissions.</p>
+<p>The calculation involves two emission factors: one for the fuel burning in
+croplands (biomass combustion) and another emission factor (Gef) for
+CH4 emissions from cropland burning. These factors are sourced from a
+country-specific database, reflecting regional variations in agricultural
+practices and crop types.</p>
+<p>The total CH4 emissions are estimated by multiplying the current area of
+cropland that is burnt, the emission factors for fuel burning, and the
+general emission factor for CH4. The result is converted into tonnes for
+easier reporting and comparison.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated CH4 emissions (in tonnes) from the burning of</dt><dd><p>cropland. The calculation considers the area of cropland burnt,
+the specific emission factor for fuel burning in croplands, and
+the general emission factor for CH4 emissions.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_cropland_fuel_burning</cite> refers to the emission factor for the burning</p></li>
+</ul>
+<p>of cropland fuels in terms of CH4.
+- <cite>ef_ch4_cropland_Gef</cite> is the general emission factor for CH4 emissions
+from cropland burning.
+- <cite>self.current_area</cite> represents the current area of cropland being analyzed.
+- <cite>self.land_use_data.cropland.share_burnt</cite> indicates the percentage of the
+cropland area that undergoes burning.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">burning_n2o_cropland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id10" title="Link to this definition"></a></dt>
+<dd><p>Calculates the nitrous oxide (N2O) emissions resulting from the burning of cropland.
+This method assesses N2O emissions specifically from cropland areas where crop
+residues and other biomass are burnt, a practice that can significantly contribute
+to N2O emissions.</p>
+<p>The calculation involves two emission factors: one for the fuel burning in croplands
+(biomass combustion) and another emission factor (Gef) for N2O emissions
+from cropland burning. These factors are sourced from a country-specific database,
+reflecting regional variations in agricultural practices and crop types.</p>
+<p>The total N2O emissions are estimated by multiplying the current area of cropland
+that is burnt, the emission factors for fuel burning, and the emission factor
+for N2O.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated N2O emissions (in tonnes) from the burning of cropland.</dt><dd><p>The calculation considers the area of cropland burnt, the specific
+emission factor for fuel burning in croplands, and the general emission
+factor for N2O emissions.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_cropland_fuel_burning</cite> refers to the emission factor for the burning</p></li>
+</ul>
+<p>of cropland fuels in terms of N2O.
+- <cite>ef_n2o_cropland_Gef</cite> is the emission factor for N2O emissions
+from cropland burning.
+- <cite>self.current_area</cite> represents the current area of cropland being analyzed.
+- <cite>self.land_use_data.cropland.share_burnt</cite> indicates the percentage of the
+cropland area that undergoes burning.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="land_utils.Forest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">land_utils.</span></span><span class="sig-name descname"><span class="pre">Forest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrix_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_land_use</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Forest" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#land_utils.LandUse" title="land_utils.LandUse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LandUse</span></code></a></p>
+<p>The Forest class is specifically tailored to handle calculations and assessments
+related to forest land use. It includes methods to estimate greenhouse gas emissions
+from various activities and conditions in forest ecosystems, such as drainage and burning.</p>
+<p>In addition to inheriting the functionalities of the LandUse class, the Forest
+class introduces specific attributes and methods to deal with forest-related
+data and emissions factors.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="land_utils.Forest.poor_drained_forest_area_exclude_over_50">
+<span class="sig-name descname"><span class="pre">poor_drained_forest_area_exclude_over_50</span></span><a class="headerlink" href="#land_utils.Forest.poor_drained_forest_area_exclude_over_50" title="Link to this definition"></a></dt>
+<dd><p>The area of poorly drained forests
+excluding those over 50 years old,
+based on specific criteria.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="land_utils.Forest.rich_drained_forest_area_exclude_over_50">
+<span class="sig-name descname"><span class="pre">rich_drained_forest_area_exclude_over_50</span></span><a class="headerlink" href="#land_utils.Forest.rich_drained_forest_area_exclude_over_50" title="Link to this definition"></a></dt>
+<dd><p>The area of richly drained forests
+excluding those over 50 years old,
+based on specific criteria.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="land_utils.Forest.forest_poor_drained_area">
+<span class="sig-name descname"><span class="pre">forest_poor_drained_area</span></span><a class="headerlink" href="#land_utils.Forest.forest_poor_drained_area" title="Link to this definition"></a></dt>
+<dd><p>The total area of poorly drained forests.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="land_utils.Forest.forest_rich_drained_area">
+<span class="sig-name descname"><span class="pre">forest_rich_drained_area</span></span><a class="headerlink" href="#land_utils.Forest.forest_rich_drained_area" title="Link to this definition"></a></dt>
+<dd><p>The total area of richly drained forests.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Forest.get_valid_area">
+<span class="sig-name descname"><span class="pre">get_valid_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Forest.get_valid_area" title="Link to this definition"></a></dt>
+<dd><p>Calculates the valid areas for poor and rich drained forests,
+excluding forests over 50 years old.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Forest.co2_drainage_organic_soils_forest">
+<span class="sig-name descname"><span class="pre">co2_drainage_organic_soils_forest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Forest.co2_drainage_organic_soils_forest" title="Link to this definition"></a></dt>
+<dd><p>Estimates CO2 emissions from the drainage
+of organic soils in forest areas.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Forest.ch4_drainage_organic_soils_forest">
+<span class="sig-name descname"><span class="pre">ch4_drainage_organic_soils_forest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Forest.ch4_drainage_organic_soils_forest" title="Link to this definition"></a></dt>
+<dd><p>Estimates CH4 emissions from the drainage
+of organic soils in forest areas.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Forest.n2o_drainage_organic_soils_forest">
+<span class="sig-name descname"><span class="pre">n2o_drainage_organic_soils_forest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Forest.n2o_drainage_organic_soils_forest" title="Link to this definition"></a></dt>
+<dd><p>Estimates N2O emissions from the drainage
+of organic soils in forest areas.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Forest.burning_co2_forest">
+<span class="sig-name descname"><span class="pre">burning_co2_forest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Forest.burning_co2_forest" title="Link to this definition"></a></dt>
+<dd><p>Calculates CO2 emissions from the burning of forest areas.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Forest.burning_ch4_forest">
+<span class="sig-name descname"><span class="pre">burning_ch4_forest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Forest.burning_ch4_forest" title="Link to this definition"></a></dt>
+<dd><p>Calculates CH4 emissions from the burning of forest areas.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="land_utils.Forest.burning_n2o_forest">
+<span class="sig-name descname"><span class="pre">burning_n2o_forest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#land_utils.Forest.burning_n2o_forest" title="Link to this definition"></a></dt>
+<dd><p>Calculates N2O emissions from the burning of forest areas.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">get_valid_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id11" title="Link to this definition"></a></dt>
+<dd><p>Calculates the valid areas for poorly drained and richly drained forests,
+excluding forest areas that are over 50 years old. This method is crucial
+for determining the specific areas within forests that are relevant for
+certain environmental impact calculations, such as emissions from drainage
+or rewetting.</p>
+<p>The method first determines the proportion of forest area that is over 50
+years old and then calculates the remaining area (valid area) that is
+younger than 50 years. This valid area is then further divided into poorly
+drained and richly drained forest areas based on specific land use data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl>
+<dt>A tuple containing two values:</dt><dd><ul class="simple">
+<li><p>The first value is the valid area of poorly drained forests</p></li>
+</ul>
+<p>(considering only forests younger than 50 years).
+- The second value is the valid area of richly drained forests
+(considering only forests younger than 50 years).</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The method uses ‘forest_age_data’ to determine the proportion of</p></li>
+</ul>
+<p>forest area over 50 years old.
+- ‘land_use_data.forest.share_organic’ and
+‘land_use_data.forest.share_organic_mineral’ are used to differentiate
+between poorly drained and richly drained forest areas.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">co2_drainage_organic_soils_forest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id12" title="Link to this definition"></a></dt>
+<dd><p>Estimates the carbon dioxide (CO2) emissions resulting from the drainage of organic
+soils in forest areas. This method considers both poorly and richly drained forest
+areas, excluding those over 50 years old, as it is assumed that areas older than
+50 years do not emit CO2 due to drainage.</p>
+<p>The calculation uses specific emission factors for both on-site and off-site drainage
+emissions. For richly drained forests, the emissions are adjusted based on the soil
+depth ratio to provide a more accurate estimation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The total CO2 emissions from the drainage of organic soils in forest areas.</dt><dd><p>This includes emissions from both poorly and richly drained forests,
+excluding those over 50 years old.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_co2_forest_drainage_off_site</cite> and <cite>ef_co2_forest_drainage_on_site</cite> are</p></li>
+</ul>
+<p>the emission factors for off-site and on-site CO2 emissions, respectively,
+from forest drainage.
+- <cite>soil_depth</cite> represents the depth of the organic mineral soil, used to
+adjust the emission calculations for richly drained forests.
+- <cite>self.poor_drained_forest_area_exclude_over_50</cite> and
+<cite>self.rich_drained_forest_area_exclude_over_50</cite> represent the valid areas
+of poorly and richly drained forests that are younger than 50 years.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id13">
+<span class="sig-name descname"><span class="pre">ch4_drainage_organic_soils_forest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id13" title="Link to this definition"></a></dt>
+<dd><p>Calculates methane (CH4) emissions resulting from the drainage of organic soils in
+forest areas. This method considers two types of drainage situations in forests:
+drainage on land and drainage through ditches, each with different emission factors.</p>
+<p>The method applies distinct emission factors for poorly and richly drained forests,
+taking into account the fraction of each forest type drained through ditches.
+This provides a more accurate estimation of CH4 emissions by considering the
+specific drainage practices employed in different forest areas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The total CH4 emissions from the drainage of organic soils in forest areas.</dt><dd><p>This includes emissions from both poorly and richly drained forests,
+taking into account the respective proportions of drainage through ditches.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_ch4_forest_drainage_land</cite> refers to the emission factor for CH4 emissions</p></li>
+</ul>
+<p>from forest drainage on land.
+- <cite>ef_ch4_forest_drainage_ditch</cite> refers to the emission factor for CH4 emissions
+from forest drainage through ditches.
+- <cite>frac_ditch_poor</cite> and <cite>frac_ditch_rich</cite> represent the fractions of poorly and
+richly drained forest areas, respectively, that are drained through ditches.
+- <cite>self.forest_poor_drained_area</cite> and <cite>self.forest_rich_drained_area</cite> are the
+total areas of poorly and richly drained forests, respectively.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id14">
+<span class="sig-name descname"><span class="pre">n2o_drainage_organic_soils_forest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id14" title="Link to this definition"></a></dt>
+<dd><p>Calculates nitrous oxide (N2O) emissions resulting from the drainage of organic
+soils in forest areas. This method separately considers the emissions from poorly
+and richly drained forests, each with their specific emission factors.</p>
+<p>The calculation involves applying distinct emission factors for N2O emissions for
+both poorly and richly drained forests. This approach ensures a more accurate
+estimation of N2O emissions by considering the specific drainage characteristics
+and soil conditions of different forest types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The total N2O emissions from the drainage of organic soils in forest areas.</dt><dd><p>This includes emissions from both poorly and richly drained forests,
+calculated using the respective emission factors for each forest type.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_n2o_forest_drainage_rich</cite> refers to the emission factor for N2O emissions</p></li>
+</ul>
+<p>from the drainage of organic soils in richly drained forests.
+- <cite>ef_n2o_forest_drainage_poor</cite> refers to the emission factor for N2O emissions
+from the drainage of organic soils in poorly drained forests.
+- <cite>self.forest_rich_drained_area</cite> and <cite>self.forest_poor_drained_area</cite> represent
+the total areas of richly and poorly drained forests, respectively.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id15">
+<span class="sig-name descname"><span class="pre">burning_co2_forest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id15" title="Link to this definition"></a></dt>
+<dd><p>Calculates carbon dioxide (CO2) emissions resulting from the burning of forests.
+This method assesses CO2 emissions specifically from forest areas where vegetation
+and other biomass are burnt, a practice that can significantly contribute to CO2 emissions.</p>
+<p>The calculation involves multiple factors: an emission factor for the fuel burning in
+forests, a emission factor (Gef) for CO2 emissions from forest burning, and a
+combustion factor (Cf) that represents the efficiency of biomass combustion.</p>
+<p>The total CO2 emissions are estimated by multiplying the area of forest burnt, the
+emission factor for fuel burning, the combustion factor, and the emission factor
+for CO2. The result is then converted into tonnes for easier reporting and comparison.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated CO2 emissions (in tonnes) from the burning of forest areas.</dt><dd><p>The calculation considers the area of forest burnt, the specific emission
+factor for fuel burning in forests, the combustion factor, and the
+emission factor for CO2 emissions.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_forest_fuel_burning</cite> refers to the emission factor for the burning of</p></li>
+</ul>
+<p>forest fuels in terms of CO2.
+- <cite>ef_co2_forest_Gef</cite> is the emission factor for CO2 emissions from
+forest burning.
+- <cite>combustion_factor</cite> (ef_forest_Cf) indicates the efficiency of biomass
+combustion in the forest.
+- <cite>self.land_use_data.forest.area_ha</cite> represents the total area of forests
+being analyzed.
+- <cite>self.land_use_data.forest.share_burnt</cite> indicates the percentage of the
+forest area that undergoes burning.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id16">
+<span class="sig-name descname"><span class="pre">burning_ch4_forest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id16" title="Link to this definition"></a></dt>
+<dd><p>Calculates methane (CH4) emissions resulting from the burning of forests. This method
+assesses CH4 emissions specifically from forest areas where vegetation and other
+biomass are burnt, which can be a significant source of methane, a potent greenhouse gas.</p>
+<p>The calculation involves several factors: an emission factor for the fuel burning in
+forests, a emission factor (Gef) for CH4 emissions from forest burning, and a
+combustion factor (Cf) that represents the efficiency of biomass combustion.</p>
+<p>The total CH4 emissions are estimated by multiplying the area of forest burnt, the
+emission factor for fuel burning, the combustion factor, and the emission factor
+for CH4. The result is then converted into tonnes for easier reporting and comparison.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated CH4 emissions (in tonnes) from the burning of forest areas.</dt><dd><p>The calculation considers the area of forest burnt, the specific emission
+factor for fuel burning in forests, the combustion factor, and the
+emission factor for CH4 emissions.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_forest_fuel_burning</cite> refers to the emission factor for the burning of</p></li>
+</ul>
+<p>forest fuels in terms of CH4.
+- <cite>ef_ch4_forest_Gef</cite> is the emission factor for CH4 emissions from
+forest burning.
+- <cite>combustion_factor</cite> (ef_forest_Cf) indicates the efficiency of biomass
+combustion in the forest.
+- <cite>self.land_use_data.forest.area_ha</cite> represents the total area of forests
+being analyzed.
+- <cite>self.land_use_data.forest.share_burnt</cite> indicates the percentage of the
+forest area that undergoes burning.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id17">
+<span class="sig-name descname"><span class="pre">burning_n2o_forest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id17" title="Link to this definition"></a></dt>
+<dd><p>Calculates nitrous oxide (N2O) emissions resulting from the burning of forests.
+This method assesses N2O emissions specifically from forest areas where vegetation
+and other biomass are burnt. N2O is a potent greenhouse gas, and its emissions
+can be significant in forest burning events.</p>
+<p>The calculation involves several factors: an emission factor for the fuel burning
+in forests, a emission factor (Gef) for N2O emissions from forest burning,
+and a combustion factor (Cf) that represents the efficiency of biomass combustion.</p>
+<p>The total N2O emissions are estimated by multiplying the area of forest burnt, the
+emission factor for fuel burning, the combustion factor, and the emission
+factor for N2O. The result is then converted into tonnes for easier reporting and
+comparison.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated N2O emissions (in tonnes) from the burning of forest areas.</dt><dd><p>The calculation considers the area of forest burnt, the specific emission
+factor for fuel burning in forests, the combustion factor, and the
+emission factor for N2O emissions.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_forest_fuel_burning</cite> refers to the emission factor for the burning of</p></li>
+</ul>
+<p>forest fuels in terms of N2O.
+- <cite>ef_n2o_forest_Gef</cite> is the emission factor for N2O emissions from
+forest burning.
+- <cite>combustion_factor</cite> (ef_forest_Cf) indicates the efficiency of biomass
+combustion in the forest.
+- <cite>self.land_use_data.forest.area_ha</cite> represents the total area of forests
+being analyzed.
+- <cite>self.land_use_data.forest.share_burnt</cite> indicates the percentage of the
+forest area that undergoes burning.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../data_loader/index.html" class="btn btn-neutral float-left" title="data_loader" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../database_manager/index.html" class="btn btn-neutral float-right" title="database_manager" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Colm Duffy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -20,7 +20,7 @@ def main():
 
     baseline_index = -1
     base = -baseline
-
+    print(type(transition_matrix[base]))
     emission_df = pd.DataFrame(
         columns=["CO2", "CH4", "N2O", "CO2e"],
         index=pd.MultiIndex.from_product(
