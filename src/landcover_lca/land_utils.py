@@ -167,7 +167,7 @@ class SOC:
                 if year < 20:
                     soc += (
                         annual_area
-                        * (EF_SOC_current_land_use - EF_SOC_previous_land_use)
+                        * (EF_SOC_previous_land_use - EF_SOC_current_land_use)
                     ) / transition_period
                 else:
                     return soc
