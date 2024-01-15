@@ -688,8 +688,6 @@ def mineral_soils_n2o_from_forest_to_grassland(
         "grassland",
     )
 
-    print("soc", soc.compute_emissions_from_mineral_soils_in_land_use_change())
-
     emissions_from_mineralization = (
         soc.compute_emissions_from_mineral_soils_in_land_use_change() * C_to_N
     )
