@@ -26,6 +26,12 @@ class DataManager:
             target_year (int, optional): The target year for which the model data is relevant. This could be a future or past year depending on the model's context.
             organic_mineral_soil_depth (int): Represents the depth of organic mineral soil, set to a default value of 28 (units not specified in the class definition but could be in centimeters or inches depending on the model's context).
 
+        Methods:
+            get_calibration_year: Returns the calibration year.
+            get_default_calibration_year: Returns the default calibration year.
+            get_target_year: Returns the target year.
+            get_organic_mineral_soil_depth: Returns the depth of organic mineral soil.
+
         Usage:
             This class can be used in scenarios where calibration and target years are important for modeling processes, especially in environmental or agricultural models. It also stores a standard value for organic mineral soil depth, which might be a parameter in soil-related calculations.
 
@@ -36,6 +42,42 @@ class DataManager:
         self.target_year = target_year
         self.organic_mineral_soil_depth = 28
 
+    def get_calibration_year(self):
+        """
+        Returns the calibration year.
+
+        Returns:
+            int: The year used for calibration.
+        """
+        return self.calibration_year
+    
+    def get_default_calibration_year(self):
+        """
+        Returns the default calibration year.
+
+        Returns:
+            int: The default year used for calibration if no specific year is provided.
+        """
+        return self.default_calibration_year
+    
+    def get_target_year(self):
+        """
+        Returns the target year.
+
+        Returns:
+            int: The target year for the model data.
+        """
+        return self.target_year
+    
+    def get_organic_mineral_soil_depth(self):
+        """
+        Returns the depth of organic mineral soil.
+
+        Returns:
+            int: The depth of organic mineral soil.
+        """
+        return self.organic_mineral_soil_depth
+
 
 class ModelData:
     """
@@ -44,6 +86,9 @@ class ModelData:
     Attributes:
         land_use_columns (list of str): A list containing the names of columns that are important for land use data. These columns typically include identifiers and various attributes related to land use, such as area, shares of different land types, etc.
 
+    Methods:
+        get_land_use_columns: Returns the list of land use columns.
+        
     Usage:
         This class is particularly useful in scenarios involving data processing or analysis of land use, where a consistent set of columns is required to standardize data frames or databases for further analysis.
 
@@ -61,3 +106,12 @@ class ModelData:
             "share_rewetted_in_mineral",
             "share_peat_extraction",
         ]
+
+    def get_land_use_columns(self):
+        """
+        Returns the list of land use columns.
+
+        Returns:
+            list of str: A list containing the names of columns that are important for land use data.
+        """
+        return self.land_use_columns
