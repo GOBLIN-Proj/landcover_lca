@@ -1,7 +1,7 @@
-:py:mod:`database_manager`
-==========================
+:py:mod:`resource_manager.database_manager`
+===========================================
 
-.. py:module:: database_manager
+.. py:module:: resource_manager.database_manager
 
 .. autoapi-nested-parse::
 
@@ -23,7 +23,7 @@ Classes
 
 .. autoapisummary::
 
-   database_manager.DataManager
+   resource_manager.database_manager.DataManager
 
 
 

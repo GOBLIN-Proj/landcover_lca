@@ -23,7 +23,7 @@ from landcover_lca.land_utils import (
 )
 
 from landcover_lca.models import Emissions_Factors, Land_Use_Features
-from landcover_lca.data_loader import Loader
+from landcover_lca.resource_manager.data_loader import Loader
 
 
 # scalar vars
@@ -212,8 +212,8 @@ def mineral_soils_co2_from_cropland_to_forest(
         land_use,
         past_land_use_data,
         transition_matrix_data,
-        "cropland",
         "forest",
+        "cropland",
     )
 
     return soc.compute_emissions_from_mineral_soils_in_land_use_change()
@@ -241,8 +241,8 @@ def mineral_soils_co2_from_grassland_to_forest(
         land_use,
         past_land_use_data,
         transition_matrix_data,
-        "grassland",
         "forest",
+        "grassland",
     )
 
     return soc.compute_emissions_from_mineral_soils_in_land_use_change()
@@ -621,8 +621,8 @@ def mineral_soils_co2_from_forest_to_grassland(
         land_use,
         past_land_use_data,
         transition_matrix_data,
-        "forest",
         "grassland",
+        "forest",
     )
     return soc.compute_emissions_from_mineral_soils_in_land_use_change()
 
@@ -652,8 +652,8 @@ def mineral_soils_co2_from_cropland_to_grassland(
         land_use,
         past_land_use_data,
         transition_matrix_data,
-        "cropland",
         "grassland",
+        "cropland",
     )
 
     return soc.compute_emissions_from_mineral_soils_in_land_use_change()
@@ -684,8 +684,8 @@ def mineral_soils_n2o_from_forest_to_grassland(
         land_use,
         past_land_use_data,
         transition_matrix_data,
-        "forest",
         "grassland",
+        "forest",
     )
 
     emissions_from_mineralization = (
@@ -1303,8 +1303,8 @@ def mineral_soils_co2_from_forest_to_cropland(
         land_use_data,
         past_land_use_data,
         transition_matrix,
-        "forest",
         "cropland",
+        "forest",
     )
 
     return soc.compute_emissions_from_mineral_soils_in_land_use_change()
@@ -1335,8 +1335,8 @@ def mineral_soils_co2_from_grassland_to_cropland(
         land_use_data,
         past_land_use_data,
         transition_matrix,
-        "grassland",
         "cropland",
+        "grassland",
     )
 
     return soc.compute_emissions_from_mineral_soils_in_land_use_change()

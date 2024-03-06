@@ -11,7 +11,7 @@ Note:
     This class is part of a larger suite of tools developed for environmental life cycle assessment and modeling, and it relies on the DataManager class from the landcover_lca.database_manager module for data management.
 """
 
-from landcover_lca.database_manager import DataManager
+from landcover_lca.resource_manager.database_manager import DataManager
 
 
 class Loader:

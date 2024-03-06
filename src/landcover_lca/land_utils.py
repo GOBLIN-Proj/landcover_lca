@@ -10,9 +10,9 @@ Note:
 
 
 import numpy as np
-from landcover_lca.data_loader import Loader
+from landcover_lca.resource_manager.data_loader import Loader
 from landcover_lca.models import Emissions_Factors, Land_Use_Features
-from landcover_lca.landcover_data_manager import DataManager
+from landcover_lca.resource_manager.landcover_data_manager import DataManager
 
 
 class SOC:
@@ -158,6 +158,7 @@ class SOC:
         )
 
         annual_area = self.compute_land_use_change_total_area()
+
 
         transition_period = 20
 
@@ -1524,7 +1525,7 @@ class Forest(LandUse):
             of poorly and richly drained forests that are younger than 50 years.
         """
 
-        soil_depth = self.data_manager_class.organic_mineral_soil_depth
+        soil_depth = self.data_manager_class.get_organic_mineral_soil_depth()
 
         SD_eq = soil_depth / 30
 

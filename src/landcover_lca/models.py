@@ -12,8 +12,8 @@ Note:
 """
 
 import pandas as pd
-from landcover_lca.data_loader import Loader
-from landcover_lca.landcover_data_manager import ModelData
+from landcover_lca.resource_manager.data_loader import Loader
+from landcover_lca.resource_manager.landcover_data_manager import ModelData
 
 
 ###########################################
@@ -387,7 +387,7 @@ def load_land_use_data(land_use_data_frame, calibration_year):
     """
     data_manager_class = ModelData()
 
-    cols = data_manager_class.land_use_columns
+    cols = data_manager_class.get_land_use_columns()
 
     for column in cols:
         land_use_data_frame[column] = pd.to_numeric(

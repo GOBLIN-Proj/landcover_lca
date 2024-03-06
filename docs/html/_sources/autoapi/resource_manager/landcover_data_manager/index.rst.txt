@@ -1,7 +1,7 @@
-:py:mod:`landcover_data_manager`
-================================
+:py:mod:`resource_manager.landcover_data_manager`
+=================================================
 
-.. py:module:: landcover_data_manager
+.. py:module:: resource_manager.landcover_data_manager
 
 .. autoapi-nested-parse::
 
@@ -28,13 +28,45 @@ Classes
 
 .. autoapisummary::
 
-   landcover_data_manager.DataManager
-   landcover_data_manager.ModelData
+   resource_manager.landcover_data_manager.DataManager
+   resource_manager.landcover_data_manager.ModelData
 
 
 
 
 .. py:class:: DataManager(calibration_year=None, target_year=None)
+
+
+   .. py:method:: get_calibration_year()
+
+      Returns the calibration year.
+
+      :returns: The year used for calibration.
+      :rtype: int
+
+
+   .. py:method:: get_default_calibration_year()
+
+      Returns the default calibration year.
+
+      :returns: The default year used for calibration if no specific year is provided.
+      :rtype: int
+
+
+   .. py:method:: get_target_year()
+
+      Returns the target year.
+
+      :returns: The target year for the model data.
+      :rtype: int
+
+
+   .. py:method:: get_organic_mineral_soil_depth()
+
+      Returns the depth of organic mineral soil.
+
+      :returns: The depth of organic mineral soil.
+      :rtype: int
 
 
 
@@ -49,8 +81,21 @@ Classes
 
       :type: list of str
 
+   .. method:: get_land_use_columns
+
+      Returns the list of land use columns.
+      
+
    Usage:
        This class is particularly useful in scenarios involving data processing or analysis of land use, where a consistent set of columns is required to standardize data frames or databases for further analysis.
+
+
+   .. py:method:: get_land_use_columns()
+
+      Returns the list of land use columns.
+
+      :returns: A list containing the names of columns that are important for land use data.
+      :rtype: list of str
 
 
 

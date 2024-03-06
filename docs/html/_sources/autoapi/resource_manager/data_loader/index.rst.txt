@@ -1,7 +1,7 @@
-:py:mod:`data_loader`
-=====================
+:py:mod:`resource_manager.data_loader`
+======================================
 
-.. py:module:: data_loader
+.. py:module:: resource_manager.data_loader
 
 .. autoapi-nested-parse::
 
@@ -25,7 +25,7 @@ Classes
 
 .. autoapisummary::
 
-   data_loader.Loader
+   resource_manager.data_loader.Loader
 
 
 
