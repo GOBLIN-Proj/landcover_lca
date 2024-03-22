@@ -1,7 +1,7 @@
 # 🏘️🌳🌲🌽🍀 Land cover LCA for the GOBLIN model (Ireland only)
 
-[![license](https://img.shields.io/badge/License-MIT-red)](https://github.com/colmduff/landcover_lca/blob/0.1.0/LICENSE)
-[![python](https://img.shields.io/badge/python-3.9-blue?logo=python&logoColor=white)](https://github.com/colmduff/landcover_lca)
+[![license](https://img.shields.io/badge/License-MIT-red)](https://github.com/GOBLIN-Proj/landcover_lca/blob/0.1.0/LICENSE)
+[![python](https://img.shields.io/badge/python-3.9-blue?logo=python&logoColor=white)](https://github.com/GOBLIN-Proj/landcover_lca)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
  Based on the [GOBLIN](https://gmd.copernicus.org/articles/15/2239/2022/) (**G**eneral **O**verview for a **B**ackcasting approach of **L**ivestock **IN**tensification) land use tool module
@@ -24,7 +24,7 @@ When prompted enter your ```<username>``` and password, which is your ```<access
 
 
 ```bash
-pip install "landcover_lca@git+https://github.com/colmduff/landcover_lca.git@main" 
+pip install "landcover_lca@git+https://github.com/GOBLIN-Proj/landcover_lca.git@main" 
 
 ```
 
