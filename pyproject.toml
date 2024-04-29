@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "landcover_lca"
-version = "0.1.1"
+version = "0.1.2"
 description = "A goblin tool for the estimation of emissions from various land cover types"
 authors = ["Colm Duffy"]
 license = "MIT"
