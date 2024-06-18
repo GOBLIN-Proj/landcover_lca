@@ -89,6 +89,7 @@ class Land_Use_Category(DynamicData):
         - share_rewetted_in_organic: 0
         - share_burnt: 0
         - share_rewetted_in_mineral: 0
+        - share_rewetted_in_mineral_organic: 0
         - share_peat_extraction: 0
 
     Usage:
@@ -114,6 +115,7 @@ class Land_Use_Category(DynamicData):
             "share_rewetted_in_organic": 0,
             "share_burnt": 0,
             "share_rewetted_in_mineral": 0,
+            "share_rewetted_in_mineral_organic":0,
             "share_peat_extraction": 0,
         }
 
@@ -297,7 +299,6 @@ class Emissions_Factors:
         self.data_loader_class = Loader(self.ef_country)
         self.emission_data_base = self.data_loader_class.landuse_emissions_factors()
 
-
     def get_emission_factor_in_emission_factor_data_base(self, emission_factor_name):
         return float(
             self.emission_data_base.get(emission_factor_name).get(self.ef_country)
@@ -388,7 +389,7 @@ def load_land_use_data(land_use_data_frame, calibration_year):
     """
     data_manager_class = ModelData()
 
-    cols = data_manager_class.get_land_use_columns()
+    cols = data_manager_class.get_geo_land_use_columns()
 
     for column in cols:
         land_use_data_frame[column] = pd.to_numeric(

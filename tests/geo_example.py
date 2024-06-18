@@ -1,18 +1,18 @@
-from landcover_lca.models import load_transition_matrix, load_land_use_data
-import landcover_lca.lca_emission as lca
+from landcover_lca.geo_goblin.geo_models import load_transition_matrix, load_land_use_data
+import landcover_lca.geo_goblin.geo_lca_emissions as lca
 import pandas as pd
 import os
 
 
 def main():
-    data_dir = "./data"
+    data_dir = "./geo_data"
 
     ef_country = "ireland"
     baseline = 2020
     target = 2050
 
     transition = pd.read_csv(os.path.join(data_dir, "transition_matrix.csv"), index_col=0)
-    land_uses = pd.read_csv(os.path.join(data_dir, "combined_future_land_use_area_results.csv"), index_col=0)
+    land_uses = pd.read_csv(os.path.join(data_dir, "land_uses.csv"), index_col=0)
 
     transition_matrix = load_transition_matrix(transition, ef_country, baseline, target)
 
@@ -140,9 +140,8 @@ def main():
         land_use_data[base],
         transition_matrix[base],
         ef_country,
-    ) + lca.horticulture_co2_peat_export(
-        ef_country, baseline, baseline
-    )
+    ) 
+    
     emission_df.loc[
         (
             baseline_index,
