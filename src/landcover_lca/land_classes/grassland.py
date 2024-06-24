@@ -97,6 +97,7 @@ class Grassland(LandUse):
 
         return self.current_area_mineral * ef_co2_mineral_soils
 
+
     def drainage_co2_organic_soils_in_grassland(self):
         """
         Calculates the carbon dioxide (CO2) onsite and offsite emissions resulting from the drainage of organic

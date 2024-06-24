@@ -1086,6 +1086,29 @@ def drainage_co2_organic_soils_in_wetland(
 
     return WETLAND.co2_emissions_wetland_drained()
 
+def unmanaged_wetland_ch4_emission(ef_country, transition_matrix, land_use_data, past_land_use_data):
+    """
+    Calculate the CH4 emissions from unmanaged wetland.
+
+    Parameters:
+        - ef_country (string): Emission factor country.
+        - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
+        - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
+        - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
+
+    Returns:
+        float: The CH4 emissions from unmanaged wetland.
+    """
+    WETLAND = Wetland(
+        ef_country,
+        transition_matrix,
+        land_use_data,
+        past_land_use_data,
+        "wetland",
+        "wetland",
+    )
+
+    return WETLAND.ch4_emissions_unmanaged_and_near_natural()
 
 def drainage_ch4_organic_soils_in_wetland(
     ef_country, transition_matrix, land_use_data, past_land_use_data
@@ -1281,6 +1304,8 @@ def total_ch4_emission_wetland(
     return drainage_ch4_organic_soils_in_wetland(
         ef_country, transition_matrix, land_use_data, past_land_use_data
     ) + burning_ch4_wetland(
+        ef_country, transition_matrix, land_use_data, past_land_use_data
+    ) + unmanaged_wetland_ch4_emission(
         ef_country, transition_matrix, land_use_data, past_land_use_data
     )
 

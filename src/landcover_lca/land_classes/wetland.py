@@ -17,13 +17,23 @@ class Wetland(LandUse):
     Methods:
         - co2_removals(): Calculate the amount of CO2 removals per year for a given area.
         - co2_emissions_wetland_drained(): Calculate the CO2 emissions from wetland drainage.
-        - drainage_ch4_organic_soils(): Calculate the methane emissions from organic soils due to drainage.
-        - drainage_n2o_organic_soils(): Calculate the nitrous oxide emissions from organic soils due to drainage.
+        - co2_emissions_industrial_drained_onsite(): Calculate the CO2 emissions from industrial wetland drainage onsite.
+        - co2_emissions_industrial_drained_offsite(): Calculate the CO2 emissions from industrial wetland drainage offsite.
+        - co2_emissions_domestic_drained_onsite(): Calculate the CO2 emissions from domestic wetland drainage onsite.
+        - co2_emissions_domestic_drained_offsite(): Calculate the CO2 emissions from domestic wetland drainage offsite.
+        - co2_emissions_unmanaged_and_near_natural_onsite(): Calculate the CO2 emissions from unmanaged and near-natural wetland drainage onsite.
+        - co2_emissions_unmanaged_and_near_natural_offsite(): Calculate the CO2 emissions from unmanaged and near-natural wetland drainage offsite.
+        - ch4_emissions_unmanaged_and_near_natural(): Calculate the CH4 emissions from unmanaged and near-natural wetland drainage.
+        - drainage_ch4_organic_soils(): Calculate the CH4 emissions from organic soils due to drainage.
+        - drainage_n2o_organic_soils(): Calculate the N2O emissions from organic soils due to drainage.
         - rewetting_co2_organic_soils(): Calculate the CO2 emissions from rewetting organic soils.
-        - rewetting_ch4_organic_soils_in_wetland(): Calculate the methane emissions from rewetting organic soils.
-        - burning_co2_wetland(): Calculate the CO2 emissions from burning wetland vegetation.
-        - burning_ch4_wetland(): Calculate the CH4 emissions from burning wetland vegetation.
-        - burning_n2o_wetland(): Calculate the N2O emissions from burning wetland vegetation.
+        - co2_emissions_default_rewetted_onsite(): Calculate the CO2 emissions from rewetting wetlands onsite.
+        - co2_emissions_default_rewetted_offsite(): Calculate the CO2 emissions from rewetting wetlands offsite.
+        - rewetting_ch4_organic_soils_in_wetland(): Calculate the CH4 emissions from rewetting organic soils in wetlands.
+        - burning_co2_wetland(): Calculate the CO2 emissions from burning wetlands.
+        - burning_ch4_wetland(): Calculate the CH4 emissions from burning wetlands.
+        - burning_n2o_wetland(): Calculate the N2O emissions from burning wetlands.
+        
 
     Args:
         - ef_country (str): The country for which the emissions factors are calculated.
@@ -228,7 +238,9 @@ class Wetland(LandUse):
             )
         )
 
-        return self.current_area_unmanaged * ef_co2_unmanaged_and_near_natural_onsite
+        total_area = self.current_area_unmanaged + self._current_area_near_natural
+
+        return total_area * ef_co2_unmanaged_and_near_natural_onsite
 
 
     def co2_emissions_unmanaged_and_near_natural_offsite(self):
@@ -245,8 +257,29 @@ class Wetland(LandUse):
             )
         )
 
-        return self.current_area_unmanaged * ef_co2_unmanaged_and_near_natural_offsite
+        total_area = self.current_area_unmanaged + self._current_area_near_natural
+        return total_area * ef_co2_unmanaged_and_near_natural_offsite
 
+    def ch4_emissions_unmanaged_and_near_natural(self):
+        """
+        Calculates the methane (CH4) emissions resulting from the drainage of unmanaged
+        and near-natural wetlands. Drainage of such wetlands can lead to the release of
+        methane, a potent greenhouse gas, due to the exposure of previously waterlogged
+        organic matter to aerobic conditions, promoting its decomposition.
+
+        Returns:
+            float: The calculated CH4 emissions in kg from unmanaged and near-natural wetland drainage.
+        """
+        ef_ch4_unmanaged_and_near_natural = (
+            self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
+                "ef_ch4_near_natural_wetland"
+            )
+        )
+
+        total_area = self.current_area_unmanaged + self._current_area_near_natural
+
+        return total_area * ef_ch4_unmanaged_and_near_natural
+    
 
     def drainage_ch4_organic_soils(self):
         """
