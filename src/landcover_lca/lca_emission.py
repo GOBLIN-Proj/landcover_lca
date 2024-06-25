@@ -14,14 +14,11 @@ Note:
 import numpy as np
 import pandas as pd
 
-from landcover_lca.land_utils import (
-    SOC,
-    Wetland,
-    Grassland,
-    Cropland,
-    Forest,
-)
-
+from landcover_lca.land_classes.soc import SOC
+from landcover_lca.land_classes.wetland import Wetland
+from landcover_lca.land_classes.grassland import Grassland
+from landcover_lca.land_classes.cropland import Cropland
+from landcover_lca.land_classes.forestland import Forest
 from landcover_lca.models import Emissions_Factors, Land_Use_Features
 from landcover_lca.resource_manager.data_loader import Loader
 
@@ -450,7 +447,7 @@ def total_n2o_emission_forest(
 
 
 # Organic soils
-# Drainagepy
+
 def drainage_co2_organic_soils_in_grassland(
     land_use, past_land_use_data, transition_matrix, ef_country
 ):
@@ -562,7 +559,7 @@ def rewetting_co2_organic_soils_in_grassland(
         land_use,
         past_land_use_data,
         "grassland",
-        "wetland",
+        "grassland",
     )
 
     return GRASSLAND.rewetting_co2_organic_soils_in_grassland()
@@ -590,13 +587,42 @@ def rewetting_ch4_organic_soils_in_grassland(
         land_use,
         past_land_use_data,
         "grassland",
-        "wetland",
+        "grassland",
     )
 
     return GRASSLAND.rewetting_ch4_organic_soils_in_grassland()
 
 
 # Mineral soils
+
+def mineral_soils_co2_grassland_remaining_grassland(
+    land_use, past_land_use_data, transition_matrix, ef_country):
+
+    """
+    Calculate the CO2 emissions from mineral soils in grassland that remains grassland.
+
+    Parameters:
+        - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
+        - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
+        - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
+        - ef_country (string): Emission factor country.
+
+
+    Returns:
+    - The calculated CO2 emissions from mineral soils in grassland that remains grassland.
+    """
+    GRASSLAND = Grassland(
+        ef_country,
+        transition_matrix,
+        land_use,
+        past_land_use_data,
+        "grassland",
+        "grassland",
+    )
+
+    return GRASSLAND.mineral_co2_in_grassland()
+
+
 def mineral_soils_co2_from_forest_to_grassland(
     land_use,
     past_land_use_data,
@@ -806,6 +832,11 @@ def total_co2_emission_to_grassland(
         past_land_use_data,
         transition_matrix,
         ef_country,
+    )+ mineral_soils_co2_grassland_remaining_grassland(
+        land_use,
+        past_land_use_data,
+        transition_matrix,
+        ef_country,
     )
 
 
@@ -945,15 +976,20 @@ def total_n2o_emission_grassland(
 
     return burning_n2o_grassland(
         ef_country, transition_matrix, land_use, past_land_use_data
-    ) + mineral_soils_n2o_from_forest_to_grassland(
+    )+ mineral_soils_n2o_from_forest_to_grassland(
         land_use,
         past_land_use_data,
         transition_matrix,
         ef_country,
     )
-    # + drainage_n2O_organic_soils_in_grassland(
-    # land_use, past_land_use_data, transition_matrix, ef_country
-    # )
+
+    #Assumed no additional soils being drained, not included in grassland remaining grassland
+    #drainage_n2O_organic_soils_in_grassland(
+    #land_use, past_land_use_data, transition_matrix, ef_country
+    #)
+
+
+
 
 
 ###############################################
@@ -992,16 +1028,16 @@ def horticulture_co2_peat_export(ef_country, year, calibration_year):
     else:
         export_weight = past_export_peat_df["Total_kg"].mean()
 
-    return (export_weight * ef_offsite_carbon_conversion_nutrient_poor) * (44 / 12)
+    return (export_weight * ef_offsite_carbon_conversion_nutrient_poor)
 
 
 # Organic soils
 # Biomass
-def biomass_co2_from_conversion_to_wetland(
+def biomass_co2_from_removals_wetland(
     land_use_data, past_land_use_data, transition_matrix, ef_country
 ):
     """
-    Calculate the CO2 removals from conversion to wetland.
+    Calculate the CO2 emissions from biomass removals in wetland.
 
     Parameters:
         - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
@@ -1009,9 +1045,8 @@ def biomass_co2_from_conversion_to_wetland(
         - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
         - ef_country (string): Emission factor country.
 
-
     Returns:
-        float: CO2 removals from conversion to wetland.
+    - The CO2 emissions from biomass removals in wetland.
     """
 
     WETLAND = Wetland(
@@ -1054,6 +1089,30 @@ def drainage_co2_organic_soils_in_wetland(
     )
 
     return WETLAND.co2_emissions_wetland_drained()
+
+def unmanaged_wetland_ch4_emission(ef_country, transition_matrix, land_use_data, past_land_use_data):
+    """
+    Calculate the CH4 emissions from unmanaged wetland.
+
+    Parameters:
+        - ef_country (string): Emission factor country.
+        - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
+        - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
+        - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
+
+    Returns:
+        float: The CH4 emissions from unmanaged wetland.
+    """
+    WETLAND = Wetland(
+        ef_country,
+        transition_matrix,
+        land_use_data,
+        past_land_use_data,
+        "wetland",
+        "wetland",
+    )
+
+    return WETLAND.ch4_emissions_unmanaged_and_near_natural()
 
 
 def drainage_ch4_organic_soils_in_wetland(
@@ -1111,6 +1170,62 @@ def drainage_n2o_organic_soils_in_wetland(
     )
 
     return WETLAND.drainage_n2o_organic_soils()
+
+# Rewetting
+def rewetting_co2_organic_soils_in_wetland(
+    ef_country, transition_matrix, land_use_data, past_land_use_data
+        ):
+    """
+    Calculate the CO2 emissions from rewetting organic soils in wetland.
+
+    Parameters:
+        - ef_country (string): Emission factor country.
+        - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
+        - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
+        - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
+
+    Returns:
+    - The CO2 emissions from rewetting organic soils in wetland.
+    """
+
+    WETLAND = Wetland(
+        ef_country,
+        transition_matrix,
+        land_use_data,
+        past_land_use_data,
+        "wetland",
+        "wetland",
+    )
+
+    return WETLAND.rewetting_co2_organic_soils()
+
+
+def rewetting_ch4_organic_soils_in_wetland(
+    ef_country, transition_matrix, land_use_data, past_land_use_data
+):
+    """
+    Calculate the CH4 emissions from rewetting organic soils in wetland.
+
+    Parameters:
+        - ef_country (string): Emission factor country.
+        - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
+        - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
+        - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
+
+    Returns:
+    - The CH4 emissions from rewetting organic soils in wetland.
+    """
+
+    WETLAND = Wetland(
+        ef_country,
+        transition_matrix,
+        land_use_data,
+        past_land_use_data,
+        "wetland",
+        "wetland",
+    )
+
+    return WETLAND.rewetting_ch4_organic_soils_in_wetland()
 
 
 # Burning
@@ -1217,10 +1332,13 @@ def total_co2_emission_wetland(
         drainage_co2_organic_soils_in_wetland(
             land_use_data, past_land_use_data, transition_matrix, ef_country
         )
-        + biomass_co2_from_conversion_to_wetland(
+        + biomass_co2_from_removals_wetland(
             land_use_data, past_land_use_data, transition_matrix, ef_country
         )
         + burning_co2_wetland(
+            ef_country, transition_matrix, land_use_data, past_land_use_data
+        )
+        + rewetting_co2_organic_soils_in_wetland(
             ef_country, transition_matrix, land_use_data, past_land_use_data
         )
     )
@@ -1245,6 +1363,10 @@ def total_ch4_emission_wetland(
     return drainage_ch4_organic_soils_in_wetland(
         ef_country, transition_matrix, land_use_data, past_land_use_data
     ) + burning_ch4_wetland(
+        ef_country, transition_matrix, land_use_data, past_land_use_data
+    ) + unmanaged_wetland_ch4_emission(
+        ef_country, transition_matrix, land_use_data, past_land_use_data
+    )+ rewetting_ch4_organic_soils_in_wetland(
         ef_country, transition_matrix, land_use_data, past_land_use_data
     )
 
@@ -1340,6 +1462,8 @@ def mineral_soils_co2_from_grassland_to_cropland(
     )
 
     return soc.compute_emissions_from_mineral_soils_in_land_use_change()
+
+
 
 
 # Burning

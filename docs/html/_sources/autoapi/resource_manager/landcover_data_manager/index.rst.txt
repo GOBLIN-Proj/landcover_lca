@@ -98,4 +98,12 @@ Classes
       :rtype: list of str
 
 
+   .. py:method:: get_geo_land_use_columns()
+
+      Returns the list of land use columns for use in geo_goblin modelling.
+
+      :returns: A list containing the names of columns that are important for land use data.
+      :rtype: list of str
+
+
 

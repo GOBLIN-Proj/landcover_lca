@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>geo_goblin.land_classes.soc &mdash; Landcover_LCA 0.2.0 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="geo_goblin.land_classes.wetland" href="../wetland/index.html" />
+    <link rel="prev" title="geo_goblin.land_classes.landuse" href="../landuse/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Landcover_LCA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../INSTALLATION.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../lca_emission/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lca_emission</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../models/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">models</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../land_classes/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">land_classes</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../database/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">database</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../resource_manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">resource_manager</span></code></a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin.land_classes</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Landcover_LCA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin</span></code></a></li>
+          <li class="breadcrumb-item"><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin.land_classes</span></code></a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin.land_classes.soc</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/autoapi/geo_goblin/land_classes/soc/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-geo_goblin.land_classes.soc">
+<span id="geo-goblin-land-classes-soc"></span><h1><a class="reference internal" href="#module-geo_goblin.land_classes.soc" title="geo_goblin.land_classes.soc"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin.land_classes.soc</span></code></a><a class="headerlink" href="#module-geo_goblin.land_classes.soc" title="Link to this heading"></a></h1>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geo_goblin.land_classes.soc.SOC" title="geo_goblin.land_classes.soc.SOC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SOC</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.soc.SOC">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geo_goblin.land_classes.soc.</span></span><span class="sig-name descname"><span class="pre">SOC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrix_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_land_use</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.soc.SOC" title="Link to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.soc.SOC.get_time_period">
+<span class="sig-name descname"><span class="pre">get_time_period</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.soc.SOC.get_time_period" title="Link to this definition"></a></dt>
+<dd><p>Calculates the time period between the current and past land use data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The time period in years.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.soc.SOC.compute_SOC_ref_for_land_use">
+<span class="sig-name descname"><span class="pre">compute_SOC_ref_for_land_use</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.soc.SOC.compute_SOC_ref_for_land_use" title="Link to this definition"></a></dt>
+<dd><p>Computes the reference SOC for the current land use category.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The reference SOC value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.soc.SOC.compute_land_use_change_total_area">
+<span class="sig-name descname"><span class="pre">compute_land_use_change_total_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.soc.SOC.compute_land_use_change_total_area" title="Link to this definition"></a></dt>
+<dd><p>Computes the total area converted from the past land use to the current land use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The annual area converted.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.soc.SOC.compute_emission_factor_from_mineral_soils">
+<span class="sig-name descname"><span class="pre">compute_emission_factor_from_mineral_soils</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">land_use_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.soc.SOC.compute_emission_factor_from_mineral_soils" title="Link to this definition"></a></dt>
+<dd><p>Computes the emission factor from mineral soils for a given land use category.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>land_use_name</strong> (<em>str</em>) – The name of the land use category.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The emission factor from mineral soils.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.soc.SOC.compute_emissions_from_mineral_soils_in_land_use_change">
+<span class="sig-name descname"><span class="pre">compute_emissions_from_mineral_soils_in_land_use_change</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.soc.SOC.compute_emissions_from_mineral_soils_in_land_use_change" title="Link to this definition"></a></dt>
+<dd><p>Computes the emissions from mineral soils during land use change.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The total emissions from mineral soils.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../landuse/index.html" class="btn btn-neutral float-left" title="geo_goblin.land_classes.landuse" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../wetland/index.html" class="btn btn-neutral float-right" title="geo_goblin.land_classes.wetland" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Colm Duffy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

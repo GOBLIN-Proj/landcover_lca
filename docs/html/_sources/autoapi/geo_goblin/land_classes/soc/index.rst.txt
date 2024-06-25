@@ -1,0 +1,66 @@
+:py:mod:`geo_goblin.land_classes.soc`
+=====================================
+
+.. py:module:: geo_goblin.land_classes.soc
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   geo_goblin.land_classes.soc.SOC
+
+
+
+
+.. py:class:: SOC(ef_country, land_use_data, past_land_use_data, transition_matrix_data, current_land_use, past_land_use)
+
+
+   .. py:method:: get_time_period()
+
+      Calculates the time period between the current and past land use data.
+
+      :returns: The time period in years.
+      :rtype: int
+
+
+   .. py:method:: compute_SOC_ref_for_land_use()
+
+      Computes the reference SOC for the current land use category.
+
+      :returns: The reference SOC value.
+      :rtype: float
+
+
+   .. py:method:: compute_land_use_change_total_area()
+
+      Computes the total area converted from the past land use to the current land use.
+
+      :returns: The annual area converted.
+      :rtype: float
+
+
+   .. py:method:: compute_emission_factor_from_mineral_soils(land_use_name)
+
+      Computes the emission factor from mineral soils for a given land use category.
+
+      :param land_use_name: The name of the land use category.
+      :type land_use_name: str
+
+      :returns: The emission factor from mineral soils.
+      :rtype: float
+
+
+   .. py:method:: compute_emissions_from_mineral_soils_in_land_use_change()
+
+      Computes the emissions from mineral soils during land use change.
+
+      :returns: The total emissions from mineral soils.
+      :rtype: float
+
+
+

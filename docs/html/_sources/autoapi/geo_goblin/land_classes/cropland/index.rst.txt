@@ -1,0 +1,140 @@
+:py:mod:`geo_goblin.land_classes.cropland`
+==========================================
+
+.. py:module:: geo_goblin.land_classes.cropland
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   geo_goblin.land_classes.cropland.Cropland
+
+
+
+
+.. py:class:: Cropland(ef_country, transition_matrix_data, land_use_data, past_land_use_data, past_land_use=None, current_land_use=None)
+
+
+   Bases: :py:obj:`landcover_lca.geo_goblin.land_classes.landuse.LandUse`
+
+   Represents a cropland land use.
+
+   :param - ef_country: The country for which the land use data is being analyzed.
+   :type - ef_country: str
+   :param - transition_matrix_data: An instance of TransitionMatrixData
+                                    class containing data for transitions between different land use categories over time.
+   :type - transition_matrix_data: TransitionMatrixData
+   :param - land_use_data: Land use transition data for future scenarios.
+   :param - past_land_use_data: Data representing current or past land use scenarios.
+   :param - past_land_use: The past land use category. Defaults to None.
+   :type - past_land_use: str, optional
+   :param - current_land_use: The current/future land use category. Defaults to None.
+   :type - current_land_use: str, optional
+
+   .. attribute:: - current_land_use
+
+      The current/future land use category.
+
+      :type: str
+
+   .. attribute:: - current_area
+
+      The current area of cropland.
+
+      :type: float
+
+   .. attribute:: - current_area_drained
+
+      The current area of cropland that is drained.
+
+      :type: float
+
+   .. method:: - burning_ch4_cropland
+
+      Calculates the methane (CH4) emissions resulting from the
+      burning of cropland.
+
+   .. method:: - burning_n2o_cropland
+
+      Calculates the nitrous oxide (N2O) emissions resulting from
+      the burning of cropland.
+      
+
+   .. py:method:: burning_ch4_cropland()
+
+      Calculates the methane (CH4) emissions resulting from the burning of cropland.
+      This method assesses CH4 emissions specifically from cropland areas where
+      crop residues and other biomass are burnt, a practice that can significantly
+      contribute to CH4 emissions.
+
+      The calculation involves two emission factors: one for the fuel burning in
+      croplands (biomass combustion) and another emission factor (Gef) for
+      CH4 emissions from cropland burning. These factors are sourced from a
+      country-specific database, reflecting regional variations in agricultural
+      practices and crop types.
+
+      The total CH4 emissions are estimated by multiplying the current area of
+      cropland that is burnt, the emission factors for fuel burning, and the
+      general emission factor for CH4. The result is converted into tonnes for
+      easier reporting and comparison.
+
+      :returns:
+
+                The calculated CH4 emissions (in tonnes) from the burning of
+                    cropland. The calculation considers the area of cropland burnt,
+                    the specific emission factor for fuel burning in croplands, and
+                    the general emission factor for CH4 emissions.
+      :rtype: float
+
+      .. rubric:: Notes
+
+      - `ef_cropland_fuel_burning` refers to the emission factor for the burning
+      of cropland fuels in terms of CH4.
+      - `ef_ch4_cropland_Gef` is the general emission factor for CH4 emissions
+      from cropland burning.
+      - `self.current_area` represents the current area of cropland being analyzed.
+      - `self.land_use_data.cropland.share_burnt` indicates the percentage of the
+      cropland area that undergoes burning.
+
+
+   .. py:method:: burning_n2o_cropland()
+
+      Calculates the nitrous oxide (N2O) emissions resulting from the burning of cropland.
+      This method assesses N2O emissions specifically from cropland areas where crop
+      residues and other biomass are burnt, a practice that can significantly contribute
+      to N2O emissions.
+
+      The calculation involves two emission factors: one for the fuel burning in croplands
+      (biomass combustion) and another emission factor (Gef) for N2O emissions
+      from cropland burning. These factors are sourced from a country-specific database,
+      reflecting regional variations in agricultural practices and crop types.
+
+      The total N2O emissions are estimated by multiplying the current area of cropland
+      that is burnt, the emission factors for fuel burning, and the emission factor
+      for N2O.
+
+      :returns:
+
+                The calculated N2O emissions (in tonnes) from the burning of cropland.
+                    The calculation considers the area of cropland burnt, the specific
+                    emission factor for fuel burning in croplands, and the general emission
+                    factor for N2O emissions.
+      :rtype: float
+
+      .. rubric:: Notes
+
+      - `ef_cropland_fuel_burning` refers to the emission factor for the burning
+      of cropland fuels in terms of N2O.
+      - `ef_n2o_cropland_Gef` is the emission factor for N2O emissions
+      from cropland burning.
+      - `self.current_area` represents the current area of cropland being analyzed.
+      - `self.land_use_data.cropland.share_burnt` indicates the percentage of the
+      cropland area that undergoes burning.
+
+
+

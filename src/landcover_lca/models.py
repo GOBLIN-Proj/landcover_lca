@@ -297,6 +297,7 @@ class Emissions_Factors:
         self.data_loader_class = Loader(self.ef_country)
         self.emission_data_base = self.data_loader_class.landuse_emissions_factors()
 
+
     def get_emission_factor_in_emission_factor_data_base(self, emission_factor_name):
         return float(
             self.emission_data_base.get(emission_factor_name).get(self.ef_country)

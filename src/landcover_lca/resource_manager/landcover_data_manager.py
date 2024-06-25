@@ -101,10 +101,36 @@ class ModelData:
             "area_ha",
             "share_organic",
             "share_mineral",
+            "share_drained_rich_organic",
+            "share_drained_poor_organic",
+            "share_rewetted_rich_organic",
+            "share_rewetted_rich_organic",
+            "share_rewetted_poor_organic",
+            "share_organic_mineral",
             "share_rewetted_in_organic",
-            "share_burnt",
             "share_rewetted_in_mineral",
+            "share_domestic_peat_extraction",
+            "share_industrial_peat_extraction",
+            "share_rewetted_industrial_peat_extraction",
+            "share_rewetted_domestic_peat_extraction",
+            "share_near_natural_wetland",
+            "share_unmanaged_wetland",
+            "share_burnt"
+        ]
+
+        self.geo_land_use_columns = [
+            "farm_id",
+            "year",
+            "area_ha",
+            "share_organic",
+            "share_mineral",
+            "share_organic_mineral",
+            "share_rewetted_in_organic",
+            "share_rewetted_in_mineral",
+            "share_rewetted_in_organic_mineral",
             "share_peat_extraction",
+            "share_burnt"
+        
         ]
 
     def get_land_use_columns(self):
@@ -115,3 +141,13 @@ class ModelData:
             list of str: A list containing the names of columns that are important for land use data.
         """
         return self.land_use_columns
+    
+
+    def get_geo_land_use_columns(self):
+        """
+        Returns the list of land use columns for use in geo_goblin modelling.
+
+        Returns:
+            list of str: A list containing the names of columns that are important for land use data.
+        """
+        return self.geo_land_use_columns

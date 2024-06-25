@@ -1,0 +1,20 @@
+:py:mod:`land_classes`
+======================
+
+.. py:module:: land_classes
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   cropland/index.rst
+   forestland/index.rst
+   grassland/index.rst
+   landuse/index.rst
+   soc/index.rst
+   wetland/index.rst
+
+

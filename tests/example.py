@@ -11,8 +11,8 @@ def main():
     baseline = 2020
     target = 2050
 
-    transition = pd.read_csv(os.path.join(data_dir, "transition.csv"), index_col=0)
-    land_uses = pd.read_csv(os.path.join(data_dir, "land_uses.csv"), index_col=0)
+    transition = pd.read_csv(os.path.join(data_dir, "transition_matrix.csv"), index_col=0)
+    land_uses = pd.read_csv(os.path.join(data_dir, "combined_future_land_use_area_results.csv"), index_col=0)
 
     transition_matrix = load_transition_matrix(transition, ef_country, baseline, target)
 
@@ -193,7 +193,7 @@ def main():
     )
 
     emission_df["CO2e"] = (
-        emission_df["CO2"] + (emission_df["CH4"] * 28) + (emission_df["N2O"] * 295)
+        emission_df["CO2"] + (emission_df["CH4"] * 28) + (emission_df["N2O"] * 265)
     )
     print(emission_df)
 

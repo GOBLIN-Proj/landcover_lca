@@ -16,8 +16,8 @@ class TestGenerateData(unittest.TestCase):
             baseline = 2020
             target = 2050
 
-            transition = pd.read_csv(os.path.join(data_dir, "transition.csv"), index_col=0)
-            land_uses = pd.read_csv(os.path.join(data_dir, "land_uses.csv"), index_col=0)
+            transition = pd.read_csv(os.path.join(data_dir, "transition_matrix.csv"), index_col=0)
+            land_uses = pd.read_csv(os.path.join(data_dir, "combined_future_land_use_area_results.csv"), index_col=0)
 
             transition_matrix = load_transition_matrix(transition, ef_country, baseline, target)
 

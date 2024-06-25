@@ -8,8 +8,9 @@ This page contains auto-generated API reference documentation [#f1]_.
 
    /autoapi/lca_emission/index
    /autoapi/models/index
-   /autoapi/land_utils/index
+   /autoapi/land_classes/index
    /autoapi/database/index
    /autoapi/resource_manager/index
+   /autoapi/geo_goblin/index
 
 .. [#f1] Created with `sphinx-autoapi <https://github.com/readthedocs/sphinx-autoapi>`_

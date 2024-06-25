@@ -1,0 +1,25 @@
+:py:mod:`geo_goblin`
+====================
+
+.. py:module:: geo_goblin
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   land_classes/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   geo_lca_emissions/index.rst
+   geo_models/index.rst
+
+

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>geo_goblin.land_classes.cropland &mdash; Landcover_LCA 0.2.0 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="geo_goblin.land_classes.forestland" href="../forestland/index.html" />
+    <link rel="prev" title="geo_goblin.land_classes" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Landcover_LCA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../INSTALLATION.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../lca_emission/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lca_emission</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../models/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">models</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../land_classes/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">land_classes</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../database/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">database</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../resource_manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">resource_manager</span></code></a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin.land_classes</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Landcover_LCA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin</span></code></a></li>
+          <li class="breadcrumb-item"><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin.land_classes</span></code></a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin.land_classes.cropland</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/autoapi/geo_goblin/land_classes/cropland/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-geo_goblin.land_classes.cropland">
+<span id="geo-goblin-land-classes-cropland"></span><h1><a class="reference internal" href="#module-geo_goblin.land_classes.cropland" title="geo_goblin.land_classes.cropland"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin.land_classes.cropland</span></code></a><a class="headerlink" href="#module-geo_goblin.land_classes.cropland" title="Link to this heading"></a></h1>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geo_goblin.land_classes.cropland.Cropland" title="geo_goblin.land_classes.cropland.Cropland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Cropland</span></code></a></p></td>
+<td><p>Represents a cropland land use.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.cropland.Cropland">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geo_goblin.land_classes.cropland.</span></span><span class="sig-name descname"><span class="pre">Cropland</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrix_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_land_use</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.cropland.Cropland" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">landcover_lca.geo_goblin.land_classes.landuse.LandUse</span></code></p>
+<p>Represents a cropland land use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ef_country</strong> (<em>-</em>) – The country for which the land use data is being analyzed.</p></li>
+<li><p><strong>transition_matrix_data</strong> (<em>-</em>) – An instance of TransitionMatrixData
+class containing data for transitions between different land use categories over time.</p></li>
+<li><p><strong>land_use_data</strong> (<em>-</em>) – Land use transition data for future scenarios.</p></li>
+<li><p><strong>past_land_use_data</strong> (<em>-</em>) – Data representing current or past land use scenarios.</p></li>
+<li><p><strong>past_land_use</strong> (<em>-</em>) – The past land use category. Defaults to None.</p></li>
+<li><p><strong>current_land_use</strong> (<em>-</em>) – The current/future land use category. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">current_land_use</span></span></dt>
+<dd><p>The current/future land use category.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">current_area</span></span></dt>
+<dd><p>The current area of cropland.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">current_area_drained</span></span></dt>
+<dd><p>The current area of cropland that is drained.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">burning_ch4_cropland</span></span></dt>
+<dd><p>Calculates the methane (CH4) emissions resulting from the
+burning of cropland.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">burning_n2o_cropland</span></span></dt>
+<dd><p>Calculates the nitrous oxide (N2O) emissions resulting from
+the burning of cropland.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.cropland.Cropland.burning_ch4_cropland">
+<span class="sig-name descname"><span class="pre">burning_ch4_cropland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.cropland.Cropland.burning_ch4_cropland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the methane (CH4) emissions resulting from the burning of cropland.
+This method assesses CH4 emissions specifically from cropland areas where
+crop residues and other biomass are burnt, a practice that can significantly
+contribute to CH4 emissions.</p>
+<p>The calculation involves two emission factors: one for the fuel burning in
+croplands (biomass combustion) and another emission factor (Gef) for
+CH4 emissions from cropland burning. These factors are sourced from a
+country-specific database, reflecting regional variations in agricultural
+practices and crop types.</p>
+<p>The total CH4 emissions are estimated by multiplying the current area of
+cropland that is burnt, the emission factors for fuel burning, and the
+general emission factor for CH4. The result is converted into tonnes for
+easier reporting and comparison.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated CH4 emissions (in tonnes) from the burning of</dt><dd><p>cropland. The calculation considers the area of cropland burnt,
+the specific emission factor for fuel burning in croplands, and
+the general emission factor for CH4 emissions.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_cropland_fuel_burning</cite> refers to the emission factor for the burning</p></li>
+</ul>
+<p>of cropland fuels in terms of CH4.
+- <cite>ef_ch4_cropland_Gef</cite> is the general emission factor for CH4 emissions
+from cropland burning.
+- <cite>self.current_area</cite> represents the current area of cropland being analyzed.
+- <cite>self.land_use_data.cropland.share_burnt</cite> indicates the percentage of the
+cropland area that undergoes burning.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.cropland.Cropland.burning_n2o_cropland">
+<span class="sig-name descname"><span class="pre">burning_n2o_cropland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.cropland.Cropland.burning_n2o_cropland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the nitrous oxide (N2O) emissions resulting from the burning of cropland.
+This method assesses N2O emissions specifically from cropland areas where crop
+residues and other biomass are burnt, a practice that can significantly contribute
+to N2O emissions.</p>
+<p>The calculation involves two emission factors: one for the fuel burning in croplands
+(biomass combustion) and another emission factor (Gef) for N2O emissions
+from cropland burning. These factors are sourced from a country-specific database,
+reflecting regional variations in agricultural practices and crop types.</p>
+<p>The total N2O emissions are estimated by multiplying the current area of cropland
+that is burnt, the emission factors for fuel burning, and the emission factor
+for N2O.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated N2O emissions (in tonnes) from the burning of cropland.</dt><dd><p>The calculation considers the area of cropland burnt, the specific
+emission factor for fuel burning in croplands, and the general emission
+factor for N2O emissions.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_cropland_fuel_burning</cite> refers to the emission factor for the burning</p></li>
+</ul>
+<p>of cropland fuels in terms of N2O.
+- <cite>ef_n2o_cropland_Gef</cite> is the emission factor for N2O emissions
+from cropland burning.
+- <cite>self.current_area</cite> represents the current area of cropland being analyzed.
+- <cite>self.land_use_data.cropland.share_burnt</cite> indicates the percentage of the
+cropland area that undergoes burning.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="geo_goblin.land_classes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../forestland/index.html" class="btn btn-neutral float-right" title="geo_goblin.land_classes.forestland" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Colm Duffy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

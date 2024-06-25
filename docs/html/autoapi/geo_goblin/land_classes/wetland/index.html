@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>geo_goblin.land_classes.wetland &mdash; Landcover_LCA 0.2.0 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="geo_goblin.geo_lca_emissions" href="../../geo_lca_emissions/index.html" />
+    <link rel="prev" title="geo_goblin.land_classes.soc" href="../soc/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Landcover_LCA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../INSTALLATION.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../lca_emission/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lca_emission</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../models/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">models</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../land_classes/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">land_classes</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../database/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">database</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../resource_manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">resource_manager</span></code></a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin.land_classes</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Landcover_LCA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin</span></code></a></li>
+          <li class="breadcrumb-item"><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin.land_classes</span></code></a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin.land_classes.wetland</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/autoapi/geo_goblin/land_classes/wetland/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-geo_goblin.land_classes.wetland">
+<span id="geo-goblin-land-classes-wetland"></span><h1><a class="reference internal" href="#module-geo_goblin.land_classes.wetland" title="geo_goblin.land_classes.wetland"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin.land_classes.wetland</span></code></a><a class="headerlink" href="#module-geo_goblin.land_classes.wetland" title="Link to this heading"></a></h1>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geo_goblin.land_classes.wetland.Wetland" title="geo_goblin.land_classes.wetland.Wetland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Wetland</span></code></a></p></td>
+<td><p>A class representing a wetland land use.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.wetland.Wetland">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geo_goblin.land_classes.wetland.</span></span><span class="sig-name descname"><span class="pre">Wetland</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrix_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_land_use</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.wetland.Wetland" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">landcover_lca.geo_goblin.land_classes.landuse.LandUse</span></code></p>
+<p>A class representing a wetland land use.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">current_area_mineral</span></span></dt>
+<dd><p>The current area of mineral wetland in hectares.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">current_area_unmanaged</span></span></dt>
+<dd><p>The current area of unmanaged wetland in hectares.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">current_area_near_natural</span></span></dt>
+<dd><p>The current area of near-natural wetland in hectares.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">current_area_domestic_drained</span></span></dt>
+<dd><p>The current area of wetland drained for domestic peat extraction in hectares.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">current_area_industrial_drained</span></span></dt>
+<dd><p>The current area of wetland drained for industrial peat extraction in hectares.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">current_area_domestic_rewetted</span></span></dt>
+<dd><p>The current area of wetland rewetted after domestic peat extraction in hectares.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">current_area_industrial_rewetted</span></span></dt>
+<dd><p>The current area of wetland rewetted after industrial peat extraction in hectares.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">co2_removals()</span></span></dt>
+<dd><p>Calculate the amount of CO2 removals per year for a given area.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">co2_emissions_wetland_drained()</span></span></dt>
+<dd><p>Calculate the CO2 emissions from wetland drainage.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">drainage_ch4_organic_soils()</span></span></dt>
+<dd><p>Calculate the methane emissions from organic soils due to drainage.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">drainage_n2o_organic_soils()</span></span></dt>
+<dd><p>Calculate the nitrous oxide emissions from organic soils due to drainage.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">rewetting_co2_organic_soils()</span></span></dt>
+<dd><p>Calculate the CO2 emissions from rewetting organic soils.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">rewetting_ch4_organic_soils_in_wetland()</span></span></dt>
+<dd><p>Calculate the methane emissions from rewetting organic soils.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">burning_co2_wetland()</span></span></dt>
+<dd><p>Calculate the CO2 emissions from burning wetland vegetation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">burning_ch4_wetland()</span></span></dt>
+<dd><p>Calculate the CH4 emissions from burning wetland vegetation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">burning_n2o_wetland()</span></span></dt>
+<dd><p>Calculate the N2O emissions from burning wetland vegetation.</p>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ef_country</strong> (<em>-</em>) – The country for which the emissions factors are calculated.</p></li>
+<li><p><strong>transition_matrix_data</strong> (<em>-</em>) – The transition matrix data.</p></li>
+<li><p><strong>land_use_data</strong> (<em>-</em>) – The land use data.</p></li>
+<li><p><strong>past_land_use_data</strong> (<em>-</em>) – The past land use data.</p></li>
+<li><p><strong>past_land_use</strong> (<em>-</em>) – The past land use. Defaults to None.</p></li>
+<li><p><strong>current_land_use</strong> (<em>-</em>) – The current land use. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.wetland.Wetland.co2_removals">
+<span class="sig-name descname"><span class="pre">co2_removals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.wetland.Wetland.co2_removals" title="Link to this definition"></a></dt>
+<dd><p>Calculate the amount of CO2 removals per year for a given area.
+return 0.6t C per year for 5 years for area drained.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The total amount of CO2 removals in kg over the specified year range.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.wetland.Wetland.co2_emissions_unmanaged_and_near_natural_onsite">
+<span class="sig-name descname"><span class="pre">co2_emissions_unmanaged_and_near_natural_onsite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.wetland.Wetland.co2_emissions_unmanaged_and_near_natural_onsite" title="Link to this definition"></a></dt>
+<dd><p>Calculates the carbon dioxide (CO2) emissions resulting from the drainage of unmanaged
+and near-natural wetlands onsite.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The calculated CO2 emissions in kg from unmanaged and near-natural wetland drainage onsite.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.wetland.Wetland.co2_emissions_unmanaged_and_near_natural_offsite">
+<span class="sig-name descname"><span class="pre">co2_emissions_unmanaged_and_near_natural_offsite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.wetland.Wetland.co2_emissions_unmanaged_and_near_natural_offsite" title="Link to this definition"></a></dt>
+<dd><p>Calculates the carbon dioxide (CO2) emissions resulting from the drainage of unmanaged
+and near-natural wetlands offsite.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The calculated CO2 emissions in kg from unmanaged and near-natural wetland drainage offsite.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.wetland.Wetland.ch4_emissions_unmanaged_and_near_natural">
+<span class="sig-name descname"><span class="pre">ch4_emissions_unmanaged_and_near_natural</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.wetland.Wetland.ch4_emissions_unmanaged_and_near_natural" title="Link to this definition"></a></dt>
+<dd><p>Calculates the methane (CH4) emissions resulting from the drainage of unmanaged
+and near-natural wetlands. Drainage of such wetlands can lead to the release of
+methane, a potent greenhouse gas, due to the exposure of previously waterlogged
+organic matter to aerobic conditions, promoting its decomposition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The calculated CH4 emissions in kg from unmanaged and near-natural wetland drainage.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.wetland.Wetland.burning_co2_wetland">
+<span class="sig-name descname"><span class="pre">burning_co2_wetland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.wetland.Wetland.burning_co2_wetland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the carbon dioxide (CO2) emissions resulting from the burning of wetland
+vegetation and organic matter. This method focuses on CO2 emissions due to the
+combustion of wetland biomass, which can occur in various scenarios, such as
+land management practices or wildfires.</p>
+<p>The calculation incorporates two key emission factors: one for the burning of
+wetland fuels (biomass) and another that represents the emission factors
+(Gef) for CO2 emissions from wetland burning. These factors are sourced from
+a country-specific database, reflecting regional variations in wetland
+composition and burning practices.</p>
+<p>The total CO2 emissions are estimated by multiplying the total combined area
+of the wetland, the proportion of the wetland that is burnt, and the product
+of the two emission factors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated CO2 emissions (in tonnes) from the burning of wetlands.</dt><dd><p>The calculation is based on the combined wetland area, the share of
+wetlands burnt, and the specific emission factors for wetland fuel
+burning and general CO2 emissions.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.wetland.Wetland.burning_ch4_wetland">
+<span class="sig-name descname"><span class="pre">burning_ch4_wetland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.wetland.Wetland.burning_ch4_wetland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the methane (CH4) emissions resulting from the burning of wetland
+vegetation and organic matter. This method assesses CH4 emissions, a potent
+greenhouse gas, released during the combustion of wetland biomass, which can
+occur due to natural fires, agricultural burning, or other human activities.</p>
+<p>The calculation involves two primary emission factors: one for the combustion
+of wetland fuels (biomass) and another representing the emission factor
+(Gef) for CH4 emissions specifically from wetland burning. These emission factors
+are sourced from a country-specific database to account for regional differences
+in wetland burning characteristics and fuel types.</p>
+<p>The total CH4 emissions are estimated by multiplying the combined wetland area,
+the proportion of wetland that is burnt, and the product of the two emission
+factors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated CH4 emissions (in tonnes) from the burning of wetlands.</dt><dd><p>This is determined by considering the combined wetland area, the share
+of wetlands burnt, and the specific emission factors for wetland fuel
+burning and general CH4 emissions.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.wetland.Wetland.burning_n2o_wetland">
+<span class="sig-name descname"><span class="pre">burning_n2o_wetland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.wetland.Wetland.burning_n2o_wetland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the nitrous oxide (N2O) emissions resulting from the burning of wetland
+vegetation and organic matter. Wetland burning can be a significant source of N2O,
+a potent greenhouse gas, especially when it involves the combustion of peat and
+other nitrogen-rich organic materials.</p>
+<p>This method incorporates two emission factors: one for the combustion of wetland
+fuels (biomass) and another for the emission factor (Gef) specific to N2O
+emissions from wetland burning. These emission factors are obtained from a
+country-specific database, which accounts for variations in wetland types and
+burning practices across different regions.</p>
+<p>The total N2O emissions are estimated by multiplying the combined area of the
+wetland, the proportion of the wetland that is burnt, and the product of the two
+emission factors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated N2O emissions (in tonnes) from the burning of wetlands.</dt><dd><p>The computation takes into account the combined wetland area, the
+proportion of wetlands burnt, and the respective emission factors for
+wetland fuel burning and general N2O emissions.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../soc/index.html" class="btn btn-neutral float-left" title="geo_goblin.land_classes.soc" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../geo_lca_emissions/index.html" class="btn btn-neutral float-right" title="geo_goblin.geo_lca_emissions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Colm Duffy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
