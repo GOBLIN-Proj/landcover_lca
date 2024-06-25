@@ -1,0 +1,353 @@
+:py:mod:`geo_goblin.land_classes.grassland`
+===========================================
+
+.. py:module:: geo_goblin.land_classes.grassland
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   geo_goblin.land_classes.grassland.Grassland
+
+
+
+
+.. py:class:: Grassland(ef_country, transition_matrix_data, land_use_data, past_land_use_data, past_land_use, current_land_use)
+
+
+   Bases: :py:obj:`landcover_lca.geo_goblin.land_classes.landuse.LandUse`
+
+   A class representing grassland land use.
+
+   .. attribute:: - ef_country
+
+      The country-specific emission factors.
+
+   .. attribute:: - transition_matrix_data
+
+      The transition matrix data.
+
+   .. attribute:: - land_use_data
+
+      The land use data.
+
+   .. attribute:: - past_land_use_data
+
+      The past land use data.
+
+   .. attribute:: - past_land_use
+
+      The past land use.
+
+   .. attribute:: - current_land_use
+
+      The current land use.
+
+   .. attribute:: - current_area
+
+      The current area of grassland.
+
+   .. attribute:: - current_area_drained
+
+      The current area of drained grassland.
+
+   .. method:: - mineral_co2_in_grassland()
+
+      Calculate the CO2 emissions from mineral soils in grassland.
+
+   .. method:: - drainage_co2_organic_soils_in_grassland()
+
+      Calculate the CO2 emissions from the drainage of organic soils in grassland.
+
+   .. method:: - drainage_ch4_organic_soils_in_grassland()
+
+      Calculate the CH4 emissions from the drainage of organic soils in grassland.
+
+   .. method:: - drainage_n2O_organic_soils_in_grassland()
+
+      Calculate the N2O emissions from the drainage of organic soils in grassland.
+
+   .. method:: - rewetting_co2_organic_soils_in_grassland()
+
+      Calculate the CO2 emissions from the rewetting of organic soils in grassland.
+
+   .. method:: - rewetting_ch4_organic_soils_in_grassland()
+
+      Calculate the CH4 emissions from the rewetting of organic soils in grassland.
+
+   .. method:: - burning_co2_grassland()
+
+      Calculate the CO2 emissions from the burning of grassland.
+
+   .. method:: - burning_ch4_grassland()
+
+      Calculate the CH4 emissions from the burning of grassland.
+
+   .. method:: - burning_n2o_grassland()
+
+      Calculate the N2O emissions from the burning of grassland.
+      
+
+   :param - ef_country: The country for which the emissions factors are calculated.
+   :type - ef_country: str
+   :param - transition_matrix_data: The transition matrix data.
+   :type - transition_matrix_data: dict
+   :param - land_use_data: The land use data.
+   :type - land_use_data: dict
+   :param - past_land_use_data: The past land use data.
+   :type - past_land_use_data: dict
+   :param - past_land_use: The past land use. Defaults to None.
+   :type - past_land_use: str, optional
+   :param - current_land_use: The current land use. Defaults to None.
+   :type - current_land_use: str, optional
+
+   .. py:method:: mineral_co2_in_grassland()
+
+      Calculate the CO2 removals from mineral soils in grassland. This uses and implied
+      emission factor based on Ireland's national inventory reporting.
+
+      :returns: The CO2 removals in kg from mineral soils in grassland.
+      :rtype: float
+
+
+   .. py:method:: drainage_co2_organic_soils_in_grassland()
+
+      Calculates the carbon dioxide (CO2) onsite and offsite emissions resulting from the drainage of organic
+      soils in grassland areas. Draining organic soils can lead to significant CO2 emissions.
+      This process exposes previously waterlogged organic matter to oxygen, accelerating its
+      decomposition and releasing stored carbon into the atmosphere.
+
+      This method focuses specifically on CO2 emissions from on-site sources in grasslands
+      where organic soils have been drained. The emission factor used for this calculation
+      is tailored to the specific conditions of drained grasslands, reflecting the typical
+      rate of CO2 emissions per unit area for such land use change.
+
+      The emission factors are obtained from a country-specific database of emission factors,
+      ensuring the calculation is representative of regional characteristics and land
+      management practices.
+
+      :returns:
+
+                The calculated CO2 emissions in kg resulting from the drainage of organic soils
+                    in grassland areas. The emissions are based on the current area of drained
+                    land and the specific emission factor for CO2 emissions from grassland drainage.
+      :rtype: float
+
+
+   .. py:method:: drainage_onsite_co2_organic_soils_in_grassland()
+
+      Calculates the carbon dioxide (CO2) emissions resulting from the drainage of poor and rich organic
+      soils in grassland areas. Draining organic soils can lead to significant CO2 emissions.
+      This process exposes previously waterlogged organic matter to oxygen, accelerating its
+      decomposition and releasing stored carbon into the atmosphere.
+
+      This method focuses specifically on CO2 emissions from on-site sources in grasslands
+      where organic soils have been drained. The emission factor used for this calculation
+      is tailored to the specific conditions of drained grasslands, reflecting the typical
+      rate of CO2 emissions per unit area for such land use change.
+
+      The emission factor is obtained from a country-specific database of emission factors,
+      ensuring the calculation is representative of regional characteristics and land
+      management practices.
+
+      :returns:
+
+                The calculated CO2 emissions in kg resulting from the drainage of poor and rich organic soils
+                    in grassland areas. The emissions are based on the current area of drained
+                    land and the specific emission factor for CO2 emissions from grassland drainage.
+      :rtype: float
+
+
+   .. py:method:: drainage_offsite_co2_organic_soils_in_grassland()
+
+      Cacluates the offsite CO2 emissions, in the form of Disolved Organic Carbon (DOC) from the drainage of poor and rich organic
+      soils in grassland areas.
+
+      A tier 1 approach is used to estimate the DOC emissions from the drained organic soils in grasslands.
+
+      :returns:
+
+                The calculated CO2 emissions in kg resulting from the drainage of poor and rich organic soils
+                    in grassland areas. The emissions are based on the current area of drained
+                    land and the specific emission factor for CO2 emissions from grassland drainage.
+      :rtype: float
+
+
+   .. py:method:: drainage_ch4_organic_soils_in_grassland()
+
+      Calculates the methane (CH4) emissions resulting from the drainage of poor and rich organic soils
+      in grassland areas. The drainage of organic soils can significantly
+      increase CH4 emissions due to the exposure of previously waterlogged organic matter
+      to conditions that promote methane production.
+
+      Emission factors are sourced from a country-specific database, ensuring that the
+      emissions estimation is relevant to the regional characteristics of grassland drainage.
+
+      :returns: The calculated CH4 emissions in kg from organic soils in grassland areas.
+                The emissions are based on the current area of drained land and a combination
+                of the emission factors for land drainage and ditch drainage.
+      :rtype: float
+
+
+   .. py:method:: drainage_n2O_organic_soils_in_grassland()
+
+      Calculates the nitrous oxide (N2O) emissions resulting from the drainage of poor and rich organic
+      soils in grassland areas. Drainage of organic soils in grasslands can lead to increased N2O emissions.
+      This is due to the changes in soil conditions that promote nitrification and denitrification processes,
+      which are major sources of N2O emissions.
+
+      This method estimates N2O emissions by applying an emission factor specific to
+      grassland drainage.
+
+      :returns: The calculated N2O emissions in kg resulting from the drainage of organic soils in grassland areas.
+                The emissions are based on the current area of drained land and the specific emission factors for
+                N2O emissions from grassland drainage.
+      :rtype: float
+
+
+   .. py:method:: rewetting_co2_organic_soils_in_grassland()
+
+      Calculates the carbon dioxide (CO2) emissions/removals resulting from the rewetting
+      of drained rich and poor organic soils in grassland areas.
+
+      This method considers two key emission reduction factors: direct
+      on-site CO2 emissions/removals due to rewetting and the CO2 emissions related
+      to dissolved organic carbon (DOC).
+
+      :returns: The calculated CO2 emissions/removals in kg reductions resulting from the rewetting of
+                organic soils in grassland areas.
+      :rtype: float
+
+
+   .. py:method:: rewetting_co2_onsite_organic_soils_in_grassland()
+
+      Calculates the carbon dioxide (CO2) emissions resulting from the rewetting of poor and rich organic soils
+      in grassland areas.
+
+      This method focuses specifically on CO2 emissions from on-site sources in grasslands
+      where organic soils have been rewetted.
+
+      :returns: The calculated CO2 emissions in kg resulting from the rewetting of poor and rich organic soils
+                in grassland areas. The emissions are based on the current area of rewetted land and the specific emission factors
+                for CO2 emissions from grassland rewetting.
+      :rtype: float
+
+
+   .. py:method:: rewetting_co2_offsite_organic_soils_in_grassland()
+
+      Calculates the offsite CO2 emissions, in the form of Disolved Organic Carbon (DOC) from the rewetting of poor and rich organic
+      soils in grassland areas.
+
+      A tier 1 approach is used to estimate the DOC emissions from the rewetted organic soils in grasslands.
+
+      :returns:
+
+                The calculated CO2 emissions in kg resulting from the rewetting of poor and rich organic soils
+                    in grassland areas. The emissions are based on the current area of rewetted
+                    land and the specific emission factor for CO2 emissions from grassland rewetting.
+      :rtype: float
+
+
+   .. py:method:: rewetting_ch4_organic_soils_in_grassland()
+
+      Calculates the methane (CH4) emissions resulting from the rewetting of drained
+      organic soils in grassland areas. Rewetting such soils, particularly in areas
+      previously used as peatlands or other wetlands, can lead to an increase in CH4
+      emissions. This is due to the creation of anaerobic conditions favorable for
+      methanogenesis (methane production) in waterlogged soils.
+
+      This method utilizes an emission factor that specifically quantifies the rate
+      of CH4 emissions per unit area resulting from the rewetting of organic soils in
+      grassland environments. The emission factor is sourced from a country-specific
+      database, accounting for variations in soil types, previous land use practices,
+      and climatic conditions.
+
+      The total CH4 emissions are estimated based on the total area of grasslands
+      undergoing transition from drained to rewetted conditions and the emission
+      factor for grassland rewetting.
+
+      :returns: The calculated CH4 emissions resulting from the rewetting of organic
+                soils in grassland areas.
+                The emissions are based on the total transition area and the specific
+                emission factor for CH4 emissions from grassland rewetting.
+      :rtype: float
+
+
+   .. py:method:: burning_co2_grassland()
+
+      Calculates the carbon dioxide (CO2) emissions resulting from the burning of grasslands.
+      This method assesses CO2 emissions from two types of soil in grasslands: mineral soils
+      and drained organic soils. The emission calculation is based on the formula
+      𝐿𝑓𝑖𝑟𝑒 = 𝐴 ∙ 𝑀𝐵 ∙ 𝐶𝑓 ∙ 𝐺𝑒𝑓 ∙ 10^−3, where A is the area, MB is the biomass,
+      Cf is the combustion factor, and Gef is the emission factor.
+
+      The combustion factor (Cf) is assumed to be 1.0, indicating that all available fuel
+      (biomass) is burned. The method involves multiplying the area of grassland burned by
+      the emission factors for CO2 emissions from both mineral and drained organic soils.
+
+      Emission factors are sourced from a country-specific database, reflecting regional
+      variations in grassland composition and burning characteristics.
+
+      :returns:
+
+                The calculated CO2 emissions (in tonnes) from the burning of grasslands,
+                    including both mineral soils and drained organic soils. The calculation
+                    considers the area of each soil type that is burned and their respective
+                    emission factors.
+      :rtype: float
+
+
+   .. py:method:: burning_ch4_grassland()
+
+      Calculates the methane (CH4) emissions resulting from the burning of grasslands.
+      This method evaluates CH4 emissions from two types of soil in grasslands: mineral
+      soils and drained organic soils. The calculation formula used is
+      𝐿𝑓𝑖𝑟𝑒 = 𝐴 ∙ 𝑀𝐵 ∙ 𝐶𝑓 ∙ 𝐺𝑒𝑓 ∙ 10^−3, where A represents the area, MB is the biomass,
+      Cf is the combustion factor, and Gef is the emission factor.
+
+      The combustion factor (Cf) is assumed to be 1.0, signifying that all available
+      fuel (biomass) is burned. The method involves multiplying the area of grassland
+      burned by the emission factors for CH4 emissions from both mineral and drained
+      organic soils.
+
+      Emission factors are obtained from a country-specific database, which takes into
+      account regional differences in grassland composition and burning characteristics.
+
+      :returns:
+
+                The calculated CH4 emissions (in tonnes) from the burning of grasslands,
+                    comprising both mineral soils and drained organic soils. The calculation
+                    involves considering the area of each soil type that is burned and their
+                    respective emission factors.
+      :rtype: float
+
+
+   .. py:method:: burning_n2o_grassland()
+
+      Calculates the nitrous oxide (N2O) emissions resulting from the burning of grasslands.
+      This method assesses N2O emissions from two types of soil in grasslands: mineral soils
+      and drained organic soils. The combustion factor (Cf) is assumed to be 1.0, signifying
+      that all available fuel (biomass) is burned.
+
+      Emission factors for N2O emissions are applied to both mineral and drained organic soils
+      in grasslands. These factors are obtained from a country-specific database, reflecting
+      regional variations in grassland composition and burning characteristics.
+
+      The method involves calculating the N2O emissions by multiplying the area of grassland
+      burned by the emission factors for N2O emissions from both soil types.
+
+      :returns:
+
+                The calculated N2O emissions (in tonnes) from the burning of grasslands,
+                    including both mineral soils and drained organic soils. The calculation
+                    involves considering the area of each soil type that is burned and their
+                    respective emission factors.
+      :rtype: float
+
+
+

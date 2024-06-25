@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>geo_goblin.land_classes.forestland &mdash; Landcover_LCA 0.2.0 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="geo_goblin.land_classes.grassland" href="../grassland/index.html" />
+    <link rel="prev" title="geo_goblin.land_classes.cropland" href="../cropland/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Landcover_LCA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../INSTALLATION.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../lca_emission/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lca_emission</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../models/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">models</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../land_classes/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">land_classes</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../database/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">database</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../resource_manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">resource_manager</span></code></a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin.land_classes</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Landcover_LCA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin</span></code></a></li>
+          <li class="breadcrumb-item"><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin.land_classes</span></code></a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin.land_classes.forestland</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/autoapi/geo_goblin/land_classes/forestland/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-geo_goblin.land_classes.forestland">
+<span id="geo-goblin-land-classes-forestland"></span><h1><a class="reference internal" href="#module-geo_goblin.land_classes.forestland" title="geo_goblin.land_classes.forestland"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin.land_classes.forestland</span></code></a><a class="headerlink" href="#module-geo_goblin.land_classes.forestland" title="Link to this heading"></a></h1>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geo_goblin.land_classes.forestland.Forest" title="geo_goblin.land_classes.forestland.Forest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Forest</span></code></a></p></td>
+<td><p>The Forest class is specifically tailored to handle calculations and assessments</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.forestland.Forest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geo_goblin.land_classes.forestland.</span></span><span class="sig-name descname"><span class="pre">Forest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrix_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_land_use</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.forestland.Forest" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">landcover_lca.geo_goblin.land_classes.landuse.LandUse</span></code></p>
+<p>The Forest class is specifically tailored to handle calculations and assessments
+related to forest land use. It includes methods to estimate greenhouse gas emissions
+from various activities and conditions in forest ecosystems, such as drainage and burning.</p>
+<p>In addition to inheriting the functionalities of the LandUse class, the Forest
+class introduces specific attributes and methods to deal with forest-related
+data and emissions factors.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">poor_drained_forest_area_exclude_over_50</span></span></dt>
+<dd><p>The valid area of poorly drained
+forests younger than 50 years.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">rich_drained_forest_area_exclude_over_50</span></span></dt>
+<dd><p>The valid area of richly drained
+forests younger than 50 years.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">forest_poor_drained_area</span></span></dt>
+<dd><p>The total area of poorly drained forests.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">forest_rich_drained_area</span></span></dt>
+<dd><p>The total area of richly drained forests.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_valid_area()</span></span></dt>
+<dd><p>Calculates the valid areas for poorly and richly drained forests,
+excluding forest areas that are over 50 years old.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">co2_drainage_organic_soils_forest()</span></span></dt>
+<dd><p>Estimates CO2 emissions from the drainage of
+organic soils in forest areas.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">ch4_drainage_organic_soils_forest()</span></span></dt>
+<dd><p>Calculates CH4 emissions from the drainage of
+organic soils in forest areas.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">n2o_drainage_organic_soils_forest()</span></span></dt>
+<dd><p>Calculates N2O emissions from the drainage of
+organic soils in forest areas.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">burning_co2_forest()</span></span></dt>
+<dd><p>Calculates CO2 emissions from the burning of forest areas.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">burning_ch4_forest()</span></span></dt>
+<dd><p>Calculates CH4 emissions from the burning of forest areas.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">burning_n2o_forest()</span></span></dt>
+<dd><p>Calculates N2O emissions from the burning of forest areas.</p>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ef_country</strong> (<em>-</em>) – The country for which the emissions factors are calculated.</p></li>
+<li><p><strong>transition_matrix_data</strong> (<em>-</em>) – The transition matrix data.</p></li>
+<li><p><strong>land_use_data</strong> (<em>-</em>) – The land use data.</p></li>
+<li><p><strong>past_land_use_data</strong> (<em>-</em>) – The past land use data.</p></li>
+<li><p><strong>past_land_use</strong> (<em>-</em>) – The past land use. Defaults to None.</p></li>
+<li><p><strong>current_land_use</strong> (<em>-</em>) – The current land use. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.forestland.Forest.get_valid_area">
+<span class="sig-name descname"><span class="pre">get_valid_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.forestland.Forest.get_valid_area" title="Link to this definition"></a></dt>
+<dd><p>Calculates the valid areas for poorly drained and richly drained forests,
+excluding forest areas that are over 50 years old. This method is crucial
+for determining the specific areas within forests that are relevant for
+certain environmental impact calculations, such as emissions from drainage
+or rewetting.</p>
+<p>The method first determines the proportion of forest area that is over 50
+years old and then calculates the remaining area (valid area) that is
+younger than 50 years. This valid area is then further divided into poorly
+drained and richly drained forest areas based on specific land use data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl>
+<dt>A tuple containing two values:</dt><dd><ul class="simple">
+<li><p>The first value is the valid area of poorly drained forests</p></li>
+</ul>
+<p>(considering only forests younger than 50 years).
+- The second value is the valid area of richly drained forests
+(considering only forests younger than 50 years).</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The method uses ‘forest_age_data’ to determine the proportion of</p></li>
+</ul>
+<p>forest area over 50 years old.
+- ‘land_use_data.forest.share_organic’ and
+‘land_use_data.forest.share_organic_mineral’ are used to differentiate
+between poorly drained and richly drained forest areas.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.forestland.Forest.co2_drainage_organic_soils_forest">
+<span class="sig-name descname"><span class="pre">co2_drainage_organic_soils_forest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.forestland.Forest.co2_drainage_organic_soils_forest" title="Link to this definition"></a></dt>
+<dd><p>Estimates the carbon dioxide (CO2) emissions resulting from the drainage of organic
+soils in forest areas. This method considers both poorly and richly drained forest
+areas, excluding those over 50 years old, as it is assumed that areas older than
+50 years do not emit CO2 due to drainage.</p>
+<p>The calculation uses specific emission factors for both on-site and off-site drainage
+emissions. For richly drained forests, the emissions are adjusted based on the soil
+depth ratio to provide a more accurate estimation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The total CO2 emissions from the drainage of organic soils in forest areas.</dt><dd><p>This includes emissions from both poorly and richly drained forests,
+excluding those over 50 years old.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><cite>ef_co2_forest_drainage_off_site</cite> and <cite>ef_co2_forest_drainage_on_site</cite> are</p></li>
+</ul>
+<p>the emission factors for off-site and on-site CO2 emissions, respectively,
+from forest drainage.
+- <cite>soil_depth</cite> represents the depth of the organic mineral soil, used to
+adjust the emission calculations for richly drained forests.
+- <cite>self.poor_drained_forest_area_exclude_over_50</cite> and
+<cite>self.rich_drained_forest_area_exclude_over_50</cite> represent the valid areas
+of poorly and richly drained forests that are younger than 50 years.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.forestland.Forest.ch4_drainage_organic_soils_forest">
+<span class="sig-name descname"><span class="pre">ch4_drainage_organic_soils_forest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.forestland.Forest.ch4_drainage_organic_soils_forest" title="Link to this definition"></a></dt>
+<dd><p>Calculates methane (CH4) emissions resulting from the drainage of organic soils in
+forest areas. This method considers two types of drainage situations in forests:
+drainage on land and drainage through ditches, each with different emission factors.</p>
+<p>The method applies distinct emission factors for poorly and richly drained forests,
+taking into account the fraction of each forest type drained through ditches.
+This provides a more accurate estimation of CH4 emissions by considering the
+specific drainage practices employed in different forest areas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The total CH4 emissions in kg from the drainage of organic soils in forest areas.</dt><dd><p>This includes emissions from both poorly and richly drained forests,
+taking into account the respective proportions of drainage through ditches.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.forestland.Forest.n2o_drainage_organic_soils_forest">
+<span class="sig-name descname"><span class="pre">n2o_drainage_organic_soils_forest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.forestland.Forest.n2o_drainage_organic_soils_forest" title="Link to this definition"></a></dt>
+<dd><p>Calculates nitrous oxide (N2O) emissions resulting from the drainage of organic
+soils in forest areas. This method separately considers the emissions from poorly
+and richly drained forests, each with their specific emission factors.</p>
+<p>The calculation involves applying distinct emission factors for N2O emissions for
+both poorly and richly drained forests. This approach ensures a more accurate
+estimation of N2O emissions by considering the specific drainage characteristics
+and soil conditions of different forest types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The total N2O emissions in kg from the drainage of organic soils in forest areas.</dt><dd><p>This includes emissions from both poorly and richly drained forests,
+calculated using the respective emission factors for each forest type.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.forestland.Forest.burning_co2_forest">
+<span class="sig-name descname"><span class="pre">burning_co2_forest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.forestland.Forest.burning_co2_forest" title="Link to this definition"></a></dt>
+<dd><p>Calculates carbon dioxide (CO2) emissions resulting from the burning of forests.
+This method assesses CO2 emissions specifically from forest areas where vegetation
+and other biomass are burnt, a practice that can significantly contribute to CO2 emissions.</p>
+<p>The calculation involves multiple factors: an emission factor for the fuel burning in
+forests, a emission factor (Gef) for CO2 emissions from forest burning, and a
+combustion factor (Cf) that represents the efficiency of biomass combustion.</p>
+<p>The total CO2 emissions are estimated by multiplying the area of forest burnt, the
+emission factor for fuel burning, the combustion factor, and the emission factor
+for CO2. The result is then converted into tonnes for easier reporting and comparison.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated CO2 emissions (in tonnes) from the burning of forest areas.</dt><dd><p>The calculation considers the area of forest burnt, the specific emission
+factor for fuel burning in forests, the combustion factor, and the
+emission factor for CO2 emissions.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.forestland.Forest.burning_ch4_forest">
+<span class="sig-name descname"><span class="pre">burning_ch4_forest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.forestland.Forest.burning_ch4_forest" title="Link to this definition"></a></dt>
+<dd><p>Calculates methane (CH4) emissions resulting from the burning of forests. This method
+assesses CH4 emissions specifically from forest areas where vegetation and other
+biomass are burnt, which can be a significant source of methane, a potent greenhouse gas.</p>
+<p>The calculation involves several factors: an emission factor for the fuel burning in
+forests, a emission factor (Gef) for CH4 emissions from forest burning, and a
+combustion factor (Cf) that represents the efficiency of biomass combustion.</p>
+<p>The total CH4 emissions are estimated by multiplying the area of forest burnt, the
+emission factor for fuel burning, the combustion factor, and the emission factor
+for CH4. The result is then converted into tonnes for easier reporting and comparison.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated CH4 emissions (in tonnes) from the burning of forest areas.</dt><dd><p>The calculation considers the area of forest burnt, the specific emission
+factor for fuel burning in forests, the combustion factor, and the
+emission factor for CH4 emissions.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.forestland.Forest.burning_n2o_forest">
+<span class="sig-name descname"><span class="pre">burning_n2o_forest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.forestland.Forest.burning_n2o_forest" title="Link to this definition"></a></dt>
+<dd><p>Calculates nitrous oxide (N2O) emissions resulting from the burning of forests.
+This method assesses N2O emissions specifically from forest areas where vegetation
+and other biomass are burnt. N2O is a potent greenhouse gas, and its emissions
+can be significant in forest burning events.</p>
+<p>The calculation involves several factors: an emission factor for the fuel burning
+in forests, a emission factor (Gef) for N2O emissions from forest burning,
+and a combustion factor (Cf) that represents the efficiency of biomass combustion.</p>
+<p>The total N2O emissions are estimated by multiplying the area of forest burnt, the
+emission factor for fuel burning, the combustion factor, and the emission
+factor for N2O. The result is then converted into tonnes for easier reporting and
+comparison.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated N2O emissions (in tonnes) from the burning of forest areas.</dt><dd><p>The calculation considers the area of forest burnt, the specific emission
+factor for fuel burning in forests, the combustion factor, and the
+emission factor for N2O emissions.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../cropland/index.html" class="btn btn-neutral float-left" title="geo_goblin.land_classes.cropland" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../grassland/index.html" class="btn btn-neutral float-right" title="geo_goblin.land_classes.grassland" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Colm Duffy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

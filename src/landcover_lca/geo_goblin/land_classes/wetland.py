@@ -135,6 +135,25 @@ class Wetland(LandUse):
         return self.current_area_unmanaged * ef_co2_unmanaged_and_near_natural_offsite
 
 
+    def ch4_emissions_unmanaged_and_near_natural(self):
+        """
+        Calculates the methane (CH4) emissions resulting from the drainage of unmanaged
+        and near-natural wetlands. Drainage of such wetlands can lead to the release of
+        methane, a potent greenhouse gas, due to the exposure of previously waterlogged
+        organic matter to aerobic conditions, promoting its decomposition.
+
+        Returns:
+            float: The calculated CH4 emissions in kg from unmanaged and near-natural wetland drainage.
+        """
+        ef_ch4_unmanaged_and_near_natural = (
+            self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
+                "ef_ch4_near_natural_wetland"
+            )
+        )
+
+
+        return self.current_area_unmanaged  * ef_ch4_unmanaged_and_near_natural
+
     def burning_co2_wetland(self):
         """
         Calculates the carbon dioxide (CO2) emissions resulting from the burning of wetland

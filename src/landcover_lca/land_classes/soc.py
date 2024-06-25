@@ -122,19 +122,7 @@ class SOC:
         Returns:
             float: The emission factor from mineral soils.
         """
-        FLU = (
-            self.land_use_features.get_landuse_features_in_land_use_features_data_base(
-                "FLU", land_use_name
-            )
-        )
-        FMG = (
-            self.land_use_features.get_landuse_features_in_land_use_features_data_base(
-                "FMG", land_use_name
-            )
-        )
-        FI = self.land_use_features.get_landuse_features_in_land_use_features_data_base(
-            "FI", land_use_name
-        )
+
         Adjustement_factor = (
             self.land_use_features.get_landuse_features_in_land_use_features_data_base(
                 "Adjustement_factor", land_use_name

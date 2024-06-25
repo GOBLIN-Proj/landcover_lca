@@ -97,6 +97,7 @@ class Wetland(LandUse):
             * self.land_use_data.wetland.share_rewetted_industrial_peat_extraction
         )
 
+
         
     def co2_removals(self):
         """
@@ -238,9 +239,7 @@ class Wetland(LandUse):
             )
         )
 
-        total_area = self.current_area_unmanaged + self._current_area_near_natural
-
-        return total_area * ef_co2_unmanaged_and_near_natural_onsite
+        return self._current_area_near_natural * ef_co2_unmanaged_and_near_natural_onsite
 
 
     def co2_emissions_unmanaged_and_near_natural_offsite(self):
@@ -257,8 +256,7 @@ class Wetland(LandUse):
             )
         )
 
-        total_area = self.current_area_unmanaged + self._current_area_near_natural
-        return total_area * ef_co2_unmanaged_and_near_natural_offsite
+        return self._current_area_near_natural * ef_co2_unmanaged_and_near_natural_offsite
 
     def ch4_emissions_unmanaged_and_near_natural(self):
         """
@@ -276,9 +274,7 @@ class Wetland(LandUse):
             )
         )
 
-        total_area = self.current_area_unmanaged + self._current_area_near_natural
-
-        return total_area * ef_ch4_unmanaged_and_near_natural
+        return  self._current_area_near_natural * ef_ch4_unmanaged_and_near_natural
     
 
     def drainage_ch4_organic_soils(self):
@@ -420,6 +416,7 @@ class Wetland(LandUse):
         area_rewetted = self.current_area_domestic_rewetted + self.current_area_industrial_rewetted
 
         return area_rewetted * ef_ch4_peatland_to_wetland_rewetting
+
 
     def burning_co2_wetland(self):
         """

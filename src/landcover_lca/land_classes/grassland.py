@@ -522,6 +522,7 @@ class Grassland(LandUse):
             )
         )
 
+
         fire_mineral_soil = (
             (
                 self.current_area_mineral * self.land_use_data.grassland.share_burnt

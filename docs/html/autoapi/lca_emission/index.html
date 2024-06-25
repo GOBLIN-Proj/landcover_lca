@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lca_emission &mdash; Landcover_LCA 0.1.2 documentation</title>
+  <title>lca_emission &mdash; Landcover_LCA 0.2.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../_static/documentation_options.js?v=92734c54"></script>
+        <script src="../../_static/documentation_options.js?v=938c9ccc"></script>
         <script src="../../_static/doctools.js?v=888ff710"></script>
         <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -57,9 +57,10 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../models/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">models</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="../land_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">land_utils</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../land_classes/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">land_classes</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../database/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">database</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../resource_manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">resource_manager</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../geo_goblin/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -165,56 +166,68 @@ from the various land cover types.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#lca_emission.rewetting_ch4_organic_soils_in_grassland" title="lca_emission.rewetting_ch4_organic_soils_in_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rewetting_ch4_organic_soils_in_grassland</span></code></a>(land_use, ...)</p></td>
 <td><p>Calculate the CH4 emissions from rewetting organic soils in grassland.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lca_emission.mineral_soils_co2_from_forest_to_grassland" title="lca_emission.mineral_soils_co2_from_forest_to_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mineral_soils_co2_from_forest_to_grassland</span></code></a>(land_use, ...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lca_emission.mineral_soils_co2_grassland_remaining_grassland" title="lca_emission.mineral_soils_co2_grassland_remaining_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mineral_soils_co2_grassland_remaining_grassland</span></code></a>(...)</p></td>
+<td><p>Calculate the CO2 emissions from mineral soils in grassland that remains grassland.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lca_emission.mineral_soils_co2_from_forest_to_grassland" title="lca_emission.mineral_soils_co2_from_forest_to_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mineral_soils_co2_from_forest_to_grassland</span></code></a>(land_use, ...)</p></td>
 <td><p>Calculate CO2 emissions from mineral soils during land use change from forest to grassland.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lca_emission.mineral_soils_co2_from_cropland_to_grassland" title="lca_emission.mineral_soils_co2_from_cropland_to_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mineral_soils_co2_from_cropland_to_grassland</span></code></a>(land_use, ...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lca_emission.mineral_soils_co2_from_cropland_to_grassland" title="lca_emission.mineral_soils_co2_from_cropland_to_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mineral_soils_co2_from_cropland_to_grassland</span></code></a>(land_use, ...)</p></td>
 <td><p>Calculates the CO2 emissions from mineral soils due to land use change from cropland to grassland.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lca_emission.mineral_soils_n2o_from_forest_to_grassland" title="lca_emission.mineral_soils_n2o_from_forest_to_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mineral_soils_n2o_from_forest_to_grassland</span></code></a>(land_use, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lca_emission.mineral_soils_n2o_from_forest_to_grassland" title="lca_emission.mineral_soils_n2o_from_forest_to_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mineral_soils_n2o_from_forest_to_grassland</span></code></a>(land_use, ...)</p></td>
 <td><p>Calculates the N2O emissions from mineral soils due to land use change from forest to grassland.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lca_emission.burning_co2_grassland" title="lca_emission.burning_co2_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">burning_co2_grassland</span></code></a>(ef_country, transition_matrix, ...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lca_emission.burning_co2_grassland" title="lca_emission.burning_co2_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">burning_co2_grassland</span></code></a>(ef_country, transition_matrix, ...)</p></td>
 <td><p>Calculate the CO2 emissions from burning grassland.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lca_emission.burning_ch4_grassland" title="lca_emission.burning_ch4_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">burning_ch4_grassland</span></code></a>(ef_country, transition_matrix, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lca_emission.burning_ch4_grassland" title="lca_emission.burning_ch4_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">burning_ch4_grassland</span></code></a>(ef_country, transition_matrix, ...)</p></td>
 <td><p>Calculate the CH4 emissions from burning grassland.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lca_emission.burning_n2o_grassland" title="lca_emission.burning_n2o_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">burning_n2o_grassland</span></code></a>(ef_country, transition_matrix, ...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lca_emission.burning_n2o_grassland" title="lca_emission.burning_n2o_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">burning_n2o_grassland</span></code></a>(ef_country, transition_matrix, ...)</p></td>
 <td><p>Calculate the N2O emissions from burning grassland.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lca_emission.total_co2_emission_to_grassland" title="lca_emission.total_co2_emission_to_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">total_co2_emission_to_grassland</span></code></a>(land_use, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lca_emission.total_co2_emission_to_grassland" title="lca_emission.total_co2_emission_to_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">total_co2_emission_to_grassland</span></code></a>(land_use, ...)</p></td>
 <td><p>Calculates the total CO2 emission to grassland based on the given parameters. It sums mineral soils CO2</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lca_emission.total_co2_emission_in_grassland" title="lca_emission.total_co2_emission_in_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">total_co2_emission_in_grassland</span></code></a>(land_use, ...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lca_emission.total_co2_emission_in_grassland" title="lca_emission.total_co2_emission_in_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">total_co2_emission_in_grassland</span></code></a>(land_use, ...)</p></td>
 <td><p>Calculates the total CO2 emission in grassland based on the land use, past land use data,</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lca_emission.total_ch4_emission_in_grassland" title="lca_emission.total_ch4_emission_in_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">total_ch4_emission_in_grassland</span></code></a>(land_use, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lca_emission.total_ch4_emission_in_grassland" title="lca_emission.total_ch4_emission_in_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">total_ch4_emission_in_grassland</span></code></a>(land_use, ...)</p></td>
 <td><p>Calculates the total CH4 emission in grassland by summing the drainage CH4 emission from organic soils</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lca_emission.total_co2_emission_grassland" title="lca_emission.total_co2_emission_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">total_co2_emission_grassland</span></code></a>(land_use, ...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lca_emission.total_co2_emission_grassland" title="lca_emission.total_co2_emission_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">total_co2_emission_grassland</span></code></a>(land_use, ...)</p></td>
 <td><p>Calculate the total CO2 emission from grassland. Includes total CO2 emission to grassland (cropland and forest),</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lca_emission.total_ch4_emission_grassland" title="lca_emission.total_ch4_emission_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">total_ch4_emission_grassland</span></code></a>(land_use, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lca_emission.total_ch4_emission_grassland" title="lca_emission.total_ch4_emission_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">total_ch4_emission_grassland</span></code></a>(land_use, ...)</p></td>
 <td><p>Calculate the total CH4 emission in grassland. Includes total CH4 emission in grassland (drainage and rewetting)</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lca_emission.total_n2o_emission_grassland" title="lca_emission.total_n2o_emission_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">total_n2o_emission_grassland</span></code></a>(land_use, ...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lca_emission.total_n2o_emission_grassland" title="lca_emission.total_n2o_emission_grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">total_n2o_emission_grassland</span></code></a>(land_use, ...)</p></td>
 <td><p>Calculate the total N2O emission from grassland. Includes N2O emissons from land use change to grassland and</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lca_emission.horticulture_co2_peat_export" title="lca_emission.horticulture_co2_peat_export"><code class="xref py py-obj docutils literal notranslate"><span class="pre">horticulture_co2_peat_export</span></code></a>(ef_country, year, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lca_emission.horticulture_co2_peat_export" title="lca_emission.horticulture_co2_peat_export"><code class="xref py py-obj docutils literal notranslate"><span class="pre">horticulture_co2_peat_export</span></code></a>(ef_country, year, ...)</p></td>
 <td><p>Calculate the CO2 emissions from horticulture peat export.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lca_emission.biomass_co2_from_conversion_to_wetland" title="lca_emission.biomass_co2_from_conversion_to_wetland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">biomass_co2_from_conversion_to_wetland</span></code></a>(land_use_data, ...)</p></td>
-<td><p>Calculate the CO2 removals from conversion to wetland.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lca_emission.biomass_co2_from_removals_wetland" title="lca_emission.biomass_co2_from_removals_wetland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">biomass_co2_from_removals_wetland</span></code></a>(land_use_data, ...)</p></td>
+<td><p>Calculate the CO2 emissions from biomass removals in wetland.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lca_emission.drainage_co2_organic_soils_in_wetland" title="lca_emission.drainage_co2_organic_soils_in_wetland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">drainage_co2_organic_soils_in_wetland</span></code></a>(land_use_data, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lca_emission.drainage_co2_organic_soils_in_wetland" title="lca_emission.drainage_co2_organic_soils_in_wetland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">drainage_co2_organic_soils_in_wetland</span></code></a>(land_use_data, ...)</p></td>
 <td><p>Calculate CO2 emissions from drained organic soils in wetland.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lca_emission.unmanaged_wetland_ch4_emission" title="lca_emission.unmanaged_wetland_ch4_emission"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unmanaged_wetland_ch4_emission</span></code></a>(ef_country, ...)</p></td>
+<td><p>Calculate the CH4 emissions from unmanaged wetland.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#lca_emission.drainage_ch4_organic_soils_in_wetland" title="lca_emission.drainage_ch4_organic_soils_in_wetland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">drainage_ch4_organic_soils_in_wetland</span></code></a>(ef_country, ...)</p></td>
 <td><p>Calculate the CH4 emissions from drainage of organic soils in wetland areas.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#lca_emission.drainage_n2o_organic_soils_in_wetland" title="lca_emission.drainage_n2o_organic_soils_in_wetland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">drainage_n2o_organic_soils_in_wetland</span></code></a>(ef_country, ...)</p></td>
 <td><p>Calculate the N2O emissions from drainage of organic soils in wetland areas.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lca_emission.rewetting_co2_organic_soils_in_wetland" title="lca_emission.rewetting_co2_organic_soils_in_wetland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rewetting_co2_organic_soils_in_wetland</span></code></a>(ef_country, ...)</p></td>
+<td><p>Calculate the CO2 emissions from rewetting organic soils in wetland.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lca_emission.rewetting_ch4_organic_soils_in_wetland" title="lca_emission.rewetting_ch4_organic_soils_in_wetland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rewetting_ch4_organic_soils_in_wetland</span></code></a>(ef_country, ...)</p></td>
+<td><p>Calculate the CH4 emissions from rewetting organic soils in wetland.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#lca_emission.burning_co2_wetland" title="lca_emission.burning_co2_wetland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">burning_co2_wetland</span></code></a>(ef_country, transition_matrix, ...)</p></td>
 <td><p>Calculate the CO2 emissions from burning wetland.</p></td>
@@ -711,6 +724,24 @@ float: Total CH4 emission from forest.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="lca_emission.mineral_soils_co2_grassland_remaining_grassland">
+<span class="sig-prename descclassname"><span class="pre">lca_emission.</span></span><span class="sig-name descname"><span class="pre">mineral_soils_co2_grassland_remaining_grassland</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">land_use</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lca_emission.mineral_soils_co2_grassland_remaining_grassland" title="Link to this definition"></a></dt>
+<dd><p>Calculate the CO2 emissions from mineral soils in grassland that remains grassland.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>land_use_data</strong> (<em>-</em>) – The current/future land use data.</p></li>
+<li><p><strong>past_land_use_data</strong> (<em>-</em>) – The past land use data.</p></li>
+<li><p><strong>transition_matrix</strong> (<em>-</em>) – The transition matrix.</p></li>
+<li><p><strong>ef_country</strong> (<em>-</em>) – Emission factor country.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:
+- The calculated CO2 emissions from mineral soils in grassland that remains grassland.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="lca_emission.mineral_soils_co2_from_forest_to_grassland">
 <span class="sig-prename descclassname"><span class="pre">lca_emission.</span></span><span class="sig-name descname"><span class="pre">mineral_soils_co2_from_forest_to_grassland</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">land_use</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrix_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lca_emission.mineral_soils_co2_from_forest_to_grassland" title="Link to this definition"></a></dt>
 <dd><p>Calculate CO2 emissions from mineral soils during land use change from forest to grassland.</p>
@@ -985,9 +1016,9 @@ accounted for in the Agricultural soils category in the national inventory repor
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="lca_emission.biomass_co2_from_conversion_to_wetland">
-<span class="sig-prename descclassname"><span class="pre">lca_emission.</span></span><span class="sig-name descname"><span class="pre">biomass_co2_from_conversion_to_wetland</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lca_emission.biomass_co2_from_conversion_to_wetland" title="Link to this definition"></a></dt>
-<dd><p>Calculate the CO2 removals from conversion to wetland.</p>
+<dt class="sig sig-object py" id="lca_emission.biomass_co2_from_removals_wetland">
+<span class="sig-prename descclassname"><span class="pre">lca_emission.</span></span><span class="sig-name descname"><span class="pre">biomass_co2_from_removals_wetland</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lca_emission.biomass_co2_from_removals_wetland" title="Link to this definition"></a></dt>
+<dd><p>Calculate the CO2 emissions from biomass removals in wetland.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -997,13 +1028,9 @@ accounted for in the Agricultural soils category in the national inventory repor
 <li><p><strong>ef_country</strong> (<em>-</em>) – Emission factor country.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>CO2 removals from conversion to wetland.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
 </dl>
+<p>Returns:
+- The CO2 emissions from biomass removals in wetland.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -1025,6 +1052,28 @@ accounted for in the Agricultural soils category in the national inventory repor
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lca_emission.unmanaged_wetland_ch4_emission">
+<span class="sig-prename descclassname"><span class="pre">lca_emission.</span></span><span class="sig-name descname"><span class="pre">unmanaged_wetland_ch4_emission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lca_emission.unmanaged_wetland_ch4_emission" title="Link to this definition"></a></dt>
+<dd><p>Calculate the CH4 emissions from unmanaged wetland.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ef_country</strong> (<em>-</em>) – Emission factor country.</p></li>
+<li><p><strong>transition_matrix</strong> (<em>-</em>) – The transition matrix.</p></li>
+<li><p><strong>land_use_data</strong> (<em>-</em>) – The current/future land use data.</p></li>
+<li><p><strong>past_land_use_data</strong> (<em>-</em>) – The past land use data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The CH4 emissions from unmanaged wetland.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1064,6 +1113,42 @@ accounted for in the Agricultural soils category in the national inventory repor
 </div></blockquote>
 <p>Returns:
 - The N2O emissions from organic soils in wetland areas.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lca_emission.rewetting_co2_organic_soils_in_wetland">
+<span class="sig-prename descclassname"><span class="pre">lca_emission.</span></span><span class="sig-name descname"><span class="pre">rewetting_co2_organic_soils_in_wetland</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lca_emission.rewetting_co2_organic_soils_in_wetland" title="Link to this definition"></a></dt>
+<dd><p>Calculate the CO2 emissions from rewetting organic soils in wetland.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ef_country</strong> (<em>-</em>) – Emission factor country.</p></li>
+<li><p><strong>transition_matrix</strong> (<em>-</em>) – The transition matrix.</p></li>
+<li><p><strong>land_use_data</strong> (<em>-</em>) – The current/future land use data.</p></li>
+<li><p><strong>past_land_use_data</strong> (<em>-</em>) – The past land use data.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:
+- The CO2 emissions from rewetting organic soils in wetland.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lca_emission.rewetting_ch4_organic_soils_in_wetland">
+<span class="sig-prename descclassname"><span class="pre">lca_emission.</span></span><span class="sig-name descname"><span class="pre">rewetting_ch4_organic_soils_in_wetland</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lca_emission.rewetting_ch4_organic_soils_in_wetland" title="Link to this definition"></a></dt>
+<dd><p>Calculate the CH4 emissions from rewetting organic soils in wetland.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ef_country</strong> (<em>-</em>) – Emission factor country.</p></li>
+<li><p><strong>transition_matrix</strong> (<em>-</em>) – The transition matrix.</p></li>
+<li><p><strong>land_use_data</strong> (<em>-</em>) – The current/future land use data.</p></li>
+<li><p><strong>past_land_use_data</strong> (<em>-</em>) – The past land use data.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:
+- The CH4 emissions from rewetting organic soils in wetland.</p>
 </dd></dl>
 
 <dl class="py function">

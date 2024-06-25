@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>geo_goblin.land_classes.grassland &mdash; Landcover_LCA 0.2.0 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="geo_goblin.land_classes.landuse" href="../landuse/index.html" />
+    <link rel="prev" title="geo_goblin.land_classes.forestland" href="../forestland/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Landcover_LCA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../INSTALLATION.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../lca_emission/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lca_emission</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../models/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">models</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../land_classes/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">land_classes</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../database/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">database</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../resource_manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">resource_manager</span></code></a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin.land_classes</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Landcover_LCA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin</span></code></a></li>
+          <li class="breadcrumb-item"><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin.land_classes</span></code></a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin.land_classes.grassland</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/autoapi/geo_goblin/land_classes/grassland/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-geo_goblin.land_classes.grassland">
+<span id="geo-goblin-land-classes-grassland"></span><h1><a class="reference internal" href="#module-geo_goblin.land_classes.grassland" title="geo_goblin.land_classes.grassland"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geo_goblin.land_classes.grassland</span></code></a><a class="headerlink" href="#module-geo_goblin.land_classes.grassland" title="Link to this heading"></a></h1>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geo_goblin.land_classes.grassland.Grassland" title="geo_goblin.land_classes.grassland.Grassland"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Grassland</span></code></a></p></td>
+<td><p>A class representing grassland land use.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.grassland.Grassland">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geo_goblin.land_classes.grassland.</span></span><span class="sig-name descname"><span class="pre">Grassland</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrix_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_land_use</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.grassland.Grassland" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">landcover_lca.geo_goblin.land_classes.landuse.LandUse</span></code></p>
+<p>A class representing grassland land use.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">ef_country</span></span></dt>
+<dd><p>The country-specific emission factors.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">transition_matrix_data</span></span></dt>
+<dd><p>The transition matrix data.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">land_use_data</span></span></dt>
+<dd><p>The land use data.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">past_land_use_data</span></span></dt>
+<dd><p>The past land use data.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">past_land_use</span></span></dt>
+<dd><p>The past land use.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">current_land_use</span></span></dt>
+<dd><p>The current land use.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">current_area</span></span></dt>
+<dd><p>The current area of grassland.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">current_area_drained</span></span></dt>
+<dd><p>The current area of drained grassland.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">mineral_co2_in_grassland()</span></span></dt>
+<dd><p>Calculate the CO2 emissions from mineral soils in grassland.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">drainage_co2_organic_soils_in_grassland()</span></span></dt>
+<dd><p>Calculate the CO2 emissions from the drainage of organic soils in grassland.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">drainage_ch4_organic_soils_in_grassland()</span></span></dt>
+<dd><p>Calculate the CH4 emissions from the drainage of organic soils in grassland.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">drainage_n2O_organic_soils_in_grassland()</span></span></dt>
+<dd><p>Calculate the N2O emissions from the drainage of organic soils in grassland.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">rewetting_co2_organic_soils_in_grassland()</span></span></dt>
+<dd><p>Calculate the CO2 emissions from the rewetting of organic soils in grassland.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">rewetting_ch4_organic_soils_in_grassland()</span></span></dt>
+<dd><p>Calculate the CH4 emissions from the rewetting of organic soils in grassland.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">burning_co2_grassland()</span></span></dt>
+<dd><p>Calculate the CO2 emissions from the burning of grassland.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">burning_ch4_grassland()</span></span></dt>
+<dd><p>Calculate the CH4 emissions from the burning of grassland.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">burning_n2o_grassland()</span></span></dt>
+<dd><p>Calculate the N2O emissions from the burning of grassland.</p>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ef_country</strong> (<em>-</em>) – The country for which the emissions factors are calculated.</p></li>
+<li><p><strong>transition_matrix_data</strong> (<em>-</em>) – The transition matrix data.</p></li>
+<li><p><strong>land_use_data</strong> (<em>-</em>) – The land use data.</p></li>
+<li><p><strong>past_land_use_data</strong> (<em>-</em>) – The past land use data.</p></li>
+<li><p><strong>past_land_use</strong> (<em>-</em>) – The past land use. Defaults to None.</p></li>
+<li><p><strong>current_land_use</strong> (<em>-</em>) – The current land use. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.grassland.Grassland.mineral_co2_in_grassland">
+<span class="sig-name descname"><span class="pre">mineral_co2_in_grassland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.grassland.Grassland.mineral_co2_in_grassland" title="Link to this definition"></a></dt>
+<dd><p>Calculate the CO2 removals from mineral soils in grassland. This uses and implied
+emission factor based on Ireland’s national inventory reporting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The CO2 removals in kg from mineral soils in grassland.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.grassland.Grassland.drainage_co2_organic_soils_in_grassland">
+<span class="sig-name descname"><span class="pre">drainage_co2_organic_soils_in_grassland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.grassland.Grassland.drainage_co2_organic_soils_in_grassland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the carbon dioxide (CO2) onsite and offsite emissions resulting from the drainage of organic
+soils in grassland areas. Draining organic soils can lead to significant CO2 emissions.
+This process exposes previously waterlogged organic matter to oxygen, accelerating its
+decomposition and releasing stored carbon into the atmosphere.</p>
+<p>This method focuses specifically on CO2 emissions from on-site sources in grasslands
+where organic soils have been drained. The emission factor used for this calculation
+is tailored to the specific conditions of drained grasslands, reflecting the typical
+rate of CO2 emissions per unit area for such land use change.</p>
+<p>The emission factors are obtained from a country-specific database of emission factors,
+ensuring the calculation is representative of regional characteristics and land
+management practices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated CO2 emissions in kg resulting from the drainage of organic soils</dt><dd><p>in grassland areas. The emissions are based on the current area of drained
+land and the specific emission factor for CO2 emissions from grassland drainage.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.grassland.Grassland.drainage_onsite_co2_organic_soils_in_grassland">
+<span class="sig-name descname"><span class="pre">drainage_onsite_co2_organic_soils_in_grassland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.grassland.Grassland.drainage_onsite_co2_organic_soils_in_grassland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the carbon dioxide (CO2) emissions resulting from the drainage of poor and rich organic
+soils in grassland areas. Draining organic soils can lead to significant CO2 emissions.
+This process exposes previously waterlogged organic matter to oxygen, accelerating its
+decomposition and releasing stored carbon into the atmosphere.</p>
+<p>This method focuses specifically on CO2 emissions from on-site sources in grasslands
+where organic soils have been drained. The emission factor used for this calculation
+is tailored to the specific conditions of drained grasslands, reflecting the typical
+rate of CO2 emissions per unit area for such land use change.</p>
+<p>The emission factor is obtained from a country-specific database of emission factors,
+ensuring the calculation is representative of regional characteristics and land
+management practices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated CO2 emissions in kg resulting from the drainage of poor and rich organic soils</dt><dd><p>in grassland areas. The emissions are based on the current area of drained
+land and the specific emission factor for CO2 emissions from grassland drainage.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.grassland.Grassland.drainage_offsite_co2_organic_soils_in_grassland">
+<span class="sig-name descname"><span class="pre">drainage_offsite_co2_organic_soils_in_grassland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.grassland.Grassland.drainage_offsite_co2_organic_soils_in_grassland" title="Link to this definition"></a></dt>
+<dd><p>Cacluates the offsite CO2 emissions, in the form of Disolved Organic Carbon (DOC) from the drainage of poor and rich organic
+soils in grassland areas.</p>
+<p>A tier 1 approach is used to estimate the DOC emissions from the drained organic soils in grasslands.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated CO2 emissions in kg resulting from the drainage of poor and rich organic soils</dt><dd><p>in grassland areas. The emissions are based on the current area of drained
+land and the specific emission factor for CO2 emissions from grassland drainage.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.grassland.Grassland.drainage_ch4_organic_soils_in_grassland">
+<span class="sig-name descname"><span class="pre">drainage_ch4_organic_soils_in_grassland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.grassland.Grassland.drainage_ch4_organic_soils_in_grassland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the methane (CH4) emissions resulting from the drainage of poor and rich organic soils
+in grassland areas. The drainage of organic soils can significantly
+increase CH4 emissions due to the exposure of previously waterlogged organic matter
+to conditions that promote methane production.</p>
+<p>Emission factors are sourced from a country-specific database, ensuring that the
+emissions estimation is relevant to the regional characteristics of grassland drainage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The calculated CH4 emissions in kg from organic soils in grassland areas.
+The emissions are based on the current area of drained land and a combination
+of the emission factors for land drainage and ditch drainage.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.grassland.Grassland.drainage_n2O_organic_soils_in_grassland">
+<span class="sig-name descname"><span class="pre">drainage_n2O_organic_soils_in_grassland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.grassland.Grassland.drainage_n2O_organic_soils_in_grassland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the nitrous oxide (N2O) emissions resulting from the drainage of poor and rich organic
+soils in grassland areas. Drainage of organic soils in grasslands can lead to increased N2O emissions.
+This is due to the changes in soil conditions that promote nitrification and denitrification processes,
+which are major sources of N2O emissions.</p>
+<p>This method estimates N2O emissions by applying an emission factor specific to
+grassland drainage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The calculated N2O emissions in kg resulting from the drainage of organic soils in grassland areas.
+The emissions are based on the current area of drained land and the specific emission factors for
+N2O emissions from grassland drainage.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.grassland.Grassland.rewetting_co2_organic_soils_in_grassland">
+<span class="sig-name descname"><span class="pre">rewetting_co2_organic_soils_in_grassland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.grassland.Grassland.rewetting_co2_organic_soils_in_grassland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the carbon dioxide (CO2) emissions/removals resulting from the rewetting
+of drained rich and poor organic soils in grassland areas.</p>
+<p>This method considers two key emission reduction factors: direct
+on-site CO2 emissions/removals due to rewetting and the CO2 emissions related
+to dissolved organic carbon (DOC).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The calculated CO2 emissions/removals in kg reductions resulting from the rewetting of
+organic soils in grassland areas.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.grassland.Grassland.rewetting_co2_onsite_organic_soils_in_grassland">
+<span class="sig-name descname"><span class="pre">rewetting_co2_onsite_organic_soils_in_grassland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.grassland.Grassland.rewetting_co2_onsite_organic_soils_in_grassland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the carbon dioxide (CO2) emissions resulting from the rewetting of poor and rich organic soils
+in grassland areas.</p>
+<p>This method focuses specifically on CO2 emissions from on-site sources in grasslands
+where organic soils have been rewetted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The calculated CO2 emissions in kg resulting from the rewetting of poor and rich organic soils
+in grassland areas. The emissions are based on the current area of rewetted land and the specific emission factors
+for CO2 emissions from grassland rewetting.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.grassland.Grassland.rewetting_co2_offsite_organic_soils_in_grassland">
+<span class="sig-name descname"><span class="pre">rewetting_co2_offsite_organic_soils_in_grassland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.grassland.Grassland.rewetting_co2_offsite_organic_soils_in_grassland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the offsite CO2 emissions, in the form of Disolved Organic Carbon (DOC) from the rewetting of poor and rich organic
+soils in grassland areas.</p>
+<p>A tier 1 approach is used to estimate the DOC emissions from the rewetted organic soils in grasslands.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated CO2 emissions in kg resulting from the rewetting of poor and rich organic soils</dt><dd><p>in grassland areas. The emissions are based on the current area of rewetted
+land and the specific emission factor for CO2 emissions from grassland rewetting.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.grassland.Grassland.rewetting_ch4_organic_soils_in_grassland">
+<span class="sig-name descname"><span class="pre">rewetting_ch4_organic_soils_in_grassland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.grassland.Grassland.rewetting_ch4_organic_soils_in_grassland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the methane (CH4) emissions resulting from the rewetting of drained
+organic soils in grassland areas. Rewetting such soils, particularly in areas
+previously used as peatlands or other wetlands, can lead to an increase in CH4
+emissions. This is due to the creation of anaerobic conditions favorable for
+methanogenesis (methane production) in waterlogged soils.</p>
+<p>This method utilizes an emission factor that specifically quantifies the rate
+of CH4 emissions per unit area resulting from the rewetting of organic soils in
+grassland environments. The emission factor is sourced from a country-specific
+database, accounting for variations in soil types, previous land use practices,
+and climatic conditions.</p>
+<p>The total CH4 emissions are estimated based on the total area of grasslands
+undergoing transition from drained to rewetted conditions and the emission
+factor for grassland rewetting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The calculated CH4 emissions resulting from the rewetting of organic
+soils in grassland areas.
+The emissions are based on the total transition area and the specific
+emission factor for CH4 emissions from grassland rewetting.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.grassland.Grassland.burning_co2_grassland">
+<span class="sig-name descname"><span class="pre">burning_co2_grassland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.grassland.Grassland.burning_co2_grassland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the carbon dioxide (CO2) emissions resulting from the burning of grasslands.
+This method assesses CO2 emissions from two types of soil in grasslands: mineral soils
+and drained organic soils. The emission calculation is based on the formula
+𝐿𝑓𝑖𝑟𝑒 = 𝐴 ∙ 𝑀𝐵 ∙ 𝐶𝑓 ∙ 𝐺𝑒𝑓 ∙ 10^−3, where A is the area, MB is the biomass,
+Cf is the combustion factor, and Gef is the emission factor.</p>
+<p>The combustion factor (Cf) is assumed to be 1.0, indicating that all available fuel
+(biomass) is burned. The method involves multiplying the area of grassland burned by
+the emission factors for CO2 emissions from both mineral and drained organic soils.</p>
+<p>Emission factors are sourced from a country-specific database, reflecting regional
+variations in grassland composition and burning characteristics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated CO2 emissions (in tonnes) from the burning of grasslands,</dt><dd><p>including both mineral soils and drained organic soils. The calculation
+considers the area of each soil type that is burned and their respective
+emission factors.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.grassland.Grassland.burning_ch4_grassland">
+<span class="sig-name descname"><span class="pre">burning_ch4_grassland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.grassland.Grassland.burning_ch4_grassland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the methane (CH4) emissions resulting from the burning of grasslands.
+This method evaluates CH4 emissions from two types of soil in grasslands: mineral
+soils and drained organic soils. The calculation formula used is
+𝐿𝑓𝑖𝑟𝑒 = 𝐴 ∙ 𝑀𝐵 ∙ 𝐶𝑓 ∙ 𝐺𝑒𝑓 ∙ 10^−3, where A represents the area, MB is the biomass,
+Cf is the combustion factor, and Gef is the emission factor.</p>
+<p>The combustion factor (Cf) is assumed to be 1.0, signifying that all available
+fuel (biomass) is burned. The method involves multiplying the area of grassland
+burned by the emission factors for CH4 emissions from both mineral and drained
+organic soils.</p>
+<p>Emission factors are obtained from a country-specific database, which takes into
+account regional differences in grassland composition and burning characteristics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated CH4 emissions (in tonnes) from the burning of grasslands,</dt><dd><p>comprising both mineral soils and drained organic soils. The calculation
+involves considering the area of each soil type that is burned and their
+respective emission factors.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.grassland.Grassland.burning_n2o_grassland">
+<span class="sig-name descname"><span class="pre">burning_n2o_grassland</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.grassland.Grassland.burning_n2o_grassland" title="Link to this definition"></a></dt>
+<dd><p>Calculates the nitrous oxide (N2O) emissions resulting from the burning of grasslands.
+This method assesses N2O emissions from two types of soil in grasslands: mineral soils
+and drained organic soils. The combustion factor (Cf) is assumed to be 1.0, signifying
+that all available fuel (biomass) is burned.</p>
+<p>Emission factors for N2O emissions are applied to both mineral and drained organic soils
+in grasslands. These factors are obtained from a country-specific database, reflecting
+regional variations in grassland composition and burning characteristics.</p>
+<p>The method involves calculating the N2O emissions by multiplying the area of grassland
+burned by the emission factors for N2O emissions from both soil types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The calculated N2O emissions (in tonnes) from the burning of grasslands,</dt><dd><p>including both mineral soils and drained organic soils. The calculation
+involves considering the area of each soil type that is burned and their
+respective emission factors.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../forestland/index.html" class="btn btn-neutral float-left" title="geo_goblin.land_classes.forestland" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../landuse/index.html" class="btn btn-neutral float-right" title="geo_goblin.land_classes.landuse" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Colm Duffy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
