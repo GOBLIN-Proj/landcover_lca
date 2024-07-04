@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>geo_goblin.geo_models &mdash; Landcover_LCA 0.2.0 documentation</title>
+  <title>geo_goblin.geo_models &mdash; Landcover_LCA 0.2.1 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../../../_static/documentation_options.js?v=37f418d5"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -128,7 +128,10 @@ model implementation, facilitating easy integration with other components of the
 <tr class="row-even"><td><p><a class="reference internal" href="#geo_goblin.geo_models.Emissions_Factors" title="geo_goblin.geo_models.Emissions_Factors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Emissions_Factors</span></code></a></p></td>
 <td><p>Emissions_Factors is a class designed to interact with a land use database to read and retrieve emissions factors data.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#geo_goblin.geo_models.Land_Use_Features" title="geo_goblin.geo_models.Land_Use_Features"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Land_Use_Features</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geo_goblin.geo_models.Nutrient_Exports" title="geo_goblin.geo_models.Nutrient_Exports"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Nutrient_Exports</span></code></a></p></td>
+<td><p>Nutrient_Exports is a class designed to interact with a land use database to read and retrieve nutrient export factors data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geo_goblin.geo_models.Land_Use_Features" title="geo_goblin.geo_models.Land_Use_Features"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Land_Use_Features</span></code></a></p></td>
 <td><p>Land_Use_Features is a class designed to interact with a land use database to read and retrieve National Inventory soil adjustment data.</p></td>
 </tr>
 </tbody>
@@ -433,6 +436,75 @@ co2_emission_factor = emissions_factors.get_emission_factor_in_emission_factor_d
 <dt class="sig sig-object py" id="id0">
 <span class="sig-name descname"><span class="pre">get_emission_factor_in_emission_factor_data_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">emission_factor_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
 <dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geo_goblin.geo_models.Nutrient_Exports">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geo_goblin.geo_models.</span></span><span class="sig-name descname"><span class="pre">Nutrient_Exports</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.geo_models.Nutrient_Exports" title="Link to this definition"></a></dt>
+<dd><p>Nutrient_Exports is a class designed to interact with a land use database to read and retrieve nutrient export factors data.</p>
+<p>It is initialized with a specific country’s context and utilizes a data loading mechanism to access the nutrient export factors.</p>
+<p>The primary functionality of this class is to provide an interface for retrieving nutrient export factor values based on</p>
+<p>given land use types and types of land use.</p>
+<dl class="simple">
+<dt>Initialization:</dt><dd><p>Nutrient_Exports(ef_country)</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ef_country</strong> (<em>str</em>) – A string specifying the country context for which the nutrient export factors data is to be loaded and used.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geo_goblin.geo_models.Nutrient_Exports.data_loader_class">
+<span class="sig-name descname"><span class="pre">data_loader_class</span></span><a class="headerlink" href="#geo_goblin.geo_models.Nutrient_Exports.data_loader_class" title="Link to this definition"></a></dt>
+<dd><p>An instance of the Loader class initialized with the ef_country, responsible for loading the nutrient export factors data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../resource_manager/data_loader/index.html#resource_manager.data_loader.Loader" title="resource_manager.data_loader.Loader">Loader</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geo_goblin.geo_models.Nutrient_Exports.ef_country">
+<span class="sig-name descname"><span class="pre">ef_country</span></span><a class="headerlink" href="#geo_goblin.geo_models.Nutrient_Exports.ef_country" title="Link to this definition"></a></dt>
+<dd><p>The country context for the nutrient export factors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geo_goblin.geo_models.Nutrient_Exports.export_data_base">
+<span class="sig-name descname"><span class="pre">export_data_base</span></span><a class="headerlink" href="#geo_goblin.geo_models.Nutrient_Exports.export_data_base" title="Link to this definition"></a></dt>
+<dd><p>A dataframe containing nutrient export factors data loaded from the land use database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dataframe</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.geo_models.Nutrient_Exports.return_factors">
+<span class="sig-name descname"><span class="pre">return_factors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.geo_models.Nutrient_Exports.return_factors" title="Link to this definition"></a></dt>
+<dd><p>Returns the export factors data base.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.geo_models.Nutrient_Exports.get_N_export_factor_in_export_factor_data_base">
+<span class="sig-name descname"><span class="pre">get_N_export_factor_in_export_factor_data_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">landuse</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.geo_models.Nutrient_Exports.get_N_export_factor_in_export_factor_data_base" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the N export factor value for a specified land use type and type of land use, within the context of the ef_country.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.geo_models.Nutrient_Exports.get_P_export_factor_in_export_factor_data_base">
+<span class="sig-name descname"><span class="pre">get_P_export_factor_in_export_factor_data_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">landuse</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.geo_models.Nutrient_Exports.get_P_export_factor_in_export_factor_data_base" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the P export factor value for a specified land use type and type of land use, within the context of the ef_country.</p>
+</dd></dl>
 
 </dd></dl>
 

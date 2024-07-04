@@ -69,6 +69,22 @@ Classes
       :rtype: int
 
 
+   .. py:method:: get_total_N_to_po4e()
+
+      Returns the conversion factor for total nitrogen to phosphate equivalent.
+
+      :returns: The conversion factor for total nitrogen to phosphate equivalent.
+      :rtype: float
+
+
+   .. py:method:: get_total_P_to_po4e()
+
+      Returns the conversion factor for total nitrogen to N2O emissions.
+
+      :returns: The conversion factor for total nitrogen to N2O emissions.
+      :rtype: float
+
+
 
 .. py:class:: ModelData
 

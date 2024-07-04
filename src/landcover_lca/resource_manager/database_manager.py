@@ -34,6 +34,7 @@ class DataManager:
         get_ipcc_soc_factors(): Retrieves the IPCC soil class SOC factors from the database.
         get_national_forest_inventory(): Retrieves the national forest inventory data from the database.
         get_exported_peat(): Retrieves the exported peat data from the database.
+        get_slam_export_data(): Retrieves the SLAM export data from the database.
     """
 
     def __init__(self, ef_country):
@@ -133,6 +134,22 @@ class DataManager:
             "SELECT * FROM '%s'" % (table),
             self.engine,
             index_col=["Year"],
+        )
+
+        return dataframe
+    
+    def get_slam_export_data(self):
+        """
+        Retrieves the SLAM export data from the database.
+
+        Returns:
+            pandas.DataFrame: The SLAM export data.
+        """
+        table = "slam_nutrient_export_rates"
+        dataframe = pd.read_sql(
+            "SELECT * FROM '%s'" % (table),
+            self.engine,  
+            index_col=["ef_country"],
         )
 
         return dataframe

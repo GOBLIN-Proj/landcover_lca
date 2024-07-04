@@ -75,10 +75,10 @@ Classes
       :rtype: float
 
 
-   .. py:method:: get_total_transition_area()
+   .. py:method:: get_total_grassland_transition_area()
 
       Retrieves the total area that has transitioned or is projected to transition
-      from the past land use category to the current (or future) land use category.
+      from the grassland use category to the current (or future) land use category.
       This measure is vital for assessing the scale of land use change.
 
       :returns:

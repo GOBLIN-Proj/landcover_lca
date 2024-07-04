@@ -304,6 +304,55 @@ class Emissions_Factors:
             self.emission_data_base.get(emission_factor_name).get(self.ef_country)
         )
 
+class Nutrient_Exports:
+    """
+    Nutrient_Exports is a class designed to interact with a land use database to read and retrieve nutrient export factors data.
+
+    It is initialized with a specific country's context and utilizes a data loading mechanism to access the nutrient export factors.
+
+    The primary functionality of this class is to provide an interface for retrieving nutrient export factor values based on
+
+    given land use types and types of land use.
+
+    Initialization:
+        Nutrient_Exports(ef_country)
+
+    Parameters:
+        ef_country (str): A string specifying the country context for which the nutrient export factors data is to be loaded and used.
+
+    Attributes:
+        data_loader_class (Loader): An instance of the Loader class initialized with the ef_country, responsible for loading the nutrient export factors data.
+        ef_country (str): The country context for the nutrient export factors.
+        export_data_base (dataframe): A dataframe containing nutrient export factors data loaded from the land use database.
+    """
+    def __init__(self, ef_country):
+        self.ef_country = ef_country.lower()
+        self.data_loader_class = Loader(self.ef_country)
+        self.export_data_base = self.data_loader_class.nutrient_export_factors()
+
+    def return_factors(self):
+        """
+        Returns the export factors data base.
+        """
+        return self.export_data_base
+
+    def get_N_export_factor_in_export_factor_data_base(self, landuse, type):
+        """
+        Retrieves the N export factor value for a specified land use type and type of land use, within the context of the ef_country.
+        """
+        N_mask = ((self.export_data_base["land_cover"] == landuse) & (self.export_data_base["type"] == type) & (self.export_data_base.index == self.ef_country))
+        return float(
+            self.export_data_base.loc[N_mask,"N_kg_ha"].item()
+        )
+    
+    def get_P_export_factor_in_export_factor_data_base(self, landuse, type):
+        """
+        Retrieves the P export factor value for a specified land use type and type of land use, within the context of the ef_country.
+        """
+        P_mask = ((self.export_data_base["land_cover"] == landuse) & (self.export_data_base["type"] == type) & (self.export_data_base.index == self.ef_country))
+        return float(
+            self.export_data_base.loc[P_mask,"P_kg_ha"].item()
+        )
 
 class Land_Use_Features:
     """

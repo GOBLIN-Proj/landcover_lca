@@ -27,6 +27,8 @@ class Loader:
         ipcc_soc_factors: Returns the IPCC SOC factors.
         national_forest_inventory: Returns the national forest inventory.
         exported_peat: Returns the exported peat.
+        nutrient_export_factors: Returns the nutrient export factors.
+        
     """
 
     def __init__(self, ef_country):
@@ -82,3 +84,12 @@ class Loader:
             pandas.DataFrame: The exported peat.
         """
         return self.dataframes.get_exported_peat()
+    
+    def nutrient_export_factors(self):
+        """
+        Returns the nutrient export factors.
+
+        Returns:
+            pandas.DataFrame: The nutrient export factors.
+        """
+        return self.dataframes.get_slam_export_data()

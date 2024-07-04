@@ -60,6 +60,11 @@ Classes
    .. method:: exported_peat
 
       Returns the exported peat.
+
+   .. method:: nutrient_export_factors
+
+      Returns the nutrient export factors.
+      
       
 
    .. py:method:: land_use_features()
@@ -99,6 +104,14 @@ Classes
       Returns the exported peat.
 
       :returns: The exported peat.
+      :rtype: pandas.DataFrame
+
+
+   .. py:method:: nutrient_export_factors()
+
+      Returns the nutrient export factors.
+
+      :returns: The nutrient export factors.
       :rtype: pandas.DataFrame
 
 

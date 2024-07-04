@@ -31,6 +31,9 @@ class DataManager:
             get_default_calibration_year: Returns the default calibration year.
             get_target_year: Returns the target year.
             get_organic_mineral_soil_depth: Returns the depth of organic mineral soil.
+            get_total_N_to_po4e: Returns the conversion factor for total nitrogen to phosphate equivalent.
+            get_total_P_to_po4e: Returns the conversion factor for total nitrogen to N2O emissions.
+            
 
         Usage:
             This class can be used in scenarios where calibration and target years are important for modeling processes, especially in environmental or agricultural models. It also stores a standard value for organic mineral soil depth, which might be a parameter in soil-related calculations.
@@ -41,6 +44,9 @@ class DataManager:
         self.default_calibration_year = 2015
         self.target_year = target_year
         self.organic_mineral_soil_depth = 28
+
+        self.total_N_to_po4e = 0.42
+        self.total_N_to_po4e = 3.07
 
     def get_calibration_year(self):
         """
@@ -77,6 +83,26 @@ class DataManager:
             int: The depth of organic mineral soil.
         """
         return self.organic_mineral_soil_depth
+    
+
+    def get_total_N_to_po4e(self):
+        """
+        Returns the conversion factor for total nitrogen to phosphate equivalent.
+
+        Returns:
+            float: The conversion factor for total nitrogen to phosphate equivalent.
+        """
+        return self.total_N_to_po4e
+    
+
+    def get_total_P_to_po4e(self):
+        """
+        Returns the conversion factor for total nitrogen to N2O emissions.
+
+        Returns:
+            float: The conversion factor for total nitrogen to N2O emissions.
+        """
+        return self.total_N_to_po4e
 
 
 class ModelData:

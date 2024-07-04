@@ -30,6 +30,7 @@ Classes
    geo_goblin.geo_models.TransitionData
    geo_goblin.geo_models.TransitionMatrixCategory
    geo_goblin.geo_models.Emissions_Factors
+   geo_goblin.geo_models.Nutrient_Exports
    geo_goblin.geo_models.Land_Use_Features
 
 
@@ -301,6 +302,57 @@ Functions
    In this example, an instance of Emissions_Factors is created for the ireland. The CO2 emissions factor for the ireland is then retrieved using the class method.
 
    .. py:method:: get_emission_factor_in_emission_factor_data_base(emission_factor_name)
+
+
+
+.. py:class:: Nutrient_Exports(ef_country)
+
+
+   Nutrient_Exports is a class designed to interact with a land use database to read and retrieve nutrient export factors data.
+
+   It is initialized with a specific country's context and utilizes a data loading mechanism to access the nutrient export factors.
+
+   The primary functionality of this class is to provide an interface for retrieving nutrient export factor values based on
+
+   given land use types and types of land use.
+
+   Initialization:
+       Nutrient_Exports(ef_country)
+
+   :param ef_country: A string specifying the country context for which the nutrient export factors data is to be loaded and used.
+   :type ef_country: str
+
+   .. attribute:: data_loader_class
+
+      An instance of the Loader class initialized with the ef_country, responsible for loading the nutrient export factors data.
+
+      :type: Loader
+
+   .. attribute:: ef_country
+
+      The country context for the nutrient export factors.
+
+      :type: str
+
+   .. attribute:: export_data_base
+
+      A dataframe containing nutrient export factors data loaded from the land use database.
+
+      :type: dataframe
+
+   .. py:method:: return_factors()
+
+      Returns the export factors data base.
+
+
+   .. py:method:: get_N_export_factor_in_export_factor_data_base(landuse, type)
+
+      Retrieves the N export factor value for a specified land use type and type of land use, within the context of the ef_country.
+
+
+   .. py:method:: get_P_export_factor_in_export_factor_data_base(landuse, type)
+
+      Retrieves the P export factor value for a specified land use type and type of land use, within the context of the ef_country.
 
 
 

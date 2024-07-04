@@ -7,20 +7,16 @@ Description:
 
     These functions take into account current/future and historical land use data, emission factor country, and transition matrices. 
 
+    Functionality for the calculation of nutrient exports from forested land to water bodies is also included.
 Note: 
     This is part of a larger suite of tools developed for environmental data analysis and modeling. 
 """
-
-import numpy as np
-import pandas as pd
 
 from landcover_lca.geo_goblin.land_classes.soc import SOC
 from landcover_lca.geo_goblin.land_classes.wetland import Wetland
 from landcover_lca.geo_goblin.land_classes.grassland import Grassland
 from landcover_lca.geo_goblin.land_classes.cropland import Cropland
 from landcover_lca.geo_goblin.land_classes.forestland import Forest
-from landcover_lca.geo_goblin.geo_models import Emissions_Factors, Land_Use_Features
-from landcover_lca.resource_manager.data_loader import Loader
 
 
 # scalar vars
@@ -1682,3 +1678,90 @@ def total_n2o_emission(
             ef_country, transition_matrix, land_use_data, past_land_use_data
         )
     )
+
+
+##############################
+#Exports to water courses 
+##############################
+def exports_to_water_N_forest(
+    land_use_data, past_land_use_data, transition_matrix, ef_country
+):
+    """
+    Calculate the N emissions to water from forests.
+
+    Parameters:
+        - ef_country (string): Emission factor country.
+        - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
+        - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
+        - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
+
+    Returns:
+        float: N emissions to water from forests.
+    """
+
+    FOREST = Forest(
+        ef_country,
+        transition_matrix,
+        land_use_data,
+        past_land_use_data,
+        "forest",
+        "forest",
+    )
+
+    return FOREST.total_N_exports_to_water()
+
+def exports_to_water_P_forest(
+    land_use_data, past_land_use_data, transition_matrix, ef_country
+):
+    """
+    Calculate the P emissions to water from forests.    
+
+    Parameters:
+        - ef_country (string): Emission factor country.
+        - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
+        - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
+        - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
+
+    Returns:
+        float: P emissions to water from forests.
+    """
+
+    FOREST = Forest(
+        ef_country,
+        transition_matrix,
+        land_use_data,
+        past_land_use_data,
+        "forest",
+        "forest",
+    )
+
+    return FOREST.total_P_exports_to_water()
+
+
+def exports_to_water_PO4e_forest(
+    land_use_data, past_land_use_data, transition_matrix, ef_country
+):
+    """
+    Calculate nutrient exports to water as PO4 equivalents.
+
+    Parameters:
+        - ef_country (string): Emission factor country.
+        - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
+        - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
+        - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
+
+    Returns:
+        float: PO4e to water from forests.
+    """
+
+    FOREST = Forest(
+        ef_country,
+        transition_matrix,
+        land_use_data,
+        past_land_use_data,
+        "forest",
+        "forest",
+    )
+
+    return FOREST.total_PO4e_exports_to_water()
+
