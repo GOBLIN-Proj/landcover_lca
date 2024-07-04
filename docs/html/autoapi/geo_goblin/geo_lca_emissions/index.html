@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>geo_goblin.geo_lca_emissions &mdash; Landcover_LCA 0.2.0 documentation</title>
+  <title>geo_goblin.geo_lca_emissions &mdash; Landcover_LCA 0.2.1 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../../../_static/documentation_options.js?v=37f418d5"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -99,6 +99,7 @@
 land use and emissions factors. The script defines functions to estimate carbon dioxide (CO2) and methane (CH4) Nitrous Oxide (N2O) emissions from land cover change.
 from the various land cover types.</p>
 <p>These functions take into account current/future and historical land use data, emission factor country, and transition matrices.</p>
+<p>Functionality for the calculation of nutrient exports from forested land to water bodies is also included.</p>
 </dd>
 </dl>
 <div class="admonition note">
@@ -278,6 +279,15 @@ from the various land cover types.</p>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#geo_goblin.geo_lca_emissions.total_n2o_emission" title="geo_goblin.geo_lca_emissions.total_n2o_emission"><code class="xref py py-obj docutils literal notranslate"><span class="pre">total_n2o_emission</span></code></a>(land_use_data, past_land_use_data, ...)</p></td>
 <td><p>Calculate the total N2O emission by summing the N2O emissions from different land cover types.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geo_goblin.geo_lca_emissions.exports_to_water_N_forest" title="geo_goblin.geo_lca_emissions.exports_to_water_N_forest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">exports_to_water_N_forest</span></code></a>(land_use_data, ...)</p></td>
+<td><p>Calculate the N emissions to water from forests.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geo_goblin.geo_lca_emissions.exports_to_water_P_forest" title="geo_goblin.geo_lca_emissions.exports_to_water_P_forest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">exports_to_water_P_forest</span></code></a>(land_use_data, ...)</p></td>
+<td><p>Calculate the P emissions to water from forests.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geo_goblin.geo_lca_emissions.exports_to_water_PO4e_forest" title="geo_goblin.geo_lca_emissions.exports_to_water_PO4e_forest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">exports_to_water_PO4e_forest</span></code></a>(land_use_data, ...)</p></td>
+<td><p>Calculate nutrient exports to water as PO4 equivalents.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1504,6 +1514,72 @@ Types include cropland, forest, grassland, and wetland.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geo_goblin.geo_lca_emissions.exports_to_water_N_forest">
+<span class="sig-prename descclassname"><span class="pre">geo_goblin.geo_lca_emissions.</span></span><span class="sig-name descname"><span class="pre">exports_to_water_N_forest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.geo_lca_emissions.exports_to_water_N_forest" title="Link to this definition"></a></dt>
+<dd><p>Calculate the N emissions to water from forests.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ef_country</strong> (<em>-</em>) – Emission factor country.</p></li>
+<li><p><strong>transition_matrix</strong> (<em>-</em>) – The transition matrix.</p></li>
+<li><p><strong>land_use_data</strong> (<em>-</em>) – The current/future land use data.</p></li>
+<li><p><strong>past_land_use_data</strong> (<em>-</em>) – The past land use data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>N emissions to water from forests.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geo_goblin.geo_lca_emissions.exports_to_water_P_forest">
+<span class="sig-prename descclassname"><span class="pre">geo_goblin.geo_lca_emissions.</span></span><span class="sig-name descname"><span class="pre">exports_to_water_P_forest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.geo_lca_emissions.exports_to_water_P_forest" title="Link to this definition"></a></dt>
+<dd><p>Calculate the P emissions to water from forests.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ef_country</strong> (<em>-</em>) – Emission factor country.</p></li>
+<li><p><strong>transition_matrix</strong> (<em>-</em>) – The transition matrix.</p></li>
+<li><p><strong>land_use_data</strong> (<em>-</em>) – The current/future land use data.</p></li>
+<li><p><strong>past_land_use_data</strong> (<em>-</em>) – The past land use data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>P emissions to water from forests.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geo_goblin.geo_lca_emissions.exports_to_water_PO4e_forest">
+<span class="sig-prename descclassname"><span class="pre">geo_goblin.geo_lca_emissions.</span></span><span class="sig-name descname"><span class="pre">exports_to_water_PO4e_forest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_land_use_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ef_country</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.geo_lca_emissions.exports_to_water_PO4e_forest" title="Link to this definition"></a></dt>
+<dd><p>Calculate nutrient exports to water as PO4 equivalents.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ef_country</strong> (<em>-</em>) – Emission factor country.</p></li>
+<li><p><strong>transition_matrix</strong> (<em>-</em>) – The transition matrix.</p></li>
+<li><p><strong>land_use_data</strong> (<em>-</em>) – The current/future land use data.</p></li>
+<li><p><strong>past_land_use_data</strong> (<em>-</em>) – The past land use data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>PO4e to water from forests.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>

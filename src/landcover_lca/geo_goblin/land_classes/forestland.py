@@ -18,6 +18,9 @@ class Forest(LandUse):
                                                                 forests younger than 50 years.
         - forest_poor_drained_area (float): The total area of poorly drained forests.
         - forest_rich_drained_area (float): The total area of richly drained forests.
+        - afforested_area (float): The total area of afforested forest land.
+        - legacy_area (float): The total area of legacy forest land.
+
 
 
     Methods:
@@ -38,6 +41,24 @@ class Forest(LandUse):
         - burning_ch4_forest(): Calculates CH4 emissions from the burning of forest areas.
 
         - burning_n2o_forest(): Calculates N2O emissions from the burning of forest areas.
+
+        - total_N_exports_to_water(): Calculates the total nitrogen exports to water bodies
+
+        - N_exports_to_water_legacy_forest(): Estimates nitrogen exports to water bodies
+
+        - N_exports_to_water_afforested_forest(): Estimates nitrogen exports to water bodies
+
+        - total_P_exports_to_water(): Calculates the total phosphorus exports to water bodies
+
+        - P_exports_to_water_legacy_forest(): Estimates phosphorus exports to water bodies
+
+        - P_exports_to_water_afforested_forest(): Estimates phosphorus exports to water bodies
+
+        - total_PO4e_exports_to_water(): Calculates the total phosphorus equivalent exports to water bodies
+
+        - total_N_exports_to_water_as_po4e(): Calculates the total nitrogen equivalent exports to water bodies
+
+        - total_P_exports_to_water_as_po4e(): Calculates the total phosphorus equivalent exports to water bodies
 
     Args:
         - ef_country (str): The country for which the emissions factors are calculated.
@@ -78,6 +99,10 @@ class Forest(LandUse):
             self.land_use_data.forest.area_ha
             * self.land_use_data.forest.share_organic_mineral
         )
+
+        self.afforested_area = self.get_total_grassland_transition_area()
+
+        self.legacy_area = self.land_use_data.forest.area_ha - self.afforested_area
 
 
     def get_valid_area(self):
@@ -362,3 +387,133 @@ class Forest(LandUse):
             (self.land_use_data.forest.area_ha * self.land_use_data.forest.share_burnt)
             * ef_n2o_forest
         )
+    
+    def total_N_exports_to_water(self):
+        """
+        Calculates the total nitrogen (N) exports to water bodies from forest areas.
+
+        The method estimates the N exports to water by summing the N exports from both
+        legacy forest areas and afforested forest areas.
+
+        Returns:
+            float: The total N exports to water bodies from forest areas.
+        """
+        return self.N_exports_to_water_legacy_forest() + self.N_exports_to_water_afforested_forest()
+
+
+    def N_exports_to_water_legacy_forest(self):
+        """
+        Estimates the nitrogen (N) exports to water bodies from legacy forest areas.
+
+        The calculation involves multiplying the area of legacy forest by the N export
+        factor for default forest conditions. This provides an estimate of the total N
+        exports to water from legacy forest areas.
+
+        Returns:
+            float: The N exports to water bodies from legacy forest areas.
+        """
+        n_export_kg_per_ha = self.nutrient_export_factors.get_N_export_factor_in_export_factor_data_base("forest","default")
+
+        return self.legacy_area * n_export_kg_per_ha
+    
+
+    def N_exports_to_water_afforested_forest(self):
+        """
+        Estimates the nitrogen (N) exports to water bodies from afforested forest areas.
+
+        The calculation involves multiplying the area of afforested forest by the N export
+        factor for transitional forest conditions. This provides an estimate of the total N
+        exports to water from afforested forest areas.
+
+        Returns:
+            float: The N exports to water bodies from afforested forest areas.
+        """
+        n_export_kg_per_ha = self.nutrient_export_factors.get_N_export_factor_in_export_factor_data_base("forest","transitional")
+
+        return self.afforested_area * n_export_kg_per_ha
+    
+
+    def total_P_exports_to_water(self):
+        """
+        Calculates the total phosphorus (P) exports to water bodies from forest areas.
+
+        The method estimates the P exports to water by summing the P exports from both
+        legacy forest areas and afforested forest areas.
+
+        Returns:
+            float: The total P exports to water bodies from forest areas.
+        """ 
+        return self.P_exports_to_water_legacy_forest() + self.P_exports_to_water_afforested_forest()
+    
+
+    def P_exports_to_water_legacy_forest(self):
+        """
+        Estimates the phosphorus (P) exports to water bodies from legacy forest areas.
+
+        The calculation involves multiplying the area of legacy forest by the P export
+        factor for default forest conditions. This provides an estimate of the total P
+        exports to water from legacy forest areas.
+
+        Returns:
+            float: The P exports to water bodies from legacy forest areas.
+        """
+
+        p_export_kg_per_ha = self.nutrient_export_factors.get_P_export_factor_in_export_factor_data_base("forest","default")
+
+        return self.legacy_area * p_export_kg_per_ha
+    
+    def P_exports_to_water_afforested_forest(self):
+        """
+        Estimates the phosphorus (P) exports to water bodies from afforested forest areas.
+
+        The calculation involves multiplying the area of afforested forest by the P export
+        factor for transitional forest conditions. This provides an estimate of the total P
+        exports to water from afforested forest areas.
+
+        Returns:
+            float: The P exports to water bodies from afforested forest areas.
+        """
+        p_export_kg_per_ha = self.nutrient_export_factors.get_P_export_factor_in_export_factor_data_base("forest","transitional")
+
+        return self.afforested_area * p_export_kg_per_ha
+    
+    def total_PO4e_exports_to_water(self):
+        """
+        Calculates the total phosphorus equivalent (PO4e) exports to water bodies from forest areas.
+
+        The method estimates the PO4e exports to water by summing the PO4e exports from both
+        legacy forest areas and afforested forest areas.
+
+        Returns:
+            float: The total PO4e exports to water bodies from forest areas.
+        """
+        return self.total_N_exports_to_water_as_po4e() + self.total_P_exports_to_water_as_po4e()
+    
+    def total_N_exports_to_water_as_po4e(self):
+        """
+        Calculates the total nitrogen equivalent (N) exports to water bodies from forest areas.
+
+        The method estimates the N exports to water by summing the N exports from both
+        legacy forest areas and afforested forest areas, and converting the total N
+        exports to phosphate equivalent (PO4e).
+
+        Returns:
+            float: The total N exports to water bodies from forest areas, converted to PO4e.
+        """
+        return self.total_N_exports_to_water() * self.data_manager_class.get_total_N_to_po4e()
+    
+
+    def total_P_exports_to_water_as_po4e(self):
+        """
+        Calculates the total phosphorus equivalent (P) exports to water bodies from forest areas.
+
+        The method estimates the P exports to water by summing the P exports from both
+        legacy forest areas and afforested forest areas, and converting the total P
+        exports to phosphate equivalent (PO4e).
+
+        Returns:
+            float: The total P exports to water bodies from forest areas, converted to PO4e.
+        """
+        return self.total_P_exports_to_water() * self.data_manager_class.get_total_P_to_po4e()
+
+    

@@ -1,6 +1,5 @@
-import numpy as np
 from landcover_lca.resource_manager.data_loader import Loader
-from landcover_lca.geo_goblin.geo_models import Emissions_Factors
+from landcover_lca.geo_goblin.geo_models import Emissions_Factors, Nutrient_Exports
 
 
 class LandUse:
@@ -44,6 +43,7 @@ class LandUse:
         self.current_land_use = current_land_use
         self.past_land_use = past_land_use
         self.emissions_factors = Emissions_Factors(ef_country)
+        self.nutrient_export_factors = Nutrient_Exports(ef_country)
         self.forest_age_data = self.data_loader_class.national_forest_inventory()
         self.transition_matrix_data = transition_matrix_data
         self.land_use_data = land_use_data
@@ -51,7 +51,7 @@ class LandUse:
         self.year_range = self.get_time_period()
         self.annual_area = self.compute_land_use_annual_area()
         self.combined_area = self.compute_total_land_use_area()
-        self.total_transition_area = self.get_total_transition_area()
+ 
 
     def get_time_period(self):
         """
@@ -98,10 +98,10 @@ class LandUse:
         except ZeroDivisionError:
             return 0
 
-    def get_total_transition_area(self):
+    def get_total_grassland_transition_area(self):
         """
         Retrieves the total area that has transitioned or is projected to transition
-        from the past land use category to the current (or future) land use category.
+        from the grassland use category to the current (or future) land use category.
         This measure is vital for assessing the scale of land use change.
 
         Returns:
@@ -109,7 +109,7 @@ class LandUse:
                    the past and current (or future) land use categories.
         """
         return self.transition_matrix_data.__dict__[
-            f"{self.past_land_use}_to_{self.current_land_use}"
+            f"grassland_to_{self.current_land_use}"
         ]
 
     def compute_total_land_use_area(self):

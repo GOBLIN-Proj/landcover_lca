@@ -78,6 +78,10 @@ Classes
    .. method:: get_exported_peat()
 
       Retrieves the exported peat data from the database.
+
+   .. method:: get_slam_export_data()
+
+      Retrieves the SLAM export data from the database.
       
 
    .. py:method:: data_engine_creater()
@@ -125,6 +129,14 @@ Classes
       Retrieves the exported peat data from the database.
 
       :returns: The exported peat data.
+      :rtype: pandas.DataFrame
+
+
+   .. py:method:: get_slam_export_data()
+
+      Retrieves the SLAM export data from the database.
+
+      :returns: The SLAM export data.
       :rtype: pandas.DataFrame
 
 

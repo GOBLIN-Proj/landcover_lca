@@ -56,6 +56,18 @@ Classes
 
       :type: float
 
+   .. attribute:: - afforested_area
+
+      The total area of afforested forest land.
+
+      :type: float
+
+   .. attribute:: - legacy_area
+
+      The total area of legacy forest land.
+
+      :type: float
+
    .. method:: - get_valid_area()
 
       Calculates the valid areas for poorly and richly drained forests,
@@ -93,6 +105,51 @@ Classes
    .. method:: - burning_n2o_forest()
 
       Calculates N2O emissions from the burning of forest areas.
+      
+
+   .. method:: - total_N_exports_to_water()
+
+      Calculates the total nitrogen exports to water bodies
+      
+
+   .. method:: - N_exports_to_water_legacy_forest()
+
+      Estimates nitrogen exports to water bodies
+      
+
+   .. method:: - N_exports_to_water_afforested_forest()
+
+      Estimates nitrogen exports to water bodies
+      
+
+   .. method:: - total_P_exports_to_water()
+
+      Calculates the total phosphorus exports to water bodies
+      
+
+   .. method:: - P_exports_to_water_legacy_forest()
+
+      Estimates phosphorus exports to water bodies
+      
+
+   .. method:: - P_exports_to_water_afforested_forest()
+
+      Estimates phosphorus exports to water bodies
+      
+
+   .. method:: - total_PO4e_exports_to_water()
+
+      Calculates the total phosphorus equivalent exports to water bodies
+      
+
+   .. method:: - total_N_exports_to_water_as_po4e()
+
+      Calculates the total nitrogen equivalent exports to water bodies
+      
+
+   .. method:: - total_P_exports_to_water_as_po4e()
+
+      Calculates the total phosphorus equivalent exports to water bodies
       
 
    :param - ef_country: The country for which the emissions factors are calculated.
@@ -275,6 +332,111 @@ Classes
                     The calculation considers the area of forest burnt, the specific emission
                     factor for fuel burning in forests, the combustion factor, and the
                     emission factor for N2O emissions.
+      :rtype: float
+
+
+   .. py:method:: total_N_exports_to_water()
+
+      Calculates the total nitrogen (N) exports to water bodies from forest areas.
+
+      The method estimates the N exports to water by summing the N exports from both
+      legacy forest areas and afforested forest areas.
+
+      :returns: The total N exports to water bodies from forest areas.
+      :rtype: float
+
+
+   .. py:method:: N_exports_to_water_legacy_forest()
+
+      Estimates the nitrogen (N) exports to water bodies from legacy forest areas.
+
+      The calculation involves multiplying the area of legacy forest by the N export
+      factor for default forest conditions. This provides an estimate of the total N
+      exports to water from legacy forest areas.
+
+      :returns: The N exports to water bodies from legacy forest areas.
+      :rtype: float
+
+
+   .. py:method:: N_exports_to_water_afforested_forest()
+
+      Estimates the nitrogen (N) exports to water bodies from afforested forest areas.
+
+      The calculation involves multiplying the area of afforested forest by the N export
+      factor for transitional forest conditions. This provides an estimate of the total N
+      exports to water from afforested forest areas.
+
+      :returns: The N exports to water bodies from afforested forest areas.
+      :rtype: float
+
+
+   .. py:method:: total_P_exports_to_water()
+
+      Calculates the total phosphorus (P) exports to water bodies from forest areas.
+
+      The method estimates the P exports to water by summing the P exports from both
+      legacy forest areas and afforested forest areas.
+
+      :returns: The total P exports to water bodies from forest areas.
+      :rtype: float
+
+
+   .. py:method:: P_exports_to_water_legacy_forest()
+
+      Estimates the phosphorus (P) exports to water bodies from legacy forest areas.
+
+      The calculation involves multiplying the area of legacy forest by the P export
+      factor for default forest conditions. This provides an estimate of the total P
+      exports to water from legacy forest areas.
+
+      :returns: The P exports to water bodies from legacy forest areas.
+      :rtype: float
+
+
+   .. py:method:: P_exports_to_water_afforested_forest()
+
+      Estimates the phosphorus (P) exports to water bodies from afforested forest areas.
+
+      The calculation involves multiplying the area of afforested forest by the P export
+      factor for transitional forest conditions. This provides an estimate of the total P
+      exports to water from afforested forest areas.
+
+      :returns: The P exports to water bodies from afforested forest areas.
+      :rtype: float
+
+
+   .. py:method:: total_PO4e_exports_to_water()
+
+      Calculates the total phosphorus equivalent (PO4e) exports to water bodies from forest areas.
+
+      The method estimates the PO4e exports to water by summing the PO4e exports from both
+      legacy forest areas and afforested forest areas.
+
+      :returns: The total PO4e exports to water bodies from forest areas.
+      :rtype: float
+
+
+   .. py:method:: total_N_exports_to_water_as_po4e()
+
+      Calculates the total nitrogen equivalent (N) exports to water bodies from forest areas.
+
+      The method estimates the N exports to water by summing the N exports from both
+      legacy forest areas and afforested forest areas, and converting the total N
+      exports to phosphate equivalent (PO4e).
+
+      :returns: The total N exports to water bodies from forest areas, converted to PO4e.
+      :rtype: float
+
+
+   .. py:method:: total_P_exports_to_water_as_po4e()
+
+      Calculates the total phosphorus equivalent (P) exports to water bodies from forest areas.
+
+      The method estimates the P exports to water by summing the P exports from both
+      legacy forest areas and afforested forest areas, and converting the total P
+      exports to phosphate equivalent (PO4e).
+
+      :returns: The total P exports to water bodies from forest areas, converted to PO4e.
       :rtype: float
 
 

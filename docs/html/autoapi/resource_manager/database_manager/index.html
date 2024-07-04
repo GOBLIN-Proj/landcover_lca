@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>resource_manager.database_manager &mdash; Landcover_LCA 0.2.0 documentation</title>
+  <title>resource_manager.database_manager &mdash; Landcover_LCA 0.2.1 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../../../_static/documentation_options.js?v=37f418d5"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -196,6 +196,12 @@ inventory data, and exported peat data. It is optimized for ease of use and effi
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="resource_manager.database_manager.DataManager.get_slam_export_data">
+<span class="sig-name descname"><span class="pre">get_slam_export_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#resource_manager.database_manager.DataManager.get_slam_export_data" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the SLAM export data from the database.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="id0">
 <span class="sig-name descname"><span class="pre">data_engine_creater</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
 <dd><p>Creates and returns the SQLAlchemy engine for database connection.</p>
@@ -272,6 +278,20 @@ inventory data, and exported peat data. It is optimized for ease of use and effi
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The exported peat data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">get_slam_export_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the SLAM export data from the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The SLAM export data.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>pandas.DataFrame</p>

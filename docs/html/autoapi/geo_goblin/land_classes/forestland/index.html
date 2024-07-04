@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>geo_goblin.land_classes.forestland &mdash; Landcover_LCA 0.2.0 documentation</title>
+  <title>geo_goblin.land_classes.forestland &mdash; Landcover_LCA 0.2.1 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../../../../_static/documentation_options.js?v=37f418d5"></script>
         <script src="../../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/js/theme.js"></script>
@@ -161,6 +161,28 @@ forests younger than 50 years.</p>
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">afforested_area</span></span></dt>
+<dd><p>The total area of afforested forest land.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">legacy_area</span></span></dt>
+<dd><p>The total area of legacy forest land.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_valid_area()</span></span></dt>
@@ -205,6 +227,60 @@ organic soils in forest areas.</p>
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">-</span> <span class="pre">burning_n2o_forest()</span></span></dt>
 <dd><p>Calculates N2O emissions from the burning of forest areas.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">total_N_exports_to_water()</span></span></dt>
+<dd><p>Calculates the total nitrogen exports to water bodies</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">N_exports_to_water_legacy_forest()</span></span></dt>
+<dd><p>Estimates nitrogen exports to water bodies</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">N_exports_to_water_afforested_forest()</span></span></dt>
+<dd><p>Estimates nitrogen exports to water bodies</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">total_P_exports_to_water()</span></span></dt>
+<dd><p>Calculates the total phosphorus exports to water bodies</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">P_exports_to_water_legacy_forest()</span></span></dt>
+<dd><p>Estimates phosphorus exports to water bodies</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">P_exports_to_water_afforested_forest()</span></span></dt>
+<dd><p>Estimates phosphorus exports to water bodies</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">total_PO4e_exports_to_water()</span></span></dt>
+<dd><p>Calculates the total phosphorus equivalent exports to water bodies</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">total_N_exports_to_water_as_po4e()</span></span></dt>
+<dd><p>Calculates the total nitrogen equivalent exports to water bodies</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">total_P_exports_to_water_as_po4e()</span></span></dt>
+<dd><p>Calculates the total phosphorus equivalent exports to water bodies</p>
 </dd></dl>
 
 <dl class="field-list simple">
@@ -423,6 +499,156 @@ emission factor for N2O emissions.</p>
 </dd>
 </dl>
 </p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.forestland.Forest.total_N_exports_to_water">
+<span class="sig-name descname"><span class="pre">total_N_exports_to_water</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.forestland.Forest.total_N_exports_to_water" title="Link to this definition"></a></dt>
+<dd><p>Calculates the total nitrogen (N) exports to water bodies from forest areas.</p>
+<p>The method estimates the N exports to water by summing the N exports from both
+legacy forest areas and afforested forest areas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The total N exports to water bodies from forest areas.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.forestland.Forest.N_exports_to_water_legacy_forest">
+<span class="sig-name descname"><span class="pre">N_exports_to_water_legacy_forest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.forestland.Forest.N_exports_to_water_legacy_forest" title="Link to this definition"></a></dt>
+<dd><p>Estimates the nitrogen (N) exports to water bodies from legacy forest areas.</p>
+<p>The calculation involves multiplying the area of legacy forest by the N export
+factor for default forest conditions. This provides an estimate of the total N
+exports to water from legacy forest areas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The N exports to water bodies from legacy forest areas.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.forestland.Forest.N_exports_to_water_afforested_forest">
+<span class="sig-name descname"><span class="pre">N_exports_to_water_afforested_forest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.forestland.Forest.N_exports_to_water_afforested_forest" title="Link to this definition"></a></dt>
+<dd><p>Estimates the nitrogen (N) exports to water bodies from afforested forest areas.</p>
+<p>The calculation involves multiplying the area of afforested forest by the N export
+factor for transitional forest conditions. This provides an estimate of the total N
+exports to water from afforested forest areas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The N exports to water bodies from afforested forest areas.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.forestland.Forest.total_P_exports_to_water">
+<span class="sig-name descname"><span class="pre">total_P_exports_to_water</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.forestland.Forest.total_P_exports_to_water" title="Link to this definition"></a></dt>
+<dd><p>Calculates the total phosphorus (P) exports to water bodies from forest areas.</p>
+<p>The method estimates the P exports to water by summing the P exports from both
+legacy forest areas and afforested forest areas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The total P exports to water bodies from forest areas.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.forestland.Forest.P_exports_to_water_legacy_forest">
+<span class="sig-name descname"><span class="pre">P_exports_to_water_legacy_forest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.forestland.Forest.P_exports_to_water_legacy_forest" title="Link to this definition"></a></dt>
+<dd><p>Estimates the phosphorus (P) exports to water bodies from legacy forest areas.</p>
+<p>The calculation involves multiplying the area of legacy forest by the P export
+factor for default forest conditions. This provides an estimate of the total P
+exports to water from legacy forest areas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The P exports to water bodies from legacy forest areas.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.forestland.Forest.P_exports_to_water_afforested_forest">
+<span class="sig-name descname"><span class="pre">P_exports_to_water_afforested_forest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.forestland.Forest.P_exports_to_water_afforested_forest" title="Link to this definition"></a></dt>
+<dd><p>Estimates the phosphorus (P) exports to water bodies from afforested forest areas.</p>
+<p>The calculation involves multiplying the area of afforested forest by the P export
+factor for transitional forest conditions. This provides an estimate of the total P
+exports to water from afforested forest areas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The P exports to water bodies from afforested forest areas.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.forestland.Forest.total_PO4e_exports_to_water">
+<span class="sig-name descname"><span class="pre">total_PO4e_exports_to_water</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.forestland.Forest.total_PO4e_exports_to_water" title="Link to this definition"></a></dt>
+<dd><p>Calculates the total phosphorus equivalent (PO4e) exports to water bodies from forest areas.</p>
+<p>The method estimates the PO4e exports to water by summing the PO4e exports from both
+legacy forest areas and afforested forest areas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The total PO4e exports to water bodies from forest areas.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.forestland.Forest.total_N_exports_to_water_as_po4e">
+<span class="sig-name descname"><span class="pre">total_N_exports_to_water_as_po4e</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.forestland.Forest.total_N_exports_to_water_as_po4e" title="Link to this definition"></a></dt>
+<dd><p>Calculates the total nitrogen equivalent (N) exports to water bodies from forest areas.</p>
+<p>The method estimates the N exports to water by summing the N exports from both
+legacy forest areas and afforested forest areas, and converting the total N
+exports to phosphate equivalent (PO4e).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The total N exports to water bodies from forest areas, converted to PO4e.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geo_goblin.land_classes.forestland.Forest.total_P_exports_to_water_as_po4e">
+<span class="sig-name descname"><span class="pre">total_P_exports_to_water_as_po4e</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geo_goblin.land_classes.forestland.Forest.total_P_exports_to_water_as_po4e" title="Link to this definition"></a></dt>
+<dd><p>Calculates the total phosphorus equivalent (P) exports to water bodies from forest areas.</p>
+<p>The method estimates the P exports to water by summing the P exports from both
+legacy forest areas and afforested forest areas, and converting the total P
+exports to phosphate equivalent (PO4e).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The total P exports to water bodies from forest areas, converted to PO4e.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>float</p>
