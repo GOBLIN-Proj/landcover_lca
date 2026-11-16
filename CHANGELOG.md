@@ -41,6 +41,11 @@ Planned release note: the SOC fixes D1 and D2 ship together. D1 alone makes span
   - goblin_lite national case (2020-2050): no change in any output.
 
 ### Documented
+- **D4b:** forest to grassland soil carbon is a known simplification and is not changed. The package
+  gives -7.35 t C/ha (SOCref 73.51 x (1.04 - 1.14)); the NID uses Tier 2 soil-group values
+  (Tables 6.20, 6.21) and gives about -1.0 t C/ha to improved grassland with the average factors.
+  GOBLIN cannot reach it (landcover_assignment writes only `Grassland_to_*` columns). Recorded in the
+  README, the `SOC` docstring and an expected-failure test in `tests/soc_inventory_test.py`.
 - **D1:** `compute_emissions_from_mineral_soils_in_land_use_change` docstring now states
   that the result is a snapshot at the evaluated year (`year_range` is the elapsed time
   from the baseline, not a loop over years), that conversion is assumed to occur in

@@ -157,5 +157,16 @@ class TestGrasslandRemainingAgainstInventory(unittest.TestCase):
             self.assertAlmostEqual(self.EF, crf(2025, year, "kgCO2_per_ha_yr"), delta=0.25 * abs(self.EF))
 
 
+    @unittest.expectedFailure
+    def test_forest_to_grassland_matches_nid_tier2_average(self):
+        """D4b gap, documented not fixed. NID s.6.3.6.2 uses Tier 2: SOCref mean 100.46 (Table 6.20)
+        and FLU forest 1.04, improved grassland 1.05 (Table 6.21 average): 100.46 x (1.04 - 1.05) =
+        -1.0 t C/ha. The package uses 73.51 x (1.04 - 1.14) = -7.35. GOBLIN never reaches this path."""
+        s = soc_object("forest", "grassland")
+        d_soc = (s.compute_emission_factor_from_mineral_soils("forest")
+                 - s.compute_emission_factor_from_mineral_soils("grassland"))
+        self.assertAlmostEqual(d_soc, 100.46 * (1.04 - 1.05), delta=0.5)
+
+
 if __name__ == "__main__":
     unittest.main()
