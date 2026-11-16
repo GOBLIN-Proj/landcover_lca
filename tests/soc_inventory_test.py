@@ -64,8 +64,14 @@ class TestInventoryConstants(unittest.TestCase):
 
 class TestPackageAgainstInventory(unittest.TestCase):
     def test_package_soc_ref_is_the_unnormalised_weighted_mean(self):
-        # documents today's value (D4 may change it): 73.51, not renormalised (88.57)
-        self.assertAlmostEqual(soc_object().compute_SOC_ref_for_land_use(), 73.51, places=6)
+        # transitions without cropland: 73.51, not renormalised (88.57). D4b may change it.
+        self.assertAlmostEqual(soc_object("grassland", "forest").compute_SOC_ref_for_land_use(), 73.51, places=6)
+
+    def test_cropland_transitions_use_lac_socref(self):
+        # NID s.6.4.6, Table 6.28: LAC 85 (D4a)
+        for current, past in (("cropland", "grassland"), ("cropland", "forest"), ("grassland", "cropland")):
+            with self.subTest(past=past, current=current):
+                self.assertAlmostEqual(soc_object(current, past).compute_SOC_ref_for_land_use(), REF["SOCref LAC"], places=6)
 
     def test_package_adjustment_factors_match_table_6_31(self):
         s = soc_object()
@@ -74,9 +80,8 @@ class TestPackageAgainstInventory(unittest.TestCase):
         self.assertAlmostEqual(s.compute_emission_factor_from_mineral_soils("grassland") / ref, REF["AF improved grassland"], places=9)
         self.assertAlmostEqual(s.compute_emission_factor_from_mineral_soils("Temporary grassland") / ref, REF["AF temporary grassland"], places=9)
 
-    @unittest.expectedFailure
     def test_temporary_grass_to_crop_loss_matches_table_6_32(self):
-        """D4: inventory 11.0 t C/ha (SOCref 85, LAC); package 9.56 (SOCref 73.51), 13% low."""
+        """Table 6.32: 11.0 t C/ha (SOCref 85, LAC). D4a: cropland transitions use LAC 85."""
         s = soc_object()
         d_soc = (s.compute_emission_factor_from_mineral_soils("Temporary grassland")
                  - s.compute_emission_factor_from_mineral_soils("cropland"))

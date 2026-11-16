@@ -88,14 +88,25 @@ class SOC:
 
     def compute_SOC_ref_for_land_use(self):
         """
-        Computes the reference SOC for the current land use category.
+        Computes the reference SOC (t C/ha) used for this transition.
+
+        - Any transition involving cropland (cropland as the past or the current land
+          use) uses the Low Activity Clay (LAC) value, 85 t C/ha. NID 2026 s.6.4.6:
+          98% of cropland is on LAC soils and only grassland on LAC soils converts
+          directly to cropland. With the Table 6.31 adjustment factors this
+          reproduces Table 6.32 (58.7 = 85 x 0.69; 69.7 = 85 x 0.82).
+        - Every other transition uses the area-weighted mean of the four soil classes
+          (73.51 t C/ha; the proportions sum to 0.83 and are not renormalised).
+          Forest to grassland is inventoried with Tier 2 soil-group values instead (D4b).
 
         Returns:
-            float: The reference SOC value.
+            float: The reference SOC value in t C/ha.
         """
-        return np.sum(
-            self.ipcc_soil_class_SOC["Proportion"] * self.ipcc_soil_class_SOC["SOCref"]
-        )
+        soil = self.ipcc_soil_class_SOC
+        if "cropland" in (self.past_land_use, self.current_land_use):
+            lac = soil.loc[soil["IPCCSoilClass"] == "LAC", "SOCref"]
+            return float(lac.iloc[0])
+        return np.sum(soil["Proportion"] * soil["SOCref"])
 
     def compute_land_use_change_total_area(self):
         """
@@ -168,7 +179,8 @@ class SOC:
             Raises ValueError if year_range < 0.
 
         Assumptions (see README, section "Soil organic carbon"):
-            - SOC = SOCref x adjustment factor. SOCref is the area-weighted mean over the
+            - SOC = SOCref x adjustment factor. SOCref is LAC (85 t C/ha) for any
+              transition involving cropland, otherwise the area-weighted mean over the
               four mineral soil classes (see compute_SOC_ref_for_land_use).
             - Every "grassland" conversion uses the database row "grassland", adjustment
               factor 1.14 (NID Table 6.31 improved grassland). There is no improved /

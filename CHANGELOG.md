@@ -50,6 +50,16 @@ Planned release note: the SOC fixes D1 and D2 ship together. D1 alone makes span
   need year-by-year data from landcover_assignment.
 
 ### Changed
+- **D4a: transitions involving cropland now use SOCref LAC = 85 t C/ha (was 73.51).**
+  `SOC.compute_SOC_ref_for_land_use` returns the Low Activity Clay value when cropland is
+  the past or the current land use (NID 2026 s.6.4.6: 98% of cropland is on LAC soils;
+  Table 6.28). With the Table 6.31 factors this reproduces Table 6.32 (58.7 and 69.7 t C/ha).
+  All other transitions keep the weighted mean 73.51 until D4b. Cropland SOC changes rise
+  by 85 / 73.51 = 1.156: 1,000 ha of grassland to cropland over 30 years is 4.675 kt CO2/yr
+  (was 4.043). Converted grassland stays improved grassland (1.14): scenario conversions
+  are permanent, not the temporary-grassland rotation of Table 6.32. goblin_lite national
+  case: no change, and landcover_assignment only fills `Grassland_to_*` columns, so
+  `Forest_to_Cropland` and `Cropland_to_Grassland` are always 0 there.
 - **D3 / S6: a missing transition-matrix column now raises a clear `KeyError`.**
   The SOC and land use code (`soc.py`, `landuse.py`) now read transition areas through
   `models.get_transition_area(transition_matrix_data, past, current)`. If the column is
@@ -66,10 +76,9 @@ Planned release note: the SOC fixes D1 and D2 ship together. D1 alone makes span
 - Inventory tests (Layer B): `tests/soc_inventory_test.py` with fixtures in
   `tests/data/inventory/` (NID 2026 Tables 6.28, 6.31, 6.32 and the CRF 4.C.1 grassland
   mineral-soil series). Passing tests: SOCref and adjustment factors in the database match
-  the NID; Table 6.32 is reproduced from Tables 6.28 and 6.31; the 2020 baseline for
+  the NID; Table 6.32 is reproduced from Tables 6.28 and 6.31, and by the package since D4a; the 2020 baseline for
   grassland remaining grassland is within 4.4% of the 2024 submission. Expected failures
-  record known gaps: package SOC loss for temporary grass to cropland is 13% below
-  Table 6.32 (SOCref 73.51 against 85), the 2025-submission baseline is 10.6% away,
+  record known gaps: the 2025-submission baseline is 10.6% away,
   the constant grassland factor cannot follow the inventory time series, and the
   database factor for unmanaged grassland (0.95) differs from NID unimproved (1.0).
 - README section "Soil organic carbon (mineral soils): method, units and assumptions",
