@@ -148,20 +148,27 @@ class SOC:
             self.current_land_use
         )
 
+        if self.year_range < 0:
+            raise ValueError(
+                f"year_range is negative ({self.year_range}): the current land use "
+                "year is earlier than the past land use year."
+            )
+
         annual_area = self.compute_land_use_change_total_area()
 
-
+        # NID 2026 eq 6.4.3 (IPCC eq 2.25): each converted hectare loses
+        # (SOC_past - SOC_current) / T per year for T = 20 years. Positive = emission.
+        # The result is the emission rate in the target year. Cohorts converted more
+        # than 20 years before the target have finished emitting, so at most 20
+        # annual cohorts contribute.
         transition_period = 20
 
-        soc = 0
-        if annual_area:
-            for year in range(self.year_range):
-                if year < 20:
-                    soc += (
-                        annual_area
-                        * (EF_SOC_previous_land_use - EF_SOC_current_land_use)
-                    ) / transition_period
-                else:
-                    return soc
-        else:
-            return soc
+        if not annual_area:
+            return 0
+
+        return (
+            annual_area
+            * min(self.year_range, transition_period)
+            * (EF_SOC_previous_land_use - EF_SOC_current_land_use)
+            / transition_period
+        )
