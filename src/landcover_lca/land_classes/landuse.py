@@ -1,6 +1,6 @@
 import numpy as np
 from landcover_lca.resource_manager.data_loader import Loader
-from landcover_lca.models import Emissions_Factors
+from landcover_lca.models import Emissions_Factors, get_transition_area
 
 
 class LandUse:
@@ -86,9 +86,9 @@ class LandUse:
                    to current (or future) land use, averaged over the time period.
         """
 
-        land_use_total_area = self.transition_matrix_data.__dict__[
-            f"{self.past_land_use}_to_{self.current_land_use}"
-        ]
+        land_use_total_area = get_transition_area(
+            self.transition_matrix_data, self.past_land_use, self.current_land_use
+        )
 
         try:
             land_use_annual_area = land_use_total_area / self.year_range
@@ -108,9 +108,9 @@ class LandUse:
             float: The total transition area (in hectares) between
                    the past and current (or future) land use categories.
         """
-        return self.transition_matrix_data.__dict__[
-            f"{self.past_land_use}_to_{self.current_land_use}"
-        ]
+        return get_transition_area(
+            self.transition_matrix_data, self.past_land_use, self.current_land_use
+        )
 
     def compute_total_land_use_area(self):
         """

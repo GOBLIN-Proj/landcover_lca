@@ -50,6 +50,15 @@ Planned release note: the SOC fixes D1 and D2 ship together. D1 alone makes span
   need year-by-year data from landcover_assignment.
 
 ### Changed
+- **D3 / S6: a missing transition-matrix column now raises a clear `KeyError`.**
+  The SOC and land use code (`soc.py`, `landuse.py`) now read transition areas through
+  `models.get_transition_area(transition_matrix_data, past, current)`. If the column is
+  absent, the error names it and lists the available transition columns, instead of a bare
+  `KeyError('forest_to_cropland')`. A missing column is deliberately not treated as zero:
+  a renamed or dropped column would silently remove a land use change from the result.
+  Only 8 of the 36 columns are read (the four `X_to_X` columns for grassland, wetland,
+  cropland and forest, plus grassland/forest to cropland, cropland/forest to grassland).
+  Behaviour with a complete matrix is unchanged; goblin_lite national case: no change.
 - **D1:** a negative span (land-use year earlier than the baseline year) now raises
   `ValueError` instead of returning `None`.
 
@@ -65,6 +74,8 @@ Planned release note: the SOC fixes D1 and D2 ship together. D1 alone makes span
   database factor for unmanaged grassland (0.95) differs from NID unimproved (1.0).
 - README section "Soil organic carbon (mineral soils): method, units and assumptions",
   including the assumption that all converted grassland is improved grassland (1.14).
+- `tests/transition_key_test.py`: each of the 8 required columns raises the informative
+  error; a column that is never read can be absent without changing results.
 - `tests/soc_test.py`: span tests (1 to 60 years), hand-calculated values, comparison
   with the previous loop for spans over 20 years, zero-area, zero-span and negative-span
   cases.

@@ -353,6 +353,29 @@ class Land_Use_Features:
         return float(self.features_data_base.get(emission_feature_name).get(land_use))
 
 
+def get_transition_area(transition_matrix_data, past_land_use, current_land_use):
+    """
+    Returns the area (ha) in the transition matrix for ``past_land_use`` to
+    ``current_land_use``.
+
+    Raises:
+        KeyError: if the transition matrix has no such column. The message names the
+        missing column and lists the columns that are present. A missing column is
+        never treated as zero: a renamed or dropped column would silently remove a
+        land use change from the result.
+    """
+    key = f"{past_land_use}_to_{current_land_use}"
+    data = transition_matrix_data.__dict__
+    try:
+        return data[key]
+    except KeyError:
+        available = sorted(k for k in data if "_to_" in k)
+        raise KeyError(
+            f"Transition matrix has no column '{key}' (columns are matched in lower "
+            f"case). Available transition columns: {', '.join(available)}"
+        ) from None
+
+
 def load_land_use_data(land_use_data_frame, calibration_year):
     """
     Processes and organizes land use data from a given DataFrame into structured land use categories and collections.

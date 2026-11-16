@@ -354,6 +354,8 @@ Implemented in `land_classes/soc.py` and called by the `mineral_soils_co2_from_<
 
 The inventory reports **no land converted to cropland** (CRT 4.B.2 is NO), so there is no inventory total for conversions to cropland. The nearest inventory values are the rotation table (NID Table 6.32) and the grassland-remaining-grassland series; both are used in `tests/soc_inventory_test.py`. Known gaps against the inventory are recorded there as expected failures.
 
+**Required transition-matrix columns.** The SOC and land use code read 8 of the matrix columns: `Grassland_to_Grassland`, `Cropland_to_Cropland`, `Forest_to_Forest`, `Wetland_to_Wetland`, `Grassland_to_Cropland`, `Forest_to_Cropland`, `Cropland_to_Grassland` and `Forest_to_Grassland`. If one is missing, a `KeyError` names it and lists the columns present. A missing column is never treated as zero.
+
 Not yet updated for these fixes: the parallel `geo_goblin` copy.
 
 ## License
