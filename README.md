@@ -327,5 +327,34 @@ if __name__ == "__main__":
 
     
 ```
+## Soil organic carbon (mineral soils): method, units and assumptions
+
+Mineral-soil carbon change from land-use change follows the Irish National Inventory Document (NID 2026), equation 6.4.3 (IPCC Tier 1, equation 2.25):
+
+```
+C = A x (SOC_past - SOC_current) / T          T = 20 years
+SOC = SOCref x adjustment factor              (FLU x FMG x FI, NID Table 6.31)
+```
+
+Implemented in `land_classes/soc.py` and called by the `mineral_soils_co2_from_<past>_to_<current>` functions in `lca_emission.py`.
+
+**Units.** Every CO2 total returned by this package is in **kg CO2**, positive for an emission and negative for a removal (goblin_lite multiplies by 1e-6 to report kt). The `SOC` class itself returns **t C per year**; the `lca_emission` functions convert it (x 1000 x 44/12).
+
+**What one call returns.** An annual emission rate at one evaluated year (`year_range` = evaluated year minus baseline year), not a time series. Converted area is assumed to convert in equal annual slices, each releasing `delta SOC / 20` per year for 20 years, so `min(year_range, 20)` slices contribute. For spans of 20 years or less the timing of conversion does not matter; for longer spans the equal-slice assumption does.
+
+**Assumptions to be aware of**
+
+| Assumption | Detail | Inventory |
+|---|---|---|
+| **All grassland is "improved" grassland** | Every conversion to or from grassland uses the database row `grassland`, adjustment factor **1.14**. There is no improved / unimproved / rough-grazing split. A grassland-to-cropland conversion is therefore assumed to start from the highest-carbon grassland (1.14 against cropland 0.69). | NID Table 6.31 gives improved 1.14, unimproved 1.0, temporary 0.82, rough grazing 1.0. The adjustment factors for these exist in the database but are not selected. |
+| SOCref is a weighted mean of four soil classes | 73.51 t C/ha. The class proportions (HAC 0.01, LAC 0.71, peaty 0.10, sandy 0.01) sum to 0.83 because organic soils (0.17) have no SOCref, and they are not renormalised. | The inventory uses LAC, **85 t C/ha**, for cropland (98% of cropland is on LAC) and Tier 2 soil-group values for forest to grassland. |
+| Forest uses adjustment factor 1.04 | Tier 2 average from NID Table 6.21. | Forest to grassland: the package gives a removal; the inventory (Table 6.19) reports a mineral-soil loss for deforestation overall. |
+| Grassland remaining grassland is one constant | `ef_co2_implied_grassland_remaining_SOC_per_ha`, -371.985 kg CO2/ha/yr, a single implied value. | The inventory series runs from about +27 (1990) to about -400 kg CO2/ha/yr (2023). |
+| N2O from soil carbon loss is incomplete | Only `delta C x 1/15` (forest to grassland), without the emission factor, 44/28 or indirect N2O. | NID eq 11.8. |
+
+The inventory reports **no land converted to cropland** (CRT 4.B.2 is NO), so there is no inventory total for conversions to cropland. The nearest inventory values are the rotation table (NID Table 6.32) and the grassland-remaining-grassland series; both are used in `tests/soc_inventory_test.py`. Known gaps against the inventory are recorded there as expected failures.
+
+Not yet updated for these fixes: the parallel `geo_goblin` copy.
+
 ## License
 This project is licensed under the terms of the MIT license.

@@ -159,8 +159,16 @@ class SOC:
               t C/yr for a delta SOC of 33.08 t C/ha.
 
         Returns:
-            float: Emission rate in the evaluated year (currently t C per year;
-            unit conversion is a later change). Raises ValueError if year_range < 0.
+            float: Emission rate in the evaluated year in **t C per year** (positive =
+            emission). The lca_emission CO2 functions convert this to kg CO2 (x 1000 x 44/12).
+            Raises ValueError if year_range < 0.
+
+        Assumptions (see README, section "Soil organic carbon"):
+            - SOC = SOCref x adjustment factor. SOCref is the area-weighted mean over the
+              four mineral soil classes (see compute_SOC_ref_for_land_use).
+            - Every "grassland" conversion uses the database row "grassland", adjustment
+              factor 1.14 (NID Table 6.31 improved grassland). There is no improved /
+              unimproved split.
         """
         EF_SOC_previous_land_use = self.compute_emission_factor_from_mineral_soils(
             self.past_land_use

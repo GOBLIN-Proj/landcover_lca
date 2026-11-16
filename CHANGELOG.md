@@ -11,6 +11,19 @@ Planned release note: the SOC fixes D1 and D2 ship together. D1 alone makes span
 20 years or less return a number, but still in t C per year, not kg CO2 (see D2).
 
 ### Fixed
+- **D2 / S2: mineral-soil CO2 from land-use change was in t C, not kg CO2.**
+  The six `mineral_soils_co2_from_<past>_to_<current>` functions in `lca_emission.py`
+  now return **kg CO2 per year**: the `SOC` class result (t C/yr) x 1000 x 44/12
+  (new constant `C_to_CO2`). Every other term in `total_co2_emission` was already kg CO2,
+  and goblin_lite multiplies the total by 1e-6 to give kt, so SOC conversion terms were
+  too small by 3,666.67. Example: 1,000 ha grassland to cropland over 30 years was
+  1,102.65 (reported as 0.0011 kt) and is now 4,043,050 kg CO2 (4.04 kt). Sign unchanged.
+  - The `SOC` class still returns t C/yr (its docstring says so).
+  - `mineral_soils_n2o_from_forest_to_grassland` is unchanged (D5).
+  - goblin_lite national case (2020-2050): no change in any total (the SOC conversion
+    areas are zero there); the three cropland CO2 cells now print as `0.0` instead of `0`.
+  - **Behaviour change for any scenario that converts land into cropland or grassland:**
+    totals rise by the corrected amount. Release D1 and D2 together.
 - **D1 / S1: mineral-soil SOC change returned `None` for spans of 20 years or less.**
   `SOC.compute_emissions_from_mineral_soils_in_land_use_change`
   (`land_classes/soc.py`) now returns
@@ -41,6 +54,17 @@ Planned release note: the SOC fixes D1 and D2 ship together. D1 alone makes span
   `ValueError` instead of returning `None`.
 
 ### Added
+- Inventory tests (Layer B): `tests/soc_inventory_test.py` with fixtures in
+  `tests/data/inventory/` (NID 2026 Tables 6.28, 6.31, 6.32 and the CRF 4.C.1 grassland
+  mineral-soil series). Passing tests: SOCref and adjustment factors in the database match
+  the NID; Table 6.32 is reproduced from Tables 6.28 and 6.31; the 2020 baseline for
+  grassland remaining grassland is within 4.4% of the 2024 submission. Expected failures
+  record known gaps: package SOC loss for temporary grass to cropland is 13% below
+  Table 6.32 (SOCref 73.51 against 85), the 2025-submission baseline is 10.6% away,
+  the constant grassland factor cannot follow the inventory time series, and the
+  database factor for unmanaged grassland (0.95) differs from NID unimproved (1.0).
+- README section "Soil organic carbon (mineral soils): method, units and assumptions",
+  including the assumption that all converted grassland is improved grassland (1.14).
 - `tests/soc_test.py`: span tests (1 to 60 years), hand-calculated values, comparison
   with the previous loop for spans over 20 years, zero-area, zero-span and negative-span
   cases.

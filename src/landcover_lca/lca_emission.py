@@ -27,6 +27,7 @@ from landcover_lca.resource_manager.data_loader import Loader
 t_to_kg = 1e3
 kt_to_kg = 1e6
 C_to_N = 1.0 / 15.0
+C_to_CO2 = 44.0 / 12.0  # t C to t CO2 (molecular weights)
 kha_to_ha = 1e3
 
 
@@ -201,7 +202,7 @@ def mineral_soils_co2_from_cropland_to_forest(
 
 
     Returns:
-    float: The computed CO2 emissions from mineral soils in the land use change.
+    float: CO2 in kg CO2 per year at the evaluated year (positive = emission, negative = removal). Mineral soils, IPCC Tier 1, NID 2026 eq 6.4.3; see SOC.compute_emissions_from_mineral_soils_in_land_use_change.
     """
 
     soc = SOC(
@@ -213,7 +214,11 @@ def mineral_soils_co2_from_cropland_to_forest(
         "cropland",
     )
 
-    return soc.compute_emissions_from_mineral_soils_in_land_use_change()
+    return (
+        soc.compute_emissions_from_mineral_soils_in_land_use_change()
+        * t_to_kg
+        * C_to_CO2
+    )
 
 
 def mineral_soils_co2_from_grassland_to_forest(
@@ -230,7 +235,7 @@ def mineral_soils_co2_from_grassland_to_forest(
 
 
     Returns:
-    float: The calculated CO2 emissions from mineral soils during land use change.
+    float: CO2 in kg CO2 per year at the evaluated year (positive = emission, negative = removal). Mineral soils, IPCC Tier 1, NID 2026 eq 6.4.3; see SOC.compute_emissions_from_mineral_soils_in_land_use_change.
     """
 
     soc = SOC(
@@ -242,7 +247,11 @@ def mineral_soils_co2_from_grassland_to_forest(
         "grassland",
     )
 
-    return soc.compute_emissions_from_mineral_soils_in_land_use_change()
+    return (
+        soc.compute_emissions_from_mineral_soils_in_land_use_change()
+        * t_to_kg
+        * C_to_CO2
+    )
 
 
 def mineral_soils_co2_to_forest(
@@ -640,7 +649,7 @@ def mineral_soils_co2_from_forest_to_grassland(
 
 
     Returns:
-    - The computed CO2 emissions from mineral soils during land use change.
+    float: CO2 in kg CO2 per year at the evaluated year (positive = emission, negative = removal). Mineral soils, IPCC Tier 1, NID 2026 eq 6.4.3; see SOC.compute_emissions_from_mineral_soils_in_land_use_change.
     """
     soc = SOC(
         ef_country,
@@ -650,7 +659,11 @@ def mineral_soils_co2_from_forest_to_grassland(
         "grassland",
         "forest",
     )
-    return soc.compute_emissions_from_mineral_soils_in_land_use_change()
+    return (
+        soc.compute_emissions_from_mineral_soils_in_land_use_change()
+        * t_to_kg
+        * C_to_CO2
+    )
 
 
 def mineral_soils_co2_from_cropland_to_grassland(
@@ -670,7 +683,7 @@ def mineral_soils_co2_from_cropland_to_grassland(
 
 
     Returns:
-        float: The computed CO2 emissions from mineral soils in the land use change.
+        float: CO2 in kg CO2 per year at the evaluated year (positive = emission, negative = removal). Mineral soils, IPCC Tier 1, NID 2026 eq 6.4.3; see SOC.compute_emissions_from_mineral_soils_in_land_use_change.
 
     """
     soc = SOC(
@@ -682,7 +695,11 @@ def mineral_soils_co2_from_cropland_to_grassland(
         "cropland",
     )
 
-    return soc.compute_emissions_from_mineral_soils_in_land_use_change()
+    return (
+        soc.compute_emissions_from_mineral_soils_in_land_use_change()
+        * t_to_kg
+        * C_to_CO2
+    )
 
 
 def mineral_soils_n2o_from_forest_to_grassland(
@@ -1417,7 +1434,7 @@ def mineral_soils_co2_from_forest_to_cropland(
 
 
     Returns:
-        float: CO2 emissions from mineral soils in the land use change.
+        float: CO2 in kg CO2 per year at the evaluated year (positive = emission, negative = removal). Mineral soils, IPCC Tier 1, NID 2026 eq 6.4.3; see SOC.compute_emissions_from_mineral_soils_in_land_use_change.
 
     """
     soc = SOC(
@@ -1429,7 +1446,11 @@ def mineral_soils_co2_from_forest_to_cropland(
         "forest",
     )
 
-    return soc.compute_emissions_from_mineral_soils_in_land_use_change()
+    return (
+        soc.compute_emissions_from_mineral_soils_in_land_use_change()
+        * t_to_kg
+        * C_to_CO2
+    )
 
 
 def mineral_soils_co2_from_grassland_to_cropland(
@@ -1449,7 +1470,7 @@ def mineral_soils_co2_from_grassland_to_cropland(
 
 
     Returns:
-        float: CO2 emissions from mineral soils in the land use change.
+        float: CO2 in kg CO2 per year at the evaluated year (positive = emission, negative = removal). Mineral soils, IPCC Tier 1, NID 2026 eq 6.4.3; see SOC.compute_emissions_from_mineral_soils_in_land_use_change.
 
     """
     soc = SOC(
@@ -1461,7 +1482,11 @@ def mineral_soils_co2_from_grassland_to_cropland(
         "grassland",
     )
 
-    return soc.compute_emissions_from_mineral_soils_in_land_use_change()
+    return (
+        soc.compute_emissions_from_mineral_soils_in_land_use_change()
+        * t_to_kg
+        * C_to_CO2
+    )
 
 
 

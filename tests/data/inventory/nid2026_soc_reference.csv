@@ -1,0 +1,18 @@
+quantity,value,unit,source
+SOCref HAC,95,t C/ha,NID 2026 Table 6.28 p.253
+SOCref LAC,85,t C/ha,NID 2026 Table 6.28 p.253
+SOCref Peaty/Humic,115,t C/ha,NID 2026 Table 6.28 p.253
+SOCref Sandy,71,t C/ha,NID 2026 Table 6.28 p.253
+Proportion HAC,0.01,fraction,NID 2026 Table 6.28 p.253
+Proportion LAC,0.71,fraction,NID 2026 Table 6.28 p.253
+Proportion Peaty/Humic,0.10,fraction,NID 2026 Table 6.28 p.253
+Proportion Sandy,0.01,fraction,NID 2026 Table 6.28 p.253
+Proportion wetland soils (organic),0.17,fraction,NID 2026 Table 6.28 p.253
+AF cropland,0.69,-,NID 2026 Table 6.31 p.262
+AF improved grassland,1.14,-,NID 2026 Table 6.31 p.262
+AF unimproved grassland,1.00,-,NID 2026 Table 6.31 p.262
+AF temporary grassland,0.82,-,NID 2026 Table 6.31 p.262
+SOC under crops at year 0 (crops under grass table),58.7,t C/ha,NID 2026 Table 6.32 p.263
+SOC under grass at year 0 (grass under crop table),69.7,t C/ha,NID 2026 Table 6.32 p.263
+SOC grass-under-crop after 20 years,58.7,t C/ha,NID 2026 Table 6.32 p.263
+SOC grass-under-crop after 10 years,64.2,t C/ha,NID 2026 Table 6.32 p.263
