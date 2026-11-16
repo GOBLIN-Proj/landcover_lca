@@ -27,6 +27,15 @@ Planned release note: the SOC fixes D1 and D2 ship together. D1 alone makes span
   - Results are still in t C per year; the unit conversion is D2.
   - goblin_lite national case (2020-2050): no change in any output.
 
+### Documented
+- **D1:** `compute_emissions_from_mineral_soils_in_land_use_change` docstring now states
+  that the result is a snapshot at the evaluated year (`year_range` is the elapsed time
+  from the baseline, not a loop over years), that conversion is assumed to occur in
+  equal annual cohorts, and that this assumption only affects spans over 20 years
+  (for 1,000 ha over 30 years: 1,102.65 even split, 1,653.97 if all converted in the
+  last 5 years, 0 if all in the first 5 years, in t C/yr). Real conversion timing would
+  need year-by-year data from landcover_assignment.
+
 ### Changed
 - **D1:** a negative span (land-use year earlier than the baseline year) now raises
   `ValueError` instead of returning `None`.
