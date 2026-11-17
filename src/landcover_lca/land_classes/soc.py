@@ -9,6 +9,16 @@ from landcover_lca.resource_manager.landcover_data_manager import DataManager
 
 
 class SOC:
+    """
+    Soil organic carbon change from land use change, mineral soils (NID 2026 eq 6.4.3).
+
+    Which transitions feed the totals, which are available but not yet used by GOBLIN scenarios
+    (landcover_assignment writes only ``Grassland_to_<X>`` columns), and what each represents
+    against the inventory, are tabulated in the README, section "Soil organic carbon (mineral soils)".
+    In short: grassland to cropland, forest to cropland, cropland to grassland and forest to grassland
+    are in the totals; grassland and cropland to forest are not (CBM covers forest soils).
+    """
+
     def __init__(
         self,
         ef_country,

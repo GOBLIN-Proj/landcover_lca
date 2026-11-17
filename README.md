@@ -354,6 +354,17 @@ Implemented in `land_classes/soc.py` and called by the `mineral_soils_co2_from_<
 
 The inventory reports **no land converted to cropland** (CRT 4.B.2 is NO), so there is no inventory total for conversions to cropland. The nearest inventory values are the rotation table (NID Table 6.32) and the grassland-remaining-grassland series; both are used in `tests/soc_inventory_test.py`. Known gaps against the inventory are recorded there as expected failures.
 
+**Which conversion terms are in use.** All of these are available and aligned with the inventory as far as the table says. Several are **not yet used by GOBLIN scenarios**, because landcover_assignment writes only `Grassland_to_<X>` columns and the national scenarios do not yet change cropland area. They are kept, tested and documented so the capacity is there when a scenario needs them; a term that is not in the totals is a choice, not a defect.
+
+| Transition | Function | In the totals? | Can landcover_assignment supply it? | Inventory counterpart | What it currently represents |
+|---|---|---|---|---|---|
+| Grassland to cropland | `mineral_soils_co2_from_grassland_to_cropland` | CO2: yes | Yes (the only conversion into cropland it can write). Area is 0 in current scenarios; cropland change is planned | None: CRT 4.B.2 is NO. Checked per hectare against NID Table 6.32 | SOCref LAC 85 (D4a). Assumes improved grassland (1.14). No N2O from the soil carbon loss: the NID reports it under Agriculture (3.D.1.5, C:N 10) |
+| Forest to cropland | `mineral_soils_co2_from_forest_to_cropland` | CO2: yes | No (no `Forest_to_*` columns) | NID: no such transitions detected | Tier 1, LAC 85 |
+| Cropland to grassland | `mineral_soils_co2_from_cropland_to_grassland` | CO2: yes | No | NID: no permanent transition found in the rotation analysis | Tier 1, LAC 85 |
+| Forest to grassland | `mineral_soils_co2_from_forest_to_grassland`, `mineral_soils_n2o_from_forest_to_grassland` | CO2 and N2O: yes | No | CRT 4.C.2: an emission, 0.896 t C/ha/yr | Tier 1 gives the opposite sign (D4b, expected-failure test). The N2O chain matches the CRT (D5). The inventory rate is stored, unused, as `ef_co2_implied_forest_to_grassland_SOC_per_ha` |
+| Grassland to forest, cropland to forest | `mineral_soils_co2_from_grassland_to_forest`, `..._cropland_to_forest` | **No**: CBM covers forest soils | Grassland to forest: yes (afforestation) | Forest soils are in the CBM runs | Callable directly; not summed in any total |
+| Grassland remaining grassland | `mineral_soils_co2_grassland_remaining_grassland` | CO2: yes, every year | Not a transition: uses the mineral grassland area | CRT 4.C.1, Tier 1 | Implied factor, -392.73 kg CO2/ha/yr (D7). The only soil carbon term that is non-zero in the goblin_lite national case |
+
 **Required transition-matrix columns.** The SOC and land use code read 8 of the matrix columns: `Grassland_to_Grassland`, `Cropland_to_Cropland`, `Forest_to_Forest`, `Wetland_to_Wetland`, `Grassland_to_Cropland`, `Forest_to_Cropland`, `Cropland_to_Grassland` and `Forest_to_Grassland`. If one is missing, a `KeyError` names it and lists the columns present. A missing column is never treated as zero.
 
 Implied emission factors (values derived from inventory totals) are documented in `docs/emission_factor_provenance.md`: source table, submission, years, formula and how to refresh them.
