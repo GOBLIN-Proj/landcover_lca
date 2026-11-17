@@ -38,3 +38,8 @@ jobs:
       run: |
         cd ./tests/
         python -m unittest output_test.py
+        python -m unittest soc_test.py
+        python -m unittest soc_inventory_test.py
+        python -m unittest soc_n2o_test.py
+        python -m unittest transition_key_test.py
+        python -m unittest implied_factor_test.py

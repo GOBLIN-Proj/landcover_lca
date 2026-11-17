@@ -18,8 +18,10 @@ Summary of what changes numbers:
   goblin_lite's current scenarios do). D1 and D2 ship together: D1 alone returns numbers
   that are in t C per year, not kg CO2.
 - D3, D4b, D4c: a clearer error and documentation, no change to results.
-- Not in this release: D6 (validate the year source; dossier written, undecided), D8 (geo_goblin
-  still carries the old SOC code), and the CI change to run the new test files.
+- Not in this release: D6 (validate the year source; dossier written, undecided) and D8 (geo_goblin
+  still carries the old SOC code).
+- CI now also runs `soc_test`, `soc_inventory_test`, `soc_n2o_test`, `transition_key_test` and
+  `implied_factor_test` (`.github/workflows/main.yml`). `load_test` stays out: it already fails.
 
 ### Fixed
 - **D2 / S2: mineral-soil CO2 from land-use change was in t C, not kg CO2.**
