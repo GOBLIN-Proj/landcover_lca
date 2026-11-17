@@ -169,6 +169,29 @@ class TestCroplandUsesLAC(unittest.TestCase):
             run_tc("Forest_to_Grassland", lca.mineral_soils_co2_from_forest_to_grassland, 15), -367.55, places=3)
 
 
+class TestConvertedAreaIsAssumedMineral(unittest.TestCase):
+    """D4c: the area in the transition matrix that leaves grassland (and is not rewetted) is assumed to be
+    mineral soil, whatever its exact type. The conversion terms therefore charge the whole converted area
+    and do not depend on the soil shares of any land use."""
+
+    def result(self, organic_share):
+        lu = LAND_USE.copy()
+        for col, val in (("share_mineral", 1 - organic_share), ("share_organic", organic_share)):
+            lu.loc[lu.land_use.isin(["grassland", "cropland"]), col] = val
+        t = TRANSITION.copy()
+        t.loc[0, "Grassland_to_Cropland"] = AREA
+        tm = load_transition_matrix(t, "ireland", 2020, 2050)
+        ld = load_land_use_data(lu, 2020)
+        return lca.mineral_soils_co2_from_grassland_to_cropland(ld[0], ld[-2020], tm[0], "ireland")
+
+    def test_result_does_not_depend_on_the_soil_shares(self):
+        base = self.result(0.0)
+        self.assertAlmostEqual(base, 4675000.0, places=3)      # kg CO2/yr: the whole 1,000 ha is charged
+        for organic in (0.0805, 0.5):
+            with self.subTest(organic_share=organic):
+                self.assertAlmostEqual(self.result(organic), base, places=6)
+
+
 class TestSocUnitsKgCO2(unittest.TestCase):
     """The lca_emission CO2 functions return kg CO2 per year (positive = emission)."""
 

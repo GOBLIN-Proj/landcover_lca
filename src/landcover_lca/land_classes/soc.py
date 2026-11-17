@@ -126,6 +126,12 @@ class SOC:
         """
         Computes the total area converted from the past land use to the current land use.
 
+        Assumption: the converted area is **mineral soil** (rewetting of organic soil does not use
+        this code). The soil type of the converted hectares is not known, and no mineral share is
+        applied: the whole area is charged the mineral-soil carbon change, regardless of the soil
+        shares in the land use data. NID 2026 s.6.4.6 makes the same assumption for cropland. If new
+        land could be organic soil, a mineral share and organic-soil terms would be needed (D4c).
+
         Returns:
             float: The annual area converted.
         """

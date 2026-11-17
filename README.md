@@ -365,6 +365,8 @@ The inventory reports **no land converted to cropland** (CRT 4.B.2 is NO), so th
 | Grassland to forest, cropland to forest | `mineral_soils_co2_from_grassland_to_forest`, `..._cropland_to_forest` | **No**: CBM covers forest soils | Grassland to forest: yes (afforestation) | Forest soils are in the CBM runs | Callable directly; not summed in any total |
 | Grassland remaining grassland | `mineral_soils_co2_grassland_remaining_grassland` | CO2: yes, every year | Not a transition: uses the mineral grassland area | CRT 4.C.1, Tier 1 | Implied factor, -392.73 kg CO2/ha/yr (D7). The only soil carbon term that is non-zero in the goblin_lite national case |
 
+**Converted land is assumed to be mineral soil.** The area that leaves grassland for another use (rewetting excepted) is charged the mineral-soil carbon change in full. Its exact soil type is not known and no mineral share is applied, so the result does not depend on the soil shares in the land use data (`tests/soc_test.py`, `TestConvertedAreaIsAssumedMineral`). NID 2026 s.6.4.6 makes the same assumption for cropland. If converted land could be organic soil, organic-soil terms for the destination would be needed.
+
 **Required transition-matrix columns.** The SOC and land use code read 8 of the matrix columns: `Grassland_to_Grassland`, `Cropland_to_Cropland`, `Forest_to_Forest`, `Wetland_to_Wetland`, `Grassland_to_Cropland`, `Forest_to_Cropland`, `Cropland_to_Grassland` and `Forest_to_Grassland`. If one is missing, a `KeyError` names it and lists the columns present. A missing column is never treated as zero.
 
 Implied emission factors (values derived from inventory totals) are documented in `docs/emission_factor_provenance.md`: source table, submission, years, formula and how to refresh them.
