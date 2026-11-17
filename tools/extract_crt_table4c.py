@@ -9,8 +9,12 @@ Columns used (CRT layout, 0-based): 3 total area (kha), 4 mineral area (kha),
 16 net C stock change in mineral soils (kt C, CRT sign).
 Output sign convention (package): + emission, - removal. kg CO2/ha = -(t C/ha) x 1000 x 44/12.
 
-Usage: python tools/extract_crt_table4c.py <dir with the yearly workbooks> <submission> <out.csv>
-Example: python tools/extract_crt_table4c.py ~/crt2026 2026 tests/data/inventory/crt2026_4c_mineral_soils.csv
+A second output (optional) lists the mineral-soil carbon stock change of all forest-conversion destinations that have
+mineral soil rows (4.C.2.a grassland, 4.E.2.a settlements, 4.F.2.a other land), used to cross-check NID Table 6.19.
+
+Usage: python tools/extract_crt_table4c.py <dir with the yearly workbooks> <submission> <out.csv> [<out_forest_conversions.csv>]
+Example: python tools/extract_crt_table4c.py artifacts/data/national-inventory-2026/IRL-CRT-2026-V1.0 2026 \
+             tests/data/inventory/crt2026_4c_mineral_soils.csv tests/data/inventory/crt2026_forest_conversions_mineral_soils.csv
 """
 import glob
 import re
@@ -47,8 +51,32 @@ def extract(folder, submission):
     return pd.DataFrame(out).sort_values(["category", "year"])
 
 
+FOREST_ROWS = (("Table4.C", "4.C.2.a", "grassland"), ("Table4.E", "4.E.2.a", "settlement"), ("Table4.F", "4.F.2.a", "other"))
+
+
+def extract_forest_conversions(folder, submission):
+    out = []
+    for path in sorted(glob.glob(f"{folder}/IRL-CRT-{submission}-V1.0-*.xlsx")):
+        year = int(re.search(r"-(\d{4})\.xlsx$", path).group(1))
+        wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
+        for sheet, key, dest in FOREST_ROWS:
+            for r in wb[sheet].iter_rows(min_row=8, max_row=40, values_only=True):
+                label = str(r[1] or "").strip()
+                if label.startswith(key):
+                    area, kt_c = r[3], r[16]
+                    out.append({"submission": submission, "year": year, "destination": dest,
+                                "area_kha": area if isinstance(area, (int, float)) else 0.0,
+                                "mineral_soil_ktC_crt_sign": kt_c if isinstance(kt_c, (int, float)) else 0.0,
+                                "source": f"EPA CRT {submission} {sheet}, row '{label[:40]}', workbook year {year}"})
+    return pd.DataFrame(out).sort_values(["destination", "year"])
+
+
 if __name__ == "__main__":
     folder, submission, out = sys.argv[1], int(sys.argv[2]), sys.argv[3]
     df = extract(folder, submission)
     df.to_csv(out, index=False)
     print(df.groupby("category").year.agg(["min", "max", "count"]))
+    if len(sys.argv) > 4:
+        fc = extract_forest_conversions(folder, submission)
+        fc.to_csv(sys.argv[4], index=False)
+        print(fc.groupby("destination").year.agg(["min", "max", "count"]))

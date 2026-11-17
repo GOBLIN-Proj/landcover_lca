@@ -73,6 +73,33 @@ class TestImpliedForestToGrasslandFactor(unittest.TestCase):
         self.assertGreater(db_value(FOREST), 0)
 
 
+class TestForestRateAgainstNID(unittest.TestCase):
+    """Is the forest to grassland rate right? Cross-checks of the CRT 2026 extract against the NID text."""
+
+    DEFOR = "./data/inventory/crt2026_forest_conversions_mineral_soils.csv"
+    # NID 2026 Table 6.19 (p.238), column "Mineral Soils Net CSC (kt C)", all deforestation destinations
+    TABLE_6_19_MINERAL = {2010: -11.00, 2015: -13.22, 2020: -14.08, 2022: -13.35}
+
+    def test_grassland_settlement_other_sum_to_nid_table_6_19(self):
+        d = pd.read_csv(self.DEFOR)
+        for year, nid in self.TABLE_6_19_MINERAL.items():
+            with self.subTest(year=year):
+                got = d[d.year == year].mineral_soil_ktC_crt_sign.sum()
+                self.assertAlmostEqual(got, nid, delta=0.02)
+
+    def test_other_land_uses_the_nid_rule_of_1_1_t_c_per_ha_per_year(self):
+        # NID p.239: 20 per cent of 110 t C/ha over 20 years = 1.1 t C/ha/yr
+        d = pd.read_csv(self.DEFOR)
+        o = d[(d.destination == "other") & (d.year == 2024)].iloc[0]
+        self.assertAlmostEqual(o.mineral_soil_ktC_crt_sign / o.area_kha, -1.1, places=3)
+
+    def test_rate_is_about_17_per_cent_of_a_typical_forest_soil_stock(self):
+        # database rate x 20 years = 17.9 t C/ha, against Tier 2 SOCref (mean 100.46) x forest FLU (mean 1.04)
+        # = 104.5 t C/ha: 17%, close to the NID's 20% rule for settlement and other land
+        loss_20yr = db_value(FOREST) / 1000 * 12 / 44 * 20
+        self.assertAlmostEqual(loss_20yr / (100.46 * 1.04), 0.17, places=2)
+
+
 class TestProvenanceRecord(unittest.TestCase):
     def test_provenance_record_states_values_window_and_source(self):
         text = open(PROVENANCE, encoding="utf-8").read()
