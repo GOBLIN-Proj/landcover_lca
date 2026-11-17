@@ -124,6 +124,25 @@ Per kg of N mineralised: (0.006 + 0.1 x 0.011) x 44/28 = **0.011157 kg N2O**. Pe
 
 **Assumptions.** The inventory counts only losses of soil carbon for deforestation. The package's function is linear, so a gain of soil carbon (which the Tier 1 forest to grassland calculation gives, see D4b) gives a negative N2O (immobilisation). The sign question disappears if D4b is ever aligned with the inventory.
 
+## N2O from drained organic soils (`ef_n2o_*_drainage_*`)
+
+These factors are stored in **kg N2O per ha per year**: the published kg N2O-N value times 44/28 (1.5714). The conversion was made when the database was built; the code multiplies area by the factor and does not convert again. Checked by `tests/n2o_drainage_factors_test.py`.
+
+| Column | Stored | Published (kg N2O-N/ha/yr) | Source |
+|---|---|---|---|
+| `ef_n2o_grassland_drainage_poor` | 6.757 | 4.3 | NID 2026 s.5.6.1 p.183 and Table 5.6 (EF2); IPCC 2013 Wetlands Supplement Table 2.5 |
+| `ef_n2o_grassland_drainage_rich` | 12.886 | 8.2 | same |
+| `ef_n2o_forest_drainage_rich` | 4.4 | 2.8 | NID 2026 s.6.3 p.220; IPCC 2013 Wetlands Supplement Table 2.5 |
+| `ef_n2o_forest_drainage_poor` | 1.1 | 0.7 | NID 2026 s.6.3 p.220 (country specific, Yamulki et al. 2013); the NID text writes "0.7 kg N2O" but the inventory treats it as N2O-N (CRT implied EF 1.115 kg N2O-N/ha for forest is a mix of 2.8 and 0.7) |
+| `ef_n2o_wetland_drainage_default` | 0.4714 | 0.3 | NID 2026 s.6.6 p.280 (industrial and domestic peat extraction); IPCC 2013 Wetlands Supplement, drained peatland managed for extraction, boreal/temperate |
+
+Matches the inventory, no method deviation:
+- CRT 2026 Table 3.D, row 3.D.1.f (cultivation of organic soils, i.e. drained organic grassland), 2022: 141,000 ha x 6.052 kg N2O-N/ha x 44/28 = 1.341 kt N2O. 6.052 is the mix of 4.3 and 8.2 at 44.9% nutrient-rich.
+- CRT 2026 Table 4(II).D.1.a, drained peat extraction, 2020 and 2022: EF 0.3 kg N2O-N/ha; N2O = area x 0.3 x 44/28 (domestic 83.93 kha gives 0.03957 kt; industrial 41.68 kha gives 0.01965 kt).
+- The package applies the wetland factor to domestic plus industrial drained area (`wetland.py` `drainage_n2o_organic_soils`), the same area as the CRT.
+- Grassland drained-organic N2O is reported in CRT Table 3.D, not in Table 4(II) (cell empty there).
+- NID 2024 and NIR 2024 are the same document (the EPA renamed National Inventory Report to National Inventory Document).
+
 ## ef_co2_forest_to_settlement_mineral_soil
 
 80,666.67 kg CO2 per hectare, **one-off over 20 years**, not per year. This is a rule, not an implied value: 20% of a 110 t C/ha stock is emitted over 20 years (NID s.6.3.6.2, p.239) = 22 t C = 80,667 kg CO2. Not reachable from the goblin_lite totals.

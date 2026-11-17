@@ -43,3 +43,4 @@ jobs:
         python -m unittest soc_n2o_test.py
         python -m unittest transition_key_test.py
         python -m unittest implied_factor_test.py
+        python -m unittest n2o_drainage_factors_test.py
