@@ -376,6 +376,64 @@ def get_transition_area(transition_matrix_data, past_land_use, current_land_use)
         ) from None
 
 
+def _category_year(land_use_dataset, category, dataset_name):
+    """Year carried by one land use category of a dataset, or a clear KeyError."""
+    data = land_use_dataset.__dict__
+    try:
+        category_data = data[category]
+    except KeyError:
+        available = ", ".join(sorted(k for k in data if not k.startswith("_")))
+        raise KeyError(
+            f"{dataset_name} has no land use category '{category}', so the year of "
+            f"the transition cannot be read. Available categories: {available}"
+        ) from None
+    return category_data.year
+
+
+def _check_same_year(land_use_dataset, dataset_name, current_land_use, past_land_use, current_year):
+    """Raise ValueError if the source category carries a different year from the destination."""
+    if past_land_use is None or past_land_use == current_land_use:
+        return
+    if past_land_use not in land_use_dataset.__dict__:
+        return  # cannot be compared
+    past_year = land_use_dataset.__dict__[past_land_use].year
+    if past_year != current_year:
+        raise ValueError(
+            f"{dataset_name} carries different years for the two land uses of the transition "
+            f"'{past_land_use}' to '{current_land_use}': {past_land_use} {past_year}, "
+            f"{current_land_use} {current_year}. All categories of a dataset must carry the same year."
+        )
+
+
+def get_time_period(
+    land_use_data, past_land_use_data, current_land_use, past_land_use=None
+):
+    """
+    Years between the baseline (``past_land_use_data``) and the evaluated year
+    (``land_use_data``) for a transition to ``current_land_use``.
+
+    The span is year(``current_land_use``, ``land_use_data``) - year(``current_land_use``,
+    ``past_land_use_data``). It is the one implementation used by ``SOC`` and ``LandUse``.
+
+    Raises:
+        KeyError: if ``current_land_use`` is missing from either dataset (the message
+            names the dataset and lists the categories present).
+        ValueError: if ``past_land_use`` (the source category) is given, present, and carries a
+            different year from ``current_land_use`` within the same dataset. A source category that
+            is absent from the dataset cannot be compared and is not an error.
+    """
+    datasets = (
+        (land_use_data, "land_use_data"),
+        (past_land_use_data, "past_land_use_data"),
+    )
+    years = []
+    for dataset, name in datasets:
+        year = _category_year(dataset, current_land_use, name)
+        _check_same_year(dataset, name, current_land_use, past_land_use, year)
+        years.append(year)
+    return years[0] - years[1]
+
+
 def load_land_use_data(land_use_data_frame, calibration_year):
     """
     Processes and organizes land use data from a given DataFrame into structured land use categories and collections.

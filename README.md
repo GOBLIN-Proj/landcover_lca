@@ -340,7 +340,7 @@ Implemented in `land_classes/soc.py` and called by the `mineral_soils_co2_from_<
 
 **Units.** Every CO2 total returned by this package is in **kg CO2**, positive for an emission and negative for a removal (goblin_lite multiplies by 1e-6 to report kt). The `SOC` class itself returns **t C per year**; the `lca_emission` functions convert it (x 1000 x 44/12).
 
-**What one call returns.** An annual emission rate at one evaluated year (`year_range` = evaluated year minus baseline year), not a time series. Converted area is assumed to convert in equal annual slices, each releasing `delta SOC / 20` per year for 20 years, so `min(year_range, 20)` slices contribute. For spans of 20 years or less the timing of conversion does not matter; for longer spans the equal-slice assumption does.
+**What one call returns.** An annual emission rate at one evaluated year (`year_range` = evaluated year minus baseline year, read by `models.get_time_period` from the year of the destination land use in the two datasets), not a time series. Converted area is assumed to convert in equal annual slices, each releasing `delta SOC / 20` per year for 20 years, so `min(year_range, 20)` slices contribute. For spans of 20 years or less the timing of conversion does not matter; for longer spans the equal-slice assumption does. The span is validated (D6): a missing destination category raises a `KeyError` naming the dataset, and a source category carrying a different year from the destination in the same dataset raises a `ValueError`.
 
 **Assumptions to be aware of**
 

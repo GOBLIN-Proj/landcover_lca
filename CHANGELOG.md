@@ -17,11 +17,11 @@ Summary of what changes numbers:
 - D1, D2, D4a, D5: only for scenarios that convert land into cropland or grassland (none of
   goblin_lite's current scenarios do). D1 and D2 ship together: D1 alone returns numbers
   that are in t C per year, not kg CO2.
-- D3, D4b, D4c: a clearer error and documentation, no change to results.
-- Not in this release: D6 (validate the year source; dossier written, undecided) and D8 (geo_goblin
+- D3, D4b, D4c, D6: a clearer error and documentation, no change to results.
+- Not in this release: D8 (geo_goblin
   still carries the old SOC code).
 - CI now also runs `soc_test`, `soc_inventory_test`, `soc_n2o_test`, `transition_key_test` and
-  `implied_factor_test` and `n2o_drainage_factors_test` (`.github/workflows/main.yml`). `load_test` stays out: it already fails.
+  `implied_factor_test`, `n2o_drainage_factors_test` and `time_period_test` (`.github/workflows/main.yml`). `load_test` stays out: it already fails.
 
 ### Fixed
 - **D2 / S2: mineral-soil CO2 from land-use change was in t C, not kg CO2.**
@@ -52,6 +52,10 @@ Summary of what changes numbers:
   - Zero converted area and a zero span (the baseline call) still return 0.
   - Results are still in t C per year; the unit conversion is D2.
   - goblin_lite national case (2020-2050): no change in any output.
+
+### Changed (validation)
+- **D6 / S8: the span between the baseline and the evaluated year is read in one place and validated.**
+  `SOC.get_time_period` and `LandUse.get_time_period` were identical copies; both now call `models.get_time_period(land_use_data, past_land_use_data, current_land_use, past_land_use)`. The value is unchanged for correct data (year of the destination category in the target dataset minus the same in the baseline). New errors replace a bare `AttributeError` and a silently wrong span: `KeyError` naming the dataset and listing the categories present if the destination category is missing; `ValueError` if the source category carries a different year from the destination within the same dataset (a source category absent from the dataset cannot be compared and is not an error). goblin_lite national output identical (checked byte for byte). `tests/time_period_test.py`.
 
 ### Documented
 - **EF2: the N2O drainage factors are in kg N2O, not kg N2O-N, and match the inventory.** The five `ef_n2o_*_drainage_*` factors are the published N2O-N values x 44/28 (grassland 4.3 and 8.2, forest 2.8 and 0.7, wetland 0.3: NID 2026 pp.183, 220, 280) and reproduce CRT 2026 Table 3.D and 4(II). No change to any result. Database `units` cells corrected from "N20/kg" to "kg N2O/ha/yr" and `source` cells give the NID page; `tests/n2o_drainage_factors_test.py`; `docs/emission_factor_provenance.md`.

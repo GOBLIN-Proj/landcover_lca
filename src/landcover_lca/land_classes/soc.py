@@ -3,6 +3,7 @@ from landcover_lca.resource_manager.data_loader import Loader
 from landcover_lca.models import (
     Emissions_Factors,
     Land_Use_Features,
+    get_time_period,
     get_transition_area,
 )
 from landcover_lca.resource_manager.landcover_data_manager import DataManager
@@ -85,16 +86,12 @@ class SOC:
         Returns:
             int: The time period in years.
         """
-        years = tuple(
-            (
-                self.land_use_data.__getattribute__(self.current_land_use).year,
-                self.past_land_use_data.__getattribute__(self.current_land_use).year,
-            )
+        return get_time_period(
+            self.land_use_data,
+            self.past_land_use_data,
+            self.current_land_use,
+            self.past_land_use,
         )
-
-        scenario_period = years[0] - years[1]
-
-        return scenario_period
 
     def compute_SOC_ref_for_land_use(self):
         """

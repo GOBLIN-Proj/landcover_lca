@@ -1,6 +1,6 @@
 import numpy as np
 from landcover_lca.resource_manager.data_loader import Loader
-from landcover_lca.models import Emissions_Factors, get_transition_area
+from landcover_lca.models import Emissions_Factors, get_time_period, get_transition_area
 
 
 class LandUse:
@@ -63,16 +63,12 @@ class LandUse:
             int: The time period in years between the current (or future) and past
                  land use data.
         """
-        years = tuple(
-            (
-                self.land_use_data.__getattribute__(self.current_land_use).year,
-                self.past_land_use_data.__getattribute__(self.current_land_use).year,
-            )
+        return get_time_period(
+            self.land_use_data,
+            self.past_land_use_data,
+            self.current_land_use,
+            self.past_land_use,
         )
-
-        scenario_period = years[0] - years[1]
-
-        return scenario_period
 
     def compute_land_use_annual_area(self):
         """
