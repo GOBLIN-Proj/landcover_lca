@@ -2,13 +2,24 @@
 
 All notable changes to `landcover_lca` are recorded here, newest first. Format follows
 [Keep a Changelog](https://keepachangelog.com/). Each SOC fix is tracked as a numbered
-dossier (D1, D2, ...) in `artifacts/soc/`. Unreleased entries have not been merged to
-`main` or released.
+dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repository).
 
-## [Unreleased]
+## [0.3.0] - 2026-11-17
 
-Planned release note: the SOC fixes D1 and D2 ship together. D1 alone makes spans of
-20 years or less return a number, but still in t C per year, not kg CO2 (see D2).
+This release changes results. It is a minor version bump on purpose: goblin_lite pins
+`landcover_lca ^0.2.0`, which excludes 0.3.0, so goblin_lite keeps its current numbers
+until it is deliberately moved (separate job, after the data audit). Nothing is released to
+PyPI by this entry; it records what the merge of branch `soc-review` contains.
+
+Summary of what changes numbers:
+- D7 (implied soil factors refreshed from the 2026 CRT): goblin_lite national baseline CO2
+  3,785.6 -> 3,711.0 kt (-2.0%); 2050 scenarios -0.3%.
+- D1, D2, D4a, D5: only for scenarios that convert land into cropland or grassland (none of
+  goblin_lite's current scenarios do). D1 and D2 ship together: D1 alone returns numbers
+  that are in t C per year, not kg CO2.
+- D3, D4b, D4c: a clearer error and documentation, no change to results.
+- Not in this release: D6 (validate the year source; dossier written, undecided), D8 (geo_goblin
+  still carries the old SOC code), and the CI change to run the new test files.
 
 ### Fixed
 - **D2 / S2: mineral-soil CO2 from land-use change was in t C, not kg CO2.**
