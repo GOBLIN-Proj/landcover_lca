@@ -56,6 +56,15 @@ Planned release note: the SOC fixes D1 and D2 ship together. D1 alone makes span
   need year-by-year data from landcover_assignment.
 
 ### Changed
+- **D5 / S5: N2O from soil carbon loss (forest to grassland) now follows the inventory chain.**
+  `mineral_soils_n2o_from_forest_to_grassland` returned `t C / 15`, which is tonnes of nitrogen, as if it
+  were kg N2O, with no emission factor, no 44/28 and no indirect N2O. It now returns kg N2O per year:
+  `t C x 1000 / 15 x (EF1 0.006 + FracLEACH 0.1 x EF5 0.011) x 44/28` (new helper
+  `n2o_from_soil_carbon_loss`, constants `EF1_SOM`, `FRAC_LEACH`, `EF5`, `N2O_N_to_N2O`), NID 2026 eq 11.8
+  and 11.10. The value is **11.157 times** the previous one. Reproduces CRT 2026 Table 4(III), row
+  4(III).C.2.a (forest land converted to grassland) in every year (22 years checked, `tests/soc_n2o_test.py`).
+  goblin_lite national case: no change (the conversion area is zero). Behaviour change for any scenario
+  that converts forest to grassland (none can today: landcover_assignment never writes `Forest_to_*`).
 - **D7: the implied soil factors are refreshed from the 2026 CRT and documented.**
   `ef_co2_implied_grassland_remaining_SOC_per_ha`: -371.985 -> **-392.73 kg CO2/ha/yr**
   (CRT 4.C.1 mineral soils, 2026 submission, 2020-2024, sum kt CO2 / sum mineral area).
@@ -100,6 +109,7 @@ Planned release note: the SOC fixes D1 and D2 ship together. D1 alone makes span
   database factor for unmanaged grassland (0.95) differs from NID unimproved (1.0).
 - README section "Soil organic carbon (mineral soils): method, units and assumptions",
   including the assumption that all converted grassland is improved grassland (1.14).
+- `tests/soc_n2o_test.py` and `tests/data/inventory/crt2026_4iii_forest_to_grassland_n2o.csv`: the N2O chain against CRT Table 4(III).
 - `tests/transition_key_test.py`: each of the 8 required columns raises the informative
   error; a column that is never read can be absent without changing results.
 - `tests/soc_test.py`: span tests (1 to 60 years), hand-calculated values, comparison

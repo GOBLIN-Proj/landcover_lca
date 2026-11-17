@@ -190,10 +190,11 @@ class TestSocUnitsKgCO2(unittest.TestCase):
         self.assertGreater(run("Grassland_to_Cropland", lca.mineral_soils_co2_from_grassland_to_cropland, 30), 0)
         self.assertLess(run("Forest_to_Grassland", lca.mineral_soils_co2_from_forest_to_grassland, 30), 0)
 
-    def test_n2o_caller_unchanged_by_d2(self):
-        # still t C x 1/15 until D5
+    def test_n2o_caller_is_kg_n2o_since_d5(self):
+        # D2 left this at t C / 15 (not a unit of N2O); D5 makes it kg N2O: t C x 1000 / 15 x (0.006 + 0.1 x 0.011) x 44/28
         got = run("Forest_to_Grassland", lca.mineral_soils_n2o_from_forest_to_grassland, 30)
-        self.assertAlmostEqual(got, expected("forest", "grassland", 30) / 15.0, places=6)
+        want = expected("forest", "grassland", 30) * 1000 / 15 * (0.006 + 0.1 * 0.011) * 44 / 28
+        self.assertAlmostEqual(got, want, places=6)
 
     def test_soc_class_still_returns_t_c(self):
         from landcover_lca.land_classes.soc import SOC

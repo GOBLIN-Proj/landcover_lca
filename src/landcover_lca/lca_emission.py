@@ -28,6 +28,14 @@ t_to_kg = 1e3
 kt_to_kg = 1e6
 C_to_N = 1.0 / 15.0
 C_to_CO2 = 44.0 / 12.0  # t C to t CO2 (molecular weights)
+
+# N2O from the loss of soil carbon (NID 2026 s.6.3.6.2, eq 11.8 and 11.10; CRT Table 4(III) reproduces them):
+#   N mineralised = soil C lost / 15; direct N2O-N = N x EF1; indirect N2O-N = N x FracLEACH x EF5; N2O = N2O-N x 44/28
+EF1_SOM = 0.006  # kg N2O-N per kg N mineralised (IPCC 2019 Refinement Table 11.1, wet climate; implied by CRT 4(III) and NID Table 6.9)
+FRAC_LEACH = 0.1  # kg N leached per kg N mineralised (Ireland, NID Table 5.7)
+EF5 = 0.011  # kg N2O-N per kg N leached or run off (IPCC 2006 Table 11.3; NID p.185)
+N2O_N_to_N2O = 44.0 / 28.0  # kg N2O-N to kg N2O (molecular weights)
+
 kha_to_ha = 1e3
 
 
@@ -702,6 +710,22 @@ def mineral_soils_co2_from_cropland_to_grassland(
     )
 
 
+def n2o_from_soil_carbon_loss(soil_c_loss_t):
+    """
+    N2O from the mineralisation of soil nitrogen that accompanies a loss of soil carbon
+    (NID 2026 eq 11.8 for FSOM and eq 11.10 for leaching and runoff).
+
+    Parameters:
+        - soil_c_loss_t (float): soil carbon lost in a year, t C per year (positive = loss).
+
+    Returns:
+    - float: kg N2O per year, direct plus indirect. Negative if soil carbon is gained.
+      = t C x 1000 / 15 (kg N) x (EF1 + FracLEACH x EF5) x 44/28.
+    """
+    n_mineralised_kg = soil_c_loss_t * C_to_N * t_to_kg
+    return n_mineralised_kg * (EF1_SOM + FRAC_LEACH * EF5) * N2O_N_to_N2O
+
+
 def mineral_soils_n2o_from_forest_to_grassland(
     land_use,
     past_land_use_data,
@@ -719,7 +743,7 @@ def mineral_soils_n2o_from_forest_to_grassland(
 
 
     Returns:
-    - emissions_from_mineralization (float): The calculated N2O emissions from mineral soils.
+    - emissions_from_mineralization (float): N2O from mineral soils in kg N2O per year (direct + indirect, see n2o_from_soil_carbon_loss).
     """
 
     soc = SOC(
@@ -731,8 +755,8 @@ def mineral_soils_n2o_from_forest_to_grassland(
         "forest",
     )
 
-    emissions_from_mineralization = (
-        soc.compute_emissions_from_mineral_soils_in_land_use_change() * C_to_N
+    emissions_from_mineralization = n2o_from_soil_carbon_loss(
+        soc.compute_emissions_from_mineral_soils_in_land_use_change()
     )
 
     return emissions_from_mineralization

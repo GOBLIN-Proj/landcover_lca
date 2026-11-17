@@ -100,6 +100,30 @@ So the rate is the inventory's own, consistent with its totals and with its othe
 
 Values 219,392.6 (CO2), 1,793.4 (CH4) and 10.4615 (N2O) kg per hectare burnt. Source `NIR, 2024`; derived by the database author from the inventory's forest fire emissions divided by area burnt. **The derivation is not yet documented.** They are live in the goblin_lite totals and will be reviewed with the fire set of fixes.
 
+## N2O from the loss of soil carbon (constants in `lca_emission.py`)
+
+Used by `mineral_soils_n2o_from_forest_to_grassland` through `n2o_from_soil_carbon_loss`. The unit returned is **kg N2O per year**. goblin_lite multiplies by 1e-6 (to kt) and applies the global warming potential itself.
+
+| Step | Formula | Constant | Source |
+|---|---|---|---|
+| 1. Nitrogen mineralised with the carbon lost | N (kg) = soil C lost (t C) x 1000 / **15** | C:N ratio 15 (`C_to_N = 1/15`) | NID 2026 p.239 (deforestation). CRT Table 4(III) agrees: 7,901.8 t C lost in 2022 / 15 = 526.8 t N, the CRT's value. (Agricultural soils use 10, NID section 5.5; not used here) |
+| 2. Direct N2O-N | N x **EF1 = 0.006** | `EF1_SOM` | IPCC 2019 Refinement, Table 11.1, wet climate. It is not stated in the NID text, but is what the CRT and NID Table 6.9 use: 526.8 t N x 0.006 x 44/28 = 4.97 t N2O, the CRT's 0.00497 kt |
+| 3. Indirect N2O-N | N x **FracLEACH 0.1** x **EF5 0.011** | `FRAC_LEACH`, `EF5` | NID Table 5.7 (FracLEACH-(H) 0.1) and p.185 (EF5 0.011): 526.8 x 0.1 x 0.011 x 44/28 = 0.91 t N2O, the CRT's 0.00091 kt |
+| 4. N2O-N to N2O | x **44/28** | `N2O_N_to_N2O` | molecular weights |
+Per kg of N mineralised: (0.006 + 0.1 x 0.011) x 44/28 = **0.011157 kg N2O**. Per tonne of soil carbon lost: 1000/15 x 0.011157 = **0.7438 kg N2O**; with the AR5 GWP of 265 (used by the NID) that is 0.197 t CO2e per t C. The previous code returned t C / 15 as if it were kg N2O, which is 1000 x 0.011157 = **11.157 times smaller** than this.
+
+**Check.** `tests/soc_n2o_test.py` takes the CRT 2026 Table 4(III) row 4(III).C.2.a, `N mineralised`, and compares the package's value with the CRT total N2O in the 22 years with a CRT total of at least 0.002 kt: the package matches to the rounding of the CRT. The fixture is `tests/data/inventory/crt2026_4iii_forest_to_grassland_n2o.csv` (written by `tools/extract_crt_table4c.py`). The CRT also confirms the NID's own forest table: NID Table 6.9 (forest remaining forest) gives direct N2O of 0.024 kt for 2,564.8 t N in 1990 = EF1 0.006, and total 7.583 kt CO2e = 28.6 t N2O x GWP 265.
+
+| Year | N mineralised (t N) | CRT direct (kt N2O) | CRT indirect (kt N2O) | CRT total (kt N2O) | Package (kt N2O) |
+|---|---|---|---|---|---|
+| 2020 | 570.02 | 0.00537 | 0.00099 | 0.00636 | 0.00636 |
+| 2021 | 549.55 | 0.00518 | 0.00095 | 0.00613 | 0.00613 |
+| 2022 | 526.79 | 0.00497 | 0.00091 | 0.00588 | 0.00588 |
+| 2023 | 481.15 | 0.00454 | 0.00083 | 0.00537 | 0.00537 |
+| 2024 | 411.22 | 0.00388 | 0.00071 | 0.00459 | 0.00459 |
+
+**Assumptions.** The inventory counts only losses of soil carbon for deforestation. The package's function is linear, so a gain of soil carbon (which the Tier 1 forest to grassland calculation gives, see D4b) gives a negative N2O (immobilisation). The sign question disappears if D4b is ever aligned with the inventory.
+
 ## ef_co2_forest_to_settlement_mineral_soil
 
 80,666.67 kg CO2 per hectare, **one-off over 20 years**, not per year. This is a rule, not an implied value: 20% of a 110 t C/ha stock is emitted over 20 years (NID s.6.3.6.2, p.239) = 22 t C = 80,667 kg CO2. Not reachable from the goblin_lite totals.

@@ -104,7 +104,7 @@ class TestProvenanceRecord(unittest.TestCase):
     def test_provenance_record_states_values_window_and_source(self):
         text = open(PROVENANCE, encoding="utf-8").read()
         for needle in (GRASS, FOREST, "-392.73", "3,285.34", "2020-2024", "2026 submission", "CRT Table 4.C",
-                       "sum of kt", "tools/extract_crt_table4c.py"):
+                       "sum of kt", "tools/extract_crt_table4c.py", "EF1", "FracLEACH", "11.157"):
             with self.subTest(needle=needle):
                 self.assertIn(needle, text)
 
