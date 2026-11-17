@@ -126,11 +126,23 @@ class SOC:
         """
         Computes the total area converted from the past land use to the current land use.
 
-        Assumption: the converted area is **mineral soil** (rewetting of organic soil does not use
-        this code). The soil type of the converted hectares is not known, and no mineral share is
-        applied: the whole area is charged the mineral-soil carbon change, regardless of the soil
-        shares in the land use data. NID 2026 s.6.4.6 makes the same assumption for cropland. If new
-        land could be organic soil, a mineral share and organic-soil terms would be needed (D4c).
+        Assumption, for land **leaving grassland** (grassland to cropland, grassland to forest;
+        rewetting of organic soil does not use this code): the converted area is **mineral soil**.
+        The exact soil type of the converted hectares is not known, and no mineral share is applied:
+        the whole area is charged the mineral-soil carbon change, regardless of the soil shares in
+        the land use data. NID 2026 s.6.4.6 makes the same assumption for cropland.
+
+        In GOBLIN scenarios, the land converted is grassland on mineral soil, moving to another
+        use. Drained organic grassland that is rewetted is not a conversion: it is a change in the
+        grassland's soil shares, charged by the ``Grassland`` rewetting terms
+        (``current_area_rewetted_rich``/``_poor``), not by this code.
+
+        The assumption does **not** hold for land **moving into grassland** (forest to grassland,
+        cropland to grassland). There the converted hectares may be organic soil. They would be
+        charged the mineral-soil change here and, as part of the current grassland area, the
+        drained-organic terms in ``Grassland`` (``current_area_drained_rich``/``_poor``), so an
+        organic hectare would be charged twice. No mineral share is applied to those transitions
+        either; they are not yet used by GOBLIN scenarios (D4c).
 
         Returns:
             float: The annual area converted.

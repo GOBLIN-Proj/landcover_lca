@@ -41,7 +41,7 @@ Planned release note: the SOC fixes D1 and D2 ship together. D1 alone makes span
   - goblin_lite national case (2020-2050): no change in any output.
 
 ### Documented
-- **D4c:** converted land is assumed to be mineral soil and no mineral share is applied (soil type of the converted hectares is unknown; NID s.6.4.6). Stated in the `SOC` docstring and the README, and recorded by `TestConvertedAreaIsAssumedMineral`. No change in behaviour.
+- **D4c:** land leaving grassland is assumed to be mineral soil and no mineral share is applied (soil type of the converted hectares is unknown; NID s.6.4.6). In GOBLIN scenarios the converted land is mineral grassland moving to another use; rewetting of drained organic grassland is a change in the grassland's soil shares, not a conversion. The assumption does not hold for land moving into grassland (forest or cropland to grassland): organic hectares there would be charged twice. Stated in the `SOC` docstring and the README; the leaving-grassland case is recorded by `TestConvertedAreaIsAssumedMineral`. No change in behaviour.
 - **D4b:** forest to grassland soil carbon is a known simplification and is not changed. The package
   gives -7.35 t C/ha over 20 years (SOCref 73.51 x (1.04 - 1.14)), a removal; the inventory (CRT 2026
   4.C.2, Tier 2 soil-group values, NID Tables 6.20, 6.21) reports an emission of +17.9 t C/ha over 20 years
