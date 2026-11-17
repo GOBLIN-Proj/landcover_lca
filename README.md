@@ -356,6 +356,8 @@ The inventory reports **no land converted to cropland** (CRT 4.B.2 is NO), so th
 
 **Required transition-matrix columns.** The SOC and land use code read 8 of the matrix columns: `Grassland_to_Grassland`, `Cropland_to_Cropland`, `Forest_to_Forest`, `Wetland_to_Wetland`, `Grassland_to_Cropland`, `Forest_to_Cropland`, `Cropland_to_Grassland` and `Forest_to_Grassland`. If one is missing, a `KeyError` names it and lists the columns present. A missing column is never treated as zero.
 
+Implied emission factors (values derived from inventory totals) are documented in `docs/emission_factor_provenance.md`: source table, submission, years, formula and how to refresh them.
+
 Not yet updated for these fixes: the parallel `geo_goblin` copy.
 
 ## License

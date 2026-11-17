@@ -119,40 +119,40 @@ class TestDatabaseAgainstInventory(unittest.TestCase):
 
 
 class TestGrasslandRemainingAgainstInventory(unittest.TestCase):
-    """The implied factor -371.985 kg CO2/ha/yr and the baseline total against CRF 4.C.1 mineral soils."""
+    """The implied factor (-394.70 kg CO2/ha/yr, CRF 4.C.1 mineral soils, 2025 submission, 2019-2023,
+    sum kt / sum area; docs/emission_factor_provenance.md) and the baseline total against the CRF."""
 
-    EF = -371.985462196794
+    EF = -394.70054675481975
 
     def test_fixture_agrees_with_nid_table_1(self):
         # NID 2026 summary table, 4.C.1 Grassland remaining grassland mineral soils, 1990: +107.27 kt CO2
         self.assertAlmostEqual(crf(2024, 1990, "mineral_soil_ktCO2"), 107.27, places=2)
 
-    def test_factor_is_within_the_inventory_range(self):
-        series = CRF[CRF.submission == 2024].kgCO2_per_ha_yr
-        self.assertGreaterEqual(self.EF, series.min())
-        self.assertLessEqual(self.EF, series.max())
+    def test_factor_is_within_the_recent_inventory_range(self):
+        w = CRF[(CRF.submission == 2025) & CRF.year.between(2019, 2023)].kgCO2_per_ha_yr
+        self.assertGreaterEqual(self.EF, w.min())
+        self.assertLessEqual(self.EF, w.max())
 
-    def test_factor_close_to_2021_value_of_2024_submission(self):
-        # closest year found (0.3% apart); the exact derivation is not recorded in the repo
-        self.assertAlmostEqual(self.EF, crf(2024, 2021, "kgCO2_per_ha_yr"), delta=0.01 * abs(self.EF))
+    def test_factor_reproduces_2020_total_when_the_area_is_the_inventory_area(self):
+        # inventory mineral area 3,880.7 kha x factor = -1,531.7 kt against -1,495.8 kt (2025 submission, 2020): 2.4%
+        inv_area = crf(2025, 2020, "mineral_area_kha")
+        self.assertAlmostEqual(self.EF * inv_area / 1000, crf(2025, 2020, "mineral_soil_ktCO2"),
+                               delta=0.03 * 1495.8)
 
     def _baseline_kt(self):
         tm = load_transition_matrix(TRANSITION, "ireland", 2020, 2050)
         ld = load_land_use_data(LAND_USE, 2020)
         return lca.mineral_soils_co2_grassland_remaining_grassland(ld[-2020], ld[-2020], tm[-2020], "ireland") * 1e-6
 
-    def test_baseline_2020_total_vs_2024_submission(self):
-        # package -1,337.6 kt (3,595.7 kha x factor) against inventory -1,280.7 kt: +4.4%
-        self.assertAlmostEqual(self._baseline_kt(), crf(2024, 2020, "mineral_soil_ktCO2"), delta=0.05 * 1280.7)
-
     @unittest.expectedFailure
     def test_baseline_2020_total_vs_2025_submission(self):
-        """The 2025 submission gives -1,495.8 kt for 2020; the package is 10.6% away (constant factor, area -7%)."""
-        self.assertAlmostEqual(self._baseline_kt(), crf(2025, 2020, "mineral_soil_ktCO2"), delta=0.05 * 1495.8)
+        """2025 submission 2020: -1,495.8 kt. Package: -1,419.2 kt (-5.1%). The factor is right; the package
+        mineral grassland area is 3,595.7 kha against the inventory 3,880.7 kha (-7.3%): landcover_assignment (LA2)."""
+        self.assertAlmostEqual(self._baseline_kt(), crf(2025, 2020, "mineral_soil_ktCO2"), delta=0.03 * 1495.8)
 
     @unittest.expectedFailure
     def test_factor_follows_the_inventory_time_series(self):
-        """A constant cannot follow the series: 1990 is +26.6 kg/ha, 2023 is -397.9 (NID Tables 1.9, 1.11)."""
+        """A constant cannot follow the series: 1990 is +26.6 kg/ha, 2023 is -397.9 (NID Tables 1.9, 1.11). By design: the factor is a recent-years average."""
         for year in (1990, 2000, 2010):
             self.assertAlmostEqual(self.EF, crf(2025, year, "kgCO2_per_ha_yr"), delta=0.25 * abs(self.EF))
 

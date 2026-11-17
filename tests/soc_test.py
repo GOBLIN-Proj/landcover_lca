@@ -208,12 +208,14 @@ class TestSocUnitsKgCO2(unittest.TestCase):
         self.assertAlmostEqual(got * 1e-6, 4.675, places=5)  # kt CO2 per year
 
     def test_national_total_unchanged(self):
+        # Goblin_lite national case. Values moved by D7 only (grassland remaining factor -371.985 -> -394.70);
+        # before D7: 3785608957.9, 4637503163.5, 4640527270.9. D1-D6 change nothing here (zero conversion areas).
         t = TRANSITION
         tm = load_transition_matrix(t, "ireland", 2020, 2050)
         ld = load_land_use_data(LAND_USE, 2020)
-        self.assertAlmostEqual(lca.total_co2_emission(ld[-2020], ld[-2020], tm[-2020], "ireland"), 3785608957.9, delta=0.1)
-        self.assertAlmostEqual(lca.total_co2_emission(ld[0], ld[-2020], tm[0], "ireland"), 4637503163.5, delta=0.1)
-        self.assertAlmostEqual(lca.total_co2_emission(ld[1], ld[-2020], tm[1], "ireland"), 4640527270.9, delta=0.1)
+        self.assertAlmostEqual(lca.total_co2_emission(ld[-2020], ld[-2020], tm[-2020], "ireland"), 3703931207.8, delta=0.1)
+        self.assertAlmostEqual(lca.total_co2_emission(ld[0], ld[-2020], tm[0], "ireland"), 4620246661.6, delta=0.1)
+        self.assertAlmostEqual(lca.total_co2_emission(ld[1], ld[-2020], tm[1], "ireland"), 4623455773.3, delta=0.1)
 
 
 if __name__ == "__main__":
