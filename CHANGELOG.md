@@ -42,8 +42,9 @@ Planned release note: the SOC fixes D1 and D2 ship together. D1 alone makes span
 
 ### Documented
 - **D4b:** forest to grassland soil carbon is a known simplification and is not changed. The package
-  gives -7.35 t C/ha (SOCref 73.51 x (1.04 - 1.14)); the NID uses Tier 2 soil-group values
-  (Tables 6.20, 6.21) and gives about -1.0 t C/ha to improved grassland with the average factors.
+  gives -7.35 t C/ha over 20 years (SOCref 73.51 x (1.04 - 1.14)), a removal; the inventory (CRT 2026
+  4.C.2, Tier 2 soil-group values, NID Tables 6.20, 6.21) reports an emission of +17.9 t C/ha over 20 years
+  (0.896 t C/ha/yr). The signs differ.
   GOBLIN cannot reach it (landcover_assignment writes only `Grassland_to_*` columns). Recorded in the
   README, the `SOC` docstring and an expected-failure test in `tests/soc_inventory_test.py`.
 - **D1:** `compute_emissions_from_mineral_soils_in_land_use_change` docstring now states
@@ -55,15 +56,17 @@ Planned release note: the SOC fixes D1 and D2 ship together. D1 alone makes span
   need year-by-year data from landcover_assignment.
 
 ### Changed
-- **D7: the implied grassland-remaining-grassland factor is refreshed and documented.**
-  `ef_co2_implied_grassland_remaining_SOC_per_ha` changes from -371.985 to **-394.70 kg CO2/ha/yr**:
-  sum of kt CO2 / sum of mineral area over 2019-2023 of CRF 4.C.1 (2025 submission). The old value
-  was derived from the CRF by the database author (`NIR, 2024`) and cannot be reproduced exactly
-  because the EPA recalculates its series each year. The derivation is scripted
-  (`tools/derive_implied_grassland_factor.py`), recorded in `docs/emission_factor_provenance.md`
-  and tested (`tests/implied_factor_test.py`). **This is the one SOC change that alters goblin_lite
-  results:** national baseline CO2 3,785.6 -> 3,703.9 kt (-2.2%); 2050 scenarios 4,637.5 -> 4,620.2
-  and 4,640.5 -> 4,623.5 kt (-0.4%). The database `source` row for this factor is updated.
+- **D7: the implied soil factors are refreshed from the 2026 CRT and documented.**
+  `ef_co2_implied_grassland_remaining_SOC_per_ha`: -371.985 -> **-392.73 kg CO2/ha/yr**
+  (CRT 4.C.1 mineral soils, 2026 submission, 2020-2024, sum kt CO2 / sum mineral area).
+  `ef_co2_implied_forest_to_grassland_SOC_per_ha` (unused): 785.79 -> **+3,285.34 kg CO2/ha/yr**
+  (CRT 4.C.2, same window; the inventory applies a constant 0.896 t C/ha/yr loss).
+  The old values were derived from earlier CRFs by the database author (`NIR, 2024`) and cannot be
+  reproduced because the EPA recalculates its series each year. Extraction and derivation are scripted
+  (`tools/extract_crt_table4c.py`, `tools/derive_implied_grassland_factor.py`), recorded in
+  `docs/emission_factor_provenance.md` and tested (`tests/implied_factor_test.py`). **This is the one
+  SOC change that alters goblin_lite results:** national baseline CO2 3,785.6 -> 3,711.0 kt (-2.0%);
+  2050 scenarios 4,637.5 -> 4,621.7 and 4,640.5 -> 4,624.9 kt (-0.3%). The database `source` cells are updated.
 - **D4a: transitions involving cropland now use SOCref LAC = 85 t C/ha (was 73.51).**
   `SOC.compute_SOC_ref_for_land_use` returns the Low Activity Clay value when cropland is
   the past or the current land use (NID 2026 s.6.4.6: 98% of cropland is on LAC soils;

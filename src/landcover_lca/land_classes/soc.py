@@ -98,8 +98,8 @@ class SOC:
         - Every other transition uses the area-weighted mean of the four soil classes
           (73.51 t C/ha; the proportions sum to 0.83 and are not renormalised).
           Forest to grassland is a known simplification (D4b): the NID inventories it
-          with Tier 2 soil-group values (Tables 6.20, 6.21), which give about -1 t C/ha
-          to improved grassland against -7.35 here. It is left as is because landcover_assignment
+          with Tier 2 soil-group values (Tables 6.20, 6.21): the 2026 CRT shows an emission
+          of +17.9 t C/ha over 20 years against a removal of -7.35 here (opposite sign). It is left as is because landcover_assignment
           never creates forest transitions, so GOBLIN never reaches it. Grassland to forest
           (afforestation) is the transition that occurs, and CBM covers forests.
 
