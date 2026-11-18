@@ -184,4 +184,5 @@ def run(function, year):
     land_use, past, tm = inventory_inputs(year)
     values = {"ef_country": "ireland", "land_use": land_use, "past": past, "tm": tm, "year": year}
     params = inspect.signature(function).parameters
-    return function(**{p: values[ARG_NAMES[p]] for p in params})
+    # optional arguments (e.g. include_fire_co2) keep the package default, which is what the totals use
+    return function(**{p: values[ARG_NAMES[p]] for p, spec in params.items() if spec.default is inspect.Parameter.empty})

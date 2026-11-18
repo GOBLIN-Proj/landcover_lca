@@ -236,12 +236,14 @@ class TestSocUnitsKgCO2(unittest.TestCase):
         # D7 (grassland remaining factor -371.985 -> -392.73); before D7: 3785608957.9, 4637503163.5, 4640527270.9.
         # FIRE-1 (forest fire CO2 219,392.6 -> 104,427.25 kg/ha x 177.6534 ha burnt = -20,423,985.6 kg in each);
         # before FIRE-1: 3711000230.5, 4621740172.5, 4624933272.4.
+        # FIRE-2 (grassland fire CO2 not counted, NID Tier 1): -4,498,641.4, -2,566,304.6, -2,560,755.3 kg;
+        # before FIRE-2: 3690576244.9, 4601316186.9, 4604509286.8.
         t = TRANSITION
         tm = load_transition_matrix(t, "ireland", 2020, 2050)
         ld = load_land_use_data(LAND_USE, 2020)
-        self.assertAlmostEqual(lca.total_co2_emission(ld[-2020], ld[-2020], tm[-2020], "ireland"), 3690576244.9, delta=0.1)
-        self.assertAlmostEqual(lca.total_co2_emission(ld[0], ld[-2020], tm[0], "ireland"), 4601316186.9, delta=0.1)
-        self.assertAlmostEqual(lca.total_co2_emission(ld[1], ld[-2020], tm[1], "ireland"), 4604509286.8, delta=0.1)
+        self.assertAlmostEqual(lca.total_co2_emission(ld[-2020], ld[-2020], tm[-2020], "ireland"), 3686077603.5, delta=0.1)
+        self.assertAlmostEqual(lca.total_co2_emission(ld[0], ld[-2020], tm[0], "ireland"), 4598749882.3, delta=0.1)
+        self.assertAlmostEqual(lca.total_co2_emission(ld[1], ld[-2020], tm[1], "ireland"), 4601948531.6, delta=0.1)
 
 
 if __name__ == "__main__":

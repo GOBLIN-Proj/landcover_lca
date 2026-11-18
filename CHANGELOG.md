@@ -20,6 +20,16 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
     CH4 -263 t, N2O +1.22 t. geo_goblin uses the same database and moves the same way.
   - Tests: `tests/forest_fire_factors_test.py` (new, in CI); forest fire rows in `inventory_alignment_test` now covered
     (within 1.6% each year); goblin_lite totals re-pinned in `soc_test` and `soc_n2o_test`.
+- **FIRE-2: grassland fire CO2 is no longer counted (changes results).** NID 2026 s.6.5.4 (Tier 1) estimates grassland
+  fire CH4 and N2O only, and the CRT reports CO2 as NO. `burning_co2_grassland` (main and geo_goblin) now returns 0
+  unless `include_fire_co2=True`, which keeps the Table 6.34 calculation for later use. Resolves F4; F3 (362 g CO2 or
+  CO2-C) only matters with that option.
+  - goblin_lite national CO2: -4.50 kt baseline (3,690.6 -> 3,686.1 kt), -2.57 kt scenario 0, -2.56 kt scenario 1.
+  - Grassland fire CH4/N2O unchanged. Documented difference from the NID: the burnt area is spread over soil types in
+    proportion to their areas; the NID puts most of it on organic soil (unpublished split), so on inventory areas the
+    package gives 0.57-0.72x the CRT. Cropland fire factors equal the NID; unchanged. README section "Fires".
+  - Tests: `tests/grassland_cropland_fire_test.py` (new, in CI); `inventory_alignment_test` grassland fire CO2 covered,
+    grassland and cropland fire CH4/N2O excluded with reasons; `soc_test` totals re-pinned.
 
 ### Added
 - **Inventory alignment tests** (`tests/inventory_alignment_test.py`, in CI). The package is given the
@@ -33,6 +43,8 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
     near-natural CH4; wetland rewetted CH4 (sum).
   - Gaps (14): fire in all land uses (FIRE-1, FIRE-2, wetland), wetland drainage and rewetted CO2, industrial
     peat CH4 (wetland, P1).
+  - Since then FIRE-1 and FIRE-2 have moved forest fire and grassland fire CO2 to covered, and grassland and cropland
+    fire CH4/N2O to excluded (see Changed).
 
 ## [0.3.0] - 2026-11-17
 

@@ -385,27 +385,32 @@ class Grassland(LandUse):
         return emissions_poor + emissions_rich
     
 
-    def burning_co2_grassland(self):
+    def burning_co2_grassland(self, include_fire_co2=False):
         """
-        Calculates the carbon dioxide (CO2) emissions resulting from the burning of grasslands.
-        This method assesses CO2 emissions from two types of soil in grasslands: mineral soils
-        and drained organic soils. The emission calculation is based on the formula
-        𝐿𝑓𝑖𝑟𝑒 = 𝐴 ∙ 𝑀𝐵 ∙ 𝐶𝑓 ∙ 𝐺𝑒𝑓 ∙ 10^−3, where A is the area, MB is the biomass,
-        Cf is the combustion factor, and Gef is the emission factor.
+        CO2 from grassland fires, in tonnes. Returns 0 unless include_fire_co2 is True.
 
-        The combustion factor (Cf) is assumed to be 1.0, indicating that all available fuel
-        (biomass) is burned. The method involves multiplying the area of grassland burned by
-        the emission factors for CO2 emissions from both mineral and drained organic soils.
+        **Not required under the national inventory.** NID 2026 s.6.5.4 (Tier 1): "there are no long-term
+        losses of biomass carbon due to fires on grassland, and emissions are estimated for CH4 and N2O
+        only"; CRT 2026 4(IV).C.1 reports CO2 as NO. So the default (False) gives 0, and grassland fire CO2
+        is not in total_co2_emission_grassland.
 
-        Emission factors are sourced from a country-specific database, reflecting regional
-        variations in grassland composition and burning characteristics.
+        The calculation is kept for later use (for example a higher tier that counts peat-fire CO2).
+        With include_fire_co2=True it returns the IPCC eq 2.27 result, L = A x MB.Cf x Gef x 1e-3, for each
+        soil type, with the burnt share applied equally to all three:
+            mineral soil          MB.Cf 4.1 t/ha, Gef CO2 1613 g/kg dry matter
+            drained organic soil  MB.Cf 336 t/ha, Gef CO2 362 g/kg dry matter
+            undrained organic     MB.Cf 66 t/ha,  Gef CO2 362 g/kg dry matter (package "rewetted" grassland)
+        Values from NID 2026 Table 6.34. The 362 is labelled g CO2 there; the IPCC 2013 Wetlands Supplement
+        source may state it as CO2-C (audit item F3), so check the unit before using this option.
+
+        Parameters:
+            include_fire_co2 (bool): False (default) returns 0, as in the inventory. True returns the Tier 1 CO2.
 
         Returns:
-            float: The calculated CO2 emissions (in tonnes) from the burning of grasslands,
-                including both mineral soils and drained organic soils. The calculation
-                considers the area of each soil type that is burned and their respective
-                emission factors.
+            float: CO2 emissions from grassland fires (t).
         """
+        if not include_fire_co2:
+            return 0.0
 
         ef_wildfire_MB_time_CF_mineral_soil_grassland = (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
@@ -470,25 +475,20 @@ class Grassland(LandUse):
 
     def burning_ch4_grassland(self):
         """
-        Calculates the methane (CH4) emissions resulting from the burning of grasslands.
-        This method evaluates CH4 emissions from two types of soil in grasslands: mineral
-        soils and drained organic soils. The calculation formula used is
-        𝐿𝑓𝑖𝑟𝑒 = 𝐴 ∙ 𝑀𝐵 ∙ 𝐶𝑓 ∙ 𝐺𝑒𝑓 ∙ 10^−3, where A represents the area, MB is the biomass,
-        Cf is the combustion factor, and Gef is the emission factor.
+        CH4 from grassland fires, in tonnes (NID 2026 s.6.5.4, IPCC eq 2.27: L = A x MB.Cf x Gef x 1e-3).
 
-        The combustion factor (Cf) is assumed to be 1.0, signifying that all available
-        fuel (biomass) is burned. The method involves multiplying the area of grassland
-        burned by the emission factors for CH4 emissions from both mineral and drained
-        organic soils.
+        Factors are NID 2026 Table 6.34: MB.Cf 4.1 / 336 / 66 t/ha and Gef CH4 2.3 / 9 / 9 g/kg dry matter
+        for mineral / drained organic / undrained organic soil (package "rewetted" grassland).
 
-        Emission factors are obtained from a country-specific database, which takes into
-        account regional differences in grassland composition and burning characteristics.
+        **Soil split differs from the NID.** The package applies share_burnt equally to each soil type, so the
+        burnt area follows the soil areas (about 8% organic in the inventory). The NID puts much more of the
+        burnt area on organic soil (it counts half of peatland fires as rough grazing; about 87% of the dry
+        matter burnt is organic, from the CRT CH4/N2O ratio) and does not publish its split. With the
+        inventory's own areas the package gives 0.57-0.72x the CRT CH4 (2020-2022). Kept on purpose: it needs
+        no unpublished split and keeps the response to drainage and rewetting.
 
         Returns:
-            float: The calculated CH4 emissions (in tonnes) from the burning of grasslands,
-                comprising both mineral soils and drained organic soils. The calculation
-                involves considering the area of each soil type that is burned and their
-                respective emission factors.
+            float: CH4 emissions from grassland fires (t).
         """
         ef_wildfire_MB_time_CF_mineral_soil_grassland = (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
@@ -553,23 +553,20 @@ class Grassland(LandUse):
 
     def burning_n2o_grassland(self):
         """
-        Calculates the nitrous oxide (N2O) emissions resulting from the burning of grasslands.
-        This method assesses N2O emissions from two types of soil in grasslands: mineral soils
-        and drained organic soils. The combustion factor (Cf) is assumed to be 1.0, signifying
-        that all available fuel (biomass) is burned.
+        N2O from grassland fires, in tonnes (NID 2026 s.6.5.4, IPCC eq 2.27: L = A x MB.Cf x Gef x 1e-3).
 
-        Emission factors for N2O emissions are applied to both mineral and drained organic soils
-        in grasslands. These factors are obtained from a country-specific database, reflecting
-        regional variations in grassland composition and burning characteristics.
+        Factors are NID 2026 Table 6.34: MB.Cf 4.1 / 336 / 66 t/ha and Gef N2O 0.21 / 0.21 / 0.21 g/kg dry matter
+        for mineral / drained organic / undrained organic soil (package "rewetted" grassland).
 
-        The method involves calculating the N2O emissions by multiplying the area of grassland
-        burned by the emission factors for N2O emissions from both soil types.
+        **Soil split differs from the NID.** The package applies share_burnt equally to each soil type, so the
+        burnt area follows the soil areas (about 8% organic in the inventory). The NID puts much more of the
+        burnt area on organic soil (it counts half of peatland fires as rough grazing; about 87% of the dry
+        matter burnt is organic, from the CRT CH4/N2O ratio) and does not publish its split. With the
+        inventory's own areas the package gives 0.57-0.72x the CRT N2O (2020-2022). Kept on purpose: it needs
+        no unpublished split and keeps the response to drainage and rewetting.
 
         Returns:
-            float: The calculated N2O emissions (in tonnes) from the burning of grasslands,
-                including both mineral soils and drained organic soils. The calculation
-                involves considering the area of each soil type that is burned and their
-                respective emission factors.
+            float: N2O emissions from grassland fires (t).
         """
 
         ef_wildfire_MB_time_CF_mineral_soil_grassland = (

@@ -123,6 +123,25 @@ Forest wildfire factors, kg CO2 / CH4 / N2O per ha burnt (FIRE-1). Renamed from 
 - **To refresh:** re-extract the fixtures from a newer submission (`tools/extract_inventory_fixtures.py`), change `YEARS`
   in the script, run it with `--write`, update this section and the test.
 
+## Grassland and cropland fire factors (not implied; NID defaults)
+
+| cells | values | source |
+|---|---|---|
+| `ef_wildfire_MB_time_CF_{mineral_soil,drained_organic_soil,wet_organic_soil}_grassland` | 4.1, 336, 66 t DM/ha | NID 2026 Table 6.34 |
+| `ef_wildfire_GEF_ch4_*` grassland | 2.3, 9, 9 g/kg DM | NID 2026 Table 6.34 |
+| `ef_wildfire_GEF_n2o_*` grassland | 0.21, 0.21, 0.21 g/kg DM | NID 2026 Table 6.34 |
+| `ef_wildfire_GEF_co2_*` grassland | 1613, 362, 362 g/kg DM | NID 2026 Table 6.34; **not used by default** (FIRE-2) |
+| `ef_wildfire_MB_time_CF_cropland`, `ef_ch4_cropland_Gef`, `ef_n2o_cropland_Gef` | 4.0 t DM/ha, 2.7, 0.07 g/kg DM | NID 2026 s.6.4.8 |
+
+Checked by `tests/grassland_cropland_fire_test.py`. Grassland fire CO2 is 0 unless `include_fire_co2=True`: NID 2026
+s.6.5.4 (Tier 1) estimates CH4 and N2O only and the CRT reports CO2 as NO. Whether 362 is g CO2 or g CO2-C (F3) only
+matters if that option is used.
+
+**Soil split differs from the NID.** The package spreads the grassland burnt area over soil types in proportion to their
+areas; the NID puts most of it on organic soil and does not publish the split (CRT CH4/N2O = 38.65 in every year, so about
+87% of the dry matter burnt is organic). On inventory areas the package gives 0.57-0.72x the CRT CH4 and N2O. Cropland
+matches the CRT where the burnt area is unrevised (2021); CRF 2024 areas for 2020 and 2022 were revised in the 2026 submission.
+
 ## N2O from the loss of soil carbon (constants in `lca_emission.py`)
 
 Used by `mineral_soils_n2o_from_forest_to_grassland` through `n2o_from_soil_carbon_loss`. The unit returned is **kg N2O per year**. goblin_lite multiplies by 1e-6 (to kt) and applies the global warming potential itself.
