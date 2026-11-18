@@ -6,6 +6,21 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
 
 ## [Unreleased]
 
+### Changed
+- **FIRE-1: forest wildfire factors replaced with the 2020-2022 inventory values (changes results).** The three factors
+  did not reproduce the inventory (2.10x CO2, 5.73x CH4, 0.60x N2O on the inventory's own areas): CO2 was the CRF 2024
+  total-forest factor, CH4 and N2O the sum of the two forest category factors. New values, kg per ha burnt: CO2
+  219,392.6 -> 104,427.25, CH4 1,793.4 -> 312.82, N2O 10.4615 -> 17.3047 (CRT 2026 4(IV).A / CRF 2024 area burnt,
+  2020-2022, sum/sum). Scripted (`tools/derive_implied_forest_fire_factor.py`) and documented in
+  `docs/emission_factor_provenance.md`; `source` and `units` cells now state the tables, years and unit.
+  - Database columns renamed: `ef_{co2,ch4,n2o}_implied_wildfire_forest` (were `ef_co2_implied_wilfire_forest`,
+    `ef_CH4_implied_wilfire_forest`, `ef_n2o_implied_wilfire_forest`); both `forestland.py` (main and geo_goblin) read
+    the new names, and their docstrings now describe what the code does.
+  - goblin_lite national case (177.65 ha burnt, every scenario): CO2 -20.42 kt (3,711.0 -> 3,690.6 kt baseline),
+    CH4 -263 t, N2O +1.22 t. geo_goblin uses the same database and moves the same way.
+  - Tests: `tests/forest_fire_factors_test.py` (new, in CI); forest fire rows in `inventory_alignment_test` now covered
+    (within 1.6% each year); goblin_lite totals re-pinned in `soc_test` and `soc_n2o_test`.
+
 ### Added
 - **Inventory alignment tests** (`tests/inventory_alignment_test.py`, in CI). The package is given the
   NID/CRT 2026 areas and each emission term is compared with the CRT 2026 emissions, 2020-2024

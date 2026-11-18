@@ -96,9 +96,32 @@ It is high compared with the grassland sink (0.107 t C/ha/yr gained), and it is 
 
 So the rate is the inventory's own, consistent with its totals and with its other deforestation rates. What is not documented in the NID is exactly how the 0.896 was built from the Tier 2 parameters.
 
-## ef_co2_implied_wilfire_forest, ef_CH4_implied_wilfire_forest, ef_n2o_implied_wilfire_forest
+## ef_co2_implied_wildfire_forest, ef_ch4_implied_wildfire_forest, ef_n2o_implied_wildfire_forest
 
-Values 219,392.6 (CO2), 1,793.4 (CH4) and 10.4615 (N2O) kg per hectare burnt. Source `NIR, 2024`; derived by the database author from the inventory's forest fire emissions divided by area burnt. **The derivation is not yet documented.** They are live in the goblin_lite totals and will be reviewed with the fire set of fixes.
+Forest wildfire factors, kg CO2 / CH4 / N2O per ha burnt (FIRE-1). Renamed from `ef_co2_implied_wilfire_forest`,
+`ef_CH4_implied_wilfire_forest`, `ef_n2o_implied_wilfire_forest` (nothing outside this package read them).
+
+| factor | value | before FIRE-1 |
+|---|---|---|
+| CO2 | 104,427.25 | 219,392.6 |
+| CH4 | 312.82 | 1,793.4 |
+| N2O | 17.3047 | 10.4615 |
+
+- **Derivation:** sum over 2020-2022 of CRT 2026 Table 4(IV) 4.A.1 + 4.A.2 wildfire emissions / sum over 2020-2022 of
+  CRF 2024 Table4(V) area burnt, 4.A.1 + 4.A.2 (499.88 ha). The CRT 2026 leaves area burnt blank, so the previous
+  submission's area is the latest published one. Script: `tools/derive_implied_forest_fire_factor.py` (reads the
+  fixtures in `tests/data/inventory/`; `--write` sets the value, `source` and `units` cells). Test: `tests/forest_fire_factors_test.py`.
+- **Method behind the inventory values** (NID 2026 s.6.3.4.4, IPCC 2006 eq 2.27): dry matter x Cf 0.45 x Gef
+  (CO2 1,569, CH4 4.7, N2O 0.26 g/kg; the NID text prints N2O as 0.026, the CRT values need 0.26). Dry matter 177,713 kg/ha
+  (4.A.1) and 103,485 kg/ha (4.A.2), so 125,474 and 73,066 kg CO2/ha. The CRT 2026 values per category are 123,857-124,232
+  and 74,433-74,567 kg CO2/ha in 2020-2022. The total-forest factor depends on the 4.A.1/4.A.2 mix of the burnt area
+  (0.59-0.64 in these years).
+- **The old values** were not one calculation: CO2 was the CRF 2024 total-forest implied factor, CH4 and N2O the sum of
+  the 4.A.1 and 4.A.2 factors. Against the inventory: 2.10x, 5.73x and 0.60x.
+- **Input expected:** `share_burnt` is the **total** forest burnt area (4.A.1 + 4.A.2). landcover_assignment currently
+  supplies 4.A.1 only (logged for that package; not compensated here).
+- **To refresh:** re-extract the fixtures from a newer submission (`tools/extract_inventory_fixtures.py`), change `YEARS`
+  in the script, run it with `--write`, update this section and the test.
 
 ## N2O from the loss of soil carbon (constants in `lca_emission.py`)
 

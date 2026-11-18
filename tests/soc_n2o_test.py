@@ -36,7 +36,9 @@ def run_n2o(span, area=1000.0):
 
 
 # kg N2O, goblin_lite national case (baseline 2020, scenarios 0 and 1 in 2050), measured before D5
-NATIONAL_N2O_BEFORE_D5 = [616310.977184324, 616059.4020200202, 616058.6795489962]
+# goblin_lite national N2O (kg). D5 changes nothing here. FIRE-1 adds 177.6534 ha x (17.3047 - 10.4615) kg N2O/ha
+# = 1,215.719 kg; before FIRE-1: 616310.977184324, 616059.4020200202, 616058.6795489962.
+NATIONAL_N2O = [617526.696301, 617275.121136, 617274.398665]
 
 
 class TestInventoryChain(unittest.TestCase):
@@ -98,7 +100,7 @@ class TestPackageCaller(unittest.TestCase):
         tm = load_transition_matrix(TRANSITION, "ireland", 2020, 2050)
         ld = load_land_use_data(LAND_USE, 2020)
         got = [lca.total_n2o_emission(ld[i], ld[-2020], tm[i], "ireland") for i in (-2020, 0, 1)]
-        for g, want in zip(got, NATIONAL_N2O_BEFORE_D5):
+        for g, want in zip(got, NATIONAL_N2O):
             self.assertAlmostEqual(g, want, delta=1e-3)
 
 

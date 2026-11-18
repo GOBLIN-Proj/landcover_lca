@@ -402,7 +402,7 @@ charges the mineral-soil carbon change (NID 2026 eq 6.4.3, see the section above
 - `tests/inventory_inputs.py` builds the land-use table and transition matrix. Its docstring states how each inventory row maps to a package share and the caveats.
 - `tests/data/inventory/inventory_coverage.csv` lists every comparison as **covered** (must match within its tolerance), **gap** (a known difference owned by a fix; run as an expected failure) or **excluded** (out of scope, with the reason). Every term in `total_{co2,ch4,n2o}_emission` and every CRT Table4 category is in the map.
 
-Current state: forest drainage CO2/CH4/N2O, grassland remaining mineral CO2, grassland organic CO2, peat extraction N2O, near-natural CH4 and wetland rewetted CH4 match. The grassland CH4 rows are only a consistency check (the rich/poor split is derived from them). Known gaps: biomass burning for all land uses, wetland CO2 (peat extraction including exported horticultural peat, rewetted peat) and industrial peat CH4.
+Current state: forest drainage CO2/CH4/N2O, grassland remaining mineral CO2, grassland organic CO2, peat extraction N2O, near-natural CH4 and wetland rewetted CH4 match. The grassland CH4 rows are only a consistency check (the rich/poor split is derived from them). Forest fire CO2/CH4/N2O match since FIRE-1. Known gaps: biomass burning in grassland, wetland and cropland, wetland CO2 (peat extraction including exported horticultural peat, rewetted peat) and industrial peat CH4.
 
 ## License
 This project is licensed under the terms of the MIT license.

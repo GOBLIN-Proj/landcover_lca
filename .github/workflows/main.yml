@@ -47,3 +47,4 @@ jobs:
         python -m unittest time_period_test.py
         python -m unittest cropland_readiness_test.py
         python -m unittest inventory_alignment_test.py
+        python -m unittest forest_fire_factors_test.py

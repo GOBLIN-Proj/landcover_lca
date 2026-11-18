@@ -292,28 +292,20 @@ class Forest(LandUse):
 
     def burning_co2_forest(self):
         """
-        Calculates carbon dioxide (CO2) emissions resulting from the burning of forests.
-        This method assesses CO2 emissions specifically from forest areas where vegetation
-        and other biomass are burnt, a practice that can significantly contribute to CO2 emissions.
+        Carbon dioxide (CO2) from forest wildfires, in tonnes.
 
-        The calculation involves multiple factors: an emission factor for the fuel burning in
-        forests, a emission factor (Gef) for CO2 emissions from forest burning, and a
-        combustion factor (Cf) that represents the efficiency of biomass combustion.
-
-        The total CO2 emissions are estimated by multiplying the area of forest burnt, the
-        emission factor for fuel burning, the combustion factor, and the emission factor
-        for CO2. The result is then converted into tonnes for easier reporting and comparison.
+        Burnt area (forest area_ha x share_burnt) x the implied factor ef_co2_implied_wildfire_forest
+        (kg CO2 per ha burnt) x 1e-3. The factor is the 2020-2022 inventory value: CRT 2026 Table 4(IV)
+        4.A.1 + 4.A.2 emissions / CRF 2024 area burnt (FIRE-1, docs/emission_factor_provenance.md). It is a
+        total-forest factor, so share_burnt should be the total forest burnt area (forest remaining forest plus
+        land converted to forest).
 
         Returns:
-            float: The calculated CO2 emissions (in tonnes) from the burning of forest areas.
-                The calculation considers the area of forest burnt, the specific emission
-                factor for fuel burning in forests, the combustion factor, and the
-                emission factor for CO2 emissions.
-
+            float: CO2 emissions from forest wildfires (t).
         """
         ef_co2_forest = (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
-                "ef_co2_implied_wilfire_forest"
+                "ef_co2_implied_wildfire_forest"
             ) * 1e-3
         )
 
@@ -325,27 +317,20 @@ class Forest(LandUse):
 
     def burning_ch4_forest(self):
         """
-        Calculates methane (CH4) emissions resulting from the burning of forests. This method
-        assesses CH4 emissions specifically from forest areas where vegetation and other
-        biomass are burnt, which can be a significant source of methane, a potent greenhouse gas.
+        Methane (CH4) from forest wildfires, in tonnes.
 
-        The calculation involves several factors: an emission factor for the fuel burning in
-        forests, a emission factor (Gef) for CH4 emissions from forest burning, and a
-        combustion factor (Cf) that represents the efficiency of biomass combustion.
-
-        The total CH4 emissions are estimated by multiplying the area of forest burnt, the
-        emission factor for fuel burning, the combustion factor, and the emission factor
-        for CH4. The result is then converted into tonnes for easier reporting and comparison.
+        Burnt area (forest area_ha x share_burnt) x the implied factor ef_ch4_implied_wildfire_forest
+        (kg CH4 per ha burnt) x 1e-3. The factor is the 2020-2022 inventory value: CRT 2026 Table 4(IV)
+        4.A.1 + 4.A.2 emissions / CRF 2024 area burnt (FIRE-1, docs/emission_factor_provenance.md). It is a
+        total-forest factor, so share_burnt should be the total forest burnt area (forest remaining forest plus
+        land converted to forest).
 
         Returns:
-            float: The calculated CH4 emissions (in tonnes) from the burning of forest areas.
-                The calculation considers the area of forest burnt, the specific emission
-                factor for fuel burning in forests, the combustion factor, and the
-                emission factor for CH4 emissions.
+            float: CH4 emissions from forest wildfires (t).
         """
         ef_ch4_forest = (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
-                "ef_CH4_implied_wilfire_forest"
+                "ef_ch4_implied_wildfire_forest"
             ) * 1e-3
         )
 
@@ -356,30 +341,20 @@ class Forest(LandUse):
 
     def burning_n2o_forest(self):
         """
-        Calculates nitrous oxide (N2O) emissions resulting from the burning of forests.
-        This method assesses N2O emissions specifically from forest areas where vegetation
-        and other biomass are burnt. N2O is a potent greenhouse gas, and its emissions
-        can be significant in forest burning events.
+        Nitrous oxide (N2O) from forest wildfires, in tonnes.
 
-        The calculation involves several factors: an emission factor for the fuel burning
-        in forests, a emission factor (Gef) for N2O emissions from forest burning,
-        and a combustion factor (Cf) that represents the efficiency of biomass combustion.
-
-        The total N2O emissions are estimated by multiplying the area of forest burnt, the
-        emission factor for fuel burning, the combustion factor, and the emission
-        factor for N2O. The result is then converted into tonnes for easier reporting and
-        comparison.
+        Burnt area (forest area_ha x share_burnt) x the implied factor ef_n2o_implied_wildfire_forest
+        (kg N2O per ha burnt) x 1e-3. The factor is the 2020-2022 inventory value: CRT 2026 Table 4(IV)
+        4.A.1 + 4.A.2 emissions / CRF 2024 area burnt (FIRE-1, docs/emission_factor_provenance.md). It is a
+        total-forest factor, so share_burnt should be the total forest burnt area (forest remaining forest plus
+        land converted to forest).
 
         Returns:
-            float: The calculated N2O emissions (in tonnes) from the burning of forest areas.
-                The calculation considers the area of forest burnt, the specific emission
-                factor for fuel burning in forests, the combustion factor, and the
-                emission factor for N2O emissions.
-
+            float: N2O emissions from forest wildfires (t).
         """
         ef_n2o_forest = (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
-                "ef_n2o_implied_wilfire_forest"
+                "ef_n2o_implied_wildfire_forest"
             ) * 1e-3
         )
 
