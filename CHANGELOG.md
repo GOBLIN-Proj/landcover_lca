@@ -22,7 +22,7 @@ Summary of what changes numbers:
 - Not in this release: D8 (geo_goblin
   still carries the old SOC code).
 - CI now also runs `soc_test`, `soc_inventory_test`, `soc_n2o_test`, `transition_key_test` and
-  `implied_factor_test`, `n2o_drainage_factors_test` and `time_period_test` (`.github/workflows/main.yml`). `load_test` stays out: it already fails.
+  `implied_factor_test`, `n2o_drainage_factors_test`, `time_period_test` and `cropland_readiness_test` (`.github/workflows/main.yml`). `load_test` stays out: it already fails.
 
 ### Fixed
 - **D2 / S2: mineral-soil CO2 from land-use change was in t C, not kg CO2.**
