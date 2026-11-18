@@ -4,6 +4,21 @@ All notable changes to `landcover_lca` are recorded here, newest first. Format f
 [Keep a Changelog](https://keepachangelog.com/). Each SOC fix is tracked as a numbered
 dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repository).
 
+## [Unreleased]
+
+### Added
+- **Inventory alignment tests** (`tests/inventory_alignment_test.py`, in CI). The package is given the
+  NID/CRT 2026 areas and each emission term is compared with the CRT 2026 emissions, 2020-2024
+  (fire 2020-2022). No change to `src/` or to any result.
+  - Fixtures in `tests/data/inventory/`, each value with its source; `tools/extract_inventory_fixtures.py`
+    rebuilds the CRT/CRF ones. `openpyxl` is added as a Poetry dev dependency for the extraction tools.
+  - `inventory_coverage.csv` marks each comparison covered, gap (expected failure, with its fix) or excluded.
+  - Covered (10): forest drainage CO2 (2020-2023), CH4, N2O; grassland remaining mineral CO2 (2020-2024 sum);
+    grassland organic CO2; grassland drainage and rewet-status CH4 (consistency only); peat extraction N2O;
+    near-natural CH4; wetland rewetted CH4 (sum).
+  - Gaps (14): fire in all land uses (FIRE-1, FIRE-2, wetland), wetland drainage and rewetted CO2, industrial
+    peat CH4 (wetland, P1).
+
 ## [0.3.0] - 2026-11-17
 
 This release changes results. It is a minor version bump on purpose: goblin_lite pins

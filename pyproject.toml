@@ -12,6 +12,10 @@ pandas = "2.1.4"
 numpy = "^1.25.0"
 sqlalchemy = "^1.4.0"
 
+[tool.poetry.group.dev.dependencies]
+# used only by tools/extract_*.py to rebuild test fixtures from the EPA workbooks
+openpyxl = "^3.1"
+
 
 
 [build-system]

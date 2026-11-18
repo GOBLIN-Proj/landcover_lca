@@ -147,6 +147,22 @@ Matches the inventory, no method deviation:
 
 80,666.67 kg CO2 per hectare, **one-off over 20 years**, not per year. This is a rule, not an implied value: 20% of a 110 t C/ha stock is emitted over 20 years (NID s.6.3.6.2, p.239) = 22 t C = 80,667 kg CO2. Not reachable from the goblin_lite totals.
 
+## Inventory alignment fixtures (tests only)
+
+These files are test inputs and expected values for `tests/inventory_alignment_test.py`; no factor in the database is derived from them.
+
+| File | Source | Years | How it is made |
+|---|---|---|---|
+| `tests/data/inventory/crt2026_lulucf.csv` | EPA CRT 2026 (`IRL-CRT-2026-V1.0-<year>.xlsx`): Table4, Table4.A-D, Table4(II), Table4(IV) | 2020-2024 | `tools/extract_inventory_fixtures.py`; each cell is found by sheet, row and column, and the row label is checked |
+| `tests/data/inventory/crf2024_burnt_area.csv` | EPA CRF 2024 submission, Table4(V) area burnt (col E, ha) | 2020-2022 | same tool. The CRT 2026 leaves area burnt blank, so this earlier submission is the only published area |
+| `tests/data/inventory/nid2026_forest_organic_soils.csv` | NID 2026 Table 6.7 (p.217, 4.A.1) and Table 6.15 (p.231, 4.A.2) | 2020-2024 | transcribed by hand: drained N-poor and N-rich (organo-mineral) areas, on-site and DOC |
+
+Notes on the sources:
+- NID 2026 Table 6.8 (forest burnt area): the rows labelled 2020-2024 are CRT years 2016-2020 (e.g. 22.00 kt CO2 in the "2024" row is CRT 2020). There is no forest burnt area for CRT 2021-2024.
+- CRT 4.A col T (organic soil C) is NID on-site + DOC; CRT 4(II) col H CO2 is DOC only.
+- CRT 4(II).C.1 "Other organic soils" is the package's rewetted grassland (NID 2026 s.6.5.2).
+- Table4(II) and Table4.D split the peat-extraction areas differently (2020 industrial: 55.5 kha and 98.3 kha). The inputs use 4(II).
+
 ## To refresh a soil factor
 1. Put the new submission's yearly CRT workbooks in a folder and run `python tools/extract_crt_table4c.py <folder> <submission> tests/data/inventory/crt<submission>_4c_mineral_soils.csv`.
 2. Run `python tools/derive_implied_grassland_factor.py <submission> <first_year> <last_year>`.

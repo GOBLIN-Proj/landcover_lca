@@ -394,5 +394,15 @@ charges the mineral-soil carbon change (NID 2026 eq 6.4.3, see the section above
 - The inventory reports **no conversion to cropland** (CRT 4.B.2 = NO; NID 2026 s.6.4). The method here (IPCC Tier 1, eq 6.4.3, NID factors) reproduces the NID's Table 6.32 rotation values, but there is no inventory total for converted land to compare against.
 - **Cropland remaining cropland (CRT 4.B.1) is not modelled.** The NID defines cropland as crops plus temporary grassland in crop rotations (a fixed cohort of 133,929 LPIS parcels, 9,909 rotation patterns). Each parcel's soil carbon falls under crops (0.69) and recovers under temporary grass (0.82). The CRT figure is the net of those movements in a year, so it is not a sink from annual cropping: it is +27.7, +22.0, +17.6, -28.3, -9.0 kt C for 2020-2024 (removal in 2020-22, emission in 2023-24; five-year mean about -22 kt CO2/yr, 0.6% of the goblin_lite baseline). It follows the share of land in the grass phase, so a fixed factor would be misleading. Documented, not modelled.
 
+## Inventory alignment (tests)
+
+`tests/inventory_alignment_test.py` gives the package the national inventory's own areas (NID/CRT 2026) and compares each emission term with the CRT 2026 emissions, for 2020-2024 (fire: 2020-2022, the only years with a published burnt area). The package itself is not changed or calibrated by these tests.
+
+- Inputs: `tests/data/inventory/` holds CRT 2026 cells (`crt2026_lulucf.csv`), CRF 2024 burnt areas (`crf2024_burnt_area.csv`) and NID 2026 forest drained areas (`nid2026_forest_organic_soils.csv`). Every value records its source cell or table. The two CSVs from workbooks are rebuilt by `tools/extract_inventory_fixtures.py` (needs `openpyxl`, in the Poetry dev group).
+- `tests/inventory_inputs.py` builds the land-use table and transition matrix. Its docstring states how each inventory row maps to a package share and the caveats.
+- `tests/data/inventory/inventory_coverage.csv` lists every comparison as **covered** (must match within its tolerance), **gap** (a known difference owned by a fix; run as an expected failure) or **excluded** (out of scope, with the reason). Every term in `total_{co2,ch4,n2o}_emission` and every CRT Table4 category is in the map.
+
+Current state: forest drainage CO2/CH4/N2O, grassland remaining mineral CO2, grassland organic CO2, peat extraction N2O, near-natural CH4 and wetland rewetted CH4 match. The grassland CH4 rows are only a consistency check (the rich/poor split is derived from them). Known gaps: biomass burning for all land uses, wetland CO2 (peat extraction including exported horticultural peat, rewetted peat) and industrial peat CH4.
+
 ## License
 This project is licensed under the terms of the MIT license.
