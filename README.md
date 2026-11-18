@@ -373,5 +373,26 @@ Implied emission factors (values derived from inventory totals) are documented i
 
 Not yet updated for these fixes: the parallel `geo_goblin` copy.
 
+## Cropland change: what the package assumes
+
+Scenarios can convert grassland to cropland. `landcover_assignment` supplies the area; this package
+charges the mineral-soil carbon change (NID 2026 eq 6.4.3, see the section above). Checked end to end by
+`tests/cropland_readiness_test.py`: 100,000 ha of grassland to cropland over 30 years gives 467.5 kt CO2/yr
+(SOC term, kg CO2 in the code).
+
+**What `landcover_assignment` provides (the contract)**
+- Cropland can only grow. A scenario sets a cropland share of the spared area; future cropland area is current plus allocated.
+- The converted land is mineral grassland. It is written as `Grassland_to_Cropland` (ha over the whole period). Only `Grassland_to_<X>` columns are ever written: cropland to grassland, forest to anything and so on are always 0.
+- The transition code writes `abs(change in area)`, which loses direction. It is harmless while cropland only grows. Any fix is in `landcover_assignment`, not here (logged there as a later item).
+
+**Assumptions in this package**
+- **New cropland is mineral soil**, so there is no drainage term for organic cropland. Existing cropland is 100% mineral in the data. A term would be needed only if cropland could gain organic soil.
+- **Improved grassland (GR1).** All converted grassland is treated as improved (adjustment factor 1.14, NID Table 6.31); cropland is 0.69; SOCref is LAC 85 t C/ha. This is the higher-emission case. If a share u of the converted area were unimproved (factor 1.0), the emission would fall by u x 0.14/0.45: 3.1% per 10% unimproved, 31% if all of it. The unimproved, temporary (0.82) and rough/other (1.0) factors are already in the database but are not used, because the improved/unimproved split of the converted area is not supplied. If it were supplied, the cost of converting each grassland type could be computed; this is a planned extension.
+- **The cropland factor is a crop-phase value.** The inventory's cropland includes temporary grassland in rotation (factor 0.82). A scenario hectare is taken as permanently under crops (0.69), which is the higher-emission case. A temporary-grass share could be added later in the same way as the grassland partition.
+
+**What the inventory does, and what is not modelled (CR1, NI1)**
+- The inventory reports **no conversion to cropland** (CRT 4.B.2 = NO; NID 2026 s.6.4). The method here (IPCC Tier 1, eq 6.4.3, NID factors) reproduces the NID's Table 6.32 rotation values, but there is no inventory total for converted land to compare against.
+- **Cropland remaining cropland (CRT 4.B.1) is not modelled.** The NID defines cropland as crops plus temporary grassland in crop rotations (a fixed cohort of 133,929 LPIS parcels, 9,909 rotation patterns). Each parcel's soil carbon falls under crops (0.69) and recovers under temporary grass (0.82). The CRT figure is the net of those movements in a year, so it is not a sink from annual cropping: it is +27.7, +22.0, +17.6, -28.3, -9.0 kt C for 2020-2024 (removal in 2020-22, emission in 2023-24; five-year mean about -22 kt CO2/yr, 0.6% of the goblin_lite baseline). It follows the share of land in the grass phase, so a fixed factor would be misleading. Documented, not modelled.
+
 ## License
 This project is licensed under the terms of the MIT license.
