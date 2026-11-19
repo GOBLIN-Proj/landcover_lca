@@ -2,7 +2,8 @@
 
 Before, total_ch4_emission_cropland and total_n2o_emission_cropland took (ef_country, transition_matrix, land_use_data,
 past_land_use_data). A call in the old order now raises TypeError naming the new order. Values are unchanged.
-Settlement totals take (land_use, ef_country) and are not called by any total.
+Settlement totals take (land_use, ef_country) and are not called by any total. Options such as include_fire_co2
+(FIRE-3) are keyword-only, so they cannot shift the positional order.
 """
 import ast
 import inspect
@@ -34,7 +35,8 @@ class TestArgumentOrder(unittest.TestCase):
         for module, *_ in TREES:
             for name in totals(module):
                 with self.subTest(tree=module.__name__, function=name):
-                    params = list(inspect.signature(getattr(module, name)).parameters)
+                    params = [p for p, v in inspect.signature(getattr(module, name)).parameters.items()
+                              if v.kind is not inspect.Parameter.KEYWORD_ONLY]  # keyword-only options allowed
                     self.assertEqual(len(params), 4, params)
                     for param, allowed in zip(params, ROLES):
                         self.assertIn(param, allowed, params)

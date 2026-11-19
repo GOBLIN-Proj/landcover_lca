@@ -286,24 +286,32 @@ def total_co2_emission_forest(
     past_land_use_data,
     transition_matrix,
     ef_country,
+    *,
+    include_fire_co2=True,
 ):
     """
-    Calculate the total CO2 emission from forest land use change.
+    Calculate the total CO2 emission from forest: drained and rewetted organic soils, and wildfire.
 
-    Mineral soils are not included here as they are accounted for in the CBM model.
+    Biomass, dead organic matter and mineral soils are not included: the CBM model covers them.
 
     Parameters:
         - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
         - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
         - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
         - ef_country (string): Emission factor country.
+        - include_fire_co2 (bool, keyword only): Include wildfire CO2 (burning_co2_forest). Default True: the NID
+          reports it (CRT 4(IV).A). Set False when the forest carbon model the result is combined with (e.g. CBM)
+          already counts the carbon lost to fire. Fire CH4 and N2O are not affected (FIRE-3).
 
     Returns:
-        float: Total CO2 emission from forest land use change.
+        float: Total CO2 emission from forest, kg.
     """
-    return burning_co2_forest(
-        ef_country, transition_matrix, land_use_data, past_land_use_data
-    ) + organic_soils_co2_forest(
+    fire = (
+        burning_co2_forest(ef_country, transition_matrix, land_use_data, past_land_use_data)
+        if include_fire_co2
+        else 0.0
+    )
+    return fire + organic_soils_co2_forest(
         ef_country, transition_matrix, land_use_data, past_land_use_data
     )
 
@@ -1322,6 +1330,8 @@ def total_co2_emission(
     past_land_use_data,
     transition_matrix_data,
     ef_country,
+    *,
+    include_fire_co2=True,
 ):
     """
     Calculates the total CO2 emission by summing the CO2 emissions from different land cover types.
@@ -1332,6 +1342,8 @@ def total_co2_emission(
         - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
         - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
         - ef_country (string): Emission factor country.
+        - include_fire_co2 (bool, keyword only): Include forest wildfire CO2; passed to total_co2_emission_forest
+          (default True, as the NID).
 
     Returns:
         float: Total CO2 emission.
@@ -1349,6 +1361,7 @@ def total_co2_emission(
             past_land_use_data,
             transition_matrix_data,
             ef_country,
+            include_fire_co2=include_fire_co2,
         )
         + total_co2_emission_grassland(
             land_use_data,

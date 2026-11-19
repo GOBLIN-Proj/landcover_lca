@@ -15,6 +15,13 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
   `total_n2o_emission_cropland` take `(ef_country, transition_matrix, land_use_data, past_land_use_data)`.
   `tests/examples_test.py` (in CI) runs both without Jupyter; the goblin_lite totals equal the national pins.
 
+### Added
+- **FIRE-3: forest fire CO2 switch.** `total_co2_emission_forest` and `total_co2_emission` (main and geo_goblin) take
+  `include_fire_co2=True` (keyword only). The default keeps forest wildfire CO2 in, as the NID (CRT 4(IV).A): no
+  result changes. `False` leaves it out, for callers that add a forest carbon model which may already count fire
+  carbon loss (goblin_lite adds CBM "Total Ecosystem"; a double count is not confirmed). CH4 and N2O are not switched.
+  goblin_lite baseline forest fire CO2: 18.55 kt. `tests/forest_fire_switch_test.py` (in CI).
+
 ### Changed
 - **D8: geo_goblin shares the national tree's mineral-soil SOC code (changes geo_goblin results for land converted to
   cropland or grassland).** `geo_goblin/land_classes/soc.py` re-exports `landcover_lca.land_classes.soc.SOC`, and
