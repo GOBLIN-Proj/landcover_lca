@@ -54,3 +54,4 @@ jobs:
         python -m unittest peat_export_test.py
         python -m unittest examples_test.py
         python -m unittest argument_order_test.py
+        python -m unittest geo_soc_test.py

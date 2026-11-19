@@ -16,6 +16,17 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
   `tests/examples_test.py` (in CI) runs both without Jupyter; the goblin_lite totals equal the national pins.
 
 ### Changed
+- **D8: geo_goblin shares the national tree's mineral-soil SOC code (changes geo_goblin results for land converted to
+  cropland or grassland).** `geo_goblin/land_classes/soc.py` re-exports `landcover_lca.land_classes.soc.SOC`, and
+  `geo_lca_emissions` imports the mineral-soil CO2 and N2O functions (and `n2o_from_soil_carbon_loss`) from
+  `lca_emission`, so the 0.3.0 SOC fixes now apply to geo_goblin and later fixes stay in step. Before, the geo copy
+  returned `None` for spans of 20 years or less (D1), returned t C as kg CO2, about 3,667x too low (D2), raised a bare
+  `KeyError` for a missing transition (D3), used SOCref 73.51 instead of LAC 85 t C/ha for cropland transitions (D4a),
+  charged N2O from soil carbon loss as C x 1/15 only (D5) and did not check the years (D6). Example: 1,000 ha
+  grassland to cropland over 30 years gave 1,102.65 ("kg CO2", in fact t C); it now gives 4,675,000 kg CO2.
+  `mineral_soils_co2_grassland_remainging_grassland` (geo) renamed `mineral_soils_co2_grassland_remaining_grassland`,
+  as in the national tree. geo test data totals unchanged (only grassland to forest, not in the totals).
+  `tests/geo_soc_test.py` (in CI).
 - **Argument order: `total_ch4_emission_cropland` and `total_n2o_emission_cropland` now take
   `(land_use_data, past_land_use_data, transition_matrix, ef_country)`, like every other total (main and geo_goblin).
   Callers must update.** They took `(ef_country, transition_matrix, land_use_data, past_land_use_data)`; a call in the

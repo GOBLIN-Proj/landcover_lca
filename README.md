@@ -371,7 +371,7 @@ The inventory reports **no land converted to cropland** (CRT 4.B.2 is NO), so th
 
 Implied emission factors (values derived from inventory totals) are documented in `docs/emission_factor_provenance.md`: source table, submission, years, formula and how to refresh them.
 
-Not yet updated for these fixes: the parallel `geo_goblin` copy.
+**geo_goblin uses the same code (D8).** The geo tree has no SOC copy of its own: `geo_goblin/land_classes/soc.py` re-exports the SOC class above, and `geo_lca_emissions` imports the mineral-soil CO2 and N2O functions from `lca_emission`. So every fix in this section applies to geo_goblin too. Grassland remaining grassland stays in the geo tree (it reads the geo land-use columns) and uses the same method and factor.
 
 ## Cropland change: what the package assumes
 
