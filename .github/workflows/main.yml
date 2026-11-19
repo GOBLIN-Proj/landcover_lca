@@ -53,3 +53,4 @@ jobs:
         python -m unittest wetland_factors_test.py
         python -m unittest peat_export_test.py
         python -m unittest examples_test.py
+        python -m unittest argument_order_test.py

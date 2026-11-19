@@ -1626,40 +1626,60 @@ def total_co2_emission_cropland(
     return result
 
 
+def _check_total_argument_order(name, land_use_data):
+    """Raise TypeError if a total is called with ef_country first (the old order of the cropland CH4 and N2O totals)."""
+    if isinstance(land_use_data, str):
+        raise TypeError(
+            f"{name} takes (land_use_data, past_land_use_data, transition_matrix, ef_country), like every "
+            f"total; it was called with ef_country first (the old order of the cropland CH4 and N2O totals)."
+        )
+
+
 def total_ch4_emission_cropland(
-    ef_country, transition_matrix, land_use_data, past_land_use_data
+    land_use_data, past_land_use_data, transition_matrix, ef_country
 ):
     """
     Calculate the total CH4 emissions from cropland. Burning is the only source of CH4 emissions from cropland.
 
     Parameters:
-        - ef_country (string): Emission factor country.
-        - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
         - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
         - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
+        - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
+        - ef_country (string): Emission factor country.
+
     Returns:
-        float: Total CH4 emissions from cropland.
+        float: Total CH4 emissions from cropland, kg.
+
+    Raises:
+        TypeError: If called in the old order, (ef_country, transition_matrix, land_use_data,
+            past_land_use_data).
     """
+    _check_total_argument_order("total_ch4_emission_cropland", land_use_data)
     return burning_ch4_cropland(
         ef_country, transition_matrix, land_use_data, past_land_use_data
     )
 
 
 def total_n2o_emission_cropland(
-    ef_country, transition_matrix, land_use_data, past_land_use_data
+    land_use_data, past_land_use_data, transition_matrix, ef_country
 ):
     """
     Calculate the total N2O emission from cropland. Burning is the only source of N2O emissions from cropland.
 
     Parameters:
-        - ef_country (string): Emission factor country.
-        - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
         - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
         - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
+        - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
+        - ef_country (string): Emission factor country.
 
     Returns:
-        float: Total N2O emission from cropland.
+        float: Total N2O emission from cropland, kg.
+
+    Raises:
+        TypeError: If called in the old order, (ef_country, transition_matrix, land_use_data,
+            past_land_use_data).
     """
+    _check_total_argument_order("total_n2o_emission_cropland", land_use_data)
     return burning_n2o_cropland(
         ef_country, transition_matrix, land_use_data, past_land_use_data
     )
@@ -1897,7 +1917,7 @@ def total_ch4_emission(
             land_use_data, past_land_use_data, transition_matrix, ef_country
         )
         + total_ch4_emission_cropland(
-            ef_country, transition_matrix, land_use_data, past_land_use_data
+            land_use_data, past_land_use_data, transition_matrix, ef_country
         )
         + total_ch4_emission_forest(
             land_use_data, past_land_use_data, transition_matrix, ef_country
@@ -1938,6 +1958,6 @@ def total_n2o_emission(
             land_use_data, past_land_use_data, transition_matrix, ef_country
         )
         + total_n2o_emission_cropland(
-            ef_country, transition_matrix, land_use_data, past_land_use_data
+            land_use_data, past_land_use_data, transition_matrix, ef_country
         )
     )

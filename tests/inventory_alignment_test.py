@@ -119,7 +119,8 @@ class TestCoverageMap(unittest.TestCase):
         def leaves(name):
             out = set()
             for node in ast.walk(functions[name]):
-                if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in functions:
+                if (isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in functions
+                        and not node.func.id.startswith("_")):  # private helpers (argument checks) are not terms
                     out |= leaves(node.func.id) if node.func.id.startswith("total_") else {node.func.id}
             return out
 

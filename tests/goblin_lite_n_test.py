@@ -128,10 +128,10 @@ def main():
             "CH4",
         ] = (
             landuse_lca.total_ch4_emission_cropland(
-                ef_country,
-                transition_matrix[sc],
-                land_use_data[base],
                 land_use_data[sc],
+                land_use_data[base],
+                transition_matrix[sc],
+                ef_country,
             )
             * kg_to_kt
         )
@@ -145,10 +145,10 @@ def main():
             "N2O",
         ] = (
             landuse_lca.total_n2o_emission_cropland(
-                ef_country,
-                transition_matrix[sc],
-                land_use_data[base],
                 land_use_data[sc],
+                land_use_data[base],
+                transition_matrix[sc],
+                ef_country,
             )
             * kg_to_kt
         )

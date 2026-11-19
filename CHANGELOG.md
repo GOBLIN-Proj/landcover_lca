@@ -16,6 +16,13 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
   `tests/examples_test.py` (in CI) runs both without Jupyter; the goblin_lite totals equal the national pins.
 
 ### Changed
+- **Argument order: `total_ch4_emission_cropland` and `total_n2o_emission_cropland` now take
+  `(land_use_data, past_land_use_data, transition_matrix, ef_country)`, like every other total (main and geo_goblin).
+  Callers must update.** They took `(ef_country, transition_matrix, land_use_data, past_land_use_data)`; a call in the
+  old order raises `TypeError` naming the new order, so it cannot pass silently. Values unchanged.
+  `tests/argument_order_test.py` (in CI) checks the order of every total in both trees. The scenario calls in
+  `tests/goblin_lite_national_test.py` and `goblin_lite_n_test.py` also passed the baseline as current land use;
+  corrected (no effect on the test data, where scenario cropland equals baseline cropland).
 - **P1: off-site CO2 from horticultural peat in the national wetland total (changes results).**
   - **Callers: remove any separate `horticulture_co2_peat_export` addition**, or it is counted twice.
     `lca_emission.total_co2_emission_wetland` (and so `total_co2_emission`) now includes it, for the year carried by
