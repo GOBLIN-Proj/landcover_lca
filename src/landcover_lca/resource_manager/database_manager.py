@@ -94,6 +94,21 @@ class DataManager:
 
         return dataframe
 
+    def get_landuse_emissions_factor_units(self):
+        """
+        Retrieves the published unit of each land use emission factor (the 'units' row).
+
+        Returns:
+            pandas.Series: unit by factor name.
+        """
+        dataframe = pd.read_sql(
+            "SELECT * FROM emission_factors_land_use WHERE ef_country = 'units'",
+            self.engine,
+            index_col=["ef_country"],
+        )
+
+        return dataframe.loc["units"]
+
     def get_ipcc_soc_factors(self):
         """
         Retrieves the IPCC soil class SOC factors from the database.

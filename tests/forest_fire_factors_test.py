@@ -68,7 +68,7 @@ class TestForestFireFactors(unittest.TestCase):
                 units = database_cell(name, "units")
                 for text in ("CRT 2026", "4(IV)", "CRF 2024", "2020-2022"):
                     self.assertIn(text, source)
-                self.assertEqual(units, f"kg {gas} per ha burnt")
+                self.assertEqual(units, f"kg {gas}/ha burnt")
 
 
 if __name__ == "__main__":

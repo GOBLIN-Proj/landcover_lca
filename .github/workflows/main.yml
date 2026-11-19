@@ -49,3 +49,4 @@ jobs:
         python -m unittest inventory_alignment_test.py
         python -m unittest forest_fire_factors_test.py
         python -m unittest grassland_cropland_fire_test.py
+        python -m unittest units_test.py

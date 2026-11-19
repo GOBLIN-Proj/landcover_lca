@@ -58,6 +58,15 @@ class Loader:
         """
         return self.dataframes.get_landuse_emissions_factors()
 
+    def landuse_emissions_factor_units(self):
+        """
+        Returns the published unit of each land use emission factor.
+
+        Returns:
+            pandas.Series: unit by factor name (see landcover_lca.resource_manager.units).
+        """
+        return self.dataframes.get_landuse_emissions_factor_units()
+
     def ipcc_soc_factors(self):
         """
         Returns the IPCC SOC factors.

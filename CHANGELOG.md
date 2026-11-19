@@ -7,6 +7,23 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
 ## [Unreleased]
 
 ### Changed
+- **UNITS: emission factors stored as published; conversions in one file (changes results).** The table
+  `emission_factors_land_use` now holds each factor's published value and unit (e.g. 1.59 t CO2-C/ha/yr, 54.7 kg CH4-C,
+  0.3 kg N2O-N) with its source. `resource_manager/units.py` holds the conversions (44/12, 16/12, 44/28, t to kg);
+  `Emissions_Factors` (main and geo_goblin) converts on read, so callers receive the same units as before. New
+  `Emissions_Factors.get_published_factor`. Readable copy of the table: `src/landcover_lca/database/emission_factors_land_use.csv`,
+  written into the database by `tools/write_emission_factors.py` (`tools/derive_implied_forest_fire_factor.py --write`
+  goes through it). `lca_emission.py` and `geo_lca_emissions.py` take their conversion constants from `units.py`.
+  - Values that change: wetland fire Gef CO2 342 is g CO2-C per kg DM (CRT 4(IV) D.1 CO2/CH4 = 342 x 44/12 / 8.35 in
+    every year), so wetland fire CO2 rises 3.67x; grassland organic-soil fire Gef 362 is g CO2-C (only used with
+    `include_fire_co2=True`); grassland and wetland drained-soil DOC 0.31 -> 0.3024 t C/ha/yr (IPCC 2013 eq 2.5, as
+    the CRT implies, 1108.8 kg CO2/ha); forest DOC stays 0.31 t C (NID s.6.3 and Tables 6.7, 6.15 use 0.31); thirteen
+    factors converted with 3.67 now use 44/12 (-0.09%).
+  - goblin_lite national CO2: baseline 3,686.1 -> 3,776.4 kt (+90.3: wetland fire +102.9, other wetland -5.6, grassland
+    -5.6, forest -1.5); scenarios +90.5 kt. CH4 and N2O unchanged.
+  - Tests: `tests/units_test.py` (new, in CI): database equals the CSV, every unit is known, and every value the
+    calculations receive is pinned against its previous value with each change listed. `n2o_drainage_factors_test` and
+    `grassland_cropland_fire_test` check the published values; `soc_test` re-pinned.
 - **FIRE-1: forest wildfire factors replaced with the 2020-2022 inventory values (changes results).** The three factors
   did not reproduce the inventory (2.10x CO2, 5.73x CH4, 0.60x N2O on the inventory's own areas): CO2 was the CRF 2024
   total-forest factor, CH4 and N2O the sum of the two forest category factors. New values, kg per ha burnt: CO2

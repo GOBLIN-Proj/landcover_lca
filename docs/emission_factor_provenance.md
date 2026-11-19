@@ -1,7 +1,46 @@
 # Provenance of the implied emission factors
 
 An **implied** emission factor is worked back from reported inventory totals (kt CO2 divided by area). It is not a measured or default IPCC value. This page records, for each implied factor in the database
-(`src/landcover_lca/database/landcover_lca_database.db`, table `emission_factors_land_use`), where it came from, how it was derived, and how to refresh it. The database also holds a `source` row and a `units` row under each factor; the `units` labels are legacy and not reliable (the unit is stated here).
+(`src/landcover_lca/database/landcover_lca_database.db`, table `emission_factors_land_use`), where it came from, how it was derived, and how to refresh it. The database also holds a `source` row and a `units` row under each factor (see **How factors are stored** below).
+
+## How factors are stored (all factors)
+
+**The database holds each factor as published**: the number printed in the NID, CRT or IPCC table, in that source's
+unit, with the source cited. Nothing in the database has to be converted by hand to check it against its source.
+
+- `src/landcover_lca/database/emission_factors_land_use.csv` is the readable copy of the table (the database is binary in
+  git): one row per factor with `value`, `unit`, `source`. **To change a factor:** edit the CSV, run
+  `tools/write_emission_factors.py`, run the tests. `tests/units_test.py` checks the database equals the CSV.
+- `src/landcover_lca/resource_manager/units.py` holds every conversion (44/12, 16/12, 44/28, t to kg) and the list of
+  units the table may use. `Emissions_Factors.get_emission_factor_in_emission_factor_data_base` converts on read, so the
+  calculations receive kg CO2, kg CH4 or kg N2O per ha, g gas per kg dry matter, and so on.
+  `Emissions_Factors.get_published_factor` returns the stored (value, unit).
+- Carbon is converted with 44/12 exactly, as the inventory does (some values were previously converted with 3.67).
+
+| published unit | calculations receive | conversion |
+|---|---|---|
+| t CO2-C/ha/yr, t C/ha | kg CO2/ha(/yr) | x 1000 x 44/12 |
+| kg CH4-C/ha/yr | kg CH4/ha/yr | x 16/12 |
+| kg N2O-N/ha/yr | kg N2O/ha/yr | x 44/28 |
+| g CO2-C/kg dm | g CO2/kg dm | x 44/12 |
+| t C/t air-dry peat | t CO2/t | x 44/12 |
+| kg CH4/ha/yr, g CH4/kg dm, kg CO2/ha/yr (CRT-derived), t dm/ha, fraction, ... | same | none |
+
+Values that changed when the table was moved to published units (UNITS):
+- **Wetland fire Gef CO2 342 is g CO2-C per kg DM** (Wilson et al. 2015). The CRT shows this: 4(IV) D.1 CO2/CH4 = 150.18
+  in every year = 342 x 44/12 / 8.35. It was read as g CO2, so wetland fire CO2 was 0.27x; now x 44/12 (= 1254 g CO2).
+  The NID text writes "CO2 = 342 g kg-1".
+- **Grassland organic-soil fire Gef CO2 362 is g CO2-C** (IPCC 2013 Wetlands Supplement Table 2.7; NID Table 6.34 prints
+  g CO2). Grassland fire CO2 is off by default (FIRE-2), so this only matters with `include_fire_co2=True`.
+- **Drained-soil DOC differs by land use, as in the inventory.** Grassland and wetland: 0.31 -> **0.3024 t C/ha/yr**,
+  IPCC 2013 eq 2.5 with the Table 2.2 temperate values, 0.21 x (1 + 0.60) x 0.9, as the CRT (implied 1108.8 kg CO2/ha for
+  grassland and peat extraction; the NID text quotes 0.31). Forest: **0.31 t C/ha/yr, unchanged**, the IPCC Table 2.2
+  value the NID states (s.6.3 p.216); NID Tables 6.7 and 6.15 reproduce it (DOC / drained area = 0.310 in 2020-2024).
+- Rounding: thirteen factors had used 3.67 for 44/12 (-0.09%).
+- **Question for the inventory (not changed here):** grassland fire on organic soil counts CH4 and N2O from peat burnt
+  (MB.Cf 336 t DM/ha, Table 6.34) but no CO2 (s.6.5.4, CRT NO), while wetland fire counts CO2 from the same kind of
+  peat burning (s.6.6.5). IPCC 2013 Wetlands Supplement s.2.2.1.4 (eq 2.8) asks for CO2 from organic-soil fires. The
+  package follows the NID (off by default; `include_fire_co2=True` gives the IPCC calculation).
 
 **Source data for the two soil factors:** EPA CRT Table 4.C (Grassland), **2026 submission**, one workbook per year 1990-2024 (`IRL-CRT-2026-V1.0-<year>.xlsx`). The mineral-soil rows are extracted by `tools/extract_crt_table4c.py` into `tests/data/inventory/crt2026_4c_mineral_soils.csv` (and `crt2026_forest_conversions_mineral_soils.csv` for the cross-check below). The method is laid out step by step in the next section. CRT sign convention: + = gain of carbon, - = loss. The extract flips it to the package convention (+ emission, - removal): kg CO2/ha = -(t C/ha) x 1000 x 44/12. The 4.C.1 rows reproduce the NID 2026 key category table (+107.27 kt CO2 in 1990, -1,549.47 kt CO2 in 2024).
 
@@ -12,7 +51,7 @@ An **implied** emission factor is worked back from reported inventory totals (kt
 3. **Read four cells from each row** (Excel columns): **D** total area (kha); **E** area of mineral soil (kha; for 4.C.2 the mineral area is the total area D, because the row has no organic soil); **K** implied net carbon stock change in mineral soils (t C per ha per year); **Q** net carbon stock change in mineral soils (kt C). These are the headings "Net carbon stock change in soils per area, Mineral soils" and "Carbon stock changes, Net carbon stock change in soils, Mineral soils".
 4. **Change the sign.** The CRT reports + for a gain of carbon and - for a loss. The package reports + for an emission and - for a removal, so the sign is flipped. Convert carbon to CO2 with 44/12: `kt CO2 = -kt C x 44/12` and `kg CO2 per ha = -(t C per ha) x 1000 x 44/12`.
 5. **Pool five years.** Take the latest five years, 2020-2024. Add the kt CO2 of the five years, add the mineral areas of the five years, and divide: `factor (kg CO2/ha/yr) = sum of kt CO2 / sum of area (kha) x 1000`. This weights each year by its area; it is not the average of the five yearly factors (for the grassland factor the two differ by less than 0.01 kg CO2/ha; for the forest factor they are identical because the CRT applies one constant rate).
-6. **Store the result** in the database (value in the `ireland` row, source text in the `source` row; the table has three rows) and record it on this page.
+6. **Store the result** in `src/landcover_lca/database/emission_factors_land_use.csv` (value, unit `kg CO2/ha/yr`, source), run `tools/write_emission_factors.py`, and record it on this page.
 7. **Check it** with `tests/implied_factor_test.py`, which repeats steps 3 to 5 from the stored extract and compares with the database. Steps 2 to 4 are scripted in `tools/extract_crt_table4c.py`; step 5 in `tools/derive_implied_grassland_factor.py`.
 
 **Why 2020-2024 and not one year.** The EPA recalculates the full time series each submission, so a single year is not stable. A scenario baseline is usually 2020 but not always, so the factor should describe recent conditions. Five years is long enough to damp year-to-year change and short enough to stay recent.
@@ -110,7 +149,7 @@ Forest wildfire factors, kg CO2 / CH4 / N2O per ha burnt (FIRE-1). Renamed from 
 - **Derivation:** sum over 2020-2022 of CRT 2026 Table 4(IV) 4.A.1 + 4.A.2 wildfire emissions / sum over 2020-2022 of
   CRF 2024 Table4(V) area burnt, 4.A.1 + 4.A.2 (499.88 ha). The CRT 2026 leaves area burnt blank, so the previous
   submission's area is the latest published one. Script: `tools/derive_implied_forest_fire_factor.py` (reads the
-  fixtures in `tests/data/inventory/`; `--write` sets the value, `source` and `units` cells). Test: `tests/forest_fire_factors_test.py`.
+  fixtures in `tests/data/inventory/`; `--write` sets the value in `emission_factors_land_use.csv` and writes the table into the database). Test: `tests/forest_fire_factors_test.py`.
 - **Method behind the inventory values** (NID 2026 s.6.3.4.4, IPCC 2006 eq 2.27): dry matter x Cf 0.45 x Gef
   (CO2 1,569, CH4 4.7, N2O 0.26 g/kg; the NID text prints N2O as 0.026, the CRT values need 0.26). Dry matter 177,713 kg/ha
   (4.A.1) and 103,485 kg/ha (4.A.2), so 125,474 and 73,066 kg CO2/ha. The CRT 2026 values per category are 123,857-124,232
@@ -130,12 +169,12 @@ Forest wildfire factors, kg CO2 / CH4 / N2O per ha burnt (FIRE-1). Renamed from 
 | `ef_wildfire_MB_time_CF_{mineral_soil,drained_organic_soil,wet_organic_soil}_grassland` | 4.1, 336, 66 t DM/ha | NID 2026 Table 6.34 |
 | `ef_wildfire_GEF_ch4_*` grassland | 2.3, 9, 9 g/kg DM | NID 2026 Table 6.34 |
 | `ef_wildfire_GEF_n2o_*` grassland | 0.21, 0.21, 0.21 g/kg DM | NID 2026 Table 6.34 |
-| `ef_wildfire_GEF_co2_*` grassland | 1613, 362, 362 g/kg DM | NID 2026 Table 6.34; **not used by default** (FIRE-2) |
+| `ef_wildfire_GEF_co2_*` grassland | 1613 g CO2, 362, 362 g CO2-C per kg DM | NID 2026 Table 6.34 (362: IPCC 2013 WS Table 2.7, CO2-C); **not used by default** (FIRE-2) |
 | `ef_wildfire_MB_time_CF_cropland`, `ef_ch4_cropland_Gef`, `ef_n2o_cropland_Gef` | 4.0 t DM/ha, 2.7, 0.07 g/kg DM | NID 2026 s.6.4.8 |
 
 Checked by `tests/grassland_cropland_fire_test.py`. Grassland fire CO2 is 0 unless `include_fire_co2=True`: NID 2026
-s.6.5.4 (Tier 1) estimates CH4 and N2O only and the CRT reports CO2 as NO. Whether 362 is g CO2 or g CO2-C (F3) only
-matters if that option is used.
+s.6.5.4 (Tier 1) estimates CH4 and N2O only and the CRT reports CO2 as NO. 362 is stored as g CO2-C and converted
+(x 44/12) if that option is used (F3).
 
 **Soil split differs from the NID.** The package spreads the grassland burnt area over soil types in proportion to their
 areas; the NID puts most of it on organic soil and does not publish the split (CRT CH4/N2O = 38.65 in every year, so about
@@ -168,9 +207,9 @@ Per kg of N mineralised: (0.006 + 0.1 x 0.011) x 44/28 = **0.011157 kg N2O**. Pe
 
 ## N2O from drained organic soils (`ef_n2o_*_drainage_*`)
 
-These factors are stored in **kg N2O per ha per year**: the published kg N2O-N value times 44/28 (1.5714). The conversion was made when the database was built; the code multiplies area by the factor and does not convert again. Checked by `tests/n2o_drainage_factors_test.py`.
+These factors are stored as published, in **kg N2O-N per ha per year**; the calculations receive kg N2O (x 44/28 = 1.5714, `units.py`). Checked by `tests/n2o_drainage_factors_test.py`.
 
-| Column | Stored | Published (kg N2O-N/ha/yr) | Source |
+| Column | Calculations receive (kg N2O) | Stored, published (kg N2O-N/ha/yr) | Source |
 |---|---|---|---|
 | `ef_n2o_grassland_drainage_poor` | 6.757 | 4.3 | NID 2026 s.5.6.1 p.183 and Table 5.6 (EF2); IPCC 2013 Wetlands Supplement Table 2.5 |
 | `ef_n2o_grassland_drainage_rich` | 12.886 | 8.2 | same |
@@ -208,5 +247,5 @@ Notes on the sources:
 ## To refresh a soil factor
 1. Put the new submission's yearly CRT workbooks in a folder and run `python tools/extract_crt_table4c.py <folder> <submission> tests/data/inventory/crt<submission>_4c_mineral_soils.csv`.
 2. Run `python tools/derive_implied_grassland_factor.py <submission> <first_year> <last_year>`.
-3. Update the database value and the `source` row (update only the row with `ef_country = 'ireland'` for the value and `'source'` for the source; the table has three rows).
+3. Update the value and source in `src/landcover_lca/database/emission_factors_land_use.csv` and run `tools/write_emission_factors.py`.
 4. Update the numbers on this page, the constants in `tests/implied_factor_test.py`, `tests/soc_inventory_test.py` and the national totals in `tests/soc_test.py`, `CHANGELOG.md` and the emission-factor inventory.

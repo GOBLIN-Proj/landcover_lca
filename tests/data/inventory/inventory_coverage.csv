@@ -25,7 +25,7 @@ peat_extraction_ch4,gap,D.1,CH4,drainage_ch4_organic_soils_in_wetland,II.D.domes
 peat_extraction_n2o,covered,D.1,N2O,drainage_n2o_organic_soils_in_wetland,II.D.domestic:N2O;II.D.industrial:N2O,2020-2024,per_year,0.001,,"CRT 4(II) domestic + industrial peat extraction."
 near_natural_ch4,covered,D.1,CH4,unmanaged_wetland_ch4_emission,II.D.near_natural:CH4,2020-2024,per_year,0.001,,"CRT 4(II) near-natural wetlands."
 wetland_rewetted_ch4,covered,D.1,CH4,rewetting_ch4_organic_soils_in_wetland,II.D.rewetted_industrial:CH4,2020-2024,sum,0.02,F1,"CRT implied factor 208-221 kg CH4/ha by year, package 216 fixed; single years 0.98-1.04. Contradicts F1's 288."
-wetland_fire_co2,gap,D.1,CO2,burning_co2_wetland,IV.D.1:CO2,fire,per_year,0.05,WET,"Package/CRT 0.28-0.33 (Gef 342 unit suspect)."
+wetland_fire_co2,gap,D.1,CO2,burning_co2_wetland,IV.D.1:CO2,fire,per_year,0.05,WET,"Package/CRT 1.04-1.20 since UNITS (Gef 342 g CO2-C x 44/12), the same ratio as CH4 and N2O: burnt-area basis (CRF 2024 area, CRT 2026 emissions)."
 wetland_fire_ch4,gap,D.1,CH4,burning_ch4_wetland,IV.D.1:CH4,fire,per_year,0.05,WET,"Package/CRT 1.04-1.19."
 wetland_fire_n2o,gap,D.1,N2O,burning_n2o_wetland,IV.D.1:N2O,fire,per_year,0.05,WET,"Package/CRT 1.04-1.19."
 wetland_biomass_removals,excluded,D.1,CO2,biomass_co2_from_removals_wetland,,,,,W1,"Needs Wetland_to_Wetland > 0, which crashes (W1); set to 0 in the inputs."

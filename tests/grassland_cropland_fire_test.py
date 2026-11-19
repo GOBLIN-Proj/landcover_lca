@@ -12,9 +12,9 @@ import inventory_inputs as ii
 import landcover_lca.lca_emission as lca
 import landcover_lca.geo_goblin.geo_lca_emissions as geo_lca
 import landcover_lca.geo_goblin.geo_models as geo_models
-from landcover_lca.models import load_land_use_data
+from landcover_lca.models import Emissions_Factors, load_land_use_data
 
-TABLE_6_34 = {  # (mineral, drained organic, undrained organic)
+TABLE_6_34 = {  # (mineral, drained organic, undrained organic), as published (organic-soil CO2 is g CO2-C per kg DM)
     "MB_time_CF": (("ef_wildfire_MB_time_CF_mineral_soil_grassland", 4.1),
                    ("ef_wildfire_MB_time_CF_drained_organic_soil_grassland", 336.0),
                    ("ef_wildfire_MB_time_CF_wet_organic_soil_grassland", 66.0)),
@@ -59,15 +59,17 @@ def geo_inputs():
 
 class TestFactorsAreTheNid(unittest.TestCase):
     def test_grassland_table_6_34(self):
+        ef = Emissions_Factors("ireland")
         for group, cells in TABLE_6_34.items():
             for name, value in cells:
                 with self.subTest(name=name):
-                    self.assertEqual(ii.factor(name), value)
+                    self.assertEqual(ef.get_published_factor(name)[0], value)
 
     def test_cropland_s_6_4_8(self):
+        ef = Emissions_Factors("ireland")
         for name, value in CROPLAND:
             with self.subTest(name=name):
-                self.assertEqual(ii.factor(name), value)
+                self.assertEqual(ef.get_published_factor(name)[0], value)
 
 
 class TestGrasslandFireCo2(unittest.TestCase):
@@ -87,12 +89,14 @@ class TestGrasslandFireCo2(unittest.TestCase):
                          lca.total_co2_emission_grassland(unburnt, unburnt, tm, "ireland"))
 
     def test_calculation_kept_when_asked_for(self):
-        """include_fire_co2=True gives the Table 6.34 Tier 1 CO2 (A x MB.Cf x Gef x 1e-3, t), all three soil types."""
+        """include_fire_co2=True gives the Tier 1 CO2 (A x MB.Cf x Gef x 1e-3, t), all three soil types."""
         land_use, past, tm = inputs()
         g = land_use.grassland
         burnt = g.area_ha * g.share_burnt
         (_, mb_m), (_, mb_d), (_, mb_w) = TABLE_6_34["MB_time_CF"]
-        (_, gef_m), (_, gef_d), (_, gef_w) = TABLE_6_34["CO2"]
+        # Gef in g CO2 per kg DM as the calculation receives it: mineral 1613 g CO2, organic 362 g CO2-C x 44/12
+        gef_m, gef_d, gef_w = (ii.factor(name) for name, _ in TABLE_6_34["CO2"])
+        self.assertAlmostEqual(gef_d, 362 * 44 / 12, places=9)
         want_t = burnt * 1e-3 * (g.share_mineral * mb_m * gef_m
                                  + (g.share_drained_rich_organic + g.share_drained_poor_organic) * mb_d * gef_d
                                  + (g.share_rewetted_rich_organic + g.share_rewetted_poor_organic) * mb_w * gef_w)

@@ -1,7 +1,8 @@
 """N2O factors for drained organic soils (EF2 dossier).
 
-The database stores these factors in kg N2O per ha per year: the published kg N2O-N value times 44/28.
-Each is checked against the NID 2026 value and against the CRT 2026 (Tables 3.D and 4(II)).
+The database stores these factors as published, in kg N2O-N per ha per year; Emissions_Factors converts them to
+kg N2O (x 44/28, landcover_lca.resource_manager.units). Each is checked against the NID 2026 value and against
+the CRT 2026 (Tables 3.D and 4(II)).
 Run from landcover_lca/tests:  python -m unittest n2o_drainage_factors_test.py
 """
 import os
@@ -25,7 +26,7 @@ PUBLISHED = {
     "ef_n2o_forest_drainage_poor": (0.7, "NID 2026 s.6.3 p.220 (Yamulki et al. 2013)"),
     "ef_n2o_wetland_drainage_default": (0.3, "NID 2026 s.6.6 p.280 (IPCC 2013 Wetlands Suppl., peat extraction)"),
 }
-UNIT = "kg N2O/ha/yr"
+UNIT = "kg N2O-N/ha/yr"
 
 
 def value(name):
@@ -33,12 +34,12 @@ def value(name):
 
 
 class TestN2ODrainageFactors(unittest.TestCase):
-    def test_database_is_published_n2o_n_times_44_28(self):
+    def test_calculations_receive_published_n2o_n_times_44_28(self):
         for name, (n2o_n, where) in PUBLISHED.items():
             with self.subTest(name=name):
                 self.assertAlmostEqual(value(name), n2o_n * N2O_N_to_N2O, places=6, msg=where)
 
-    def test_units_label_says_kg_n2o_per_ha_per_year(self):
+    def test_units_label_says_kg_n2o_n_per_ha_per_year(self):
         con = sqlite3.connect(DB)
         cur = con.execute("select * from emission_factors_land_use")
         cols = [d[0] for d in cur.description]
@@ -49,16 +50,11 @@ class TestN2ODrainageFactors(unittest.TestCase):
             with self.subTest(name=name):
                 self.assertEqual(unit_row[cols.index(name)], UNIT)
 
-    def test_source_says_factor_was_converted(self):
-        con = sqlite3.connect(DB)
-        cur = con.execute("select * from emission_factors_land_use")
-        cols = [d[0] for d in cur.description]
-        rows = cur.fetchall()
-        con.close()
-        source_row = [r for r in rows if r[0] == "source"][0]
-        for name in PUBLISHED:
+    def test_database_holds_the_published_n2o_n_value(self):
+        ef = Emissions_Factors("ireland")
+        for name, (n2o_n, where) in PUBLISHED.items():
             with self.subTest(name=name):
-                self.assertIn("N2O-N x 44/28", source_row[cols.index(name)])
+                self.assertEqual(ef.get_published_factor(name), (n2o_n, UNIT), msg=where)
 
 
 class TestAgainstCRT(unittest.TestCase):

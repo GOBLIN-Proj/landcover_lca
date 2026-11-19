@@ -23,18 +23,16 @@ from landcover_lca.models import Emissions_Factors, Land_Use_Features
 from landcover_lca.resource_manager.data_loader import Loader
 
 
-# scalar vars
-t_to_kg = 1e3
-kt_to_kg = 1e6
+# scalar vars (unit conversions live in landcover_lca.resource_manager.units)
+from landcover_lca.resource_manager.units import C_TO_CO2 as C_to_CO2, KT_TO_KG as kt_to_kg, N2O_N_TO_N2O as N2O_N_to_N2O, T_TO_KG as t_to_kg
+
 C_to_N = 1.0 / 15.0
-C_to_CO2 = 44.0 / 12.0  # t C to t CO2 (molecular weights)
 
 # N2O from the loss of soil carbon (NID 2026 s.6.3.6.2, eq 11.8 and 11.10; CRT Table 4(III) reproduces them):
 #   N mineralised = soil C lost / 15; direct N2O-N = N x EF1; indirect N2O-N = N x FracLEACH x EF5; N2O = N2O-N x 44/28
 EF1_SOM = 0.006  # kg N2O-N per kg N mineralised (IPCC 2019 Refinement Table 11.1, wet climate; implied by CRT 4(III) and NID Table 6.9)
 FRAC_LEACH = 0.1  # kg N leached per kg N mineralised (Ireland, NID Table 5.7)
 EF5 = 0.011  # kg N2O-N per kg N leached or run off (IPCC 2006 Table 11.3; NID p.185)
-N2O_N_to_N2O = 44.0 / 28.0  # kg N2O-N to kg N2O (molecular weights)
 
 kha_to_ha = 1e3
 

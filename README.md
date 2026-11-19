@@ -408,6 +408,14 @@ Area burnt = land-use area x `share_burnt` (from the input). Emissions = area bu
 
 **Grassland soil split (differs from the NID).** Both use NID Table 6.34 for mineral, drained organic and undrained organic soil. The package spreads the burnt area over the soil types in proportion to their areas (about 8% organic). The NID puts most of it on organic soil (half of peatland fires are counted as rough grazing; about 87% of the dry matter burnt is organic) and does not publish the split. On the inventory's own areas the package gives 0.57-0.72x the CRT grassland CH4 and N2O. This is deliberate: it needs no unpublished split, and fire emissions still respond to drainage and rewetting.
 
+## Emission factors: stored as published
+
+The database table `emission_factors_land_use` holds each factor **as published**: the number and unit printed in the NID, CRT or IPCC table, with its source. A value can be checked against its source without any arithmetic. All unit conversions (44/12, 16/12, 44/28, t to kg) are in one file, `src/landcover_lca/resource_manager/units.py`, and are applied when a factor is read, so the calculations receive kg CO2, kg CH4 or kg N2O per ha (or g per kg dry matter for fires).
+
+- Readable copy of the table: `src/landcover_lca/database/emission_factors_land_use.csv` (value, unit, source per factor). The database is binary in git, so this file is where changes are reviewed.
+- To change a factor: edit the CSV, run `python tools/write_emission_factors.py`, run the tests (`tests/units_test.py` checks the database equals the CSV).
+- Details and the list of values that changed when this was introduced: `docs/emission_factor_provenance.md`, "How factors are stored".
+
 ## Inventory alignment (tests)
 
 `tests/inventory_alignment_test.py` gives the package the national inventory's own areas (NID/CRT 2026) and compares each emission term with the CRT 2026 emissions, for 2020-2024 (fire: 2020-2022, the only years with a published burnt area). The package itself is not changed or calibrated by these tests.
@@ -416,7 +424,7 @@ Area burnt = land-use area x `share_burnt` (from the input). Emissions = area bu
 - `tests/inventory_inputs.py` builds the land-use table and transition matrix. Its docstring states how each inventory row maps to a package share and the caveats.
 - `tests/data/inventory/inventory_coverage.csv` lists every comparison as **covered** (must match within its tolerance), **gap** (a known difference owned by a fix; run as an expected failure) or **excluded** (out of scope, with the reason). Every term in `total_{co2,ch4,n2o}_emission` and every CRT Table4 category is in the map.
 
-Current state: forest drainage CO2/CH4/N2O, grassland remaining mineral CO2, grassland organic CO2, peat extraction N2O, near-natural CH4 and wetland rewetted CH4 match. The grassland CH4 rows are only a consistency check (the rich/poor split is derived from them). Forest fire CO2/CH4/N2O match since FIRE-1, and grassland fire CO2 (0, as the NID) since FIRE-2. Grassland and cropland fire CH4/N2O are excluded (soil split and area basis, see Fires). Known gaps: wetland fire, wetland CO2 (peat extraction including exported horticultural peat, rewetted peat) and industrial peat CH4.
+Current state: forest drainage CO2/CH4/N2O, grassland remaining mineral CO2, grassland organic CO2, peat extraction N2O, near-natural CH4 and wetland rewetted CH4 match. The grassland CH4 rows are only a consistency check (the rich/poor split is derived from them). Forest fire CO2/CH4/N2O match since FIRE-1, and grassland fire CO2 (0, as the NID) since FIRE-2. Grassland and cropland fire CH4/N2O are excluded (soil split and area basis, see Fires). Known gaps: wetland fire (factors now match the CRT ratios; the burnt-area basis differs), wetland CO2 (peat extraction including exported horticultural peat, rewetted peat) and industrial peat CH4.
 
 ## License
 This project is licensed under the terms of the MIT license.

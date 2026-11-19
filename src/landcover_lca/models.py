@@ -13,6 +13,7 @@ Note:
 
 import pandas as pd
 from landcover_lca.resource_manager.data_loader import Loader
+from landcover_lca.resource_manager.units import to_model_units
 from landcover_lca.resource_manager.landcover_data_manager import ModelData
 
 
@@ -279,7 +280,11 @@ class Emissions_Factors:
             - Parameters:
                 emission_factor_name (str): The name of the emission factor whose value is to be retrieved.
             - Returns:
-                float: The value of the specified emission factor for the given country.
+                float: The value of the specified emission factor for the given country, converted from the
+                  published unit stored in the database to the unit the calculations use
+                  (landcover_lca.resource_manager.units).
+        get_published_factor(emission_factor_name)
+            - Returns (value, unit) exactly as stored: the number and unit printed in the source.
 
     Usage:
         This class can be used to access and retrieve specific emissions factors from a land use database,
@@ -296,12 +301,20 @@ class Emissions_Factors:
         self.ef_country = ef_country.lower()
         self.data_loader_class = Loader(self.ef_country)
         self.emission_data_base = self.data_loader_class.landuse_emissions_factors()
+        self.emission_factor_units = self.data_loader_class.landuse_emissions_factor_units()
 
+    def get_published_factor(self, emission_factor_name):
+        """The factor as stored: (published value, published unit), e.g. (1.59, "t CO2-C/ha/yr")."""
+        value = float(self.emission_data_base.get(emission_factor_name).get(self.ef_country))
+        return value, self.emission_factor_units[emission_factor_name]
 
     def get_emission_factor_in_emission_factor_data_base(self, emission_factor_name):
-        return float(
-            self.emission_data_base.get(emission_factor_name).get(self.ef_country)
-        )
+        """The factor in the unit the calculations use (kg CO2, kg CH4 or kg N2O per ha; g per kg DM; ...).
+
+        The database holds the published value and unit; the conversion is in landcover_lca.resource_manager.units.
+        """
+        value, unit = self.get_published_factor(emission_factor_name)
+        return to_model_units(value, unit, emission_factor_name)
 
 
 class Land_Use_Features:

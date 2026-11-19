@@ -11,27 +11,28 @@ Usage (from the repo root):
     .venv/bin/python tools/derive_implied_forest_fire_factor.py           # print the factors
     .venv/bin/python tools/derive_implied_forest_fire_factor.py --write   # also write them to the database
 
---write sets the value, source and units cells of ef_{co2,ch4,n2o}_implied_wildfire_forest in
-emission_factors_land_use. Columns still spelt with the old names (ef_*_implied_wilfire_forest) are renamed first.
+--write sets the value of ef_{co2,ch4,n2o}_implied_wildfire_forest in the factor table
+src/landcover_lca/database/emission_factors_land_use.csv and writes that table into the database
+(tools/write_emission_factors.py).
 """
+import csv
 import os
-import sqlite3
 import sys
 
 import pandas as pd
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import write_emission_factors  # noqa: E402
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INV = os.path.join(ROOT, "tests", "data", "inventory")
-DB = os.path.join(ROOT, "src", "landcover_lca", "database", "landcover_lca_database.db")
 
 YEARS = (2020, 2021, 2022)
 COLUMNS = {
-    "CO2": ("ef_co2_implied_wilfire_forest", "ef_co2_implied_wildfire_forest"),
-    "CH4": ("ef_CH4_implied_wilfire_forest", "ef_ch4_implied_wildfire_forest"),
-    "N2O": ("ef_n2o_implied_wilfire_forest", "ef_n2o_implied_wildfire_forest"),
+    "CO2": "ef_co2_implied_wildfire_forest",
+    "CH4": "ef_ch4_implied_wildfire_forest",
+    "N2O": "ef_n2o_implied_wildfire_forest",
 }
-SOURCE = ("CRT 2026 Table 4(IV).A.1 + A.2 wildfire emissions / CRF 2024 Table4(V) area burnt (4.A.1 + 4.A.2), "
-          "2020-2022, sum/sum (docs/emission_factor_provenance.md)")
 
 
 def derive():
@@ -51,25 +52,24 @@ def derive():
 
 
 def write(factors):
-    con = sqlite3.connect(DB)
-    present = {r[1] for r in con.execute("pragma table_info(emission_factors_land_use)")}
-    for gas, (old, new) in COLUMNS.items():
-        if old in present:
-            con.execute(f"alter table emission_factors_land_use rename column [{old}] to [{new}]")
-        rows = {"ireland": factors[gas], "source": SOURCE, "units": f"kg {gas} per ha burnt"}
-        for country, value in rows.items():
-            cur = con.execute(f"update emission_factors_land_use set [{new}] = ? where ef_country = ?", (value, country))
-            if cur.rowcount != 1:
-                raise ValueError(f"{new}: row {country} not found")
-    con.commit()
-    con.close()
+    rows = write_emission_factors.read_csv()
+    by_name = {r["name"]: r for r in rows}
+    for gas, name in COLUMNS.items():
+        if by_name[name]["unit"] != f"kg {gas}/ha burnt":
+            raise ValueError(f"{name}: unexpected unit {by_name[name]['unit']!r}")
+        by_name[name]["value"] = repr(factors[gas])
+    with open(write_emission_factors.CSV, "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=["name", "value", "unit", "source"], lineterminator="\n")
+        w.writeheader()
+        w.writerows(rows)
+    write_emission_factors.write()
 
 
 if __name__ == "__main__":
     factors, ha = derive()
     print(f"burnt area 2020-2022: {ha:.2f} ha")
     for gas, value in factors.items():
-        print(f"{COLUMNS[gas][1]}: {value:.4f} kg {gas} per ha burnt")
+        print(f"{COLUMNS[gas]}: {value:.4f} kg {gas} per ha burnt")
     if "--write" in sys.argv[1:]:
         write(factors)
-        print(f"written to {DB}")
+        print(f"written to {write_emission_factors.CSV} and {write_emission_factors.DB}")

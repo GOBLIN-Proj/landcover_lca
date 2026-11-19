@@ -20,8 +20,7 @@ from landcover_lca.geo_goblin.land_classes.forestland import Forest
 
 
 # scalar vars
-t_to_kg = 1e3
-kt_to_kg = 1e6
+from landcover_lca.resource_manager.units import KT_TO_KG as kt_to_kg, T_TO_KG as t_to_kg  # unit conversions
 C_to_N = 1.0 / 15.0
 kha_to_ha = 1e3
 
