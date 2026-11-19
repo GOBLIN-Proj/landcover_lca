@@ -6,6 +6,15 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
 
 ## [Unreleased]
 
+### Added
+- **Example notebooks for the two packages that use landcover_lca** (replace `tests/example.py` and
+  `tests/geo_example.py`). `tests/goblin_lite_example.ipynb`: the national tree, called as goblin_lite calls it (every
+  total by land use and gas, baseline and scenarios, CO2e, drained grassland N2O reported in agriculture, horticultural
+  peat already inside wetland CO2). `tests/geo_goblin_example.ipynb`: the geo tree, as geo_goblin calls it (the same
+  totals, plus forest exports to water N, P and PO4e). Both point out that `total_ch4_emission_cropland` and
+  `total_n2o_emission_cropland` take `(ef_country, transition_matrix, land_use_data, past_land_use_data)`.
+  `tests/examples_test.py` (in CI) runs both without Jupyter; the goblin_lite totals equal the national pins.
+
 ### Changed
 - **P1: off-site CO2 from horticultural peat in the national wetland total (changes results).**
   - **Callers: remove any separate `horticulture_co2_peat_export` addition**, or it is counted twice.
