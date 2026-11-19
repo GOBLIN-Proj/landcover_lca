@@ -50,3 +50,4 @@ jobs:
         python -m unittest forest_fire_factors_test.py
         python -m unittest grassland_cropland_fire_test.py
         python -m unittest units_test.py
+        python -m unittest wetland_factors_test.py

@@ -307,6 +307,8 @@ class Emissions_Factors:
 
     def get_published_factor(self, emission_factor_name):
         """The factor as stored: (published value, published unit), e.g. (1.59, "t CO2-C/ha/yr")."""
+        if emission_factor_name not in self.emission_data_base:
+            raise KeyError(f"{emission_factor_name}: no such column in emission_factors_land_use")
         value = float(self.emission_data_base.get(emission_factor_name).get(self.ef_country))
         return value, self.emission_factor_units[emission_factor_name]
 

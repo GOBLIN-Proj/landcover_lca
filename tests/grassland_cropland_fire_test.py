@@ -2,7 +2,7 @@
 
 - Grassland (NID 2026 s.6.5.4, Table 6.34): CH4 and N2O only. "In the Tier 1 methodology, there are no long-term losses
   of biomass carbon due to fires on grassland, and emissions are estimated for CH4 and N2O only." The package keeps the
-  CO2 calculation (Table 6.34 Gef CO2) behind include_fire_co2=False, so grassland fire CO2 is 0 unless asked for.
+  organic-soil (peat) CO2 calculation behind include_peat_fire_co2=False, so grassland fire CO2 is 0 unless asked for.
 - Cropland (NID 2026 s.6.4.8): CH4 and N2O only, MB.Cf 4.0 t/ha, Gef CH4 2.7, N2O 0.07 g/kg dry matter.
 - The burnt share applies equally to every grassland soil type (mineral, drained and undrained organic).
 """
@@ -88,24 +88,37 @@ class TestGrasslandFireCo2(unittest.TestCase):
         self.assertEqual(lca.total_co2_emission_grassland(land_use, past, tm, "ireland"),
                          lca.total_co2_emission_grassland(unburnt, unburnt, tm, "ireland"))
 
-    def test_calculation_kept_when_asked_for(self):
-        """include_fire_co2=True gives the Tier 1 CO2 (A x MB.Cf x Gef x 1e-3, t), all three soil types."""
+    def test_peat_fire_co2_when_asked_for(self):
+        """include_peat_fire_co2=True gives CO2 from organic (peat) soil fires only (IPCC 2013 WS eq 2.8, t)."""
         land_use, past, tm = inputs()
         g = land_use.grassland
         burnt = g.area_ha * g.share_burnt
-        (_, mb_m), (_, mb_d), (_, mb_w) = TABLE_6_34["MB_time_CF"]
-        # Gef in g CO2 per kg DM as the calculation receives it: mineral 1613 g CO2, organic 362 g CO2-C x 44/12
-        gef_m, gef_d, gef_w = (ii.factor(name) for name, _ in TABLE_6_34["CO2"])
+        _, (_, mb_d), (_, mb_w) = TABLE_6_34["MB_time_CF"]
+        # Gef in g CO2 per kg DM as the calculation receives it: 362 g CO2-C x 44/12
+        _, gef_d, gef_w = (ii.factor(name) for name, _ in TABLE_6_34["CO2"])
         self.assertAlmostEqual(gef_d, 362 * 44 / 12, places=9)
-        want_t = burnt * 1e-3 * (g.share_mineral * mb_m * gef_m
-                                 + (g.share_drained_rich_organic + g.share_drained_poor_organic) * mb_d * gef_d
+        want_t = burnt * 1e-3 * ((g.share_drained_rich_organic + g.share_drained_poor_organic) * mb_d * gef_d
                                  + (g.share_rewetted_rich_organic + g.share_rewetted_poor_organic) * mb_w * gef_w)
         self.assertGreater(want_t, 0)
-        got = lca.burning_co2_grassland("ireland", tm, land_use, past, include_fire_co2=True)
+        got = lca.burning_co2_grassland("ireland", tm, land_use, past, include_peat_fire_co2=True)
         self.assertAlmostEqual(got / 1000, want_t, places=6)
         geo_land_use, geo_past, geo_tm = geo_inputs()
-        got_geo = geo_lca.burning_co2_grassland("ireland", geo_tm, geo_land_use, geo_past, include_fire_co2=True)
+        got_geo = geo_lca.burning_co2_grassland("ireland", geo_tm, geo_land_use, geo_past, include_peat_fire_co2=True)
         self.assertAlmostEqual(got_geo / 1000, want_t, places=6)
+
+    def test_mineral_soil_is_never_charged_co2(self):
+        """Burnt grass on mineral soil regrows: no CO2 under the IPCC Tier 1 or the NID, with or without the switch."""
+        frame = ii.inventory_land_use_frame(YEAR)
+        grass = frame.land_use == "grassland"
+        frame.loc[grass, "share_mineral"] = frame.loc[grass, "area_ha"]
+        for col in ("share_organic", "share_drained_rich_organic", "share_drained_poor_organic",
+                    "share_rewetted_rich_organic", "share_rewetted_poor_organic"):
+            frame.loc[grass, col] = 0.0
+        mineral_only = load_land_use_data(frame, YEAR)[-YEAR]
+        _, _, tm = inputs()
+        self.assertGreater(mineral_only.grassland.share_burnt, 0)
+        self.assertEqual(lca.burning_co2_grassland("ireland", tm, mineral_only, mineral_only,
+                                                   include_peat_fire_co2=True), 0.0)
 
 
 class TestGrasslandFireCh4N2o(unittest.TestCase):

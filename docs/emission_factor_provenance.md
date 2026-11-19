@@ -31,16 +31,38 @@ Values that changed when the table was moved to published units (UNITS):
   in every year = 342 x 44/12 / 8.35. It was read as g CO2, so wetland fire CO2 was 0.27x; now x 44/12 (= 1254 g CO2).
   The NID text writes "CO2 = 342 g kg-1".
 - **Grassland organic-soil fire Gef CO2 362 is g CO2-C** (IPCC 2013 Wetlands Supplement Table 2.7; NID Table 6.34 prints
-  g CO2). Grassland fire CO2 is off by default (FIRE-2), so this only matters with `include_fire_co2=True`.
+  g CO2). Grassland fire CO2 is off by default (FIRE-2), so this only matters with `include_peat_fire_co2=True`.
 - **Drained-soil DOC differs by land use, as in the inventory.** Grassland and wetland: 0.31 -> **0.3024 t C/ha/yr**,
   IPCC 2013 eq 2.5 with the Table 2.2 temperate values, 0.21 x (1 + 0.60) x 0.9, as the CRT (implied 1108.8 kg CO2/ha for
   grassland and peat extraction; the NID text quotes 0.31). Forest: **0.31 t C/ha/yr, unchanged**, the IPCC Table 2.2
   value the NID states (s.6.3 p.216); NID Tables 6.7 and 6.15 reproduce it (DOC / drained area = 0.310 in 2020-2024).
 - Rounding: thirteen factors had used 3.67 for 44/12 (-0.09%).
-- **Question for the inventory (not changed here):** grassland fire on organic soil counts CH4 and N2O from peat burnt
-  (MB.Cf 336 t DM/ha, Table 6.34) but no CO2 (s.6.5.4, CRT NO), while wetland fire counts CO2 from the same kind of
-  peat burning (s.6.6.5). IPCC 2013 Wetlands Supplement s.2.2.1.4 (eq 2.8) asks for CO2 from organic-soil fires. The
-  package follows the NID (off by default; `include_fire_co2=True` gives the IPCC calculation).
+- **Difference from the IPCC, following the NID: grassland peat fire CO2.** IPCC 2013 Wetlands Supplement s.2.2.2.3:
+  "it is good practice to report greenhouse gas emissions from fires on all managed lands with organic soils", CO2
+  included (eq 2.8, Table 2.7: 362 g CO2-C per kg DM). The NID counts CH4 and N2O from grassland peat burnt (MB.Cf 336
+  t DM/ha, Table 6.34) but no CO2 (s.6.5.4; CRT NO), while its wetland fire does count CO2 (s.6.6.5). The package
+  burns grassland organic soil in proportion to its area and follows the NID: CO2 off by default.
+  `include_peat_fire_co2=True` gives the organic-soil CO2 only. Mineral soil is never charged fire CO2 (neither the
+  IPCC Tier 1 nor the NID counts it: the vegetation regrows), so `ef_wildfire_GEF_co2_mineral_soil_grassland` is not used.
+- **Difference from the IPCC, following the NID: rewetted CH4 216 / 92.** IPCC 2013 Wetlands Supplement Table 3.3 gives
+  these in kg CH4-C (temperate rich 216, poor 92). The NID applies them as kg CH4 for rewetted peat extraction ("216 kg
+  CH4 and 92 kg CH4", s.6.6.4.2; CRT implied 208-221 kg CH4/ha confirms), so wetland is 12/16 = 0.75x the IPCC value.
+  For rewetted grassland the NID applies them as kg CH4-C (68.1 / 216; the CRT 4(II) C.1 "other" row is reproduced
+  with x 16/12). The package follows the NID in each case.
+
+### Wetland rewetted CH4 (WET)
+
+| Column | Published | Source |
+|---|---|---|
+| `ef_ch4_wetland_rewet_industrial` | 216 kg CH4/ha/yr | NID 2026 s.6.6.4.2 p.281, nutrient rich (IPCC 2013 WS Table 3.3), applied as kg CH4 as the NID does. CRT 4(II) rewetted industrial implied 208-221 by year |
+| `ef_ch4_wetland_rewet_domestic` | 106.4 kg CH4/ha/yr | **CRT 2026 implied factor** (layer 3), 4(II) "Other Domestic Peat Extraction", constant 2020-2024: CH4 / area. Not stated in the NID. It is a weighted average of the NID's 216 (rich) and 92 (poor): (106.4 - 92) / (216 - 92) = 11.6% rich |
+
+The inventory publishes no rich/poor split of the rewetted areas, so one factor is applied to each category, each to
+its own area. "Other Domestic Peat Extraction" is the rewetted domestic area: its on-site (0.5 t C/ha) and DOC
+(880 kg CO2/ha) implied factors equal the NID rewetted factors exactly. Checked by `tests/wetland_factors_test.py`.
+Before WET a single 216 was applied to both areas (columns `ef_ch4_wetland_rewet_off_site_deafult` and
+`ef_co2_wetland_rewet_off_site_deafult`, now `ef_ch4_wetland_rewet_industrial` and
+`ef_co2_wetland_rewet_off_site_default`).
 
 **Source data for the two soil factors:** EPA CRT Table 4.C (Grassland), **2026 submission**, one workbook per year 1990-2024 (`IRL-CRT-2026-V1.0-<year>.xlsx`). The mineral-soil rows are extracted by `tools/extract_crt_table4c.py` into `tests/data/inventory/crt2026_4c_mineral_soils.csv` (and `crt2026_forest_conversions_mineral_soils.csv` for the cross-check below). The method is laid out step by step in the next section. CRT sign convention: + = gain of carbon, - = loss. The extract flips it to the package convention (+ emission, - removal): kg CO2/ha = -(t C/ha) x 1000 x 44/12. The 4.C.1 rows reproduce the NID 2026 key category table (+107.27 kt CO2 in 1990, -1,549.47 kt CO2 in 2024).
 
@@ -172,7 +194,7 @@ Forest wildfire factors, kg CO2 / CH4 / N2O per ha burnt (FIRE-1). Renamed from 
 | `ef_wildfire_GEF_co2_*` grassland | 1613 g CO2, 362, 362 g CO2-C per kg DM | NID 2026 Table 6.34 (362: IPCC 2013 WS Table 2.7, CO2-C); **not used by default** (FIRE-2) |
 | `ef_wildfire_MB_time_CF_cropland`, `ef_ch4_cropland_Gef`, `ef_n2o_cropland_Gef` | 4.0 t DM/ha, 2.7, 0.07 g/kg DM | NID 2026 s.6.4.8 |
 
-Checked by `tests/grassland_cropland_fire_test.py`. Grassland fire CO2 is 0 unless `include_fire_co2=True`: NID 2026
+Checked by `tests/grassland_cropland_fire_test.py`. Grassland fire CO2 is 0 unless `include_peat_fire_co2=True` (organic soil only): NID 2026
 s.6.5.4 (Tier 1) estimates CH4 and N2O only and the CRT reports CO2 as NO. 362 is stored as g CO2-C and converted
 (x 44/12) if that option is used (F3).
 

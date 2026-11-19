@@ -7,6 +7,33 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
 ## [Unreleased]
 
 ### Changed
+- **WET: wetland rewetted CH4 split by category; restored-wetland biomass removal fixed (changes results).**
+  - Rewetted CH4: one factor per category, each on its own area (no rich/poor split is published). Industrial 216 kg
+    CH4/ha (NID 2026 s.6.6.4.2, unchanged); domestic **106.4 kg CH4/ha**, the CRT 2026 4(II) "Other Domestic Peat
+    Extraction" implied factor, a weighted average of the NID's 216 (rich) and 92 (poor), about 12% rich. Before, 216
+    was applied to both. New column `ef_ch4_wetland_rewet_domestic`; misspelled columns renamed
+    (`ef_ch4_wetland_rewet_off_site_deafult` -> `ef_ch4_wetland_rewet_industrial`,
+    `ef_co2_wetland_rewet_off_site_deafult` -> `ef_co2_wetland_rewet_off_site_default`). An unknown factor name now
+    raises a `KeyError` naming it.
+  - `Wetland.co2_removals` (main and geo_goblin): the old loop divided by zero, misplaced brackets and called `len` on
+    an int, so any non-zero `Wetland_to_Wetland` crashed. Now: removal in the target year = annual area x min(span, 5)
+    x factor / 5 (NID s.6.6.4.1: 0.6 t C/ha/yr for 5 years to 3 t C/ha; same convention as D1). The CRT reports this
+    gain as IE; 0 with the default GOBLIN inputs.
+  - Docstrings: unmanaged wetland is area only (NID s.6.6.1); the `*_unmanaged_and_near_natural` methods use the
+    near-natural area. geo_goblin applies the near-natural factors to all organic wetland (stated in its docstring).
+  - Rewetted CO2 keeps the NID factors (0.5 / 0.24 t CO2-C/ha): rewetted domestic equals the CRT, rewetted industrial
+    is 1.17-1.25x (the CRT mixes nutrient status). Industrial drained CH4 keeps the NID factors (the CRT implies
+    22.6-23.6 kg CH4/ha against 32.9; documented). Rewetted CH4 216/92 is applied as kg CH4, as the NID does; the IPCC
+    table gives kg CH4-C (documented in `docs/emission_factor_provenance.md`).
+  - goblin_lite national CH4: baseline 142.0 -> 132.3 kt (-9.7, mostly because the 2020 input sets rewetted domestic
+    = drained domestic, 88.3 kha; landcover_assignment); scenarios 126.0 -> 124.4 kt. CO2 and N2O unchanged.
+  - Grassland fire CO2 switch: `include_fire_co2` renamed `include_peat_fire_co2` (main and geo_goblin) and now
+    covers organic (peat) soil only, as the IPCC 2013 Wetlands Supplement (eq 2.8) asks. Mineral-soil fire CO2 is
+    removed: neither the IPCC Tier 1 nor the NID counts it (the grass regrows). Default unchanged (0, as the NID).
+    With the switch, goblin_lite baseline 7.5 kt (was 10.0 with mineral soil).
+  - Tests: `tests/wetland_factors_test.py` (new, in CI). `inventory_alignment_test`: rewetted CH4 covered for
+    domestic + industrial (0.98-1.03 per year); wetland fire, rewetted CO2 and industrial peat CH4 excluded with
+    reasons; CRT "Other Domestic" mapped to rewetted domestic in `tests/inventory_inputs.py`.
 - **UNITS: emission factors stored as published; conversions in one file (changes results).** The table
   `emission_factors_land_use` now holds each factor's published value and unit (e.g. 1.59 t CO2-C/ha/yr, 54.7 kg CH4-C,
   0.3 kg N2O-N) with its source. `resource_manager/units.py` holds the conversions (44/12, 16/12, 44/28, t to kg);
@@ -16,7 +43,7 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
   goes through it). `lca_emission.py` and `geo_lca_emissions.py` take their conversion constants from `units.py`.
   - Values that change: wetland fire Gef CO2 342 is g CO2-C per kg DM (CRT 4(IV) D.1 CO2/CH4 = 342 x 44/12 / 8.35 in
     every year), so wetland fire CO2 rises 3.67x; grassland organic-soil fire Gef 362 is g CO2-C (only used with
-    `include_fire_co2=True`); grassland and wetland drained-soil DOC 0.31 -> 0.3024 t C/ha/yr (IPCC 2013 eq 2.5, as
+    `include_peat_fire_co2=True`); grassland and wetland drained-soil DOC 0.31 -> 0.3024 t C/ha/yr (IPCC 2013 eq 2.5, as
     the CRT implies, 1108.8 kg CO2/ha); forest DOC stays 0.31 t C (NID s.6.3 and Tables 6.7, 6.15 use 0.31); thirteen
     factors converted with 3.67 now use 44/12 (-0.09%).
   - goblin_lite national CO2: baseline 3,686.1 -> 3,776.4 kt (+90.3: wetland fire +102.9, other wetland -5.6, grassland

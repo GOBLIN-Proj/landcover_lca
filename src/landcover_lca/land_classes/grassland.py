@@ -385,92 +385,50 @@ class Grassland(LandUse):
         return emissions_poor + emissions_rich
     
 
-    def burning_co2_grassland(self, include_fire_co2=False):
+    def burning_co2_grassland(self, include_peat_fire_co2=False):
         """
-        CO2 from grassland fires, in tonnes. Returns 0 unless include_fire_co2 is True.
+        CO2 from grassland fires on organic (peat) soil, in tonnes. Returns 0 unless include_peat_fire_co2 is True.
 
-        **Not required under the national inventory.** NID 2026 s.6.5.4 (Tier 1): "there are no long-term
-        losses of biomass carbon due to fires on grassland, and emissions are estimated for CH4 and N2O
-        only"; CRT 2026 4(IV).C.1 reports CO2 as NO. So the default (False) gives 0, and grassland fire CO2
-        is not in total_co2_emission_grassland.
+        **Not counted under the national inventory.** NID 2026 s.6.5.4 (Tier 1) estimates grassland fire CH4 and
+        N2O only; CRT 2026 4(IV).C.1 reports CO2 as NO. So the default (False) gives 0, and grassland fire CO2 is
+        not in total_co2_emission_grassland.
 
-        The calculation is kept for later use (for example a higher tier that counts peat-fire CO2).
-        With include_fire_co2=True it returns the IPCC eq 2.27 result, L = A x MB.Cf x Gef x 1e-3, for each
-        soil type, with the burnt share applied equally to all three:
-            mineral soil          MB.Cf 4.1 t/ha, Gef CO2 1613 g/kg dry matter
-            drained organic soil  MB.Cf 336 t/ha, Gef CO2 362 g/kg dry matter
-            undrained organic     MB.Cf 66 t/ha,  Gef CO2 362 g/kg dry matter (package "rewetted" grassland)
-        Values from NID 2026 Table 6.34. The 362 is labelled g CO2 there; the IPCC 2013 Wetlands Supplement
-        source may state it as CO2-C (audit item F3), so check the unit before using this option.
+        The IPCC 2013 Wetlands Supplement (s.2.2.2.3, eq 2.8) asks for CO2 from fires on managed organic soils,
+        because burnt peat does not grow back. include_peat_fire_co2=True gives that calculation,
+        L = A x MB.Cf x Gef x 1e-3, with the burnt share applied equally to each organic soil type:
+            drained organic soil  MB.Cf 336 t DM/ha, Gef 362 g CO2-C/kg DM (x 44/12 on read)
+            undrained organic     MB.Cf 66 t DM/ha,  Gef 362 g CO2-C/kg DM (package "rewetted" grassland)
+        MB.Cf from NID 2026 Table 6.34; Gef from IPCC 2013 WS Table 2.7 (NID Table 6.34 prints it as g CO2).
+        Mineral soil is never charged CO2: burnt grass regrows, and neither the IPCC Tier 1 nor the NID counts it.
 
         Parameters:
-            include_fire_co2 (bool): False (default) returns 0, as in the inventory. True returns the Tier 1 CO2.
+            include_peat_fire_co2 (bool): False (default) returns 0, as in the inventory. True returns the
+                organic-soil (peat) fire CO2.
 
         Returns:
-            float: CO2 emissions from grassland fires (t).
+            float: CO2 emissions from grassland peat fires (t).
         """
-        if not include_fire_co2:
+        if not include_peat_fire_co2:
             return 0.0
 
-        ef_wildfire_MB_time_CF_mineral_soil_grassland = (
-            self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
-                "ef_wildfire_MB_time_CF_mineral_soil_grassland"
-            )
-        )
-        ef_wildfire_MB_time_CF_drained_organic_soil_grassland = (
-            self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
-                "ef_wildfire_MB_time_CF_drained_organic_soil_grassland"
-            )
-        )
-        ef_wildfire_MB_time_CF_wet_organic_soil_grassland = (
-            self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
-                "ef_wildfire_MB_time_CF_wet_organic_soil_grassland"
-            )
-        )
+        get = self.emissions_factors.get_emission_factor_in_emission_factor_data_base
 
-        ef_wildfire_GEF_co2_mineral = (
-            self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
-                "ef_wildfire_GEF_co2_mineral_soil_grassland"
-            )
-        )
-        ef_wildfire_GEF_co2_wet = (
-            self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
-                "ef_wildfire_GEF_co2_wet_organic_soil_grassland"
-            )
-        )
-        ef_wildfire_GEF_co2_drained = (
-            self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
-                "ef_wildfire_GEF_co2_drained_organic_soil_grassland"
-            )
-        )
-
-        fire_mineral_soil = (
-            (self.current_area_mineral
-            * self.land_use_data.grassland.share_burnt)
-            * ef_wildfire_MB_time_CF_mineral_soil_grassland
-            * ef_wildfire_GEF_co2_mineral
-            * 10**-3
-        )
         fire_undrained_organic_soil = (
-            (
             (self.current_area_rewetted_poor + self.current_area_rewetted_rich)
             * self.land_use_data.grassland.share_burnt
-            )
-            * ef_wildfire_MB_time_CF_wet_organic_soil_grassland
-            * ef_wildfire_GEF_co2_wet
+            * get("ef_wildfire_MB_time_CF_wet_organic_soil_grassland")
+            * get("ef_wildfire_GEF_co2_wet_organic_soil_grassland")
             * 10**-3
         )
         fire_drained_organic_soil = (
-            (
-                (self.current_area_drained_poor + self.current_area_drained_rich)
-                * self.land_use_data.grassland.share_burnt
-            )
-            * ef_wildfire_MB_time_CF_drained_organic_soil_grassland
-            * ef_wildfire_GEF_co2_drained
+            (self.current_area_drained_poor + self.current_area_drained_rich)
+            * self.land_use_data.grassland.share_burnt
+            * get("ef_wildfire_MB_time_CF_drained_organic_soil_grassland")
+            * get("ef_wildfire_GEF_co2_drained_organic_soil_grassland")
             * 10**-3
         )
 
-        return (fire_mineral_soil + fire_undrained_organic_soil + fire_drained_organic_soil)
+        return fire_undrained_organic_soil + fire_drained_organic_soil
 
 
     def burning_ch4_grassland(self):

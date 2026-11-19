@@ -24,12 +24,13 @@ ef_ch4_wetland_drainage_land_default,6.1,kg CH4/ha/yr,"NID 2026 s.6.6.4.2 p.280:
 ef_ch4_wetland_drainage_ditch_default,542.0,kg CH4/ha/yr,"NID 2026 s.6.6.4.2 p.280: EFCH4_ditch, IPCC 2013 Wetlands Suppl. Table 2.4"
 ef_n2o_wetland_drainage_default,0.3,kg N2O-N/ha/yr,"NID 2026 s.6.6.4.2 p.280: IPCC 2013 Wetlands Suppl. Table 2.5, peatland managed for extraction"
 ef_co2_wetland_rewet_on_site_default,0.5,t CO2-C/ha/yr,"NID 2026 s.6.6.4.2 p.281: rewetted, IPCC 2013 Wetlands Suppl. Table 3.1 temperate"
-ef_co2_wetland_rewet_off_site_deafult,0.24,t CO2-C/ha/yr,"NID 2026 s.6.6.4.2 p.281: rewetted DOC, IPCC 2013 Wetlands Suppl. Table 3.2 temperate"
+ef_co2_wetland_rewet_off_site_default,0.24,t CO2-C/ha/yr,"NID 2026 s.6.6.4.2 p.281: rewetted DOC, IPCC 2013 Wetlands Suppl. Table 3.2 temperate"
 ef_co2_wetland_domestic_extraction_on_site,1.59,t CO2-C/ha/yr,"NID 2026 s.6.6.4.2 p.281: domestic peat extraction on-site, country specific"
 ef_co2_near_natural_wetland_removal,-0.33,t CO2-C/ha/yr,"NID 2026 s.6.6.4.2 p.281: near-natural on-site removal, Aitova et al. 2023"
 ef_co2_near_natural_wetland_runoff,0.17,t CO2-C/ha/yr,"NID 2026 s.6.6.4.2 p.281: near-natural C loss in surface runoff, Aitova et al. 2023"
 ef_ch4_near_natural_wetland,54.7,kg CH4-C/ha/yr,"NID 2026 s.6.6.4.2 p.281: near-natural CH4, Aitova et al. 2023"
-ef_ch4_wetland_rewet_off_site_deafult,216.0,kg CH4/ha/yr,"NID 2026 s.6.6.4.2 p.281: rewetted, nutrient rich, 'kg CH4' as the NID applies it (IPCC 2013 Wetlands Suppl. Table 3.3); CRT 2026 4(II) rewetted industrial implied 208-221 kg CH4/ha"
+ef_ch4_wetland_rewet_industrial,216.0,kg CH4/ha/yr,"NID 2026 s.6.6.4.2 p.281: rewetted, nutrient rich, 'kg CH4' as the NID applies it (IPCC 2013 Wetlands Suppl. Table 3.3). Applied to rewetted industrial peat (one factor: no rich/poor split published); CRT 2026 4(II) rewetted industrial implied 208-221 kg CH4/ha"
+ef_ch4_wetland_rewet_domestic,106.4,kg CH4/ha/yr,"CRT 2026 4(II) 'Other Domestic Peat Extraction' (= rewetted domestic) implied factor, constant 2020-2024. Not stated in the NID: a weighted average of the NID's 216 (rich) and 92 (poor) kg CH4/ha (s.6.6.4.2), about 12% rich; no rich/poor area split is published, so one factor is applied"
 ef_co2_forest_rewetting_on_site,-0.23,t CO2-C/ha/yr,"NID 2026 s.6.3.6 p.240: forest to rewetted wetland, IPCC 2013 Wetlands Suppl. Table 3.1"
 ef_co2_forest_rewetting_DOC,0.24,t CO2-C/ha/yr,"NID 2026 s.6.3.6 p.240: EFDOC_rewetted, IPCC 2013 Wetlands Suppl. Table 3.2 (the NID prints -0.24; DOC is an emission)"
 ef_ch4_forest_rewetting,92.0,kg CH4/ha/yr,"NID 2026 s.6.3.6 p.240: '92 kg CH4 ha-1', IPCC 2013 Wetlands Suppl. Table 3.3"
@@ -47,7 +48,7 @@ ef_wildfire_MB_time_CF_wet_organic_soil_grassland,66.0,t dm/ha,NID 2026 Table 6.
 ef_wildfire_GEF_n2o_mineral_soil_grassland,0.21,g N2O/kg dm,NID 2026 Table 6.34 (IPCC 2006 Vol 4 Table 2.5)
 ef_wildfire_GEF_n2o_wet_in_organic_grassland,0.21,g N2O/kg dm,NID 2026 Table 6.34
 ef_wildfire_GEF_n2o_drained_in_organic_grassland,0.21,g N2O/kg dm,NID 2026 Table 6.34
-ef_wildfire_GEF_co2_mineral_soil_grassland,1613.0,g CO2/kg dm,"NID 2026 Table 6.34 (IPCC 2006 Vol 4 Table 2.5); not used by default, NID Tier 1 has no grassland fire CO2"
+ef_wildfire_GEF_co2_mineral_soil_grassland,1613.0,g CO2/kg dm,NID 2026 Table 6.34 (IPCC 2006 Vol 4 Table 2.5). Not used: mineral-soil grassland fire CO2 is not counted (IPCC Tier 1 and NID s.6.5.4: the vegetation regrows)
 ef_wildfire_GEF_co2_drained_organic_soil_grassland,362.0,g CO2-C/kg dm,IPCC 2013 Wetlands Suppl. Table 2.7 (CO2-C); NID 2026 Table 6.34 prints it as g CO2; not used by default
 ef_wildfire_GEF_co2_wet_organic_soil_grassland,362.0,g CO2-C/kg dm,IPCC 2013 Wetlands Suppl. Table 2.7 (CO2-C); NID 2026 Table 6.34 prints it as g CO2; not used by default
 ef_wildfire_GEF_ch4_mineral_soil_grassland,2.3,g CH4/kg dm,NID 2026 Table 6.34 (IPCC 2006 Vol 4 Table 2.5)

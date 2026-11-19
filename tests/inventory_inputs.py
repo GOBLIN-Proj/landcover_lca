@@ -22,16 +22,18 @@ How each land use is built (area_ha in ha; shares are fractions of area_ha):
                DERIVED from the CRT CH4 implied factor of each row with the package's own CH4 factors, so the
                grassland CH4 comparison is a consistency check, not an independent test.
     wetland    area = CRT 4.D.1 (peat extraction + near-natural + unmanaged). Shares from the CRT 4(II) areas:
-               domestic and industrial peat extraction (drained), rewetted industrial, near-natural; unmanaged from 4.D.
+               domestic and industrial peat extraction (drained), rewetted industrial, rewetted domestic (CRT "Other
+               Domestic Peat Extraction": on-site 0.5 t C/ha and DOC 880 kg CO2/ha exactly, the NID rewetted
+               factors), near-natural; unmanaged from 4.D.
                4(II) and 4.D split the peat-extraction areas differently (2020: industrial 55.5 kha in 4(II),
-               98.3 kha in 4.D). The 4(II) areas are used. "Other Domestic Peat Extraction" has no package category
-               (share 0; a known gap).
+               98.3 kha in 4.D). The 4(II) areas are used.
     cropland   area = CRT 4.B.1, all mineral.
     burnt      share_burnt = CRF 2024 area burnt / area (2020-2022 only; 0 in other years). Forest = 4.A.1 + 4.A.2.
 
 The transition matrix holds only "remaining" areas and no conversions, and past = current (span 0), so every
 land-use-change term is 0. Conversions are tested in soc_test, soc_inventory_test and soc_n2o_test.
-Wetland_to_Wetland is 0 because Wetland.co2_removals fails for a non-zero value (W1).
+Wetland_to_Wetland is 0: with past = current the span is 0, so the restored-wetland biomass removal is 0 (the CRT
+reports it as IE).
 """
 import inspect
 import os
@@ -138,6 +140,7 @@ def inventory_land_use_frame(year):
                      share_domestic_peat_extraction=crt(year, "II.D.domestic", "area") * KHA,
                      share_industrial_peat_extraction=crt(year, "II.D.industrial", "area") * KHA,
                      share_rewetted_industrial_peat_extraction=crt(year, "II.D.rewetted_industrial", "area") * KHA,
+                     share_rewetted_domestic_peat_extraction=crt(year, "II.D.other_domestic", "area") * KHA,
                      share_near_natural_wetland=crt(year, "II.D.near_natural", "area") * KHA,
                      share_unmanaged_wetland=crt(year, "D.unmanaged", "area") * KHA,
                      share_burnt=burnt_ha(year, "wetland") if fire else 0.0))
@@ -184,5 +187,5 @@ def run(function, year):
     land_use, past, tm = inventory_inputs(year)
     values = {"ef_country": "ireland", "land_use": land_use, "past": past, "tm": tm, "year": year}
     params = inspect.signature(function).parameters
-    # optional arguments (e.g. include_fire_co2) keep the package default, which is what the totals use
+    # optional arguments (e.g. include_peat_fire_co2) keep the package default, which is what the totals use
     return function(**{p: values[ARG_NAMES[p]] for p, spec in params.items() if spec.default is inspect.Parameter.empty})

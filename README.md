@@ -404,9 +404,22 @@ Area burnt = land-use area x `share_burnt` (from the input). Emissions = area bu
 | Grassland | **0 by default** | yes | CO2: yes, the NID (Tier 1) does not count it. CH4/N2O: same factors, **different soil split** (below). |
 | Cropland | none | yes | Yes (NID s.6.4.8 factors). |
 
-**Grassland CO2.** Not required under the NID: s.6.5.4 estimates CH4 and N2O only, and the CRT reports CO2 as NO. The Tier 1 CO2 calculation is kept in the code for later use: `burning_co2_grassland(..., include_fire_co2=True)`. It is never added to the totals.
+**Grassland CO2.** Not required under the NID: s.6.5.4 estimates CH4 and N2O only, and the CRT reports CO2 as NO. CO2 from fires on grassland peat (organic soil), which the IPCC 2013 Wetlands Supplement asks for (eq 2.8), is available as `burning_co2_grassland(..., include_peat_fire_co2=True)` (7.5 kt in the goblin_lite baseline). It is never added to the totals. Mineral soil is never charged fire CO2: burnt grass regrows, and neither the IPCC Tier 1 nor the NID counts it.
 
 **Grassland soil split (differs from the NID).** Both use NID Table 6.34 for mineral, drained organic and undrained organic soil. The package spreads the burnt area over the soil types in proportion to their areas (about 8% organic). The NID puts most of it on organic soil (half of peatland fires are counted as rough grazing; about 87% of the dry matter burnt is organic) and does not publish the split. On the inventory's own areas the package gives 0.57-0.72x the CRT grassland CH4 and N2O. This is deliberate: it needs no unpublished split, and fire emissions still respond to drainage and rewetting.
+
+## Wetlands: where the package differs from the NID
+
+Peat extraction (domestic and industrial), rewetted peat and near-natural wetland use the NID 2026 s.6.6 factors. On the inventory's own areas, domestic peat extraction and near-natural wetland reproduce the CRT exactly.
+
+| Item | Package | NID / CRT |
+|---|---|---|
+| Rewetted CH4 | One factor per category. Industrial 216 kg CH4/ha (NID, applied as kg CH4 as the NID does; the IPCC table gives kg CH4-C). Domestic **106.4 kg CH4/ha** | The NID gives 216 (nutrient rich) and 92 (poor) and publishes no area split. 106.4 is the CRT's implied factor for rewetted domestic ("Other Domestic Peat Extraction"), a weighted average of the two (about 12% rich). Package/CRT 0.98-1.03 |
+| Rewetted CO2 | NID factors, 0.5 t CO2-C/ha on-site and 0.24 off-site | Domestic equals the CRT. Industrial is 1.17-1.25x the CRT, which mixes nutrient status (not published) |
+| Industrial drained CH4 | 32.9 kg CH4/ha, as domestic (NID) | CRT implied 22.6-23.6 on the same area. The NID factor is used and the difference documented |
+| Unmanaged wetland | Area only | As the NID (s.6.6.1). Near-natural wetland carries the removals and CH4 |
+| Restored-wetland biomass (`Wetland_to_Wetland`) | 0.6 t C/ha/yr for 5 years after restoration (NID s.6.6.4.1), D1 convention | The CRT reports this as IE. 0 with the default GOBLIN inputs |
+| Fire | NID factors; CO2 Gef 342 is g CO2-C | The factors match the CRT ratios; the burnt-area basis differs (see Fires) |
 
 ## Emission factors: stored as published
 
@@ -424,7 +437,7 @@ The database table `emission_factors_land_use` holds each factor **as published*
 - `tests/inventory_inputs.py` builds the land-use table and transition matrix. Its docstring states how each inventory row maps to a package share and the caveats.
 - `tests/data/inventory/inventory_coverage.csv` lists every comparison as **covered** (must match within its tolerance), **gap** (a known difference owned by a fix; run as an expected failure) or **excluded** (out of scope, with the reason). Every term in `total_{co2,ch4,n2o}_emission` and every CRT Table4 category is in the map.
 
-Current state: forest drainage CO2/CH4/N2O, grassland remaining mineral CO2, grassland organic CO2, peat extraction N2O, near-natural CH4 and wetland rewetted CH4 match. The grassland CH4 rows are only a consistency check (the rich/poor split is derived from them). Forest fire CO2/CH4/N2O match since FIRE-1, and grassland fire CO2 (0, as the NID) since FIRE-2. Grassland and cropland fire CH4/N2O are excluded (soil split and area basis, see Fires). Known gaps: wetland fire (factors now match the CRT ratios; the burnt-area basis differs), wetland CO2 (peat extraction including exported horticultural peat, rewetted peat) and industrial peat CH4.
+Current state: forest drainage CO2/CH4/N2O, grassland remaining mineral CO2, grassland organic CO2, peat extraction N2O, near-natural CH4 and wetland rewetted CH4 (domestic and industrial) match. The grassland CH4 rows are only a consistency check (the rich/poor split is derived from them). Forest fire CO2/CH4/N2O match since FIRE-1, and grassland fire CO2 (0, as the NID) since FIRE-2. Excluded, with the reason in the map: grassland and cropland fire CH4/N2O (soil split and area basis), wetland fire (area basis), rewetted wetland CO2 and industrial peat CH4 (see Wetlands). Known gap: wetland drainage CO2 (the CRT includes exported horticultural peat, P1).
 
 ## License
 This project is licensed under the terms of the MIT license.

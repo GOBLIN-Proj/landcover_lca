@@ -761,18 +761,19 @@ def mineral_soils_n2o_from_forest_to_grassland(
 
 
 # Burning
-def burning_co2_grassland(ef_country, transition_matrix, land_use, past_land_use_data, include_fire_co2=False):
+def burning_co2_grassland(ef_country, transition_matrix, land_use, past_land_use_data, include_peat_fire_co2=False):
     """
     CO2 from grassland fires, in kg. 0 by default: not required under the national inventory
     (NID 2026 s.6.5.4, Tier 1 estimates CH4 and N2O only; CRT 4(IV).C.1 CO2 = NO).
-    include_fire_co2=True returns the Tier 1 calculation kept in Grassland.burning_co2_grassland.
+    include_peat_fire_co2=True returns CO2 from fires on organic (peat) soil only (IPCC 2013 Wetlands Supplement
+    eq 2.8); mineral soil is never charged CO2. See Grassland.burning_co2_grassland.
 
     Parameters:
         - ef_country (string): Emission factor country.
         - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
         - land_use (landcover_lca.models.LandUseCollection): The current/future land use data.
         - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
-        - include_fire_co2 (bool): False (default) returns 0, as in the inventory.
+        - include_peat_fire_co2 (bool): False (default) returns 0, as in the inventory.
 
     Returns:
         float: CO2 emissions from grassland fires (kg).
@@ -786,7 +787,7 @@ def burning_co2_grassland(ef_country, transition_matrix, land_use, past_land_use
         "grassland",
     )
 
-    return GRASSLAND.burning_co2_grassland(include_fire_co2) * t_to_kg
+    return GRASSLAND.burning_co2_grassland(include_peat_fire_co2) * t_to_kg
 
 
 def burning_ch4_grassland(ef_country, transition_matrix, land_use, past_land_use_data):
