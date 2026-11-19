@@ -64,6 +64,52 @@ Before WET a single 216 was applied to both areas (columns `ef_ch4_wetland_rewet
 `ef_co2_wetland_rewet_off_site_deafult`, now `ef_ch4_wetland_rewet_industrial` and
 `ef_co2_wetland_rewet_off_site_default`).
 
+### Forest drainage CO2 (F6)
+
+Method, NID 2026 s.6.3 (eq 6.3.2-6.3.4, p.215-216), as `Forest.co2_drainage_organic_soils_forest` (both trees):
+
+    CO2 (t C/yr) = A_organic x (1.68 + 0.31) + A_organo-mineral x (1.68 x SD + 0.31),   kg CO2 = t C x 1000 x 44/12
+
+| Item | Value | Source (layer) |
+|---|---|---|
+| A_organic, A_organo-mineral | area x `share_organic`, area x `share_organic_mineral` (drained N-poor, N-rich) | Input. The same areas as forest drainage CH4 and N2O. Should exclude open areas, as NID Tables 6.7 and 6.15 do (about 10%, not planted or drained; p.215) |
+| Age cut-off | **none** | NID p.216: the factors "have been applied to all forest over the entire time series regardless of forest age" (layer 1, text) |
+| `ef_co2_forest_drainage_on_site` | 1.68 t C/ha/yr | NID eq 6.3.2 (Jovani Sancho et al., 2021); Tables 6.7, 6.15: organic on-site / area = 1.68 every year |
+| `ef_co2_forest_drainage_off_site_DOC` | 0.31 t C/ha/yr | NID p.216; Tables: DOC / area = 0.31 on both soils |
+| `sd_forest_organo_mineral` | **0.581** (fraction) | NID eq 6.3.3-6.3.4, SD = depth / 30 cm. The text gives no depth; **the tables give SD** (layer 1, tables), below |
+
+Derivation of SD from NID 2026 Table 6.7 (4.A.1, p.217) and Table 6.15 (4.A.2), organo-mineral on-site / (drained
+organo-mineral area x 1.68):
+
+| Category | Year | Area (kha) | On-site (kt C) | SD |
+|---|---|---|---|---|
+| 4.A.1 | 2020 | 63.5 | 61.5 | 0.5765 |
+| 4.A.1 | 2021 | 66.2 | 64.2 | 0.5773 |
+| 4.A.1 | 2022 | 68.3 | 66.3 | 0.5778 |
+| 4.A.1 | 2023 | 69.7 | 67.6 | 0.5773 |
+| 4.A.2 | 2020 | 33.9 | 33.5 | 0.5882 |
+| 4.A.2 | 2021 | 31.3 | 30.9 | 0.5876 |
+| 4.A.2 | 2022 | 29.5 | 29.2 | 0.5892 |
+| 4.A.2 | 2023 | 28.1 | 27.8 | 0.5889 |
+| **Pooled** | 2020-2023 | **390.5** | **381.0** | **0.5808** |
+
+The package has one forest category, so the pooled value is used (0.577 in 4.A.1, 0.589 in 4.A.2; steady by year).
+SD 0.581 is a soil depth of 17.4 cm. 2024 is left out: Table 6.7 prints 4.A.1 organo-mineral on-site as 0.0.
+
+Check against the CRT 2026 (4.A organic-soil carbon, col T), on the NID drained areas, package/CRT:
+
+| | 2020 | 2021 | 2022 | 2023 |
+|---|---|---|---|---|
+| Before F6: 50-year cut-off (x 0.919, CO2 only), depth 28 cm (SD 0.933) | 0.9951 | 0.9949 | 0.9950 | 0.9944 |
+| Cut-off removed, SD 0.933 (calculated, not a package option) | 1.0830 | 1.0826 | 1.0825 | 1.0820 |
+| **F6: no cut-off, SD 0.581** | **1.0001** | **0.9999** | **0.9999** | **0.9998** |
+
+Before F6 the two errors nearly cancelled. Worked example: 1,000 ha organic and 500 ha organo-mineral give
+1,000 x 1.99 + 500 x (1.68 x 0.581 + 0.31) = 1,990.0 + 643.04 = 2,633.04 t C = 9,654,480 kg CO2. Checked by
+`tests/forest_drainage_co2_test.py` and the `forest_drainage_co2` row of `tests/inventory_alignment_test.py`
+(tolerance 0.001). The depth constant 28 in `resource_manager/landcover_data_manager.py` and the age table
+`national_forest_inventory_2017` are no longer used by the calculations.
+
 ### Horticultural peat, off-site CO2 (P1)
 
 | Item | Value | Source |

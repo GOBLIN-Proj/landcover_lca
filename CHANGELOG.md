@@ -23,6 +23,22 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
   goblin_lite baseline forest fire CO2: 18.55 kt. `tests/forest_fire_switch_test.py` (in CI).
 
 ### Changed
+- **F6: forest drainage CO2 as the NID calculates it (changes results).** `Forest.co2_drainage_organic_soils_forest`
+  (main and geo_goblin): CO2 (t C) = A_organic x (1.68 + 0.31) + A_organo-mineral x (1.68 x SD + 0.31).
+  - No 50-year age cut-off: NID 2026 p.216 applies the factors "to all forest over the entire time series regardless
+    of forest age". Before, forest over 50 years old (8.1%, table `national_forest_inventory_2017`) was removed from
+    the CO2 area only; CH4 and N2O used the full area. `Forest.get_valid_area` and the `*_exclude_over_50` attributes
+    are removed; CO2 now uses `forest_poor_drained_area` / `forest_rich_drained_area`, as CH4 and N2O.
+  - Organo-mineral soil-depth factor SD = depth / 30 cm (NID eq 6.3.3-6.3.4): **0.581**, new factor
+    `sd_forest_organo_mineral`, from NID Tables 6.7 and 6.15 (organo-mineral on-site / (area x 1.68), 4.A.1 + 4.A.2,
+    2020-2023 = 381.0 kt C / (390.5 kha x 1.68) = 0.5808, 17.4 cm). Before, a depth of 28 cm (SD 0.933), hard-coded in
+    `DataManager`. The NID text gives no depth.
+  - The two old errors nearly cancelled (package/CRT 0.994-0.995); now 0.9998-1.0001 (2020-2023).
+  - goblin_lite national: forest drainage CO2 1,628.9 -> 1,615.15 kt (-13.8 kt) in the baseline and both scenarios;
+    national CO2 2020 5,561.0 -> 5,547.2 kt. Results move more where organo-mineral soil dominates (geo test data:
+    -18.6 kt on 94.3 kt).
+  - Derivation: `docs/emission_factor_provenance.md`, "Forest drainage CO2 (F6)". `tests/forest_drainage_co2_test.py`
+    (in CI); inventory row `forest_drainage_co2` tolerance 0.01 -> 0.001.
 - **D8: geo_goblin shares the national tree's mineral-soil SOC code (changes geo_goblin results for land converted to
   cropland or grassland).** `geo_goblin/land_classes/soc.py` re-exports `landcover_lca.land_classes.soc.SOC`, and
   `geo_lca_emissions` imports the mineral-soil CO2 and N2O functions (and `n2o_from_soil_carbon_loss`) from

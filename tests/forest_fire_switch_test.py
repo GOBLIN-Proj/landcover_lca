@@ -29,7 +29,7 @@ class TestForestFireCO2Switch(unittest.TestCase):
     def test_default_includes_fire_co2(self):
         # goblin_lite national totals unchanged (soc_test pins)
         ld, tm = load(*TREES[0][1:])
-        self.assertAlmostEqual(lca.total_co2_emission(ld[-2020], ld[-2020], tm[-2020], "ireland"), 5561029027.3,
+        self.assertAlmostEqual(lca.total_co2_emission(ld[-2020], ld[-2020], tm[-2020], "ireland"), 5547249730.6,
                                delta=0.1)
 
     def test_off_removes_exactly_the_fire_co2(self):

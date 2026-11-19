@@ -424,6 +424,10 @@ Peat extraction (domestic and industrial), rewetted peat and near-natural wetlan
 | Fire | NID factors; CO2 Gef 342 is g CO2-C | The factors match the CRT ratios; the burnt-area basis differs (see Fires) |
 | Horticultural peat, off-site CO2 | Exports / 0.85 x 0.45 t C/t x 44/12 (NID s.6.6.3-6.6.4.2), in the national wetland total. Exports 2011-2024 (UN Comtrade); later years use the mean of the last three years (680.8 kt CO2) | As the NID; the CRT 4.D.1 industrial row is reproduced exactly 2020-2024. The NID gives no projection. Not in the geo_goblin totals (national figure) |
 
+## Forest drainage CO2: how it is calculated
+
+As NID 2026 s.6.3 (eq 6.3.2-6.3.4): `CO2 (t C) = A_organic x (1.68 + 0.31) + A_organo-mineral x (1.68 x 0.581 + 0.31)`, then x 1000 x 44/12 for kg CO2. A is the drained forest area on each soil (`share_organic`, `share_organic_mineral`), the same area as forest drainage CH4 and N2O, and should exclude open areas (roads, extraction routes), as the NID does. No age cut-off: the NID applies the factors to all forest regardless of age. 0.581 is the organo-mineral soil-depth factor (depth / 30 cm); the NID text gives no depth, so it is taken from NID Tables 6.7 and 6.15 (on-site / (area x 1.68), 2020-2023: 0.5808, 17.4 cm). This reproduces the CRT 2026 4.A organic-soil carbon (package/CRT 0.9998-1.0001, 2020-2023). Derivation in `docs/emission_factor_provenance.md`, section "Forest drainage CO2 (F6)".
+
 ## Emission factors: stored as published
 
 The database table `emission_factors_land_use` holds each factor **as published**: the number and unit printed in the NID, CRT or IPCC table, with its source. A value can be checked against its source without any arithmetic. All unit conversions (44/12, 16/12, 44/28, t to kg) are in one file, `src/landcover_lca/resource_manager/units.py`, and are applied when a factor is read, so the calculations receive kg CO2, kg CH4 or kg N2O per ha (or g per kg dry matter for fires).

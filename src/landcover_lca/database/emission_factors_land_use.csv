@@ -1,6 +1,7 @@
 name,value,unit,source
 ef_co2_forest_drainage_on_site,1.68,t CO2-C/ha/yr,"NID 2026 s.6.3 eq 6.3.2 p.216: mean on-site EFsoil 1.68 t C/ha/yr, all forest age classes (Jovani Sancho et al., 2021)"
 ef_co2_forest_drainage_off_site_DOC,0.31,t CO2-C/ha/yr,"NID 2026 s.6.3 p.216: 0.31 t C/ha/yr (IPCC 2013 Wetlands Suppl. Table 2.2, temperate EF_DOC_DRAINED); NID 2026 Tables 6.7 and 6.15 reproduce it (DOC / drained area = 0.310, 2020-2024). Grassland and wetland use 0.3024 (eq 2.5, as the CRT): the inventory differs by land use"
+sd_forest_organo_mineral,0.581,fraction,"NID 2026 s.6.3 eq 6.3.3-6.3.4 (SD = depth / 30 cm; no depth in the text): Tables 6.7 and 6.15, organo-mineral on-site / (area x 1.68), 4.A.1 + 4.A.2 pooled 2020-2023 = 381.0 kt C / (390.5 kha x 1.68) = 0.5808 (17.4 cm)"
 ef_ch4_forest_drainage_land,2.5,kg CH4/ha/yr,"NID 2026 s.6.3.4.7 b p.221: EFCH4land, IPCC 2013 Wetlands Suppl. Table 2.3"
 ef_ch4_forest_drainage_ditch,217.0,kg CH4/ha/yr,"NID 2026 s.6.3.4.7 b p.221: EFCH4ditch, IPCC 2013 Wetlands Suppl. Table 2.4"
 ef_n2o_forest_drainage_rich,2.8,kg N2O-N/ha/yr,"NID 2026 s.6.3.4.7 a p.220: IPCC 2013 Wetlands Suppl. Table 2.5, drained temperate forest"
