@@ -145,8 +145,6 @@ class TestGenerateData(unittest.TestCase):
                 land_use_data[base],
                 transition_matrix[base],
                 ef_country,
-            ) + lca.horticulture_co2_peat_export(
-                ef_country, baseline, baseline
             )
             emission_df.loc[
                 (

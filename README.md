@@ -34,7 +34,7 @@ Transition dataframe is the land use transition matrix, and the land use datafra
 
 The land use dataframe includes proportions for area mineral, organic, rewetted, burnt, and peat extraction. 
 
-Annual trade data has been used for horticultural peat exports.
+Annual trade data has been used for horticultural peat exports. Off-site CO2 from horticultural peat is a national quantity: it is included in the national wetland total (`lca_emission.total_co2_emission_wetland`, used by goblin_lite) for the year the land-use data carries, and not in the geo_goblin totals.
 
 ```python
 from landcover_lca.models import load_transition_matrix, load_land_use_data
@@ -233,7 +233,7 @@ def main():
                 land_use_data[base],
                 transition_matrix[base],
                 ef_country,
-            ) + lca.horticulture_co2_peat_export(ef_country, baseline, baseline)
+            )  # includes off-site CO2 from horticultural peat for the baseline year
         )
     emission_df.loc[
             (
@@ -420,6 +420,7 @@ Peat extraction (domestic and industrial), rewetted peat and near-natural wetlan
 | Unmanaged wetland | Area only | As the NID (s.6.6.1). Near-natural wetland carries the removals and CH4 |
 | Restored-wetland biomass (`Wetland_to_Wetland`) | 0.6 t C/ha/yr for 5 years after restoration (NID s.6.6.4.1), D1 convention | The CRT reports this as IE. 0 with the default GOBLIN inputs |
 | Fire | NID factors; CO2 Gef 342 is g CO2-C | The factors match the CRT ratios; the burnt-area basis differs (see Fires) |
+| Horticultural peat, off-site CO2 | Exports / 0.85 x 0.45 t C/t x 44/12 (NID s.6.6.3-6.6.4.2), in the national wetland total. Exports 2011-2024 (UN Comtrade); later years use the mean of the last three years (680.8 kt CO2) | As the NID; the CRT 4.D.1 industrial row is reproduced exactly 2020-2024. The NID gives no projection. Not in the geo_goblin totals (national figure) |
 
 ## Emission factors: stored as published
 
@@ -437,7 +438,7 @@ The database table `emission_factors_land_use` holds each factor **as published*
 - `tests/inventory_inputs.py` builds the land-use table and transition matrix. Its docstring states how each inventory row maps to a package share and the caveats.
 - `tests/data/inventory/inventory_coverage.csv` lists every comparison as **covered** (must match within its tolerance), **gap** (a known difference owned by a fix; run as an expected failure) or **excluded** (out of scope, with the reason). Every term in `total_{co2,ch4,n2o}_emission` and every CRT Table4 category is in the map.
 
-Current state: forest drainage CO2/CH4/N2O, grassland remaining mineral CO2, grassland organic CO2, peat extraction N2O, near-natural CH4 and wetland rewetted CH4 (domestic and industrial) match. The grassland CH4 rows are only a consistency check (the rich/poor split is derived from them). Forest fire CO2/CH4/N2O match since FIRE-1, and grassland fire CO2 (0, as the NID) since FIRE-2. Excluded, with the reason in the map: grassland and cropland fire CH4/N2O (soil split and area basis), wetland fire (area basis), rewetted wetland CO2 and industrial peat CH4 (see Wetlands). Known gap: wetland drainage CO2 (the CRT includes exported horticultural peat, P1).
+Current state: forest drainage CO2/CH4/N2O, grassland remaining mineral CO2, grassland organic CO2, peat extraction N2O, near-natural CH4 and wetland rewetted CH4 (domestic and industrial) match. The grassland CH4 rows are only a consistency check (the rich/poor split is derived from them). Forest fire CO2/CH4/N2O match since FIRE-1, and grassland fire CO2 (0, as the NID) since FIRE-2. Excluded, with the reason in the map: grassland and cropland fire CH4/N2O (soil split and area basis), wetland fire (area basis), rewetted wetland CO2 and industrial peat CH4 (see Wetlands). Wetland drainage CO2, including off-site CO2 from horticultural peat, matches exactly since P1. No known gaps remain in the map.
 
 ## License
 This project is licensed under the terms of the MIT license.

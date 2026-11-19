@@ -81,9 +81,6 @@ def main():
                     transition_matrix[sc],
                     ef_country,
                 )
-                + landuse_lca.horticulture_co2_peat_export(
-                    ef_country, target_year, baseline
-                )
             )
             * kg_to_kt
         ) + (
@@ -215,9 +212,6 @@ def main():
                 land_use_data[base],
                 transition_matrix[sc],
                 ef_country,
-            )
-            + landuse_lca.horticulture_co2_peat_export(
-                ef_country, target_year, baseline
             )
         ) * kg_to_kt
 

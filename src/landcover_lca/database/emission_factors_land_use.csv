@@ -70,6 +70,7 @@ ef_n2o_cropland_Gef,0.07,g N2O/kg dm,NID 2026 s.6.4.8 p.263 (IPCC 2006 Vol 4 Tab
 ef_co2_forest_share_harvested,0.838,fraction,NFI FAWS (2017)
 ef_co2_forest_share_natural,0.162,fraction,NFI FAWS (2017)
 ef_offsite_carbon_conversion_nutrient_poor,0.45,t C/t air-dry peat,"IPCC 2006 Vol 4 Ch 7 Table 7.5: carbon fraction of air-dry peat, nutrient poor; NID 2026 s.6.6.4.2 (horticultural peat, off-site)"
+frac_horticultural_peat_exported,0.85,fraction,"NID 2026 s.6.6.3 p.279: 85% of horticultural peat is exported; export tonnage is scaled to total use (exports / 0.85). CRT 2026 4.D industrial organic-soil C reproduces it exactly, 2020-2024"
 ef_forest_Cf,0.45,fraction,IPCC 2006
 ef_co2_peatland_to_wetland_biomass,-3.0,t C/ha,"NID 2026 s.6.6.4.1 p.279-280: vegetation 3 t C/ha (Cruickshank et al. 2000), re-established at 0.6 t C/ha/yr over 5 years; negative = removal"
 ef_co2_implied_grassland_remaining_SOC_per_ha,-392.73460806269964,kg CO2/ha/yr,"CRT 4.C.1 mineral, 2026 submission, 2020-2024 (tools/derive_implied_grassland_factor.py; docs/emission_factor_provenance.md)"

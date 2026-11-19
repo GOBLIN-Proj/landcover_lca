@@ -64,6 +64,28 @@ Before WET a single 216 was applied to both areas (columns `ef_ch4_wetland_rewet
 `ef_co2_wetland_rewet_off_site_deafult`, now `ef_ch4_wetland_rewet_industrial` and
 `ef_co2_wetland_rewet_off_site_default`).
 
+### Horticultural peat, off-site CO2 (P1)
+
+| Item | Value | Source |
+|---|---|---|
+| `frac_horticultural_peat_exported` | 0.85 (fraction) | NID 2026 s.6.6.3 p.279: "85 per cent of horticultural peat products are exported"; the export figures are scaled up to include domestic use. Tonnage used = exports / 0.85 |
+| `ef_offsite_carbon_conversion_nutrient_poor` | 0.45 t C/t air-dry peat | IPCC 2006 Vol 4 Ch 7 Table 7.5 (nutrient poor), eq 7.5; NID 2026 s.6.6.4.2 p.280 |
+| Table `UN_comtrade_exported_peat` | kg exported, 2011-2024 | UN Comtrade, HS 2703 (peat), reporter Ireland (372), partner world, flow export. The NID takes exports from the CSO via UN Comtrade / Eurostat. 2023 (348,444,751 kg) and 2024 (313,382,351 kg) added in P1, fetched 2026-11-19 from `comtradeapi.un.org/public/v1/preview/C/A/HS?reporterCode=372&period=<year>&partnerCode=0&cmdCode=2703&flowCode=X` |
+
+**CRT check (exact, 2020-2024).** CRT 2026 Table 4.D, industrial peat extraction, organic-soil carbon = 1.7 t C/ha x
+4(II) industrial area + 0.45 x exports / 0.85. The exports this implies (919.4, 579.6, 390.4, 348.4, 313.4 kt) equal
+the table. Comtrade has since revised 2021 (589.2 kt) and 2022 (401.6 kt); the table keeps the values the CRT 2026
+used. Comtrade 2025 (370.7 kt) is beyond the CRT 2026 and not added. CO2 off-site: 2020 1,784.7 kt, 2024 608.3 kt.
+
+**Years after the table** use the mean of its last three years (2022-2024: 350.7 kt exported, 680.8 kt CO2), so the
+projection follows the data when a year is added. The NID gives no projection; the mean of the last three years was
+chosen because exports fell from 919 kt in 2020 to 313 kt in 2024, and the 2011-2022 mean used before (792.5 kt)
+reflects the earlier level of extraction. Years before the table raise ValueError.
+
+**Totals.** National (main tree): in `total_co2_emission_wetland`, for the year carried by `land_use_data.wetland`.
+geo_goblin: not included (a national export figure cannot be assigned to farms or catchments). Checked by
+`tests/peat_export_test.py` and the `wetland_drainage_co2` row of `tests/inventory_alignment_test.py`.
+
 **Source data for the two soil factors:** EPA CRT Table 4.C (Grassland), **2026 submission**, one workbook per year 1990-2024 (`IRL-CRT-2026-V1.0-<year>.xlsx`). The mineral-soil rows are extracted by `tools/extract_crt_table4c.py` into `tests/data/inventory/crt2026_4c_mineral_soils.csv` (and `crt2026_forest_conversions_mineral_soils.csv` for the cross-check below). The method is laid out step by step in the next section. CRT sign convention: + = gain of carbon, - = loss. The extract flips it to the package convention (+ emission, - removal): kg CO2/ha = -(t C/ha) x 1000 x 44/12. The 4.C.1 rows reproduce the NID 2026 key category table (+107.27 kt CO2 in 1990, -1,549.47 kt CO2 in 2024).
 
 ## Method, step by step (both soil factors)

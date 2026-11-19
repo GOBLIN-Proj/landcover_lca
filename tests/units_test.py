@@ -54,6 +54,7 @@ BEFORE = {
     "ef_ch4_near_natural_wetland": 72.9333333333333,
     "ef_ch4_wetland_rewet_industrial": 216.0,
     "ef_ch4_wetland_rewet_domestic": 106.4,  # new in WET (CRT implied)
+    "frac_horticultural_peat_exported": 0.85,  # new in P1 (NID 2026 s.6.6.3 p.279)
     "ef_co2_forest_rewetting_on_site": -843.3333333,
     "ef_co2_forest_rewetting_DOC": 880.0,
     "ef_ch4_forest_rewetting": 92.0,

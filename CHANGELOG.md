@@ -7,6 +7,22 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
 ## [Unreleased]
 
 ### Changed
+- **P1: off-site CO2 from horticultural peat in the national wetland total (changes results).**
+  - **Callers: remove any separate `horticulture_co2_peat_export` addition**, or it is counted twice.
+    `lca_emission.total_co2_emission_wetland` (and so `total_co2_emission`) now includes it, for the year carried by
+    `land_use_data.wetland`, as the NID reports it in 4.D.1. goblin_lite gains it with no change (it never added it,
+    although its docstring says wetland includes horticultural peat). The geo_goblin totals do not include it (national).
+  - Tonnage = exports / 0.85 (NID 2026 s.6.6.3 p.279: 85% is exported, scaled up to include domestic use); new factor
+    `frac_horticultural_peat_exported`. Before, exports alone were used (0.85x the CRT).
+  - Exports for 2023 and 2024 added (UN Comtrade). Before, a calibration year after 2022 raised `KeyError`.
+  - Years after the data use the mean of the last three years (2022-2024: 680.8 kt CO2), not the 2011-2022 mean
+    (1,307.6 kt CO2 before). Years before the data raise `ValueError`. `calibration_year` is now optional and unused.
+    The docstring gives the result in kg CO2 (it said metric tons).
+  - The package reproduces the CRT 2026 4.D.1 wetland drainage CO2 exactly, 2020-2024 (was 0.884-0.900).
+  - goblin_lite national CO2: baseline (2020) 3,776.4 -> 5,561.0 kt (+1,784.7); scenarios (2050) 4,689.2 -> 5,370.1
+    kt and 4,692.4 -> 5,373.3 kt (+680.8).
+  - Tests: `tests/peat_export_test.py` (new, in CI); the `wetland_drainage_co2` inventory row is now covered.
+    `tests/example.py`, `output_test.py`, `goblin_lite_national_test.py` and `goblin_lite_n_test.py` no longer add it.
 - **WET: wetland rewetted CH4 split by category; restored-wetland biomass removal fixed (changes results).**
   - Rewetted CH4: one factor per category, each on its own area (no rich/poor split is published). Industrial 216 kg
     CH4/ha (NID 2026 s.6.6.4.2, unchanged); domestic **106.4 kg CH4/ha**, the CRT 2026 4(II) "Other Domestic Peat

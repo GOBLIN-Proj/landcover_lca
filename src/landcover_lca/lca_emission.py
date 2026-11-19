@@ -1041,37 +1041,55 @@ def total_n2o_emission_grassland(
 
 
 # Peat extraction
-def horticulture_co2_peat_export(ef_country, year, calibration_year):
+def horticulture_co2_peat_export(ef_country, year, calibration_year=None):
     """
-    Calculate the CO2 emissions from horticulture peat export.
+    Off-site CO2 from horticultural peat (NID 2026 s.6.6.3 p.279 and s.6.6.4.2 p.280; IPCC 2006 Vol 4 eq 7.5).
+
+    Tonnage = exports / frac_horticultural_peat_exported (0.85): 85% of horticultural peat is exported, and the NID
+    scales the export figures up to include domestic use. CO2 = tonnage x 0.45 t C/t air-dry peat (IPCC 2006 Vol 4
+    Table 7.5, nutrient poor) x 44/12. Exports are the table UN_comtrade_exported_peat (UN Comtrade, HS 2703, Ireland
+    to world). The CRT 2026 reports this inside 4.D.1 industrial peat extraction (organic-soil carbon) and the package
+    reproduces it exactly for 2020-2024.
+
+    Years in the table use that year's exports. Years after the table use the mean of its last three years (the
+    recent level: exports fell from 919 kt in 2020 to 313 kt in 2024). Years before the table, or missing from it,
+    raise ValueError.
+
+    This is a national quantity. It is included in total_co2_emission_wetland (and so total_co2_emission) of this
+    module, which goblin_lite uses, for the year the land-use data carries. The geo_goblin totals do not include it.
 
     Parameters:
-        ef_country (str): Emission factor country
+        ef_country (str): Emission factor country.
         year (int): The year for which the emissions are calculated.
-        calibration_year (int): The year used for calibration.
+        calibration_year (int, optional): Not used. Kept so existing three-argument calls still work; the table
+            decides which years are data.
 
     Returns:
-        float: The CO2 emissions from horticulture peat export in metric tons.
+        float: Off-site CO2 from horticultural peat, kg CO2.
 
+    Raises:
+        ValueError: If the year is before the first year of the table, or missing from it.
     """
     data_loader_class = Loader(ef_country)
     emissions_factors = Emissions_Factors(ef_country)
-    ef_offsite_carbon_conversion_nutrient_poor = (
-        emissions_factors.get_emission_factor_in_emission_factor_data_base(
-            "ef_offsite_carbon_conversion_nutrient_poor"
+    get = emissions_factors.get_emission_factor_in_emission_factor_data_base
+    carbon_to_co2 = get("ef_offsite_carbon_conversion_nutrient_poor")  # kg CO2 per kg air-dry peat
+    share_exported = get("frac_horticultural_peat_exported")
+
+    exports = data_loader_class.exported_peat()["Total_kg"].sort_index()
+    first, last = int(exports.index.min()), int(exports.index.max())
+
+    if year > last:
+        export_weight = exports.iloc[-3:].mean()
+    elif pd.isna(exports.get(year)):
+        raise ValueError(
+            f"No horticultural peat export data for {year}: the table covers {first}-{last}; "
+            f"years after {last} use the mean of the last three years."
         )
-    )
-
-    past_export_peat_df = data_loader_class.exported_peat()
-
-    past_export_peat_df.fillna(0, inplace=True)
-
-    if year <= calibration_year:
-        export_weight = past_export_peat_df.loc[year, "Total_kg"]
     else:
-        export_weight = past_export_peat_df["Total_kg"].mean()
+        export_weight = exports.loc[year]
 
-    return (export_weight * ef_offsite_carbon_conversion_nutrient_poor)
+    return export_weight / share_exported * carbon_to_co2
 
 
 # Organic soils
@@ -1360,7 +1378,9 @@ def total_co2_emission_wetland(
 ):
     """
     Calculates the total CO2 emission from wetland based on different factors. Includes CO2 emissions from drainage,
-    biomass, and burning.
+    biomass, burning, rewetting and off-site CO2 from horticultural peat (horticulture_co2_peat_export, national,
+    for the year carried by land_use_data.wetland), as the NID reports it in 4.D.1. The geo_goblin total does not
+    include horticultural peat.
 
     Parameters:
         - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
@@ -1384,6 +1404,7 @@ def total_co2_emission_wetland(
         + rewetting_co2_organic_soils_in_wetland(
             ef_country, transition_matrix, land_use_data, past_land_use_data
         )
+        + horticulture_co2_peat_export(ef_country, land_use_data.wetland.year)
     )
 
 
