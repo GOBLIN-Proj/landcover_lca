@@ -387,7 +387,7 @@ def total_co2_emission_forest(
     transition_matrix,
     ef_country,
     *,
-    include_fire_co2=True,
+    include_fire_co2=False,
 ):
     """
     Calculate the total CO2 emission from forest: drained and rewetted organic soils, and wildfire.
@@ -399,9 +399,12 @@ def total_co2_emission_forest(
         - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
         - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
         - ef_country (string): Emission factor country.
-        - include_fire_co2 (bool, keyword only): Include wildfire CO2 (burning_co2_forest). Default True: the NID
-          reports it (CRT 4(IV).A). Set False when the forest carbon model the result is combined with (e.g. CBM)
-          already counts the carbon lost to fire. Fire CH4 and N2O are not affected (FIRE-3).
+        - include_fire_co2 (bool, keyword only): Include wildfire CO2 (burning_co2_forest). Default False: GOBLIN
+          adds CBM forest carbon ("Total Ecosystem" stock change), and CBM's Wildfire disturbance already sends the
+          burnt biomass and DOM carbon to the atmosphere (CBM-CFS3 v1.2 User's Guide s.1.8.5, Appendix 6), so adding
+          it here would count it twice. The inventory reports it once: CRT Table4 4.A = 4.A stock change + 4(IV)
+          wildfire CO2. Set True when no forest carbon model is added, to match the NID (CRT 4(IV).A).
+          Fire CH4 and N2O are always included (CBM output used by GOBLIN is carbon only) (FIRE-3).
 
     Returns:
         float: Total CO2 emission from forest, kg.
@@ -1861,7 +1864,7 @@ def total_co2_emission(
     transition_matrix_data,
     ef_country,
     *,
-    include_fire_co2=True,
+    include_fire_co2=False,
 ):
     """
     Calculates the total CO2 emission by summing the CO2 emissions from different land cover types.
@@ -1872,8 +1875,8 @@ def total_co2_emission(
         - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
         - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
         - ef_country (string): Emission factor country.
-        - include_fire_co2 (bool, keyword only): Include forest wildfire CO2; passed to total_co2_emission_forest
-          (default True, as the NID).
+        - include_fire_co2 (bool, keyword only): Include forest wildfire CO2; passed to total_co2_emission_forest.
+          Default False (CBM counts it; see total_co2_emission_forest). True to match the NID without CBM.
 
     Returns:
         float: Total CO2 emission.

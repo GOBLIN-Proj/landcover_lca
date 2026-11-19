@@ -244,12 +244,14 @@ class TestSocUnitsKgCO2(unittest.TestCase):
         # 2050: mean of 2022-2024, 680.8 kt); before P1: 3776368181.0, 4689223152.8, 4692421802.0.
         # F6 (forest drainage CO2: no 50-year cut-off, organo-mineral SD 0.933 -> 0.581; -13.8 kt in each);
         # before F6: 5561029027.3, 5370060130.6, 5373258779.8.
+        # FIRE-3 (forest fire CO2 out by default: CBM counts it; -18.55 kt in each); before: 5547249730.6,
+        # 5356280833.9, 5359479483.1 (= include_fire_co2=True).
         t = TRANSITION
         tm = load_transition_matrix(t, "ireland", 2020, 2050)
         ld = load_land_use_data(LAND_USE, 2020)
-        self.assertAlmostEqual(lca.total_co2_emission(ld[-2020], ld[-2020], tm[-2020], "ireland"), 5547249730.6, delta=0.1)
-        self.assertAlmostEqual(lca.total_co2_emission(ld[0], ld[-2020], tm[0], "ireland"), 5356280833.9, delta=0.1)
-        self.assertAlmostEqual(lca.total_co2_emission(ld[1], ld[-2020], tm[1], "ireland"), 5359479483.1, delta=0.1)
+        self.assertAlmostEqual(lca.total_co2_emission(ld[-2020], ld[-2020], tm[-2020], "ireland"), 5528697873.1, delta=0.1)
+        self.assertAlmostEqual(lca.total_co2_emission(ld[0], ld[-2020], tm[0], "ireland"), 5337728976.4, delta=0.1)
+        self.assertAlmostEqual(lca.total_co2_emission(ld[1], ld[-2020], tm[1], "ireland"), 5340927625.7, delta=0.1)
 
 
 if __name__ == "__main__":

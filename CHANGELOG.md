@@ -16,11 +16,16 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
   `tests/examples_test.py` (in CI) runs both without Jupyter; the goblin_lite totals equal the national pins.
 
 ### Added
-- **FIRE-3: forest fire CO2 switch.** `total_co2_emission_forest` and `total_co2_emission` (main and geo_goblin) take
-  `include_fire_co2=True` (keyword only). The default keeps forest wildfire CO2 in, as the NID (CRT 4(IV).A): no
-  result changes. `False` leaves it out, for callers that add a forest carbon model which may already count fire
-  carbon loss (goblin_lite adds CBM "Total Ecosystem"; a double count is not confirmed). CH4 and N2O are not switched.
-  goblin_lite baseline forest fire CO2: 18.55 kt. `tests/forest_fire_switch_test.py` (in CI).
+- **FIRE-3: forest fire CO2 switch, off by default (changes results).** `total_co2_emission_forest` and
+  `total_co2_emission` (main and geo_goblin) take `include_fire_co2` (keyword only), **default False**: forest wildfire
+  CO2 is no longer in the CO2 totals unless asked for. Reason: GOBLIN adds CBM forest carbon ("Total Ecosystem", the
+  change in biomass, DOM and soil pools); cbm_runner simulates fire (DISTID3 = CBM default "Wildfire"), and CBM's
+  disturbance matrices send the burnt carbon to the atmosphere (CBM-CFS3 v1.2 User's Guide s.1.8.5 p.15, Appendix 6,
+  Table 8-1), so it was counted twice. The inventory counts it once (CRT 2026 Table4 4.A = 4.A stock change + 4(IV)
+  wildfire CO2, exactly, 2020-2024). `include_fire_co2=True` restores it, to match the NID where no forest carbon model
+  is added. CH4 and N2O from forest fire are not switched. goblin_lite national CO2: -18.55 kt in the baseline and
+  scenarios (2020: 5,547.2 -> 5,528.7 kt). `burning_co2_forest` itself is unchanged.
+  `tests/forest_fire_switch_test.py` (in CI).
 
 ### Changed
 - **F6: forest drainage CO2 as the NID calculates it (changes results).** `Forest.co2_drainage_organic_soils_forest`

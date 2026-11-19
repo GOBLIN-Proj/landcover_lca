@@ -97,12 +97,13 @@ class TestGeoTotalsOnGeoData(unittest.TestCase):
         # so D8 leaves them unchanged (kg). F6 (forest drainage CO2) moved CO2 by -18,583,840 kg in each dataset: the
         # geo test forest is mostly organo-mineral (12,393 ha against 2,371 ha organic), so SD 0.933 -> 0.581
         # outweighs removing the 50-year cut-off. CO2 before F6: 133971826.04683049, 122629401.79768224,
-        # 145660669.08654857.
+        # 145660669.08654857. FIRE-3 (forest fire CO2 out by default): -2,007,288.9 kg in each; before:
+        # 115387986.0252926, 104045561.77614434, 127076829.06501068.
         tm = load_transition_matrix(TRANSITION, "ireland", 2020, 2050)
         ld = load_land_use_data(LAND_USE, 2020)
-        pins = {-2020: (115387986.0252926, 850524.8107858208, 57966.33763685918),
-                0: (104045561.77614434, 1260910.4460398883, 57948.86355070993),
-                1: (127076829.06501068, 2285026.350583825, 57860.04917144225)}
+        pins = {-2020: (113380697.14582448, 850524.8107858208, 57966.33763685918),
+                0: (102038272.89667633, 1260910.4460398883, 57948.86355070993),
+                1: (125069540.18554218, 2285026.350583825, 57860.04917144225)}
         for k, want in pins.items():
             for function, value in zip((geo_lca.total_co2_emission, geo_lca.total_ch4_emission,
                                         geo_lca.total_n2o_emission), want):

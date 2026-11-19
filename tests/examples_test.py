@@ -36,9 +36,9 @@ class TestGoblinLiteExample(unittest.TestCase):
 
     def test_totals_equal_the_national_pins(self):
         e = self.ns["emissions"]["CO2"]
-        self.assertAlmostEqual(e[(-1, "total", 2020)], 5547.2497306, places=6)  # before F6: 5561.0290273
-        self.assertAlmostEqual(e[(0, "total", 2050)], 5356.2808339, places=6)  # before F6: 5370.0601306
-        self.assertAlmostEqual(e[(1, "total", 2050)], 5359.4794831, places=6)  # before F6: 5373.2587798
+        self.assertAlmostEqual(e[(-1, "total", 2020)], 5528.6978731, places=6)  # FIRE-3 default; with fire CO2 5547.2497306
+        self.assertAlmostEqual(e[(0, "total", 2050)], 5337.7289764, places=6)  # with fire CO2 5356.2808339
+        self.assertAlmostEqual(e[(1, "total", 2050)], 5340.9276257, places=6)  # with fire CO2 5359.4794831
 
     def test_land_uses_add_up_to_the_total(self):
         e = self.ns["emissions"]
