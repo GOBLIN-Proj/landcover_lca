@@ -52,7 +52,7 @@ class TestMissingTransitionColumn(unittest.TestCase):
         self.assertEqual(get_transition_area(tm[0], "grassland", "grassland"),
                          tm[0].__dict__["grassland_to_grassland"])
 
-    def test_unrequired_column_missing_is_harmless(self):
+    def test_column_not_required_missing_is_harmless(self):
         # Settlement columns are never read: dropping one must not change the result.
         full = load_transition_matrix(TRANSITION, "ireland", 2020, 2050)
         less = load_transition_matrix(TRANSITION.drop(columns=["Settlement_to_Forest"]), "ireland", 2020, 2050)

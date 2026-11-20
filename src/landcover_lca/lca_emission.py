@@ -1013,7 +1013,7 @@ def total_n2o_emission_grassland(
     ef_country,
 ):
     """
-    Calculate the total N2O emission from grassland. Includes N2O emissons from land use change to grassland and
+    Calculate the total N2O emission from grassland. Includes N2O emissions from land use change to grassland and
     N2O emissions from burning grassland. N2O emissions from drainage and rewetting are not included as they are
     accounted for in the Agricultural soils category in the national inventory report.
 
@@ -1140,7 +1140,7 @@ def drainage_co2_organic_soils_in_wetland(
     """
     Calculate CO2 emissions from drained organic soils in wetland.
 
-    Paramters:
+    Parameters:
         - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
         - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
         - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
@@ -1721,7 +1721,7 @@ def drainage_co2_organic_soils_in_settlement(land_use, ef_country):
         The function has not been validated and is not currently used. It overestimates drainage emissions
         because we forest is used as a reference for previous land_use of organic soil converted to settlement.
 
-        ef_co2_forest_to_settlement_drainage include onsite and offite emissions
+        ef_co2_forest_to_settlement_drainage include onsite and offsite emissions
 
     """
     ef_co2_forest_to_settlement_drainage = (

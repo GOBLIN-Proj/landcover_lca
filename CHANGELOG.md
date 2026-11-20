@@ -28,6 +28,12 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
   `tests/forest_fire_switch_test.py` (in CI).
 
 ### Changed
+- **Spelling: every name corrected (no result changes).** Database: `land_use_features` column `Adjustment_factor`
+  (was `Adjustement_factor`); `slam_nutrient_export_rates` types `continuous_fabric` and `discontinuous_fabric` (were
+  `continuos_`, `discontinuos_`). The old names still work for this release with a DeprecationWarning
+  (`Land_Use_Features`, `Nutrient_Exports`). Internal: `DataManager.data_engine_creator`, and misspelt locals and
+  docstrings in the wetland, grassland and emission modules (both trees). `tests/spelling_test.py` (in CI) stops them
+  coming back.
 - **Rewetted CH4 basis checked (no result changes).** Grassland "rewet status" CH4 (68.1 / 216) is kg CH4-C, wetland
   rewetted CH4 (216) is kg CH4, as the NID applies them. New `TestRewettedCH4Basis` in `inventory_alignment_test`: the
   grassland split derived from the CRT CH4 reproduces the CRT on-site carbon only with the CH4-C reading (kg CH4 is

@@ -15,6 +15,7 @@ import pandas as pd
 from landcover_lca.resource_manager.data_loader import Loader
 from landcover_lca.resource_manager.units import to_model_units
 from landcover_lca.resource_manager.landcover_data_manager import ModelData
+from landcover_lca.models import RENAMED_EXPORT_TYPES, RENAMED_FEATURES, _renamed
 
 
 ###########################################
@@ -356,6 +357,7 @@ class Nutrient_Exports:
         """
         Retrieves the N export factor value for a specified land use type and type of land use, within the context of the ef_country.
         """
+        type = _renamed(type, RENAMED_EXPORT_TYPES)
         N_mask = ((self.export_data_base["land_cover"] == landuse) & (self.export_data_base["type"] == type) & (self.export_data_base.index == self.ef_country))
         return float(
             self.export_data_base.loc[N_mask,"N_kg_ha"].item()
@@ -365,6 +367,7 @@ class Nutrient_Exports:
         """
         Retrieves the P export factor value for a specified land use type and type of land use, within the context of the ef_country.
         """
+        type = _renamed(type, RENAMED_EXPORT_TYPES)
         P_mask = ((self.export_data_base["land_cover"] == landuse) & (self.export_data_base["type"] == type) & (self.export_data_base.index == self.ef_country))
         return float(
             self.export_data_base.loc[P_mask,"P_kg_ha"].item()
@@ -416,6 +419,7 @@ class Land_Use_Features:
     def get_landuse_features_in_land_use_features_data_base(
         self, emission_feature_name, land_use
     ):
+        emission_feature_name = _renamed(emission_feature_name, RENAMED_FEATURES)
         return float(self.features_data_base.get(emission_feature_name).get(land_use))
 
 

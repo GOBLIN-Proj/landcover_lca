@@ -109,8 +109,8 @@ class TestImprovedGrasslandAssumption(unittest.TestCase):
     def test_database_factors(self):
         feats = Land_Use_Features("ireland")
         get = feats.get_landuse_features_in_land_use_features_data_base
-        self.assertEqual(get("Adjustement_factor", "grassland"), IMPROVED)
-        self.assertEqual(get("Adjustement_factor", "cropland"), CROPLAND)
+        self.assertEqual(get("Adjustment_factor", "grassland"), IMPROVED)
+        self.assertEqual(get("Adjustment_factor", "cropland"), CROPLAND)
 
     def test_sensitivity_to_unimproved_share(self):
         """Unimproved grassland has factor 1.0 (NID Table 6.31). Share u unimproved scales the

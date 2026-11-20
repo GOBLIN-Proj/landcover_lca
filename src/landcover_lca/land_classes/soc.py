@@ -167,15 +167,15 @@ class SOC:
             float: The emission factor from mineral soils.
         """
 
-        Adjustement_factor = (
+        adjustment_factor = (
             self.land_use_features.get_landuse_features_in_land_use_features_data_base(
-                "Adjustement_factor", land_use_name
+                "Adjustment_factor", land_use_name
             )
         )
 
         SOC_ref = self.compute_SOC_ref_for_land_use()
 
-        return SOC_ref * Adjustement_factor
+        return SOC_ref * adjustment_factor
 
     def compute_emissions_from_mineral_soils_in_land_use_change(self):
         """

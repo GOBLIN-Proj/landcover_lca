@@ -153,11 +153,11 @@ class Wetland(LandUse):
             float: The total CO2 emissions in kg from wetland drainage, including emissions from
                 industrial and domestic drainage, as well as unmanaged and near-natural wetlands.
         """
-        industral_drained = self.co2_emissions_industrial_drained_onsite() + self.co2_emissions_industrial_drained_offsite()
+        industrial_drained = self.co2_emissions_industrial_drained_onsite() + self.co2_emissions_industrial_drained_offsite()
         domestic_drained = self.co2_emissions_domestic_drained_onsite() + self.co2_emissions_domestic_drained_offsite()
         unmanaged_and_near_natural = self.co2_emissions_unmanaged_and_near_natural_onsite() + self.co2_emissions_unmanaged_and_near_natural_offsite()
 
-        return industral_drained + domestic_drained + unmanaged_and_near_natural
+        return industrial_drained + domestic_drained + unmanaged_and_near_natural
 
 
     def co2_emissions_industrial_drained_onsite(self):
@@ -168,13 +168,13 @@ class Wetland(LandUse):
         Returns:
             float: The calculated CO2 emissions in kg from industrial wetland drainage onsite.
         """
-        ef_co2_industrail_drained_onsite = (
+        ef_co2_industrial_drained_onsite = (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
                 "ef_co2_wetland_industrial_extraction_on_site"
             )
         )
 
-        return self.current_area_industrial_drained * ef_co2_industrail_drained_onsite
+        return self.current_area_industrial_drained * ef_co2_industrial_drained_onsite
     
     def co2_emissions_industrial_drained_offsite(self):
         """
@@ -184,13 +184,13 @@ class Wetland(LandUse):
         Returns:
             float: The calculated CO2 emissions in kg from industrial wetland drainage offsite.
         """
-        ef_co2_industrail_drained_offsite = (
+        ef_co2_industrial_drained_offsite = (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
                 "ef_co2_wetland_drainage_DOC_default"
             )
         )
 
-        return self.current_area_industrial_drained * ef_co2_industrail_drained_offsite
+        return self.current_area_industrial_drained * ef_co2_industrial_drained_offsite
 
 
     def co2_emissions_domestic_drained_onsite(self):

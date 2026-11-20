@@ -611,8 +611,8 @@ def mineral_soils_co2_grassland_remaining_grassland(
 ):
     """
     CO2 from mineral soils of grassland remaining grassland: area x the CRT 2026 implied factor (D7,
-    ``ef_co2_implied_grassland_remaining_SOC_per_ha``), as in the national tree. Named
-    ``mineral_soils_co2_grassland_remainging_grassland`` before D8.
+    ``ef_co2_implied_grassland_remaining_SOC_per_ha``), as in the national tree (renamed in 0.3.0;
+    see the CHANGELOG).
 
     Parameters:
         - land_use (landcover_lca.geo_goblin.geo_models.LandUseCollection): The current/future land use data.
@@ -792,7 +792,7 @@ def total_n2o_emission_grassland(
     ef_country,
 ):
     """
-    Calculate the total N2O emission from grassland. Includes N2O emissons from land use change to grassland and
+    Calculate the total N2O emission from grassland. Includes N2O emissions from land use change to grassland and
     N2O emissions from burning grassland. N2O emissions from drainage and rewetting are not included as they are
     accounted for in the Agricultural soils category in the national inventory report.
 
@@ -1219,7 +1219,7 @@ def drainage_co2_organic_soils_in_settlement(land_use, ef_country):
         The function has not been validated and is not currently used. It overestimates drainage emissions
         because we forest is used as a reference for previous land_use of organic soil converted to settlement.
 
-        ef_co2_forest_to_settlement_drainage include onsite and offite emissions
+        ef_co2_forest_to_settlement_drainage include onsite and offsite emissions
 
     """
     ef_co2_forest_to_settlement_drainage = (

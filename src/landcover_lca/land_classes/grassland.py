@@ -166,7 +166,7 @@ class Grassland(LandUse):
     
     def drainage_offsite_co2_organic_soils_in_grassland(self):
         """
-        Cacluates the offsite CO2 emissions, in the form of Disolved Organic Carbon (DOC) from the drainage of poor and rich organic
+        Calculates the offsite CO2 emissions, in the form of Dissolved Organic Carbon (DOC) from the drainage of poor and rich organic
         soils in grassland areas.
 
         A tier 1 approach is used to estimate the DOC emissions from the drained organic soils in grasslands.
@@ -177,13 +177,13 @@ class Grassland(LandUse):
                 land and the specific emission factor for CO2 emissions from grassland drainage.
         """
 
-        ef_co2_offsite_grassland_draingage_DOC= (
+        ef_co2_offsite_grassland_drainage_DOC= (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
                 "ef_co2_grassland_drainage_off_site"
             )
         )
 
-        return (self.current_area_drained_poor + self.current_area_drained_rich)* ef_co2_offsite_grassland_draingage_DOC
+        return (self.current_area_drained_poor + self.current_area_drained_rich)* ef_co2_offsite_grassland_drainage_DOC
 
 
     def drainage_ch4_organic_soils_in_grassland(self):
@@ -324,7 +324,7 @@ class Grassland(LandUse):
 
     def rewetting_co2_offsite_organic_soils_in_grassland(self):
         """
-        Calculates the offsite CO2 emissions, in the form of Disolved Organic Carbon (DOC) from the rewetting of poor and rich organic
+        Calculates the offsite CO2 emissions, in the form of Dissolved Organic Carbon (DOC) from the rewetting of poor and rich organic
         soils in grassland areas.
 
         A tier 1 approach is used to estimate the DOC emissions from the rewetted organic soils in grasslands.

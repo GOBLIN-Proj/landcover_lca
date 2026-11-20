@@ -8,7 +8,7 @@
 
  The package takes outputs from the landcover_assignment module (land use data and transition matrix) and produces emissions inventory for cropland, grassland, forest and wetlands 
 
- Currently parameterised for Ireland, the historic land uses and areas of organic and mineral soil are taken from the National Invetory [CRF Tables](https://www.epa.ie/publications/monitoring--assessment/climate-change/air-emissions/irelands-national-inventory-submissions-2022.php)
+ Currently parameterised for Ireland, the historic land uses and areas of organic and mineral soil are taken from the National Inventory [CRF Tables](https://www.epa.ie/publications/monitoring--assessment/climate-change/air-emissions/irelands-national-inventory-submissions-2022.php)
 
  Final result are pandas dataframes that can be read by numerous GOBLIN packages.
 

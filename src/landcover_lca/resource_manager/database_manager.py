@@ -28,7 +28,7 @@ class DataManager:
 
     Methods:
         __init__(ef_country): Initializes the DataManager object.
-        data_engine_creater(): Creates and returns the SQLAlchemy engine for database connection.
+        data_engine_creator(): Creates and returns the SQLAlchemy engine for database connection.
         get_landuse_features(): Retrieves the land use features from the database.
         get_landuse_emissions_factors(): Retrieves the land use emissions factors from the database.
         get_ipcc_soc_factors(): Retrieves the IPCC soil class SOC factors from the database.
@@ -45,10 +45,10 @@ class DataManager:
             ef_country (str): The country for which the emissions factors are retrieved.
         """
         self.database_dir = get_local_dir()
-        self.engine = self.data_engine_creater()
+        self.engine = self.data_engine_creator()
         self.ef_country = ef_country
 
-    def data_engine_creater(self):
+    def data_engine_creator(self):
         """
         Creates and returns the SQLAlchemy engine for database connection.
 

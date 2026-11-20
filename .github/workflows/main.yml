@@ -57,3 +57,4 @@ jobs:
         python -m unittest geo_soc_test.py
         python -m unittest forest_fire_switch_test.py
         python -m unittest forest_drainage_co2_test.py
+        python -m unittest spelling_test.py

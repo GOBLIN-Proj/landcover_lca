@@ -107,16 +107,16 @@ class TestDatabaseAgainstInventory(unittest.TestCase):
 
     def test_adjustment_factors_match_table_6_31(self):
         f = Land_Use_Features("ireland").get_landuse_features_in_land_use_features_data_base
-        self.assertAlmostEqual(f("Adjustement_factor", "cropland"), REF["AF cropland"])
-        self.assertAlmostEqual(f("Adjustement_factor", "grassland"), REF["AF improved grassland"])
-        self.assertAlmostEqual(f("Adjustement_factor", "Temporary grassland"), REF["AF temporary grassland"])
-        self.assertAlmostEqual(f("Adjustement_factor", "Rough grazing"), 1.0)
+        self.assertAlmostEqual(f("Adjustment_factor", "cropland"), REF["AF cropland"])
+        self.assertAlmostEqual(f("Adjustment_factor", "grassland"), REF["AF improved grassland"])
+        self.assertAlmostEqual(f("Adjustment_factor", "Temporary grassland"), REF["AF temporary grassland"])
+        self.assertAlmostEqual(f("Adjustment_factor", "Rough grazing"), 1.0)
 
     def test_unmanaged_grassland_factor_matches_unimproved(self):
         """DB 'Grassland (unmanaged)' = NID Table 6.31 unimproved grassland, 1.0 (EF1; was FMG 0.95). No calculation
         reads this row (SOC looks up cropland, grassland, forest), so no result changes."""
         f = Land_Use_Features("ireland").get_landuse_features_in_land_use_features_data_base
-        self.assertAlmostEqual(f("Adjustement_factor", "Grassland (unmanaged)"), REF["AF unimproved grassland"])
+        self.assertAlmostEqual(f("Adjustment_factor", "Grassland (unmanaged)"), REF["AF unimproved grassland"])
 
     def test_all_grassland_conversions_use_the_improved_factor(self):
         """Documents the assumption: every grassland conversion uses 1.14 (improved), no split."""

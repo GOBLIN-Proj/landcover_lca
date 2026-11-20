@@ -15,6 +15,28 @@ import pandas as pd
 from landcover_lca.resource_manager.data_loader import Loader
 from landcover_lca.resource_manager.units import to_model_units
 from landcover_lca.resource_manager.landcover_data_manager import ModelData
+import warnings
+
+# Names corrected in 0.3.0. The old spelling still works for one release, with a DeprecationWarning.
+RENAMED_FEATURES = {
+    "Adjustement_factor": "Adjustment_factor",  # DEPRECATED_NAME
+}
+RENAMED_EXPORT_TYPES = {
+    "continuos_fabric": "continuous_fabric",  # DEPRECATED_NAME
+    "discontinuos_fabric": "discontinuous_fabric",  # DEPRECATED_NAME
+}
+
+
+def _renamed(name, renamed):
+    """Return the corrected name, warning if the old spelling was used."""
+    if name in renamed:
+        warnings.warn(
+            f"'{name}' is deprecated, use '{renamed[name]}' (spelling corrected in 0.3.0)",
+            DeprecationWarning,
+            stacklevel=3,
+        )
+        return renamed[name]
+    return name
 
 
 ###########################################
@@ -365,6 +387,7 @@ class Land_Use_Features:
     def get_landuse_features_in_land_use_features_data_base(
         self, emission_feature_name, land_use
     ):
+        emission_feature_name = _renamed(emission_feature_name, RENAMED_FEATURES)
         return float(self.features_data_base.get(emission_feature_name).get(land_use))
 
 
