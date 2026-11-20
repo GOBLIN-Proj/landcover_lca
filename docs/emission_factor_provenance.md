@@ -318,6 +318,21 @@ Matches the inventory, no method deviation:
 
 80,666.67 kg CO2 per hectare, **one-off over 20 years**, not per year. This is a rule, not an implied value: 20% of a 110 t C/ha stock is emitted over 20 years (NID s.6.3.6.2, p.239) = 22 t C = 80,667 kg CO2. Not reachable from the goblin_lite totals.
 
+## Other database tables (no source column)
+
+These tables have no `source` column, so their sources are recorded here (EF1). The SOC tables are checked against the
+NID by `tests/soc_inventory_test.py`.
+
+| Table | Values | Source | Check |
+|---|---|---|---|
+| `ipcc_soil_class_SOC` | Proportion / SOCref: HAC 0.01 / 95, LAC 0.71 / 85, Peaty/Humic 0.10 / 115, Sandy 0.01 / 71 t C/ha | NID 2026 Table 6.28 p.253 (IPCC 2006 Vol 4 Table 2.3 classes) | all match; the remaining 0.17 is wetland (organic), SOCref NA in the NID |
+| `land_use_features` | cropland 0.69 (FLU), temporary grassland 0.82 (FLU), grassland and Grassland (managed) 1.14 (FI), Rough grazing 1.0, Other non agricultural land 1.0 | NID 2026 Table 6.31 p.262 (IPCC 2019 Refinement) | all match |
+| `land_use_features` | Grassland (unmanaged) 1.0 | NID 2026 Table 6.31 p.262, unimproved grassland | was 0.95 (FMG 0.95), corrected in EF1; no calculation reads this row |
+| `land_use_features` | forest 1.04 (FLU) | NID 2026 Table 6.21 p.239, Tier 2 average FLU for forest | matches |
+| `national_forest_inventory_2017` | age classes | National Forest Inventory 2017 | not used by the calculations since F6 |
+| `UN_comtrade_exported_peat` | kg exported, 2011-2024 | UN Comtrade HS 2703 | see "Horticultural peat, off-site CO2 (P1)" |
+| `slam_nutrient_export_rates` | N and P kg/ha/yr by land cover (geo tree eutrophication only; not an inventory factor) | https://doi.org/10.1007/s10666-020-09711-z (reference supplied by the package owner) | the values have not been checked against the paper |
+
 ## Inventory alignment fixtures (tests only)
 
 These files are test inputs and expected values for `tests/inventory_alignment_test.py`; no factor in the database is derived from them.

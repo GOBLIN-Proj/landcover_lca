@@ -11,8 +11,8 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
   `tests/geo_example.py`). `tests/goblin_lite_example.ipynb`: the national tree, called as goblin_lite calls it (every
   total by land use and gas, baseline and scenarios, CO2e, drained grassland N2O reported in agriculture, horticultural
   peat already inside wetland CO2). `tests/geo_goblin_example.ipynb`: the geo tree, as geo_goblin calls it (the same
-  totals, plus forest exports to water N, P and PO4e). Both point out that `total_ch4_emission_cropland` and
-  `total_n2o_emission_cropland` take `(ef_country, transition_matrix, land_use_data, past_land_use_data)`.
+  totals, plus forest exports to water N, P and PO4e). Both note that `total_ch4_emission_cropland` and
+  `total_n2o_emission_cropland` now take the same argument order as every other total (see the argument-order entry).
   `tests/examples_test.py` (in CI) runs both without Jupyter; the goblin_lite totals equal the national pins.
 
 ### Added
@@ -28,6 +28,12 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
   `tests/forest_fire_switch_test.py` (in CI).
 
 ### Changed
+- **EF1: sources for every database factor (no result changes).** `ef_co2_forest_to_settlement_mineral_soil` now
+  cites NID 2026 s.6.3.6.2 p.239 (20% of 110 t C/ha over 20 years); `ef_co2_forest_to_settlement_drainage` is marked
+  "not in NID 2026" (both only on the unreachable settlement path). The tables without a source column are documented in
+  `docs/emission_factor_provenance.md`, "Other database tables" (NID Tables 6.21, 6.28, 6.31; SLAM nutrient export
+  rates: doi 10.1007/s10666-020-09711-z). `land_use_features` "Grassland (unmanaged)" 0.95 -> 1.0, NID Table 6.31
+  unimproved grassland (GR2); no calculation reads that row. `soc_inventory_test` expected failures 4 -> 3.
 - **F6: forest drainage CO2 as the NID calculates it (changes results).** `Forest.co2_drainage_organic_soils_forest`
   (main and geo_goblin): CO2 (t C) = A_organic x (1.68 + 0.31) + A_organo-mineral x (1.68 x SD + 0.31).
   - No 50-year age cut-off: NID 2026 p.216 applies the factors "to all forest over the entire time series regardless

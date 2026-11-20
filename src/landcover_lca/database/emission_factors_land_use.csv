@@ -35,8 +35,8 @@ ef_ch4_wetland_rewet_domestic,106.4,kg CH4/ha/yr,"CRT 2026 4(II) 'Other Domestic
 ef_co2_forest_rewetting_on_site,-0.23,t CO2-C/ha/yr,"NID 2026 s.6.3.6 p.240: forest to rewetted wetland, IPCC 2013 Wetlands Suppl. Table 3.1"
 ef_co2_forest_rewetting_DOC,0.24,t CO2-C/ha/yr,"NID 2026 s.6.3.6 p.240: EFDOC_rewetted, IPCC 2013 Wetlands Suppl. Table 3.2 (the NID prints -0.24; DOC is an emission)"
 ef_ch4_forest_rewetting,92.0,kg CH4/ha/yr,"NID 2026 s.6.3.6 p.240: '92 kg CH4 ha-1', IPCC 2013 Wetlands Suppl. Table 3.3"
-ef_co2_forest_to_settlement_mineral_soil,22.0,t C/ha,NIR 2019
-ef_co2_forest_to_settlement_drainage,0.93,t CO2-C/ha/yr,NIR 2019 (on-site and off-site)
+ef_co2_forest_to_settlement_mineral_soil,22.0,t C/ha,"NID 2026 s.6.3.6.2 p.239: 20% of a 110 t C/ha SOC stock (highest SOCref, Table 6.19) emitted over 20 years, one-off. Read only by the settlement path, which no total reaches"
+ef_co2_forest_to_settlement_drainage,0.93,t CO2-C/ha/yr,"NIR 2019 (on-site and off-site); not in NID 2026. Read only by the settlement path, which no total reaches"
 ef_co2_forest_to_other_land,0.93,t CO2-C/ha/yr,NIR 2019
 ef_co2_grassland_rewetting_on_site_poor,0.85,t CO2-C/ha/yr,"NID 2026 s.6.5.2 p.272: rewet status, nutrient poor, Aitova et al. 2023"
 ef_co2_grassland_rewetting_on_site_rich,0.5,t CO2-C/ha/yr,"NID 2026 s.6.5.2 p.272: rewet status, nutrient rich, IPCC 2013 Wetlands Suppl. Table 3.1"

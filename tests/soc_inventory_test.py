@@ -112,9 +112,9 @@ class TestDatabaseAgainstInventory(unittest.TestCase):
         self.assertAlmostEqual(f("Adjustement_factor", "Temporary grassland"), REF["AF temporary grassland"])
         self.assertAlmostEqual(f("Adjustement_factor", "Rough grazing"), 1.0)
 
-    @unittest.expectedFailure
     def test_unmanaged_grassland_factor_matches_unimproved(self):
-        """DB 'Grassland (unmanaged)' is 0.95 (FMG 0.95); NID Table 6.31 unimproved is 1.0. Name mapping to confirm."""
+        """DB 'Grassland (unmanaged)' = NID Table 6.31 unimproved grassland, 1.0 (EF1; was FMG 0.95). No calculation
+        reads this row (SOC looks up cropland, grassland, forest), so no result changes."""
         f = Land_Use_Features("ireland").get_landuse_features_in_land_use_features_data_base
         self.assertAlmostEqual(f("Adjustement_factor", "Grassland (unmanaged)"), REF["AF unimproved grassland"])
 

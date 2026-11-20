@@ -369,7 +369,7 @@ The inventory reports **no land converted to cropland** (CRT 4.B.2 is NO), so th
 
 **Required transition-matrix columns.** The SOC and land use code read 8 of the matrix columns: `Grassland_to_Grassland`, `Cropland_to_Cropland`, `Forest_to_Forest`, `Wetland_to_Wetland`, `Grassland_to_Cropland`, `Forest_to_Cropland`, `Cropland_to_Grassland` and `Forest_to_Grassland`. If one is missing, a `KeyError` names it and lists the columns present. A missing column is never treated as zero.
 
-Implied emission factors (values derived from inventory totals) are documented in `docs/emission_factor_provenance.md`: source table, submission, years, formula and how to refresh them.
+Implied emission factors (values derived from inventory totals) are documented in `docs/emission_factor_provenance.md`: source table, submission, years, formula and how to refresh them. The tables without a `source` column (soil classes, adjustment factors, forest age classes, peat exports, SLAM nutrient export rates) have their sources in the same file, section "Other database tables".
 
 **geo_goblin uses the same code (D8).** The geo tree has no SOC copy of its own: `geo_goblin/land_classes/soc.py` re-exports the SOC class above, and `geo_lca_emissions` imports the mineral-soil CO2 and N2O functions from `lca_emission`. So every fix in this section applies to geo_goblin too. Grassland remaining grassland stays in the geo tree (it reads the geo land-use columns) and uses the same method and factor.
 
