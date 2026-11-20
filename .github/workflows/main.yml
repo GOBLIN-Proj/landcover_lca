@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  ci:
+  tests:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -62,3 +62,13 @@ jobs:
         python -m unittest forest_fire_switch_test.py
         python -m unittest forest_drainage_co2_test.py
         python -m unittest spelling_test.py
+
+  # The check that branch protection requires ("ci"). It passes only if every test job passed, so the required
+  # check stays the same whatever the matrix holds.
+  ci:
+    needs: tests
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+    - name: All test jobs passed
+      run: test "${{ needs.tests.result }}" = "success"
