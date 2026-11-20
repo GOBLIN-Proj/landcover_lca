@@ -1,6 +1,7 @@
 # 🏘️🌳🌲🌽🍀 Land cover LCA for the GOBLIN model (Ireland only)
 
-[![license](https://img.shields.io/badge/License-MIT-red)](https://github.com/GOBLIN-Proj/landcover_lca/blob/0.1.0/LICENSE)
+[![license](https://img.shields.io/badge/License-MIT-red)](https://github.com/GOBLIN-Proj/landcover_lca/blob/main/LICENSE)
+[![docs](https://readthedocs.org/projects/landcover-lca/badge/?version=latest)](https://landcover-lca.readthedocs.io/en/latest/)
 [![python](https://img.shields.io/badge/python-3.9-blue?logo=python&logoColor=white)](https://github.com/GOBLIN-Proj/landcover_lca)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 

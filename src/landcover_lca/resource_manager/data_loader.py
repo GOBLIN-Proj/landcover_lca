@@ -19,7 +19,7 @@ class Loader:
     A class that loads data for land cover life cycle assessment.
 
     Attributes:
-        dataframes (DataManager): An instance of the DataManager class for managing data.
+        dataframes (landcover_lca.resource_manager.database_manager.DataManager): An instance of the database DataManager class for managing data.
 
     Methods:
         land_use_features: Returns the land use features.

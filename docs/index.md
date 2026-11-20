@@ -6,6 +6,7 @@
 :hidden:
 
 INSTALLATION.md
+emission_factor_provenance.md
 CONTRIBUTING.md
 autoapi/index
 ```

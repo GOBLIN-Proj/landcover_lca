@@ -28,6 +28,11 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
   `tests/forest_fire_switch_test.py` (in CI).
 
 ### Changed
+- **Docs on Read the Docs.** `.readthedocs.yml` and `docs/requirements.txt` (and a `docs` dependency group); the
+  version comes from `pyproject.toml`; the emission factor provenance page is in the docs; the build has no warnings
+  (`sphinx-build -W`): docstring formatting fixed in both trees, and napoleon set so each class member is described
+  once. The committed built pages (`docs/html/`, July 2024, listing removed functions) and the GitHub Pages redirect
+  are removed; Read the Docs builds the pages. README has a docs badge.
 - **Spelling: every name corrected (no result changes).** Database: `land_use_features` column `Adjustment_factor`
   (was `Adjustement_factor`); `slam_nutrient_export_rates` types `continuous_fabric` and `discontinuous_fabric` (were
   `continuos_`, `discontinuos_`). The old names still work for this release with a DeprecationWarning

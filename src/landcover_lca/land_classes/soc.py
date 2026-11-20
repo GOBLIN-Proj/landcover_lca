@@ -194,13 +194,14 @@ class SOC:
         total for the period, not the year each hectare converted. At the evaluated year
         a cohort is still releasing carbon if it was converted fewer than 20 years ago,
         so ``min(year_range, 20)`` cohorts contribute.
-            - Span of 20 years or less: every cohort is still releasing, and the result
-              does not depend on the timing of conversion.
-            - Span over 20 years: the earliest cohorts have finished, and the result
-              does depend on the even-split assumption. For 1,000 ha over 30 years,
-              the same total gives 1,102.65 (even split), 1,653.97 (all converted in
-              the last 5 years) or 0 (all converted in the first 5 years), in
-              t C/yr for a delta SOC of 33.08 t C/ha.
+
+        - Span of 20 years or less: every cohort is still releasing, and the result
+          does not depend on the timing of conversion.
+        - Span over 20 years: the earliest cohorts have finished, and the result
+          does depend on the even-split assumption. For 1,000 ha over 30 years,
+          the same total gives 1,102.65 (even split), 1,653.97 (all converted in
+          the last 5 years) or 0 (all converted in the first 5 years), in
+          t C/yr for a delta SOC of 33.08 t C/ha.
 
         Returns:
             float: Emission rate in the evaluated year in **t C per year** (positive =

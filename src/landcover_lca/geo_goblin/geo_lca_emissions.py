@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Description:
-    Calculates emissions from land cover change. It imports various modules and classes related to 
-    land use and emissions factors. The script defines functions to estimate carbon dioxide (CO2) and methane (CH4) Nitrous Oxide (N2O) emissions from land cover change.
-    from the various land cover types.
+CO2, CH4 and N2O emissions from cropland, grassland, forest and wetland (geo tree, as geo_goblin calls it).
 
-    These functions take into account current/future and historical land use data, emission factor country, and transition matrices. 
-
-    Functionality for the calculation of nutrient exports from forested land to water bodies is also included.
-Note: 
-    This is part of a larger suite of tools developed for environmental data analysis and modeling. 
+The same calculations as ``landcover_lca.lca_emission``, on the geo land-use columns; mineral-soil carbon is shared
+with the national tree. Adds nutrient exports (N, P, PO4e) from forest to water. No horticultural peat export
+(a national quantity). Every emission is in kg of gas per year.
 """
 
 # Mineral-soil SOC (CO2 and the N2O from soil carbon loss) is shared with the national tree (D8): one implementation,
@@ -580,7 +575,7 @@ def burning_n2o_grassland(ef_country, transition_matrix, land_use, past_land_use
     """
     Calculate the N2O emissions from burning grassland.
 
-     Parameters:
+    Parameters:
         - ef_country (string): Emission factor country.
         - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
         - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
@@ -893,7 +888,7 @@ def burning_co2_wetland(
     """
     Calculate the CO2 emissions from burning wetland.
 
-     Parameters:
+    Parameters:
         - ef_country (string): Emission factor country.
         - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
         - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
@@ -1421,7 +1416,7 @@ def total_n2o_emission(
     Calculate the total N2O emission by summing the N2O emissions from different land cover types.
     Types include cropland, forest, grassland, and wetland.
 
-     Parameters:
+    Parameters:
         - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
         - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
         - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.

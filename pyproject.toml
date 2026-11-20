@@ -16,6 +16,16 @@ sqlalchemy = "^1.4.0"
 # used only by tools/extract_*.py to rebuild test fixtures from the EPA workbooks
 openpyxl = "^3.1"
 
+[tool.poetry.group.docs.dependencies]
+# Docs toolchain, kept in sync with docs/requirements.txt (used by .readthedocs.yml).
+# astroid <4: astroid 4 made ``manager`` a required argument to AstroidBuilder(), which
+# sphinx-autoapi <3.8 calls without it, giving an empty API reference with exit code 0.
+astroid = ">=3.0,<4.0"
+sphinx-autoapi = ">=3.0"
+sphinx = ">=7.0,<9.0"
+myst-nb = ">=1.0"
+sphinx-rtd-theme = ">=2.0"
+
 
 
 [build-system]

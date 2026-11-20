@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Description:
-    Calculates emissions from land cover change. It imports various modules and classes related to 
-    land use and emissions factors. The script defines functions to estimate carbon dioxide (CO2) and methane (CH4) Nitrous Oxide (N2O) emissions from land cover change.
-    from the various land cover types.
+CO2, CH4 and N2O emissions from cropland, grassland, forest and wetland (national tree, as goblin_lite calls it).
 
-    These functions take into account current/future and historical land use data, emission factor country, and transition matrices. 
-
-Note: 
-    This is part of a larger suite of tools developed for environmental data analysis and modeling. 
+One function per flux (drainage, rewetting, burning, mineral-soil carbon change, horticultural peat), rolled up by
+``total_<gas>_emission_<land use>`` and ``total_<gas>_emission``. Every result is in kg of gas per year. Each function
+takes the current and past land use, the transition matrix and the emission factor country. Factors follow NID 2026 /
+CRT 2026, otherwise the IPCC; sources are in ``docs/emission_factor_provenance.md``.
 """
 
 import numpy as np
@@ -728,8 +725,8 @@ def n2o_from_soil_carbon_loss(soil_c_loss_t):
         - soil_c_loss_t (float): soil carbon lost in a year, t C per year (positive = loss).
 
     Returns:
-    - float: kg N2O per year, direct plus indirect. Negative if soil carbon is gained.
-      = t C x 1000 / 15 (kg N) x (EF1 + FracLEACH x EF5) x 44/28.
+        float: kg N2O per year, direct plus indirect, = t C x 1000 / 15 (kg N) x (EF1 + FracLEACH x EF5) x 44/28.
+        Negative if soil carbon is gained.
     """
     n_mineralised_kg = soil_c_loss_t * C_to_N * t_to_kg
     return n_mineralised_kg * (EF1_SOM + FRAC_LEACH * EF5) * N2O_N_to_N2O
@@ -830,7 +827,7 @@ def burning_n2o_grassland(ef_country, transition_matrix, land_use, past_land_use
     """
     Calculate the N2O emissions from burning grassland.
 
-     Parameters:
+    Parameters:
         - ef_country (string): Emission factor country.
         - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
         - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
@@ -1307,7 +1304,7 @@ def burning_co2_wetland(
     """
     Calculate the CO2 emissions from burning wetland.
 
-     Parameters:
+    Parameters:
         - ef_country (string): Emission factor country.
         - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
         - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
@@ -1951,7 +1948,7 @@ def total_n2o_emission(
     Calculate the total N2O emission by summing the N2O emissions from different land cover types.
     Types include cropland, forest, grassland, and wetland.
 
-     Parameters:
+    Parameters:
         - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
         - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
         - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.

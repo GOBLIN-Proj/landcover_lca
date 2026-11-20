@@ -78,12 +78,12 @@ class Cropland(LandUse):
 
         Notes:
             - `ef_cropland_fuel_burning` refers to the emission factor for the burning
-            of cropland fuels in terms of CH4.
+              of cropland fuels in terms of CH4.
             - `ef_ch4_cropland_Gef` is the general emission factor for CH4 emissions
-            from cropland burning.
+              from cropland burning.
             - `self.current_area` represents the current area of cropland being analyzed.
             - `self.land_use_data.cropland.share_burnt` indicates the percentage of the
-            cropland area that undergoes burning.
+              cropland area that undergoes burning.
         """
         ef_cropland_fuel_burning = (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
@@ -128,12 +128,12 @@ class Cropland(LandUse):
 
         Notes:
             - `ef_cropland_fuel_burning` refers to the emission factor for the burning
-            of cropland fuels in terms of N2O.
+              of cropland fuels in terms of N2O.
             - `ef_n2o_cropland_Gef` is the emission factor for N2O emissions
-            from cropland burning.
+              from cropland burning.
             - `self.current_area` represents the current area of cropland being analyzed.
             - `self.land_use_data.cropland.share_burnt` indicates the percentage of the
-            cropland area that undergoes burning.
+              cropland area that undergoes burning.
         """
         ef_cropland_fuel_burning = (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(

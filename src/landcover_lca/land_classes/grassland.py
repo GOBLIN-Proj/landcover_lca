@@ -395,9 +395,11 @@ class Grassland(LandUse):
 
         The IPCC 2013 Wetlands Supplement (s.2.2.2.3, eq 2.8) asks for CO2 from fires on managed organic soils,
         because burnt peat does not grow back. include_peat_fire_co2=True gives that calculation,
-        L = A x MB.Cf x Gef x 1e-3, with the burnt share applied equally to each organic soil type:
+        L = A x MB.Cf x Gef x 1e-3, with the burnt share applied equally to each organic soil type::
+
             drained organic soil  MB.Cf 336 t DM/ha, Gef 362 g CO2-C/kg DM (x 44/12 on read)
             undrained organic     MB.Cf 66 t DM/ha,  Gef 362 g CO2-C/kg DM (package "rewetted" grassland)
+
         MB.Cf from NID 2026 Table 6.34; Gef from IPCC 2013 WS Table 2.7 (NID Table 6.34 prints it as g CO2).
         Mineral soil is never charged CO2: burnt grass regrows, and neither the IPCC Tier 1 nor the NID counts it.
 
