@@ -1,6 +1,6 @@
 """UNITS: the database stores every factor as published; resource_manager/units.py converts on read.
 
-- The database (binary in git) equals src/landcover_lca/database/emission_factors_land_use.csv (readable, diffable):
+- The database (binary in git) equals data/emission_factors_land_use.csv (readable, diffable):
   value, unit and source of every column.
 - Every unit is one that units.py knows how to convert.
 - Regression: what the calculations receive is unchanged from before (pinned below), except the changes listed in
@@ -20,7 +20,7 @@ from landcover_lca.database import get_database_path
 
 HERE = os.path.dirname(models.__file__)
 DB = get_database_path()  # landcover_lca.database.DATABASE_FILE
-CSV = os.path.join(HERE, "database", "emission_factors_land_use.csv")
+CSV = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "emission_factors_land_use.csv")  # not shipped
 
 # EF3: factors no code reads, kept on purpose (reason in each source cell). Anything else unread is removed and
 # archived (artifacts/ef/archive, local; and git history).
@@ -150,6 +150,11 @@ class TestDatabaseIsThePublishedTable(unittest.TestCase):
                 self.assertEqual(float(rows["ireland"][name]), float(r["value"]))
                 self.assertEqual(rows["units"][name], r["unit"])
                 self.assertEqual(rows["source"][name], r["source"])
+
+    def test_factor_csv_is_not_shipped(self):
+        """The readable copy of the factor table lives in data/ at the repository root, outside the package."""
+        self.assertTrue(os.path.isfile(CSV))
+        self.assertEqual([f for f in os.listdir(os.path.join(HERE, "database")) if f.endswith(".csv")], [])
 
     def test_database_file_is_named_for_the_package_version(self):
         """The bundled database is landcover_lca_database_<version>.db; bump it with pyproject's version."""

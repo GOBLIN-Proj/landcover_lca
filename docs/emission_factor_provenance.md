@@ -8,7 +8,7 @@ An **implied** emission factor is worked back from reported inventory totals (kt
 **The database holds each factor as published**: the number printed in the NID, CRT or IPCC table, in that source's
 unit, with the source cited. Nothing in the database has to be converted by hand to check it against its source.
 
-- `src/landcover_lca/database/emission_factors_land_use.csv` is the readable copy of the table (the database is binary in
+- `data/emission_factors_land_use.csv` is the readable copy of the table (the database is binary in
   git): one row per factor with `value`, `unit`, `source`. **To change a factor:** edit the CSV, run
   `tools/write_emission_factors.py`, run the tests. `tests/units_test.py` checks the database equals the CSV.
 - `src/landcover_lca/resource_manager/units.py` holds every conversion (44/12, 16/12, 44/28, t to kg) and the list of
@@ -148,7 +148,7 @@ geo_goblin: not included (a national export figure cannot be assigned to farms o
 3. **Read four cells from each row** (Excel columns): **D** total area (kha); **E** area of mineral soil (kha; for 4.C.2 the mineral area is the total area D, because the row has no organic soil); **K** implied net carbon stock change in mineral soils (t C per ha per year); **Q** net carbon stock change in mineral soils (kt C). These are the headings "Net carbon stock change in soils per area, Mineral soils" and "Carbon stock changes, Net carbon stock change in soils, Mineral soils".
 4. **Change the sign.** The CRT reports + for a gain of carbon and - for a loss. The package reports + for an emission and - for a removal, so the sign is flipped. Convert carbon to CO2 with 44/12: `kt CO2 = -kt C x 44/12` and `kg CO2 per ha = -(t C per ha) x 1000 x 44/12`.
 5. **Pool five years.** Take the latest five years, 2020-2024. Add the kt CO2 of the five years, add the mineral areas of the five years, and divide: `factor (kg CO2/ha/yr) = sum of kt CO2 / sum of area (kha) x 1000`. This weights each year by its area; it is not the average of the five yearly factors (for the grassland factor the two differ by less than 0.01 kg CO2/ha; for the forest factor they are identical because the CRT applies one constant rate).
-6. **Store the result** in `src/landcover_lca/database/emission_factors_land_use.csv` (value, unit `kg CO2/ha/yr`, source), run `tools/write_emission_factors.py`, and record it on this page.
+6. **Store the result** in `data/emission_factors_land_use.csv` (value, unit `kg CO2/ha/yr`, source), run `tools/write_emission_factors.py`, and record it on this page.
 7. **Check it** with `tests/implied_factor_test.py`, which repeats steps 3 to 5 from the stored extract and compares with the database. Steps 2 to 4 are scripted in `tools/extract_crt_table4c.py`; step 5 in `tools/derive_implied_grassland_factor.py`.
 
 **Why 2020-2024 and not one year.** The EPA recalculates the full time series each submission, so a single year is not stable. A scenario baseline is usually 2020 but not always, so the factor should describe recent conditions. Five years is long enough to damp year-to-year change and short enough to stay recent.
@@ -365,5 +365,5 @@ Notes on the sources:
 ## To refresh a soil factor
 1. Put the new submission's yearly CRT workbooks in a folder and run `python tools/extract_crt_table4c.py <folder> <submission> tests/data/inventory/crt<submission>_4c_mineral_soils.csv`.
 2. Run `python tools/derive_implied_grassland_factor.py <submission> <first_year> <last_year>`.
-3. Update the value and source in `src/landcover_lca/database/emission_factors_land_use.csv` and run `tools/write_emission_factors.py`.
+3. Update the value and source in `data/emission_factors_land_use.csv` and run `tools/write_emission_factors.py`.
 4. Update the numbers on this page, the constants in `tests/implied_factor_test.py`, `tests/soc_inventory_test.py` and the national totals in `tests/soc_test.py`, `CHANGELOG.md` and the emission-factor inventory.

@@ -442,7 +442,7 @@ As NID 2026 s.6.3 (eq 6.3.2-6.3.4): `CO2 (t C) = A_organic x (1.68 + 0.31) + A_o
 
 The database table `emission_factors_land_use` holds each factor **as published**: the number and unit printed in the NID, CRT or IPCC table, with its source. A value can be checked against its source without any arithmetic. All unit conversions (44/12, 16/12, 44/28, t to kg) are in one file, `src/landcover_lca/resource_manager/units.py`, and are applied when a factor is read, so the calculations receive kg CO2, kg CH4 or kg N2O per ha (or g per kg dry matter for fires).
 
-- Readable copy of the table: `src/landcover_lca/database/emission_factors_land_use.csv` (value, unit, source per factor). The database is binary in git, so this file is where changes are reviewed.
+- Readable copy of the table: `data/emission_factors_land_use.csv` (value, unit, source per factor). The database is binary in git, so this file is where changes are reviewed.
 - To change a factor: edit the CSV, run `python tools/write_emission_factors.py`, run the tests (`tests/units_test.py` checks the database equals the CSV).
 - Details and the list of values that changed when this was introduced: `docs/emission_factor_provenance.md`, "How factors are stored".
 

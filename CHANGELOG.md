@@ -14,6 +14,8 @@ inventory's own areas (`tests/inventory_alignment_test.py`). goblin_lite pins `l
 0.3.0, so goblin_lite keeps its numbers until its pin is moved deliberately.
 
 ### Upgrading from 0.2.x (goblin_lite, geo_goblin_py, forest_sim)
+- The readable copy of the factor table moved to `data/emission_factors_land_use.csv` (repository only; no longer
+  shipped in the package). Edit it and run `tools/write_emission_factors.py`; `units_test` checks the database equals it.
 - The bundled database is now `landcover_lca_database_0.3.0.db` (was `landcover_lca_database.db`); its name follows
   the package version and is set once in `landcover_lca.database.DATABASE_FILE` (`get_database_path()`). Nothing outside
   landcover_lca opens the file directly.
@@ -186,7 +188,7 @@ inventory's own areas (`tests/inventory_alignment_test.py`). goblin_lite pins `l
   `emission_factors_land_use` now holds each factor's published value and unit (e.g. 1.59 t CO2-C/ha/yr, 54.7 kg CH4-C,
   0.3 kg N2O-N) with its source. `resource_manager/units.py` holds the conversions (44/12, 16/12, 44/28, t to kg);
   `Emissions_Factors` (main and geo_goblin) converts on read, so callers receive the same units as before. New
-  `Emissions_Factors.get_published_factor`. Readable copy of the table: `src/landcover_lca/database/emission_factors_land_use.csv`,
+  `Emissions_Factors.get_published_factor`. Readable copy of the table: `data/emission_factors_land_use.csv`,
   written into the database by `tools/write_emission_factors.py` (`tools/derive_implied_forest_fire_factor.py --write`
   goes through it). `lca_emission.py` and `geo_lca_emissions.py` take their conversion constants from `units.py`.
   - Values that change: wetland fire Gef CO2 342 is g CO2-C per kg DM (CRT 4(IV) D.1 CO2/CH4 = 342 x 44/12 / 8.35 in

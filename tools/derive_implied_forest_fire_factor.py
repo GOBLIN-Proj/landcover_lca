@@ -12,7 +12,7 @@ Usage (from the repo root):
     .venv/bin/python tools/derive_implied_forest_fire_factor.py --write   # also write them to the database
 
 --write sets the value of ef_{co2,ch4,n2o}_implied_wildfire_forest in the factor table
-src/landcover_lca/database/emission_factors_land_use.csv and writes that table into the database
+data/emission_factors_land_use.csv and writes that table into the database
 (tools/write_emission_factors.py).
 """
 import csv

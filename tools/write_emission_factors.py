@@ -1,4 +1,4 @@
-"""Write src/landcover_lca/database/emission_factors_land_use.csv into the database table emission_factors_land_use.
+"""Write data/emission_factors_land_use.csv into the database table emission_factors_land_use.
 
 The CSV is the readable record of the table (the database is binary in git): one row per factor with the value and
 unit as published and the source. This writes the three database rows 'ireland' (value), 'units' and 'source'.
@@ -20,7 +20,7 @@ from landcover_lca.database import get_database_path
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATABASE = os.path.join(ROOT, "src", "landcover_lca", "database")
 DB = get_database_path()  # landcover_lca.database.DATABASE_FILE
-CSV = os.path.join(DATABASE, "emission_factors_land_use.csv")
+CSV = os.path.join(ROOT, "data", "emission_factors_land_use.csv")  # repository only, not shipped
 
 
 def read_csv(path=CSV):
