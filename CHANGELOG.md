@@ -28,6 +28,11 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
   `tests/forest_fire_switch_test.py` (in CI).
 
 ### Changed
+- **Rewetted CH4 basis checked (no result changes).** Grassland "rewet status" CH4 (68.1 / 216) is kg CH4-C, wetland
+  rewetted CH4 (216) is kg CH4, as the NID applies them. New `TestRewettedCH4Basis` in `inventory_alignment_test`: the
+  grassland split derived from the CRT CH4 reproduces the CRT on-site carbon only with the CH4-C reading (kg CH4 is
+  3.5% low). Coverage row `grassland_organic_co2`: package/CRT exactly 1.0 since UNITS; tolerance 0.005 -> 0.001, stale
+  note corrected.
 - **EF3: factors no code reads (no result changes).** 8 removed from `emission_factors_land_use` (CSV and database):
   `share_forest_drainage_rich`/`_poor` (the split comes from the land-use input), `ef_co2_forest_share_harvested`/
   `_natural`, `ef_forest_Cf`, `ef_co2_forest_to_other_land`, `ef_co2_deforestation_biomass`/`_DOM` (forest carbon is

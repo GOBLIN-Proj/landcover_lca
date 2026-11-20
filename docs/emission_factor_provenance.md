@@ -49,6 +49,13 @@ Values that changed when the table was moved to published units (UNITS):
   CH4 and 92 kg CH4", s.6.6.4.2; CRT implied 208-221 kg CH4/ha confirms), so wetland is 12/16 = 0.75x the IPCC value.
   For rewetted grassland the NID applies them as kg CH4-C (68.1 / 216; the CRT 4(II) C.1 "other" row is reproduced
   with x 16/12). The package follows the NID in each case.
+  Checked independently for grassland: the rich/poor split of "Other organic soils" is derived from the CRT CH4
+  implied factor, and that split must also reproduce the CRT 4.C.1 on-site organic-soil carbon (rich 0.5, poor 0.85
+  t C/ha). Read as kg CH4-C it does exactly (2020: 2,255.6 kt CO2 = CRT); read as kg CH4 it is 3.5% low. Wetland
+  cannot be checked this way (the CRT rewetted industrial on-site C, DOC and CH4 imply different rich/poor mixes:
+  0.84-0.89 from on-site C; 0.94-1.04 from CH4 read as kg CH4; 0.52-0.59 read as kg CH4-C), so the NID text decides;
+  package/CRT 0.98-1.03. Near-natural CH4 54.7 kg CH4-C reproduces the CRT exactly. `tests/inventory_alignment_test.py`,
+  `TestRewettedCH4Basis`.
 
 ### Wetland rewetted CH4 (WET)
 

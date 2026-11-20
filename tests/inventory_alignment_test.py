@@ -22,6 +22,7 @@ import pandas as pd
 
 import inventory_inputs as ii
 import landcover_lca.lca_emission as lca
+import landcover_lca.models as models
 
 COVERAGE = pd.read_csv(os.path.join(ii.INV, "inventory_coverage.csv"), dtype=str).fillna("")
 CATEGORIES = ["A.1", "A.2", "B.1", "B.2", "C.1", "C.2", "D.1", "D.2", "E.1", "E.2", "F.1", "F.2", "G"]
@@ -127,6 +128,46 @@ class TestCoverageMap(unittest.TestCase):
         terms = set().union(*(leaves(f"total_{g}_emission") for g in ("co2", "ch4", "n2o")))
         mapped = {f for fs in COVERAGE.functions for f in fs.split(";") if f}
         self.assertEqual(sorted(terms - mapped), [])
+
+
+class TestRewettedCH4Basis(unittest.TestCase):
+    """IPCC 2013 Wetlands Suppl. Table 3.3 gives rewetted CH4 (rich 216, poor 92) in kg CH4-C. The NID applies them as
+    kg CH4-C to grassland 'rewet status' soil (s.6.5.2: 68.1 / 216) and as kg CH4 to rewetted peat extraction
+    (s.6.6.4.2: '216 kg CH4 and 92 kg CH4'). The package follows the NID in each case.
+
+    Grassland is checked independently of the CH4 row: the rich/poor split of 'Other organic soils' is derived from
+    the CRT CH4 implied factor (inventory_inputs), and the same split must reproduce the CRT on-site carbon (Table4.C
+    4.C.1 organic soil C), whose rich/poor factors differ (0.5 / 0.85 t C). Read as kg CH4-C it does exactly; read as
+    kg CH4 it is 3.5% low. Wetland cannot be checked this way: the CRT rewetted industrial row's on-site C, DOC and
+    CH4 imply different rich/poor mixes, so the NID text decides (kg CH4); package/CRT 0.98-1.03."""
+
+    @staticmethod
+    def onsite_kt_co2(year, ch4_scale):
+        f = ii.factor
+        drained, _ = ii.grassland_rich_fraction(year)
+        poor, rich = (f("ef_ch4_grassland_rewetting_poor") * ch4_scale, f("ef_ch4_grassland_rewetting_rich") * ch4_scale)
+        other = (ii.crt(year, "II.C.1.other", "ief_ch4") - poor) / (rich - poor)
+        a_dr = ii.crt(year, "II.C.1.drained", "area") * ii.KHA
+        a_other = ii.crt(year, "II.C.1.other", "area") * ii.KHA
+        kg = (a_dr * (drained * f("ef_co2_grassland_drainage_on_site_rich")
+                      + (1 - drained) * f("ef_co2_grassland_drainage_on_site_poor"))
+              + a_other * (other * f("ef_co2_grassland_rewetting_on_site_rich")
+                           + (1 - other) * f("ef_co2_grassland_rewetting_on_site_poor")))
+        return kg / 1e6
+
+    def test_grassland_reads_as_ch4_c(self):
+        for year in ii.YEARS:
+            with self.subTest(year=year):
+                crt = -ii.crt(year, "C.1", "organic_soil_C") * ii.C_TO_CO2
+                self.assertAlmostEqual(self.onsite_kt_co2(year, 1.0) / crt, 1.0, delta=1e-4)  # as stored: kg CH4-C
+                self.assertLess(self.onsite_kt_co2(year, 12 / 16) / crt, 0.97)  # as kg CH4: 3.5% low
+
+    def test_stored_units_follow_the_nid(self):
+        ef = models.Emissions_Factors("ireland").get_published_factor
+        self.assertEqual(ef("ef_ch4_grassland_rewetting_rich"), (216.0, "kg CH4-C/ha/yr"))
+        self.assertEqual(ef("ef_ch4_grassland_rewetting_poor"), (68.1, "kg CH4-C/ha/yr"))
+        self.assertEqual(ef("ef_ch4_wetland_rewet_industrial"), (216.0, "kg CH4/ha/yr"))
+        self.assertEqual(ef("ef_ch4_near_natural_wetland"), (54.7, "kg CH4-C/ha/yr"))
 
 
 if __name__ == "__main__":
