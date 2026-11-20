@@ -1,10 +1,25 @@
 import numpy as np
 from landcover_lca.resource_manager.data_loader import Loader
-from landcover_lca.models import Emissions_Factors, Land_Use_Features
+from landcover_lca.models import (
+    Emissions_Factors,
+    Land_Use_Features,
+    get_time_period,
+    get_transition_area,
+)
 from landcover_lca.resource_manager.landcover_data_manager import DataManager
 
 
 class SOC:
+    """
+    Soil organic carbon change from land use change, mineral soils (NID 2026 eq 6.4.3).
+
+    Which transitions feed the totals, which are available but not yet used by GOBLIN scenarios
+    (landcover_assignment writes only ``Grassland_to_<X>`` columns), and what each represents
+    against the inventory, are tabulated in the README, section "Soil organic carbon (mineral soils)".
+    In short: grassland to cropland, forest to cropland, cropland to grassland and forest to grassland
+    are in the totals; grassland and cropland to forest are not (CBM covers forest soils).
+    """
+
     def __init__(
         self,
         ef_country,
@@ -71,38 +86,67 @@ class SOC:
         Returns:
             int: The time period in years.
         """
-        years = tuple(
-            (
-                self.land_use_data.__getattribute__(self.current_land_use).year,
-                self.past_land_use_data.__getattribute__(self.current_land_use).year,
-            )
+        return get_time_period(
+            self.land_use_data,
+            self.past_land_use_data,
+            self.current_land_use,
+            self.past_land_use,
         )
-
-        scenario_period = years[0] - years[1]
-
-        return scenario_period
 
     def compute_SOC_ref_for_land_use(self):
         """
-        Computes the reference SOC for the current land use category.
+        Computes the reference SOC (t C/ha) used for this transition.
+
+        - Any transition involving cropland (cropland as the past or the current land
+          use) uses the Low Activity Clay (LAC) value, 85 t C/ha. NID 2026 s.6.4.6:
+          98% of cropland is on LAC soils and only grassland on LAC soils converts
+          directly to cropland. With the Table 6.31 adjustment factors this
+          reproduces Table 6.32 (58.7 = 85 x 0.69; 69.7 = 85 x 0.82).
+        - Every other transition uses the area-weighted mean of the four soil classes
+          (73.51 t C/ha; the proportions sum to 0.83 and are not renormalised).
+          Forest to grassland is a known simplification (D4b): the NID inventories it
+          with Tier 2 soil-group values (Tables 6.20, 6.21): the 2026 CRT shows an emission
+          of +17.9 t C/ha over 20 years against a removal of -7.35 here (opposite sign). It is left as is because landcover_assignment
+          never creates forest transitions, so GOBLIN never reaches it. Grassland to forest
+          (afforestation) is the transition that occurs, and CBM covers forests.
 
         Returns:
-            float: The reference SOC value.
+            float: The reference SOC value in t C/ha.
         """
-        return np.sum(
-            self.ipcc_soil_class_SOC["Proportion"] * self.ipcc_soil_class_SOC["SOCref"]
-        )
+        soil = self.ipcc_soil_class_SOC
+        if "cropland" in (self.past_land_use, self.current_land_use):
+            lac = soil.loc[soil["IPCCSoilClass"] == "LAC", "SOCref"]
+            return float(lac.iloc[0])
+        return np.sum(soil["Proportion"] * soil["SOCref"])
 
     def compute_land_use_change_total_area(self):
         """
         Computes the total area converted from the past land use to the current land use.
 
+        Assumption, for land **leaving grassland** (grassland to cropland, grassland to forest;
+        rewetting of organic soil does not use this code): the converted area is **mineral soil**.
+        The exact soil type of the converted hectares is not known, and no mineral share is applied:
+        the whole area is charged the mineral-soil carbon change, regardless of the soil shares in
+        the land use data. NID 2026 s.6.4.6 makes the same assumption for cropland.
+
+        In GOBLIN scenarios, the land converted is grassland on mineral soil, moving to another
+        use. Drained organic grassland that is rewetted is not a conversion: it is a change in the
+        grassland's soil shares, charged by the ``Grassland`` rewetting terms
+        (``current_area_rewetted_rich``/``_poor``), not by this code.
+
+        The assumption does **not** hold for land **moving into grassland** (forest to grassland,
+        cropland to grassland). There the converted hectares may be organic soil. They would be
+        charged the mineral-soil change here and, as part of the current grassland area, the
+        drained-organic terms in ``Grassland`` (``current_area_drained_rich``/``_poor``), so an
+        organic hectare would be charged twice. No mineral share is applied to those transitions
+        either; they are not yet used by GOBLIN scenarios (D4c).
+
         Returns:
             float: The annual area converted.
         """
-        land_use_total_area = self.transition_matrix_data.__dict__[
-            f"{self.past_land_use}_to_{self.current_land_use}"
-        ]
+        land_use_total_area = get_transition_area(
+            self.transition_matrix_data, self.past_land_use, self.current_land_use
+        )
 
         try:
             land_use_annual_area = land_use_total_area / self.year_range
@@ -123,22 +167,54 @@ class SOC:
             float: The emission factor from mineral soils.
         """
 
-        Adjustement_factor = (
+        adjustment_factor = (
             self.land_use_features.get_landuse_features_in_land_use_features_data_base(
-                "Adjustement_factor", land_use_name
+                "Adjustment_factor", land_use_name
             )
         )
 
         SOC_ref = self.compute_SOC_ref_for_land_use()
 
-        return SOC_ref * Adjustement_factor
+        return SOC_ref * adjustment_factor
 
     def compute_emissions_from_mineral_soils_in_land_use_change(self):
         """
         Computes the emissions from mineral soils during land use change.
 
+        NID 2026 eq 6.4.3: each converted hectare loses (SOC_past - SOC_current) / 20
+        per year for 20 years. Positive = emission, negative = removal.
+
+        This is a snapshot at one year, not a time series. ``year_range`` is the
+        elapsed time from the past (baseline) year to the evaluated year, so it is the
+        position in time: 15 means "15 years after the baseline". To evaluate another
+        year, call with that year's land use data.
+
+        The converted area is assumed to convert in equal annual slices (cohorts):
+        ``annual_area = total / year_range``, because the transition matrix only gives a
+        total for the period, not the year each hectare converted. At the evaluated year
+        a cohort is still releasing carbon if it was converted fewer than 20 years ago,
+        so ``min(year_range, 20)`` cohorts contribute.
+
+        - Span of 20 years or less: every cohort is still releasing, and the result
+          does not depend on the timing of conversion.
+        - Span over 20 years: the earliest cohorts have finished, and the result
+          does depend on the even-split assumption. For 1,000 ha over 30 years,
+          the same total gives 1,102.65 (even split), 1,653.97 (all converted in
+          the last 5 years) or 0 (all converted in the first 5 years), in
+          t C/yr for a delta SOC of 33.08 t C/ha.
+
         Returns:
-            float: The total emissions from mineral soils.
+            float: Emission rate in the evaluated year in **t C per year** (positive =
+            emission). The lca_emission CO2 functions convert this to kg CO2 (x 1000 x 44/12).
+            Raises ValueError if year_range < 0.
+
+        Assumptions (see README, section "Soil organic carbon"):
+            - SOC = SOCref x adjustment factor. SOCref is LAC (85 t C/ha) for any
+              transition involving cropland, otherwise the area-weighted mean over the
+              four mineral soil classes (see compute_SOC_ref_for_land_use).
+            - Every "grassland" conversion uses the database row "grassland", adjustment
+              factor 1.14 (NID Table 6.31 improved grassland). There is no improved /
+              unimproved split.
         """
         EF_SOC_previous_land_use = self.compute_emission_factor_from_mineral_soils(
             self.past_land_use
@@ -148,20 +224,27 @@ class SOC:
             self.current_land_use
         )
 
+        if self.year_range < 0:
+            raise ValueError(
+                f"year_range is negative ({self.year_range}): the current land use "
+                "year is earlier than the past land use year."
+            )
+
         annual_area = self.compute_land_use_change_total_area()
 
-
+        # NID 2026 eq 6.4.3 (IPCC eq 2.25): each converted hectare loses
+        # (SOC_past - SOC_current) / T per year for T = 20 years. Positive = emission.
+        # The result is the emission rate in the target year. Cohorts converted more
+        # than 20 years before the target have finished emitting, so at most 20
+        # annual cohorts contribute.
         transition_period = 20
 
-        soc = 0
-        if annual_area:
-            for year in range(self.year_range):
-                if year < 20:
-                    soc += (
-                        annual_area
-                        * (EF_SOC_previous_land_use - EF_SOC_current_land_use)
-                    ) / transition_period
-                else:
-                    return soc
-        else:
-            return soc
+        if not annual_area:
+            return 0
+
+        return (
+            annual_area
+            * min(self.year_range, transition_period)
+            * (EF_SOC_previous_land_use - EF_SOC_current_land_use)
+            / transition_period
+        )

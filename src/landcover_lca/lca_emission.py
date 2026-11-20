@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Description:
-    Calculates emissions from land cover change. It imports various modules and classes related to 
-    land use and emissions factors. The script defines functions to estimate carbon dioxide (CO2) and methane (CH4) Nitrous Oxide (N2O) emissions from land cover change.
-    from the various land cover types.
+CO2, CH4 and N2O emissions from cropland, grassland, forest and wetland (national tree, as goblin_lite calls it).
 
-    These functions take into account current/future and historical land use data, emission factor country, and transition matrices. 
-
-Note: 
-    This is part of a larger suite of tools developed for environmental data analysis and modeling. 
+One function per flux (drainage, rewetting, burning, mineral-soil carbon change, horticultural peat), rolled up by
+``total_<gas>_emission_<land use>`` and ``total_<gas>_emission``. Every result is in kg of gas per year. Each function
+takes the current and past land use, the transition matrix and the emission factor country. Factors follow NID 2026 /
+CRT 2026, otherwise the IPCC; sources are in ``docs/emission_factor_provenance.md``.
 """
 
 import numpy as np
@@ -23,10 +20,17 @@ from landcover_lca.models import Emissions_Factors, Land_Use_Features
 from landcover_lca.resource_manager.data_loader import Loader
 
 
-# scalar vars
-t_to_kg = 1e3
-kt_to_kg = 1e6
+# scalar vars (unit conversions live in landcover_lca.resource_manager.units)
+from landcover_lca.resource_manager.units import C_TO_CO2 as C_to_CO2, KT_TO_KG as kt_to_kg, N2O_N_TO_N2O as N2O_N_to_N2O, T_TO_KG as t_to_kg
+
 C_to_N = 1.0 / 15.0
+
+# N2O from the loss of soil carbon (NID 2026 s.6.3.6.2, eq 11.8 and 11.10; CRT Table 4(III) reproduces them):
+#   N mineralised = soil C lost / 15; direct N2O-N = N x EF1; indirect N2O-N = N x FracLEACH x EF5; N2O = N2O-N x 44/28
+EF1_SOM = 0.006  # kg N2O-N per kg N mineralised (IPCC 2019 Refinement Table 11.1, wet climate; implied by CRT 4(III) and NID Table 6.9)
+FRAC_LEACH = 0.1  # kg N leached per kg N mineralised (Ireland, NID Table 5.7)
+EF5 = 0.011  # kg N2O-N per kg N leached or run off (IPCC 2006 Table 11.3; NID p.185)
+
 kha_to_ha = 1e3
 
 
@@ -201,7 +205,7 @@ def mineral_soils_co2_from_cropland_to_forest(
 
 
     Returns:
-    float: The computed CO2 emissions from mineral soils in the land use change.
+    float: CO2 in kg CO2 per year at the evaluated year (positive = emission, negative = removal). Mineral soils, IPCC Tier 1, NID 2026 eq 6.4.3; see SOC.compute_emissions_from_mineral_soils_in_land_use_change.
     """
 
     soc = SOC(
@@ -213,7 +217,11 @@ def mineral_soils_co2_from_cropland_to_forest(
         "cropland",
     )
 
-    return soc.compute_emissions_from_mineral_soils_in_land_use_change()
+    return (
+        soc.compute_emissions_from_mineral_soils_in_land_use_change()
+        * t_to_kg
+        * C_to_CO2
+    )
 
 
 def mineral_soils_co2_from_grassland_to_forest(
@@ -230,7 +238,7 @@ def mineral_soils_co2_from_grassland_to_forest(
 
 
     Returns:
-    float: The calculated CO2 emissions from mineral soils during land use change.
+    float: CO2 in kg CO2 per year at the evaluated year (positive = emission, negative = removal). Mineral soils, IPCC Tier 1, NID 2026 eq 6.4.3; see SOC.compute_emissions_from_mineral_soils_in_land_use_change.
     """
 
     soc = SOC(
@@ -242,7 +250,11 @@ def mineral_soils_co2_from_grassland_to_forest(
         "grassland",
     )
 
-    return soc.compute_emissions_from_mineral_soils_in_land_use_change()
+    return (
+        soc.compute_emissions_from_mineral_soils_in_land_use_change()
+        * t_to_kg
+        * C_to_CO2
+    )
 
 
 def mineral_soils_co2_to_forest(
@@ -371,24 +383,35 @@ def total_co2_emission_forest(
     past_land_use_data,
     transition_matrix,
     ef_country,
+    *,
+    include_fire_co2=False,
 ):
     """
-    Calculate the total CO2 emission from forest land use change.
+    Calculate the total CO2 emission from forest: drained and rewetted organic soils, and wildfire.
 
-    Mineral soils are not included here as they are accounted for in the CBM model.
+    Biomass, dead organic matter and mineral soils are not included: the CBM model covers them.
 
     Parameters:
         - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
         - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
         - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
         - ef_country (string): Emission factor country.
+        - include_fire_co2 (bool, keyword only): Include wildfire CO2 (burning_co2_forest). Default False: GOBLIN
+          adds CBM forest carbon ("Total Ecosystem" stock change), and CBM's Wildfire disturbance already sends the
+          burnt biomass and DOM carbon to the atmosphere (CBM-CFS3 v1.2 User's Guide s.1.8.5, Appendix 6), so adding
+          it here would count it twice. The inventory reports it once: CRT Table4 4.A = 4.A stock change + 4(IV)
+          wildfire CO2. Set True when no forest carbon model is added, to match the NID (CRT 4(IV).A).
+          Fire CH4 and N2O are always included (CBM output used by GOBLIN is carbon only) (FIRE-3).
 
     Returns:
-        float: Total CO2 emission from forest land use change.
+        float: Total CO2 emission from forest, kg.
     """
-    return burning_co2_forest(
-        ef_country, transition_matrix, land_use_data, past_land_use_data
-    ) + organic_soils_co2_forest(
+    fire = (
+        burning_co2_forest(ef_country, transition_matrix, land_use_data, past_land_use_data)
+        if include_fire_co2
+        else 0.0
+    )
+    return fire + organic_soils_co2_forest(
         ef_country, transition_matrix, land_use_data, past_land_use_data
     )
 
@@ -640,7 +663,7 @@ def mineral_soils_co2_from_forest_to_grassland(
 
 
     Returns:
-    - The computed CO2 emissions from mineral soils during land use change.
+    float: CO2 in kg CO2 per year at the evaluated year (positive = emission, negative = removal). Mineral soils, IPCC Tier 1, NID 2026 eq 6.4.3; see SOC.compute_emissions_from_mineral_soils_in_land_use_change.
     """
     soc = SOC(
         ef_country,
@@ -650,7 +673,11 @@ def mineral_soils_co2_from_forest_to_grassland(
         "grassland",
         "forest",
     )
-    return soc.compute_emissions_from_mineral_soils_in_land_use_change()
+    return (
+        soc.compute_emissions_from_mineral_soils_in_land_use_change()
+        * t_to_kg
+        * C_to_CO2
+    )
 
 
 def mineral_soils_co2_from_cropland_to_grassland(
@@ -670,7 +697,7 @@ def mineral_soils_co2_from_cropland_to_grassland(
 
 
     Returns:
-        float: The computed CO2 emissions from mineral soils in the land use change.
+        float: CO2 in kg CO2 per year at the evaluated year (positive = emission, negative = removal). Mineral soils, IPCC Tier 1, NID 2026 eq 6.4.3; see SOC.compute_emissions_from_mineral_soils_in_land_use_change.
 
     """
     soc = SOC(
@@ -682,7 +709,27 @@ def mineral_soils_co2_from_cropland_to_grassland(
         "cropland",
     )
 
-    return soc.compute_emissions_from_mineral_soils_in_land_use_change()
+    return (
+        soc.compute_emissions_from_mineral_soils_in_land_use_change()
+        * t_to_kg
+        * C_to_CO2
+    )
+
+
+def n2o_from_soil_carbon_loss(soil_c_loss_t):
+    """
+    N2O from the mineralisation of soil nitrogen that accompanies a loss of soil carbon
+    (NID 2026 eq 11.8 for FSOM and eq 11.10 for leaching and runoff).
+
+    Parameters:
+        - soil_c_loss_t (float): soil carbon lost in a year, t C per year (positive = loss).
+
+    Returns:
+        float: kg N2O per year, direct plus indirect, = t C x 1000 / 15 (kg N) x (EF1 + FracLEACH x EF5) x 44/28.
+        Negative if soil carbon is gained.
+    """
+    n_mineralised_kg = soil_c_loss_t * C_to_N * t_to_kg
+    return n_mineralised_kg * (EF1_SOM + FRAC_LEACH * EF5) * N2O_N_to_N2O
 
 
 def mineral_soils_n2o_from_forest_to_grassland(
@@ -702,7 +749,7 @@ def mineral_soils_n2o_from_forest_to_grassland(
 
 
     Returns:
-    - emissions_from_mineralization (float): The calculated N2O emissions from mineral soils.
+    - emissions_from_mineralization (float): N2O from mineral soils in kg N2O per year (direct + indirect, see n2o_from_soil_carbon_loss).
     """
 
     soc = SOC(
@@ -714,26 +761,30 @@ def mineral_soils_n2o_from_forest_to_grassland(
         "forest",
     )
 
-    emissions_from_mineralization = (
-        soc.compute_emissions_from_mineral_soils_in_land_use_change() * C_to_N
+    emissions_from_mineralization = n2o_from_soil_carbon_loss(
+        soc.compute_emissions_from_mineral_soils_in_land_use_change()
     )
 
     return emissions_from_mineralization
 
 
 # Burning
-def burning_co2_grassland(ef_country, transition_matrix, land_use, past_land_use_data):
+def burning_co2_grassland(ef_country, transition_matrix, land_use, past_land_use_data, include_peat_fire_co2=False):
     """
-    Calculate the CO2 emissions from burning grassland.
+    CO2 from grassland fires, in kg. 0 by default: not required under the national inventory
+    (NID 2026 s.6.5.4, Tier 1 estimates CH4 and N2O only; CRT 4(IV).C.1 CO2 = NO).
+    include_peat_fire_co2=True returns CO2 from fires on organic (peat) soil only (IPCC 2013 Wetlands Supplement
+    eq 2.8); mineral soil is never charged CO2. See Grassland.burning_co2_grassland.
 
     Parameters:
         - ef_country (string): Emission factor country.
         - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
-        - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
+        - land_use (landcover_lca.models.LandUseCollection): The current/future land use data.
         - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
+        - include_peat_fire_co2 (bool): False (default) returns 0, as in the inventory.
 
     Returns:
-        float: CO2 emissions from burning grassland.
+        float: CO2 emissions from grassland fires (kg).
     """
     GRASSLAND = Grassland(
         ef_country,
@@ -744,7 +795,7 @@ def burning_co2_grassland(ef_country, transition_matrix, land_use, past_land_use
         "grassland",
     )
 
-    return GRASSLAND.burning_co2_grassland() * t_to_kg
+    return GRASSLAND.burning_co2_grassland(include_peat_fire_co2) * t_to_kg
 
 
 def burning_ch4_grassland(ef_country, transition_matrix, land_use, past_land_use_data):
@@ -776,7 +827,7 @@ def burning_n2o_grassland(ef_country, transition_matrix, land_use, past_land_use
     """
     Calculate the N2O emissions from burning grassland.
 
-     Parameters:
+    Parameters:
         - ef_country (string): Emission factor country.
         - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
         - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
@@ -959,7 +1010,7 @@ def total_n2o_emission_grassland(
     ef_country,
 ):
     """
-    Calculate the total N2O emission from grassland. Includes N2O emissons from land use change to grassland and
+    Calculate the total N2O emission from grassland. Includes N2O emissions from land use change to grassland and
     N2O emissions from burning grassland. N2O emissions from drainage and rewetting are not included as they are
     accounted for in the Agricultural soils category in the national inventory report.
 
@@ -998,37 +1049,55 @@ def total_n2o_emission_grassland(
 
 
 # Peat extraction
-def horticulture_co2_peat_export(ef_country, year, calibration_year):
+def horticulture_co2_peat_export(ef_country, year, calibration_year=None):
     """
-    Calculate the CO2 emissions from horticulture peat export.
+    Off-site CO2 from horticultural peat (NID 2026 s.6.6.3 p.279 and s.6.6.4.2 p.280; IPCC 2006 Vol 4 eq 7.5).
+
+    Tonnage = exports / frac_horticultural_peat_exported (0.85): 85% of horticultural peat is exported, and the NID
+    scales the export figures up to include domestic use. CO2 = tonnage x 0.45 t C/t air-dry peat (IPCC 2006 Vol 4
+    Table 7.5, nutrient poor) x 44/12. Exports are the table UN_comtrade_exported_peat (UN Comtrade, HS 2703, Ireland
+    to world). The CRT 2026 reports this inside 4.D.1 industrial peat extraction (organic-soil carbon) and the package
+    reproduces it exactly for 2020-2024.
+
+    Years in the table use that year's exports. Years after the table use the mean of its last three years (the
+    recent level: exports fell from 919 kt in 2020 to 313 kt in 2024). Years before the table, or missing from it,
+    raise ValueError.
+
+    This is a national quantity. It is included in total_co2_emission_wetland (and so total_co2_emission) of this
+    module, which goblin_lite uses, for the year the land-use data carries. The geo_goblin totals do not include it.
 
     Parameters:
-        ef_country (str): Emission factor country
+        ef_country (str): Emission factor country.
         year (int): The year for which the emissions are calculated.
-        calibration_year (int): The year used for calibration.
+        calibration_year (int, optional): Not used. Kept so existing three-argument calls still work; the table
+            decides which years are data.
 
     Returns:
-        float: The CO2 emissions from horticulture peat export in metric tons.
+        float: Off-site CO2 from horticultural peat, kg CO2.
 
+    Raises:
+        ValueError: If the year is before the first year of the table, or missing from it.
     """
     data_loader_class = Loader(ef_country)
     emissions_factors = Emissions_Factors(ef_country)
-    ef_offsite_carbon_conversion_nutrient_poor = (
-        emissions_factors.get_emission_factor_in_emission_factor_data_base(
-            "ef_offsite_carbon_conversion_nutrient_poor"
+    get = emissions_factors.get_emission_factor_in_emission_factor_data_base
+    carbon_to_co2 = get("ef_offsite_carbon_conversion_nutrient_poor")  # kg CO2 per kg air-dry peat
+    share_exported = get("frac_horticultural_peat_exported")
+
+    exports = data_loader_class.exported_peat()["Total_kg"].sort_index()
+    first, last = int(exports.index.min()), int(exports.index.max())
+
+    if year > last:
+        export_weight = exports.iloc[-3:].mean()
+    elif pd.isna(exports.get(year)):
+        raise ValueError(
+            f"No horticultural peat export data for {year}: the table covers {first}-{last}; "
+            f"years after {last} use the mean of the last three years."
         )
-    )
-
-    past_export_peat_df = data_loader_class.exported_peat()
-
-    past_export_peat_df.fillna(0, inplace=True)
-
-    if year <= calibration_year:
-        export_weight = past_export_peat_df.loc[year, "Total_kg"]
     else:
-        export_weight = past_export_peat_df["Total_kg"].mean()
+        export_weight = exports.loc[year]
 
-    return (export_weight * ef_offsite_carbon_conversion_nutrient_poor)
+    return export_weight / share_exported * carbon_to_co2
 
 
 # Organic soils
@@ -1068,7 +1137,7 @@ def drainage_co2_organic_soils_in_wetland(
     """
     Calculate CO2 emissions from drained organic soils in wetland.
 
-    Paramters:
+    Parameters:
         - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
         - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
         - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
@@ -1235,7 +1304,7 @@ def burning_co2_wetland(
     """
     Calculate the CO2 emissions from burning wetland.
 
-     Parameters:
+    Parameters:
         - ef_country (string): Emission factor country.
         - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
         - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
@@ -1317,7 +1386,9 @@ def total_co2_emission_wetland(
 ):
     """
     Calculates the total CO2 emission from wetland based on different factors. Includes CO2 emissions from drainage,
-    biomass, and burning.
+    biomass, burning, rewetting and off-site CO2 from horticultural peat (horticulture_co2_peat_export, national,
+    for the year carried by land_use_data.wetland), as the NID reports it in 4.D.1. The geo_goblin total does not
+    include horticultural peat.
 
     Parameters:
         - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
@@ -1341,6 +1412,7 @@ def total_co2_emission_wetland(
         + rewetting_co2_organic_soils_in_wetland(
             ef_country, transition_matrix, land_use_data, past_land_use_data
         )
+        + horticulture_co2_peat_export(ef_country, land_use_data.wetland.year)
     )
 
 
@@ -1417,7 +1489,7 @@ def mineral_soils_co2_from_forest_to_cropland(
 
 
     Returns:
-        float: CO2 emissions from mineral soils in the land use change.
+        float: CO2 in kg CO2 per year at the evaluated year (positive = emission, negative = removal). Mineral soils, IPCC Tier 1, NID 2026 eq 6.4.3; see SOC.compute_emissions_from_mineral_soils_in_land_use_change.
 
     """
     soc = SOC(
@@ -1429,7 +1501,11 @@ def mineral_soils_co2_from_forest_to_cropland(
         "forest",
     )
 
-    return soc.compute_emissions_from_mineral_soils_in_land_use_change()
+    return (
+        soc.compute_emissions_from_mineral_soils_in_land_use_change()
+        * t_to_kg
+        * C_to_CO2
+    )
 
 
 def mineral_soils_co2_from_grassland_to_cropland(
@@ -1449,7 +1525,7 @@ def mineral_soils_co2_from_grassland_to_cropland(
 
 
     Returns:
-        float: CO2 emissions from mineral soils in the land use change.
+        float: CO2 in kg CO2 per year at the evaluated year (positive = emission, negative = removal). Mineral soils, IPCC Tier 1, NID 2026 eq 6.4.3; see SOC.compute_emissions_from_mineral_soils_in_land_use_change.
 
     """
     soc = SOC(
@@ -1461,7 +1537,11 @@ def mineral_soils_co2_from_grassland_to_cropland(
         "grassland",
     )
 
-    return soc.compute_emissions_from_mineral_soils_in_land_use_change()
+    return (
+        soc.compute_emissions_from_mineral_soils_in_land_use_change()
+        * t_to_kg
+        * C_to_CO2
+    )
 
 
 
@@ -1554,40 +1634,60 @@ def total_co2_emission_cropland(
     return result
 
 
+def _check_total_argument_order(name, land_use_data):
+    """Raise TypeError if a total is called with ef_country first (the old order of the cropland CH4 and N2O totals)."""
+    if isinstance(land_use_data, str):
+        raise TypeError(
+            f"{name} takes (land_use_data, past_land_use_data, transition_matrix, ef_country), like every "
+            f"total; it was called with ef_country first (the old order of the cropland CH4 and N2O totals)."
+        )
+
+
 def total_ch4_emission_cropland(
-    ef_country, transition_matrix, land_use_data, past_land_use_data
+    land_use_data, past_land_use_data, transition_matrix, ef_country
 ):
     """
     Calculate the total CH4 emissions from cropland. Burning is the only source of CH4 emissions from cropland.
 
     Parameters:
-        - ef_country (string): Emission factor country.
-        - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
         - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
         - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
+        - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
+        - ef_country (string): Emission factor country.
+
     Returns:
-        float: Total CH4 emissions from cropland.
+        float: Total CH4 emissions from cropland, kg.
+
+    Raises:
+        TypeError: If called in the old order, (ef_country, transition_matrix, land_use_data,
+            past_land_use_data).
     """
+    _check_total_argument_order("total_ch4_emission_cropland", land_use_data)
     return burning_ch4_cropland(
         ef_country, transition_matrix, land_use_data, past_land_use_data
     )
 
 
 def total_n2o_emission_cropland(
-    ef_country, transition_matrix, land_use_data, past_land_use_data
+    land_use_data, past_land_use_data, transition_matrix, ef_country
 ):
     """
     Calculate the total N2O emission from cropland. Burning is the only source of N2O emissions from cropland.
 
     Parameters:
-        - ef_country (string): Emission factor country.
-        - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
         - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
         - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
+        - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
+        - ef_country (string): Emission factor country.
 
     Returns:
-        float: Total N2O emission from cropland.
+        float: Total N2O emission from cropland, kg.
+
+    Raises:
+        TypeError: If called in the old order, (ef_country, transition_matrix, land_use_data,
+            past_land_use_data).
     """
+    _check_total_argument_order("total_n2o_emission_cropland", land_use_data)
     return burning_n2o_cropland(
         ef_country, transition_matrix, land_use_data, past_land_use_data
     )
@@ -1618,7 +1718,7 @@ def drainage_co2_organic_soils_in_settlement(land_use, ef_country):
         The function has not been validated and is not currently used. It overestimates drainage emissions
         because we forest is used as a reference for previous land_use of organic soil converted to settlement.
 
-        ef_co2_forest_to_settlement_drainage include onsite and offite emissions
+        ef_co2_forest_to_settlement_drainage include onsite and offsite emissions
 
     """
     ef_co2_forest_to_settlement_drainage = (
@@ -1760,6 +1860,8 @@ def total_co2_emission(
     past_land_use_data,
     transition_matrix_data,
     ef_country,
+    *,
+    include_fire_co2=False,
 ):
     """
     Calculates the total CO2 emission by summing the CO2 emissions from different land cover types.
@@ -1770,6 +1872,8 @@ def total_co2_emission(
         - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
         - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
         - ef_country (string): Emission factor country.
+        - include_fire_co2 (bool, keyword only): Include forest wildfire CO2; passed to total_co2_emission_forest.
+          Default False (CBM counts it; see total_co2_emission_forest). True to match the NID without CBM.
 
     Returns:
         float: Total CO2 emission.
@@ -1787,6 +1891,7 @@ def total_co2_emission(
             past_land_use_data,
             transition_matrix_data,
             ef_country,
+            include_fire_co2=include_fire_co2,
         )
         + total_co2_emission_grassland(
             land_use_data,
@@ -1825,7 +1930,7 @@ def total_ch4_emission(
             land_use_data, past_land_use_data, transition_matrix, ef_country
         )
         + total_ch4_emission_cropland(
-            ef_country, transition_matrix, land_use_data, past_land_use_data
+            land_use_data, past_land_use_data, transition_matrix, ef_country
         )
         + total_ch4_emission_forest(
             land_use_data, past_land_use_data, transition_matrix, ef_country
@@ -1843,7 +1948,7 @@ def total_n2o_emission(
     Calculate the total N2O emission by summing the N2O emissions from different land cover types.
     Types include cropland, forest, grassland, and wetland.
 
-     Parameters:
+    Parameters:
         - land_use_data (landcover_lca.models.LandUseCollection): The current/future land use data.
         - past_land_use_data (landcover_lca.models.LandUseCollection): The past land use data.
         - transition_matrix (landcover_lca.models.TransitionMatrixCategory): The transition matrix.
@@ -1866,6 +1971,6 @@ def total_n2o_emission(
             land_use_data, past_land_use_data, transition_matrix, ef_country
         )
         + total_n2o_emission_cropland(
-            ef_country, transition_matrix, land_use_data, past_land_use_data
+            land_use_data, past_land_use_data, transition_matrix, ef_country
         )
     )

@@ -6,7 +6,9 @@ class Wetland(LandUse):
 
     Attributes:
         - current_area_mineral (float): The current area of mineral wetland in hectares.
-        - current_area_unmanaged (float): The current area of unmanaged wetland in hectares.
+        - current_area_unmanaged (float): In geo_goblin, all organic wetland (share_organic + share_organic_mineral).
+          It is treated as near-natural: the near-natural CO2 and CH4 factors are applied to it. The main tree
+          applies them to the near-natural share only and reports unmanaged wetland as area only (NID 2026 s.6.6.1).
         - current_area_near_natural (float): The current area of near-natural wetland in hectares.
         - current_area_domestic_drained (float): The current area of wetland drained for domestic peat extraction in hectares.
         - current_area_industrial_drained (float): The current area of wetland drained for industrial peat extraction in hectares.
@@ -65,12 +67,31 @@ class Wetland(LandUse):
         
     def co2_removals(self):
         """
-        Calculate the amount of CO2 removals per year for a given area.
-        return 0.6t C per year for 5 years for area drained.
+        CO2 removal by vegetation re-establishing on restored (rewetted) peatland, in kg CO2 in the target year.
+
+        NID 2026 s.6.6.4.1 (p.279-280): vegetation returns on restored cutaway over 5 years, to 3 t C/ha
+        (Cruickshank et al. 2000), i.e. 0.6 t C/ha/yr; the restoration area is the annual increase in cutaway.
+        ``ef_co2_peatland_to_wetland_biomass`` = -3.0 t C/ha in total, read as kg CO2/ha.
+        Same convention as the soil carbon change (D1): the area of ``Wetland_to_Wetland`` is spread evenly over
+        the span (``annual_area``), and in the target year the land restored in the last 5 years is still
+        accumulating:
+
+            removal = annual_area x min(span, 5) x factor / 5
+
+        A span of 0 gives 0 (no area moved). The inventory does not report this gain separately (CRT 4.D.1
+        biomass gains are "IE"), and the default GOBLIN inputs have ``Wetland_to_Wetland`` = 0, so it is 0 there.
 
         Returns:
-            float: The total amount of CO2 removals in kg over the specified year range.
+            float: CO2 in kg (negative = removal).
+
+        Raises:
+            ValueError: if the span is negative.
         """
+        if self.year_range < 0:
+            raise ValueError(f"time span must not be negative, got {self.year_range}")
+
+        if not self.annual_area:
+            return 0.0
 
         biomass_removal_factor = (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
@@ -78,26 +99,7 @@ class Wetland(LandUse):
             )
         )
 
-        carbon_sequestration = 0
-
-        if self.annual_area != 0:
-            if self.year_range <= 5:
-                for year in range(5):
-                    carbon_sequestration += (self.annual_area * (year + 1)) * (
-                        biomass_removal_factor / year + 1
-                    )
-
-                return carbon_sequestration
-            else:
-                for year in range(len(self.year_range)):
-                    carbon_sequestration += (self.annual_area * (year + 1)) * (
-                        biomass_removal_factor / year + 1
-                    )
-
-                return carbon_sequestration
-
-        else:
-            return carbon_sequestration
+        return self.annual_area * min(self.year_range, 5) * biomass_removal_factor / 5
 
 
 

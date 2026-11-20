@@ -6,7 +6,8 @@ class Wetland(LandUse):
 
     Attributes:
         - current_area_mineral (float): The current area of mineral wetland in hectares.
-        - current_area_unmanaged (float): The current area of unmanaged wetland in hectares.
+        - current_area_unmanaged (float): The current area of unmanaged wetland in hectares. Area only: no
+          emissions are calculated for it (NID 2026 s.6.6.1: "only the area of these lands is reported").
         - current_area_near_natural (float): The current area of near-natural wetland in hectares.
         - current_area_domestic_drained (float): The current area of wetland drained for domestic peat extraction in hectares.
         - current_area_industrial_drained (float): The current area of wetland drained for industrial peat extraction in hectares.
@@ -21,9 +22,10 @@ class Wetland(LandUse):
         - co2_emissions_industrial_drained_offsite(): Calculate the CO2 emissions from industrial wetland drainage offsite.
         - co2_emissions_domestic_drained_onsite(): Calculate the CO2 emissions from domestic wetland drainage onsite.
         - co2_emissions_domestic_drained_offsite(): Calculate the CO2 emissions from domestic wetland drainage offsite.
-        - co2_emissions_unmanaged_and_near_natural_onsite(): Calculate the CO2 emissions from unmanaged and near-natural wetland drainage onsite.
-        - co2_emissions_unmanaged_and_near_natural_offsite(): Calculate the CO2 emissions from unmanaged and near-natural wetland drainage offsite.
-        - ch4_emissions_unmanaged_and_near_natural(): Calculate the CH4 emissions from unmanaged and near-natural wetland drainage.
+        - co2_emissions_unmanaged_and_near_natural_onsite(): On-site CO2 of near-natural wetland (a removal).
+        - co2_emissions_unmanaged_and_near_natural_offsite(): Off-site (runoff) CO2 of near-natural wetland.
+        - ch4_emissions_unmanaged_and_near_natural(): CH4 of near-natural wetland.
+          These three use the near-natural area only; the names are kept for compatibility.
         - drainage_ch4_organic_soils(): Calculate the CH4 emissions from organic soils due to drainage.
         - drainage_n2o_organic_soils(): Calculate the N2O emissions from organic soils due to drainage.
         - rewetting_co2_organic_soils(): Calculate the CO2 emissions from rewetting organic soils.
@@ -101,12 +103,31 @@ class Wetland(LandUse):
         
     def co2_removals(self):
         """
-        Calculate the amount of CO2 removals per year for a given area.
-        return 0.6t C per year for 5 years for area drained.
+        CO2 removal by vegetation re-establishing on restored (rewetted) peatland, in kg CO2 in the target year.
+
+        NID 2026 s.6.6.4.1 (p.279-280): vegetation returns on restored cutaway over 5 years, to 3 t C/ha
+        (Cruickshank et al. 2000), i.e. 0.6 t C/ha/yr; the restoration area is the annual increase in cutaway.
+        ``ef_co2_peatland_to_wetland_biomass`` = -3.0 t C/ha in total, read as kg CO2/ha.
+        Same convention as the soil carbon change (D1): the area of ``Wetland_to_Wetland`` is spread evenly over
+        the span (``annual_area``), and in the target year the land restored in the last 5 years is still
+        accumulating:
+
+            removal = annual_area x min(span, 5) x factor / 5
+
+        A span of 0 gives 0 (no area moved). The inventory does not report this gain separately (CRT 4.D.1
+        biomass gains are "IE"), and the default GOBLIN inputs have ``Wetland_to_Wetland`` = 0, so it is 0 there.
 
         Returns:
-            float: The total amount of CO2 removals in kg over the specified year range.
+            float: CO2 in kg (negative = removal).
+
+        Raises:
+            ValueError: if the span is negative.
         """
+        if self.year_range < 0:
+            raise ValueError(f"time span must not be negative, got {self.year_range}")
+
+        if not self.annual_area:
+            return 0.0
 
         biomass_removal_factor = (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
@@ -114,26 +135,7 @@ class Wetland(LandUse):
             )
         )
 
-        carbon_sequestration = 0
-
-        if self.annual_area != 0:
-            if self.year_range <= 5:
-                for year in range(5):
-                    carbon_sequestration += (self.annual_area * (year + 1)) * (
-                        biomass_removal_factor / year + 1
-                    )
-
-                return carbon_sequestration
-            else:
-                for year in range(len(self.year_range)):
-                    carbon_sequestration += (self.annual_area * (year + 1)) * (
-                        biomass_removal_factor / year + 1
-                    )
-
-                return carbon_sequestration
-
-        else:
-            return carbon_sequestration
+        return self.annual_area * min(self.year_range, 5) * biomass_removal_factor / 5
 
     def co2_emissions_wetland_drained(self):
         """
@@ -151,11 +153,11 @@ class Wetland(LandUse):
             float: The total CO2 emissions in kg from wetland drainage, including emissions from
                 industrial and domestic drainage, as well as unmanaged and near-natural wetlands.
         """
-        industral_drained = self.co2_emissions_industrial_drained_onsite() + self.co2_emissions_industrial_drained_offsite()
+        industrial_drained = self.co2_emissions_industrial_drained_onsite() + self.co2_emissions_industrial_drained_offsite()
         domestic_drained = self.co2_emissions_domestic_drained_onsite() + self.co2_emissions_domestic_drained_offsite()
         unmanaged_and_near_natural = self.co2_emissions_unmanaged_and_near_natural_onsite() + self.co2_emissions_unmanaged_and_near_natural_offsite()
 
-        return industral_drained + domestic_drained + unmanaged_and_near_natural
+        return industrial_drained + domestic_drained + unmanaged_and_near_natural
 
 
     def co2_emissions_industrial_drained_onsite(self):
@@ -166,13 +168,13 @@ class Wetland(LandUse):
         Returns:
             float: The calculated CO2 emissions in kg from industrial wetland drainage onsite.
         """
-        ef_co2_industrail_drained_onsite = (
+        ef_co2_industrial_drained_onsite = (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
                 "ef_co2_wetland_industrial_extraction_on_site"
             )
         )
 
-        return self.current_area_industrial_drained * ef_co2_industrail_drained_onsite
+        return self.current_area_industrial_drained * ef_co2_industrial_drained_onsite
     
     def co2_emissions_industrial_drained_offsite(self):
         """
@@ -182,13 +184,13 @@ class Wetland(LandUse):
         Returns:
             float: The calculated CO2 emissions in kg from industrial wetland drainage offsite.
         """
-        ef_co2_industrail_drained_offsite = (
+        ef_co2_industrial_drained_offsite = (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
                 "ef_co2_wetland_drainage_DOC_default"
             )
         )
 
-        return self.current_area_industrial_drained * ef_co2_industrail_drained_offsite
+        return self.current_area_industrial_drained * ef_co2_industrial_drained_offsite
 
 
     def co2_emissions_domestic_drained_onsite(self):
@@ -227,11 +229,11 @@ class Wetland(LandUse):
 
     def co2_emissions_unmanaged_and_near_natural_onsite(self):
         """
-        Calculates the carbon dioxide (CO2) emissions resulting from the drainage of unmanaged
-        and near-natural wetlands onsite.
+        On-site CO2 of near-natural (undrained) wetland: -0.33 t CO2-C/ha/yr, a removal (NID 2026 s.6.6.4.2,
+        Aitova et al. 2023). Near-natural area only; unmanaged wetland is area only (NID s.6.6.1).
 
         Returns:
-            float: The calculated CO2 emissions in kg from unmanaged and near-natural wetland drainage onsite.
+            float: CO2 in kg (negative = removal).
         """
         ef_co2_unmanaged_and_near_natural_onsite = (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
@@ -244,11 +246,11 @@ class Wetland(LandUse):
 
     def co2_emissions_unmanaged_and_near_natural_offsite(self):
         """
-        Calculates the carbon dioxide (CO2) emissions resulting from the drainage of unmanaged
-        and near-natural wetlands offsite.
+        Off-site CO2 of near-natural wetland: dissolved organic carbon in runoff, 0.17 t CO2-C/ha/yr
+        (NID 2026 s.6.6.4.2). Near-natural area only.
 
         Returns:
-            float: The calculated CO2 emissions in kg from unmanaged and near-natural wetland drainage offsite.
+            float: CO2 in kg.
         """
         ef_co2_unmanaged_and_near_natural_offsite = (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
@@ -260,13 +262,11 @@ class Wetland(LandUse):
 
     def ch4_emissions_unmanaged_and_near_natural(self):
         """
-        Calculates the methane (CH4) emissions resulting from the drainage of unmanaged
-        and near-natural wetlands. Drainage of such wetlands can lead to the release of
-        methane, a potent greenhouse gas, due to the exposure of previously waterlogged
-        organic matter to aerobic conditions, promoting its decomposition.
+        CH4 of near-natural (undrained) wetland: 54.7 kg CH4-C/ha/yr (NID 2026 s.6.6.4.2, Aitova et al. 2023).
+        Near-natural area only.
 
         Returns:
-            float: The calculated CH4 emissions in kg from unmanaged and near-natural wetland drainage.
+            float: CH4 in kg.
         """
         ef_ch4_unmanaged_and_near_natural = (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
@@ -388,7 +388,7 @@ class Wetland(LandUse):
         """
         ef_co2_rewetted_offsite = (
             self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
-                "ef_co2_wetland_rewet_off_site_deafult"
+                "ef_co2_wetland_rewet_off_site_default"
             )
         )
 
@@ -397,25 +397,25 @@ class Wetland(LandUse):
 
     def rewetting_ch4_organic_soils_in_wetland(self):
         """
-        Calculates the methane (CH4) emissions resulting from the rewetting of organic soils,
-        such as peatlands. Rewetting of drained peatlands can lead to the release of methane,
-        a potent greenhouse gas, due to the anaerobic decomposition of organic matter under
-        waterlogged conditions.
+        CH4 from rewetted peat-extraction land, in kg: each area times its own factor.
 
+        - Rewetted industrial: ``ef_ch4_wetland_rewet_industrial``, 216 kg CH4/ha (NID 2026 s.6.6.4.2, the
+          nutrient-rich value, applied as kg CH4 as the NID does; IPCC 2013 Wetlands Supplement Table 3.3).
+        - Rewetted domestic: ``ef_ch4_wetland_rewet_domestic``, 106.4 kg CH4/ha, the CRT 2026 4(II) "Other
+          Domestic Peat Extraction" implied factor. The NID does not state it: it is a weighted average of the
+          NID's 216 (rich) and 92 (poor) kg CH4/ha, about 12% rich.
+
+        One factor per category, because the inventory publishes no rich/poor split of the rewetted areas.
 
         Returns:
-            float: The calculated CH4 emissions in kg from the rewetting of organic soils.
+            float: CH4 in kg.
         """
+        get = self.emissions_factors.get_emission_factor_in_emission_factor_data_base
 
-        ef_ch4_peatland_to_wetland_rewetting = (
-            self.emissions_factors.get_emission_factor_in_emission_factor_data_base(
-                "ef_ch4_wetland_rewet_off_site_deafult"
-            )
+        return (
+            self.current_area_domestic_rewetted * get("ef_ch4_wetland_rewet_domestic")
+            + self.current_area_industrial_rewetted * get("ef_ch4_wetland_rewet_industrial")
         )
-
-        area_rewetted = self.current_area_domestic_rewetted + self.current_area_industrial_rewetted
-
-        return area_rewetted * ef_ch4_peatland_to_wetland_rewetting
 
 
     def burning_co2_wetland(self):

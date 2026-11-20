@@ -13,7 +13,30 @@ Note:
 
 import pandas as pd
 from landcover_lca.resource_manager.data_loader import Loader
+from landcover_lca.resource_manager.units import to_model_units
 from landcover_lca.resource_manager.landcover_data_manager import ModelData
+import warnings
+
+# Names corrected in 0.3.0. The old spelling still works for one release, with a DeprecationWarning.
+RENAMED_FEATURES = {
+    "Adjustement_factor": "Adjustment_factor",  # DEPRECATED_NAME
+}
+RENAMED_EXPORT_TYPES = {
+    "continuos_fabric": "continuous_fabric",  # DEPRECATED_NAME
+    "discontinuos_fabric": "discontinuous_fabric",  # DEPRECATED_NAME
+}
+
+
+def _renamed(name, renamed):
+    """Return the corrected name, warning if the old spelling was used."""
+    if name in renamed:
+        warnings.warn(
+            f"'{name}' is deprecated, use '{renamed[name]}' (spelling corrected in 0.3.0)",
+            DeprecationWarning,
+            stacklevel=3,
+        )
+        return renamed[name]
+    return name
 
 
 ###########################################
@@ -279,7 +302,11 @@ class Emissions_Factors:
             - Parameters:
                 emission_factor_name (str): The name of the emission factor whose value is to be retrieved.
             - Returns:
-                float: The value of the specified emission factor for the given country.
+                float: The value of the specified emission factor for the given country, converted from the
+                  published unit stored in the database to the unit the calculations use
+                  (landcover_lca.resource_manager.units).
+        get_published_factor(emission_factor_name)
+            - Returns (value, unit) exactly as stored: the number and unit printed in the source.
 
     Usage:
         This class can be used to access and retrieve specific emissions factors from a land use database,
@@ -296,12 +323,22 @@ class Emissions_Factors:
         self.ef_country = ef_country.lower()
         self.data_loader_class = Loader(self.ef_country)
         self.emission_data_base = self.data_loader_class.landuse_emissions_factors()
+        self.emission_factor_units = self.data_loader_class.landuse_emissions_factor_units()
 
+    def get_published_factor(self, emission_factor_name):
+        """The factor as stored: (published value, published unit), e.g. (1.59, "t CO2-C/ha/yr")."""
+        if emission_factor_name not in self.emission_data_base:
+            raise KeyError(f"{emission_factor_name}: no such column in emission_factors_land_use")
+        value = float(self.emission_data_base.get(emission_factor_name).get(self.ef_country))
+        return value, self.emission_factor_units[emission_factor_name]
 
     def get_emission_factor_in_emission_factor_data_base(self, emission_factor_name):
-        return float(
-            self.emission_data_base.get(emission_factor_name).get(self.ef_country)
-        )
+        """The factor in the unit the calculations use (kg CO2, kg CH4 or kg N2O per ha; g per kg DM; ...).
+
+        The database holds the published value and unit; the conversion is in landcover_lca.resource_manager.units.
+        """
+        value, unit = self.get_published_factor(emission_factor_name)
+        return to_model_units(value, unit, emission_factor_name)
 
 
 class Land_Use_Features:
@@ -350,7 +387,89 @@ class Land_Use_Features:
     def get_landuse_features_in_land_use_features_data_base(
         self, emission_feature_name, land_use
     ):
+        emission_feature_name = _renamed(emission_feature_name, RENAMED_FEATURES)
         return float(self.features_data_base.get(emission_feature_name).get(land_use))
+
+
+def get_transition_area(transition_matrix_data, past_land_use, current_land_use):
+    """
+    Returns the area (ha) in the transition matrix for ``past_land_use`` to
+    ``current_land_use``.
+
+    Raises:
+        KeyError: if the transition matrix has no such column. The message names the
+        missing column and lists the columns that are present. A missing column is
+        never treated as zero: a renamed or dropped column would silently remove a
+        land use change from the result.
+    """
+    key = f"{past_land_use}_to_{current_land_use}"
+    data = transition_matrix_data.__dict__
+    try:
+        return data[key]
+    except KeyError:
+        available = sorted(k for k in data if "_to_" in k)
+        raise KeyError(
+            f"Transition matrix has no column '{key}' (columns are matched in lower "
+            f"case). Available transition columns: {', '.join(available)}"
+        ) from None
+
+
+def _category_year(land_use_dataset, category, dataset_name):
+    """Year carried by one land use category of a dataset, or a clear KeyError."""
+    data = land_use_dataset.__dict__
+    try:
+        category_data = data[category]
+    except KeyError:
+        available = ", ".join(sorted(k for k in data if not k.startswith("_")))
+        raise KeyError(
+            f"{dataset_name} has no land use category '{category}', so the year of "
+            f"the transition cannot be read. Available categories: {available}"
+        ) from None
+    return category_data.year
+
+
+def _check_same_year(land_use_dataset, dataset_name, current_land_use, past_land_use, current_year):
+    """Raise ValueError if the source category carries a different year from the destination."""
+    if past_land_use is None or past_land_use == current_land_use:
+        return
+    if past_land_use not in land_use_dataset.__dict__:
+        return  # cannot be compared
+    past_year = land_use_dataset.__dict__[past_land_use].year
+    if past_year != current_year:
+        raise ValueError(
+            f"{dataset_name} carries different years for the two land uses of the transition "
+            f"'{past_land_use}' to '{current_land_use}': {past_land_use} {past_year}, "
+            f"{current_land_use} {current_year}. All categories of a dataset must carry the same year."
+        )
+
+
+def get_time_period(
+    land_use_data, past_land_use_data, current_land_use, past_land_use=None
+):
+    """
+    Years between the baseline (``past_land_use_data``) and the evaluated year
+    (``land_use_data``) for a transition to ``current_land_use``.
+
+    The span is year(``current_land_use``, ``land_use_data``) - year(``current_land_use``,
+    ``past_land_use_data``). It is the one implementation used by ``SOC`` and ``LandUse``.
+
+    Raises:
+        KeyError: if ``current_land_use`` is missing from either dataset (the message
+            names the dataset and lists the categories present).
+        ValueError: if ``past_land_use`` (the source category) is given, present, and carries a
+            different year from ``current_land_use`` within the same dataset. A source category that
+            is absent from the dataset cannot be compared and is not an error.
+    """
+    datasets = (
+        (land_use_data, "land_use_data"),
+        (past_land_use_data, "past_land_use_data"),
+    )
+    years = []
+    for dataset, name in datasets:
+        year = _category_year(dataset, current_land_use, name)
+        _check_same_year(dataset, name, current_land_use, past_land_use, year)
+        years.append(year)
+    return years[0] - years[1]
 
 
 def load_land_use_data(land_use_data_frame, calibration_year):

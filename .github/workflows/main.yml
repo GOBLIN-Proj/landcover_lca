@@ -6,35 +6,69 @@ on:
       - main
 
 jobs:
-  ci:
+  tests:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # oldest supported set: what goblin_lite pins today
+          - name: oldest
+            python-version: "3.10"
+            pins: "pandas==2.1.4 numpy==1.26.4 sqlalchemy==1.4.54"
+          # newest releases (pandas 3, numpy 2, SQLAlchemy 2)
+          - name: latest
+            python-version: "3.12"
+            pins: ""
+    name: tests (${{ matrix.name }})
 
     steps:
-    - name: Set up Python 3.10.6
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.10.6
-
     - name: Check-out repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
-    - name: Set up Git authentication
-      run: git config --global url."https://${{ secrets.PAT_TOKEN }}@github.com/".insteadOf "https://github.com/"
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
 
     - name: Install dependencies
-      env:
-        PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
       run: |
         python -m pip install --upgrade pip
-        curl -sSL https://install.python-poetry.org | python3 -
+        if [ -n "${{ matrix.pins }}" ]; then python -m pip install ${{ matrix.pins }}; fi
         python -m pip install .
-
-    - name: Print current directory
-      run: |
-        pwd
-        ls -la
+        python -m pip list | grep -iE "^(pandas|numpy|sqlalchemy) "
 
     - name: Run tests
       run: |
         cd ./tests/
         python -m unittest output_test.py
+        python -m unittest soc_test.py
+        python -m unittest soc_inventory_test.py
+        python -m unittest soc_n2o_test.py
+        python -m unittest transition_key_test.py
+        python -m unittest implied_factor_test.py
+        python -m unittest n2o_drainage_factors_test.py
+        python -m unittest time_period_test.py
+        python -m unittest cropland_readiness_test.py
+        python -m unittest inventory_alignment_test.py
+        python -m unittest forest_fire_factors_test.py
+        python -m unittest grassland_cropland_fire_test.py
+        python -m unittest units_test.py
+        python -m unittest wetland_factors_test.py
+        python -m unittest peat_export_test.py
+        python -m unittest examples_test.py
+        python -m unittest argument_order_test.py
+        python -m unittest geo_soc_test.py
+        python -m unittest forest_fire_switch_test.py
+        python -m unittest forest_drainage_co2_test.py
+        python -m unittest spelling_test.py
+
+  # The check that branch protection requires ("ci"). It passes only if every test job passed, so the required
+  # check stays the same whatever the matrix holds.
+  ci:
+    needs: tests
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+    - name: All test jobs passed
+      run: test "${{ needs.tests.result }}" = "success"

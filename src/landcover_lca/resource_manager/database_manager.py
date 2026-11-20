@@ -13,7 +13,7 @@ Note:
 
 import sqlalchemy as sqa
 import pandas as pd
-from landcover_lca.database import get_local_dir
+from landcover_lca.database import get_database_path, get_local_dir
 import os
 
 
@@ -28,7 +28,7 @@ class DataManager:
 
     Methods:
         __init__(ef_country): Initializes the DataManager object.
-        data_engine_creater(): Creates and returns the SQLAlchemy engine for database connection.
+        data_engine_creator(): Creates and returns the SQLAlchemy engine for database connection.
         get_landuse_features(): Retrieves the land use features from the database.
         get_landuse_emissions_factors(): Retrieves the land use emissions factors from the database.
         get_ipcc_soc_factors(): Retrieves the IPCC soil class SOC factors from the database.
@@ -45,19 +45,17 @@ class DataManager:
             ef_country (str): The country for which the emissions factors are retrieved.
         """
         self.database_dir = get_local_dir()
-        self.engine = self.data_engine_creater()
+        self.engine = self.data_engine_creator()
         self.ef_country = ef_country
 
-    def data_engine_creater(self):
+    def data_engine_creator(self):
         """
         Creates and returns the SQLAlchemy engine for database connection.
 
         Returns:
             sqlalchemy.engine.Engine: The SQLAlchemy engine for database connection.
         """
-        database_path = os.path.abspath(
-            os.path.join(self.database_dir, "landcover_lca_database.db")
-        )
+        database_path = os.path.abspath(get_database_path())
         engine_url = f"sqlite:///{database_path}"
 
         return sqa.create_engine(engine_url)
@@ -71,7 +69,7 @@ class DataManager:
         """
         table = "land_use_features"
         dataframe = pd.read_sql(
-            "SELECT * FROM '%s'" % (table),
+            f'SELECT * FROM "{table}"',
             self.engine,
             index_col=["land_use"],
         )
@@ -87,12 +85,28 @@ class DataManager:
         """
         table = "emission_factors_land_use"
         dataframe = pd.read_sql(
-            "SELECT * FROM '%s' WHERE ef_country = '%s'" % (table, self.ef_country),
+            sqa.text(f'SELECT * FROM "{table}" WHERE ef_country = :ef_country'),
+            self.engine,
+            index_col=["ef_country"],
+            params={"ef_country": self.ef_country},
+        )
+
+        return dataframe
+
+    def get_landuse_emissions_factor_units(self):
+        """
+        Retrieves the published unit of each land use emission factor (the 'units' row).
+
+        Returns:
+            pandas.Series: unit by factor name.
+        """
+        dataframe = pd.read_sql(
+            "SELECT * FROM emission_factors_land_use WHERE ef_country = 'units'",
             self.engine,
             index_col=["ef_country"],
         )
 
-        return dataframe
+        return dataframe.loc["units"]
 
     def get_ipcc_soc_factors(self):
         """
@@ -103,9 +117,10 @@ class DataManager:
         """
         table = "ipcc_soil_class_SOC"
         dataframe = pd.read_sql(
-            "SELECT * FROM '%s' WHERE ef_country = '%s'" % (table, self.ef_country),
+            sqa.text(f'SELECT * FROM "{table}" WHERE ef_country = :ef_country'),
             self.engine,
             index_col=["ef_country"],
+            params={"ef_country": self.ef_country},
         )
 
         return dataframe
@@ -118,7 +133,7 @@ class DataManager:
             pandas.DataFrame: The national forest inventory data.
         """
         table = "national_forest_inventory_2017"
-        dataframe = pd.read_sql("SELECT * FROM '%s'" % (table), self.engine)
+        dataframe = pd.read_sql(f'SELECT * FROM "{table}"', self.engine)
 
         return dataframe
 
@@ -131,7 +146,7 @@ class DataManager:
         """
         table = "UN_comtrade_exported_peat"
         dataframe = pd.read_sql(
-            "SELECT * FROM '%s'" % (table),
+            f'SELECT * FROM "{table}"',
             self.engine,
             index_col=["Year"],
         )
@@ -147,7 +162,7 @@ class DataManager:
         """
         table = "slam_nutrient_export_rates"
         dataframe = pd.read_sql(
-            "SELECT * FROM '%s'" % (table),
+            f'SELECT * FROM "{table}"',
             self.engine,  
             index_col=["ef_country"],
         )

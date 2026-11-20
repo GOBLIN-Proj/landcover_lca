@@ -19,7 +19,7 @@ class Loader:
     A class that loads data for land cover life cycle assessment.
 
     Attributes:
-        dataframes (DataManager): An instance of the DataManager class for managing data.
+        dataframes (landcover_lca.resource_manager.database_manager.DataManager): An instance of the database DataManager class for managing data.
 
     Methods:
         land_use_features: Returns the land use features.
@@ -57,6 +57,15 @@ class Loader:
             pandas.DataFrame: The land use emissions factors.
         """
         return self.dataframes.get_landuse_emissions_factors()
+
+    def landuse_emissions_factor_units(self):
+        """
+        Returns the published unit of each land use emission factor.
+
+        Returns:
+            pandas.Series: unit by factor name (see landcover_lca.resource_manager.units).
+        """
+        return self.dataframes.get_landuse_emissions_factor_units()
 
     def ipcc_soc_factors(self):
         """
