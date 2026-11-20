@@ -9,9 +9,16 @@
 
  The package takes outputs from the landcover_assignment module (land use data and transition matrix) and produces emissions inventory for cropland, grassland, forest and wetlands 
 
- Currently parameterised for Ireland, the historic land uses and areas of organic and mineral soil are taken from the National Inventory [CRF Tables](https://www.epa.ie/publications/monitoring--assessment/climate-change/air-emissions/irelands-national-inventory-submissions-2022.php)
+ Currently parameterised for Ireland. Emission factors follow Ireland's National Inventory Document (NID 2026) and CRT 2026 tables, otherwise the IPCC; every factor's source is recorded in [`docs/emission_factor_provenance.md`](https://github.com/GOBLIN-Proj/landcover_lca/blob/main/docs/emission_factor_provenance.md), and the tests check the package against the CRT 2026 on the inventory's own areas.
 
  Final result are pandas dataframes that can be read by numerous GOBLIN packages.
+
+## What's new in 0.3.0
+
+Results change and some calls change: see the [CHANGELOG](https://github.com/GOBLIN-Proj/landcover_lca/blob/main/CHANGELOG.md), section "Upgrading from 0.2.x" (cropland
+argument order, `include_fire_co2` default False, horticultural peat inside the wetland total, corrected names).
+Requires pandas 2.1.4 to 3.x, numpy 1.25 to 2.x, SQLAlchemy 1.4 to 2.x. Documentation:
+[landcover-lca.readthedocs.io](https://landcover-lca.readthedocs.io/en/latest/).
 
 ## Installation
 
@@ -29,6 +36,8 @@ pip install landcover_lca
 ```
 
 ## Usage
+Runnable examples, called as each package that uses landcover_lca calls it: [`tests/goblin_lite_example.ipynb`](https://github.com/GOBLIN-Proj/landcover_lca/blob/main/tests/goblin_lite_example.ipynb) (national tree) and [`tests/geo_goblin_example.ipynb`](https://github.com/GOBLIN-Proj/landcover_lca/blob/main/tests/geo_goblin_example.ipynb) (geo tree). `tests/examples_test.py` runs both, so they stay current.
+
 The baseline year represents the scenario baseline. The target year is the end year for each one of the scenarios. 
 
 Transition dataframe is the land use transition matrix, and the land use dataframe is the areas for each land use. 

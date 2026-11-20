@@ -1,10 +1,50 @@
 # Changelog
 
 All notable changes to `landcover_lca` are recorded here, newest first. Format follows
-[Keep a Changelog](https://keepachangelog.com/). Each SOC fix is tracked as a numbered
-dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repository).
+[Keep a Changelog](https://keepachangelog.com/). Labels such as D1, FIRE-1 or EF3 name the review item behind each
+change (the maintainer's working notes, not in the repository).
 
 ## [Unreleased]
+
+## [0.3.0] - 2026-11-20
+
+This release changes results and the API. Every factor now follows NID 2026 / CRT 2026, otherwise the IPCC, with
+its source recorded (`docs/emission_factor_provenance.md`), and the package reproduces the CRT 2026 on the
+inventory's own areas (`tests/inventory_alignment_test.py`). goblin_lite pins `landcover_lca ^0.2.0`, which excludes
+0.3.0, so goblin_lite keeps its numbers until its pin is moved deliberately.
+
+### Upgrading from 0.2.x (goblin_lite, geo_goblin_py, forest_sim)
+- `total_ch4_emission_cropland` and `total_n2o_emission_cropland` take `(land_use_data, past_land_use_data,
+  transition_matrix, ef_country)`, like every other total; the old order raises `TypeError`.
+- `total_co2_emission_forest` and `total_co2_emission` (both trees): keyword-only `include_fire_co2`, default False.
+  Forest fire CO2 is left out because CBM forest carbon, which GOBLIN adds, already counts it. Pass True only when no
+  forest carbon model is added.
+- Grassland fire: `include_fire_co2` renamed `include_peat_fire_co2` (organic soil only; default 0, as the NID).
+- Horticultural peat is inside `total_co2_emission_wetland` / `total_co2_emission` (national tree). Do not add
+  `horticulture_co2_peat_export` separately. Its signature is `(ef_country, year, calibration_year=None)`.
+- geo tree: `mineral_soils_co2_grassland_remaining_grassland` (was `..._remainging_...`).
+- Database names: `Adjustment_factor` and the SLAM types `continuous_fabric` / `discontinuous_fabric` (old spellings
+  warn for this release); wetland and forest-fire columns renamed (WET, FIRE-1); 8 unread factors removed (EF3).
+- Dependencies: pandas >=2.1.4,<4, numpy >=1.25,<3, SQLAlchemy >=1.4,<3, Python >=3.9.
+
+### What moves the numbers (goblin_lite national test inputs, kt, 0.2.1 -> 0.3.0)
+| | 2020 baseline | scenario 0, 2050 | scenario 1, 2050 |
+|---|---|---|---|
+| CO2 total | 3,785.6 -> 5,528.7 | 4,637.5 -> 5,337.7 | 4,640.5 -> 5,340.9 |
+| of which wetland | 1,055.0 -> 2,936.9 | 853.8 -> 1,632.2 | 853.8 -> 1,632.2 |
+| of which grassland | 1,061.3 -> 976.6 | 2,114.3 -> 2,090.4 | 2,117.3 -> 2,093.6 |
+| of which forest | 1,669.4 -> 1,615.2 | 1,669.4 -> 1,615.2 | 1,669.4 -> 1,615.2 |
+| CH4 total | 142.3 -> 132.3 | 126.3 -> 124.4 | 126.3 -> 124.4 |
+| N2O total | 0.62 -> 0.62 | 0.62 -> 0.62 | 0.62 -> 0.62 |
+
+- Wetland CO2: horticultural peat now counted (P1: +1,784.7 kt in 2020, +680.8 kt in 2050; goblin_lite never added
+  it); wetland fire Gef read as carbon (UNITS).
+- Grassland CO2: implied grassland-remaining factor from the CRT 2026 (D7); no grassland fire CO2 (FIRE-2).
+- Forest CO2: fire CO2 left out of the totals (FIRE-3, -18.55 kt); drainage CO2 as the NID (F6, -13.8 kt); forest
+  fire factors from the inventory (FIRE-1).
+- CH4: rewetted wetland CH4 split by category (WET); forest fire CH4 (FIRE-1).
+- Land-use change (D1, D2, D4a, D5, D8): only for scenarios that convert land into cropland or grassland; none of the
+  test scenarios do. Before 0.3.0 that SOC term was None or 3,667 times too small.
 
 ### Added
 - **Example notebooks for the two packages that use landcover_lca** (replace `tests/example.py` and
@@ -15,7 +55,7 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
   `total_n2o_emission_cropland` now take the same argument order as every other total (see the argument-order entry).
   `tests/examples_test.py` (in CI) runs both without Jupyter; the goblin_lite totals equal the national pins.
 
-### Added
+### Changed
 - **FIRE-3: forest fire CO2 switch, off by default (changes results).** `total_co2_emission_forest` and
   `total_co2_emission` (main and geo_goblin) take `include_fire_co2` (keyword only), **default False**: forest wildfire
   CO2 is no longer in the CO2 totals unless asked for. Reason: GOBLIN adds CBM forest carbon ("Total Ecosystem", the
@@ -27,7 +67,6 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
   scenarios (2020: 5,547.2 -> 5,528.7 kt). `burning_co2_forest` itself is unchanged.
   `tests/forest_fire_switch_test.py` (in CI).
 
-### Changed
 - **Dependencies widened; tested on the oldest and latest stacks.** `python >=3.9`, `pandas >=2.1.4,<4`,
   `numpy >=1.25,<3`, `sqlalchemy >=1.4,<3` (were pandas ==2.1.4, numpy ^1.25, SQLAlchemy ^1.4), so the package installs
   next to goblin_lite (pandas 2.1.4) and on pandas 3 / numpy 2 / SQLAlchemy 2. CI runs every test file on both
@@ -181,7 +220,7 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
   - Tests: `tests/grassland_cropland_fire_test.py` (new, in CI); `inventory_alignment_test` grassland fire CO2 covered,
     grassland and cropland fire CH4/N2O excluded with reasons; `soc_test` totals re-pinned.
 
-### Added
+### Added (tests)
 - **Inventory alignment tests** (`tests/inventory_alignment_test.py`, in CI). The package is given the
   NID/CRT 2026 areas and each emission term is compared with the CRT 2026 emissions, 2020-2024
   (fire 2020-2022). No change to `src/` or to any result.
@@ -196,27 +235,12 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
   - Since then FIRE-1 and FIRE-2 have moved forest fire and grassland fire CO2 to covered, and grassland and cropland
     fire CH4/N2O to excluded (see Changed).
 
-## [0.3.0] - 2026-11-17
+### SOC set (merged into this release; dossiers D1-D7, CROP-1, EF2)
 
-This release changes results. It is a minor version bump on purpose: goblin_lite pins
-`landcover_lca ^0.2.0`, which excludes 0.3.0, so goblin_lite keeps its current numbers
-until it is deliberately moved (separate job, after the data audit). Nothing is released to
-PyPI by this entry; it records what the merge of branch `soc-review` contains.
+CI also runs the SOC tests (`soc_test`, `soc_inventory_test`, `soc_n2o_test`, `transition_key_test`,
+`implied_factor_test`, `n2o_drainage_factors_test`, `time_period_test`, `cropland_readiness_test`).
 
-Summary of what changes numbers:
-- D7 (implied soil factors refreshed from the 2026 CRT): goblin_lite national baseline CO2
-  3,785.6 -> 3,711.0 kt (-2.0%); 2050 scenarios -0.3%.
-- D1, D2, D4a, D5: only for scenarios that convert land into cropland or grassland (none of
-  goblin_lite's current scenarios do). D1 and D2 ship together: D1 alone returns numbers
-  that are in t C per year, not kg CO2.
-- D3, D4b, D4c, D6: a clearer error and documentation, no change to results.
-- CROP-1 (cropland change): documented and locked by `tests/cropland_readiness_test.py`; no result change.
-- Not in this release: D8 (geo_goblin
-  still carries the old SOC code).
-- CI now also runs `soc_test`, `soc_inventory_test`, `soc_n2o_test`, `transition_key_test` and
-  `implied_factor_test`, `n2o_drainage_factors_test`, `time_period_test` and `cropland_readiness_test` (`.github/workflows/main.yml`). `load_test` stays out: it already fails.
-
-### Fixed
+#### Fixed
 - **D2 / S2: mineral-soil CO2 from land-use change was in t C, not kg CO2.**
   The six `mineral_soils_co2_from_<past>_to_<current>` functions in `lca_emission.py`
   now return **kg CO2 per year**: the `SOC` class result (t C/yr) x 1000 x 44/12
@@ -246,11 +270,11 @@ Summary of what changes numbers:
   - Results are still in t C per year; the unit conversion is D2.
   - goblin_lite national case (2020-2050): no change in any output.
 
-### Changed (validation)
+#### Changed (validation)
 - **D6 / S8: the span between the baseline and the evaluated year is read in one place and validated.**
   `SOC.get_time_period` and `LandUse.get_time_period` were identical copies; both now call `models.get_time_period(land_use_data, past_land_use_data, current_land_use, past_land_use)`. The value is unchanged for correct data (year of the destination category in the target dataset minus the same in the baseline). New errors replace a bare `AttributeError` and a silently wrong span: `KeyError` naming the dataset and listing the categories present if the destination category is missing; `ValueError` if the source category carries a different year from the destination within the same dataset (a source category absent from the dataset cannot be compared and is not an error). goblin_lite national output identical (checked byte for byte). `tests/time_period_test.py`.
 
-### Documented
+#### Documented
 - **CROP-1: grassland to cropland works end to end and its assumptions are written down (LA1, CR2, NI1, CR1, GR1).** No code or result change. New README section "Cropland change: what the package assumes" and `tests/cropland_readiness_test.py` (11 tests: 100,000 ha over 30 years = 467.5 kt CO2/yr, 15- and 20-year spans, other land uses unchanged). Recorded: cropland only grows and only `Grassland_to_*` is written by `landcover_assignment` (`abs()` direction quirk, fix belongs there); new cropland is mineral so no organic-cropland term (CR2); all converted grassland is taken as improved, 1.14, with the sensitivity (3.1% lower emission per 10% unimproved) and the unused Table 6.31 factors kept for a future partition (GR1); the inventory has no conversion to cropland (CRT 4.B.2 = NO) so there is no total to match (NI1); cropland remaining cropland (CRT 4.B.1) is the net of crop and temporary-grass rotation, is not modelled and is not a fixed-factor term (CR1).
 - **EF2: the N2O drainage factors are in kg N2O, not kg N2O-N, and match the inventory.** The five `ef_n2o_*_drainage_*` factors are the published N2O-N values x 44/28 (grassland 4.3 and 8.2, forest 2.8 and 0.7, wetland 0.3: NID 2026 pp.183, 220, 280) and reproduce CRT 2026 Table 3.D and 4(II). No change to any result. Database `units` cells corrected from "N20/kg" to "kg N2O/ha/yr" and `source` cells give the NID page; `tests/n2o_drainage_factors_test.py`; `docs/emission_factor_provenance.md`.
 - **D4c:** land leaving grassland is assumed to be mineral soil and no mineral share is applied (soil type of the converted hectares is unknown; NID s.6.4.6). In GOBLIN scenarios the converted land is mineral grassland moving to another use; rewetting of drained organic grassland is a change in the grassland's soil shares, not a conversion. The assumption does not hold for land moving into grassland (forest or cropland to grassland): organic hectares there would be charged twice. Stated in the `SOC` docstring and the README; the leaving-grassland case is recorded by `TestConvertedAreaIsAssumedMineral`. No change in behaviour.
@@ -268,7 +292,7 @@ Summary of what changes numbers:
   last 5 years, 0 if all in the first 5 years, in t C/yr). Real conversion timing would
   need year-by-year data from landcover_assignment.
 
-### Changed
+#### Changed
 - **D5 / S5: N2O from soil carbon loss (forest to grassland) now follows the inventory chain.**
   `mineral_soils_n2o_from_forest_to_grassland` returned `t C / 15`, which is tonnes of nitrogen, as if it
   were kg N2O, with no emission factor, no 44/28 and no indirect N2O. It now returns kg N2O per year:
@@ -311,7 +335,7 @@ Summary of what changes numbers:
 - **D1:** a negative span (land-use year earlier than the baseline year) now raises
   `ValueError` instead of returning `None`.
 
-### Added
+#### Added
 - Inventory tests (Layer B): `tests/soc_inventory_test.py` with fixtures in
   `tests/data/inventory/` (NID 2026 Tables 6.28, 6.31, 6.32 and the CRF 4.C.1 grassland
   mineral-soil series). Passing tests: SOCref and adjustment factors in the database match
