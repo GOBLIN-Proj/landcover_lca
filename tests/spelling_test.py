@@ -13,9 +13,10 @@ import warnings
 
 import landcover_lca.models as models
 import landcover_lca.geo_goblin.geo_models as geo_models
+from landcover_lca.database import get_database_path
 
 SRC = os.path.dirname(models.__file__)
-DB = os.path.join(SRC, "database", "landcover_lca_database.db")
+DB = get_database_path()  # landcover_lca.database.DATABASE_FILE
 
 MISSPELT = ["adjustement", "continuos", "discontinuos", "creater", "industrail", "industral", "draingage", "disolved",
             "cacluates", "emissons", "offite", "paramters", "remainging", "deafult", "wilfire", "invetory"]

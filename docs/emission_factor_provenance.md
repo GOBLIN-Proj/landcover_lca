@@ -1,7 +1,7 @@
 # Provenance of the implied emission factors
 
 An **implied** emission factor is worked back from reported inventory totals (kt CO2 divided by area). It is not a measured or default IPCC value. This page records, for each implied factor in the database
-(`src/landcover_lca/database/landcover_lca_database.db`, table `emission_factors_land_use`), where it came from, how it was derived, and how to refresh it. The database also holds a `source` row and a `units` row under each factor (see **How factors are stored** below).
+(`src/landcover_lca/database/landcover_lca_database_0.3.0.db`, table `emission_factors_land_use`), where it came from, how it was derived, and how to refresh it. The database also holds a `source` row and a `units` row under each factor (see **How factors are stored** below).
 
 ## How factors are stored (all factors)
 

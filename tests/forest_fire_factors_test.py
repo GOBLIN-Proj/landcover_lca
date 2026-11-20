@@ -14,8 +14,9 @@ import unittest
 
 import landcover_lca.models
 import inventory_inputs as ii
+from landcover_lca.database import get_database_path
 
-DB = os.path.join(os.path.dirname(landcover_lca.models.__file__), "database", "landcover_lca_database.db")
+DB = get_database_path()  # landcover_lca.database.DATABASE_FILE
 
 NAMES = {
     "CO2": "ef_co2_implied_wildfire_forest",

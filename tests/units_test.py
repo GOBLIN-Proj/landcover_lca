@@ -16,9 +16,10 @@ import unittest
 import landcover_lca.models as models
 import landcover_lca.geo_goblin.geo_models as geo_models
 from landcover_lca.resource_manager import units
+from landcover_lca.database import get_database_path
 
 HERE = os.path.dirname(models.__file__)
-DB = os.path.join(HERE, "database", "landcover_lca_database.db")
+DB = get_database_path()  # landcover_lca.database.DATABASE_FILE
 CSV = os.path.join(HERE, "database", "emission_factors_land_use.csv")
 
 # EF3: factors no code reads, kept on purpose (reason in each source cell). Anything else unread is removed and
@@ -149,6 +150,14 @@ class TestDatabaseIsThePublishedTable(unittest.TestCase):
                 self.assertEqual(float(rows["ireland"][name]), float(r["value"]))
                 self.assertEqual(rows["units"][name], r["unit"])
                 self.assertEqual(rows["source"][name], r["source"])
+
+    def test_database_file_is_named_for_the_package_version(self):
+        """The bundled database is landcover_lca_database_<version>.db; bump it with pyproject's version."""
+        from landcover_lca.database import DATABASE_FILE
+        root = os.path.join(HERE, "..", "..")
+        version = re.search(r'^version = "([^"]+)"', open(os.path.join(root, "pyproject.toml")).read(), re.M).group(1)
+        self.assertEqual(DATABASE_FILE, f"landcover_lca_database_{version}.db")
+        self.assertTrue(os.path.isfile(DB))
 
     def test_every_factor_is_read_or_kept_on_purpose(self):
         """EF3: no dead rows. Each factor is read somewhere in src/, or is in KEPT_UNREAD with its reason in the

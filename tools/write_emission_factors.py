@@ -15,10 +15,11 @@ import os
 import sqlite3
 
 from landcover_lca.resource_manager.units import UNITS
+from landcover_lca.database import get_database_path
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATABASE = os.path.join(ROOT, "src", "landcover_lca", "database")
-DB = os.path.join(DATABASE, "landcover_lca_database.db")
+DB = get_database_path()  # landcover_lca.database.DATABASE_FILE
 CSV = os.path.join(DATABASE, "emission_factors_land_use.csv")
 
 

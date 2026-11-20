@@ -14,6 +14,9 @@ inventory's own areas (`tests/inventory_alignment_test.py`). goblin_lite pins `l
 0.3.0, so goblin_lite keeps its numbers until its pin is moved deliberately.
 
 ### Upgrading from 0.2.x (goblin_lite, geo_goblin_py, forest_sim)
+- The bundled database is now `landcover_lca_database_0.3.0.db` (was `landcover_lca_database.db`); its name follows
+  the package version and is set once in `landcover_lca.database.DATABASE_FILE` (`get_database_path()`). Nothing outside
+  landcover_lca opens the file directly.
 - `total_ch4_emission_cropland` and `total_n2o_emission_cropland` take `(land_use_data, past_land_use_data,
   transition_matrix, ef_country)`, like every other total; the old order raises `TypeError`.
 - `total_co2_emission_forest` and `total_co2_emission` (both trees): keyword-only `include_fire_co2`, default False.

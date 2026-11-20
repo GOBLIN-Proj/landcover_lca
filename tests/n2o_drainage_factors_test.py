@@ -13,10 +13,11 @@ import pandas as pd
 
 import landcover_lca.models as models
 from landcover_lca.models import Emissions_Factors
+from landcover_lca.database import get_database_path
 
 N2O_N_to_N2O = 44.0 / 28.0
 CRT = pd.read_csv("./data/inventory/crt2026_n2o_drainage.csv")
-DB = os.path.join(os.path.dirname(models.__file__), "database", "landcover_lca_database.db")
+DB = get_database_path()  # landcover_lca.database.DATABASE_FILE
 
 # column: (published kg N2O-N/ha/yr, where)
 PUBLISHED = {

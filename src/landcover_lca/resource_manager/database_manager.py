@@ -13,7 +13,7 @@ Note:
 
 import sqlalchemy as sqa
 import pandas as pd
-from landcover_lca.database import get_local_dir
+from landcover_lca.database import get_database_path, get_local_dir
 import os
 
 
@@ -55,9 +55,7 @@ class DataManager:
         Returns:
             sqlalchemy.engine.Engine: The SQLAlchemy engine for database connection.
         """
-        database_path = os.path.abspath(
-            os.path.join(self.database_dir, "landcover_lca_database.db")
-        )
+        database_path = os.path.abspath(get_database_path())
         engine_url = f"sqlite:///{database_path}"
 
         return sqa.create_engine(engine_url)
