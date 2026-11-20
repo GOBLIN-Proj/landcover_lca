@@ -12,7 +12,7 @@ import landcover_lca.lca_emission as lca
 TRANSITION = pd.read_csv("./goblin_lite_data/transition_matrix.csv", index_col=0)
 LAND_USE = pd.read_csv("./goblin_lite_data/landuse_data_test_version.csv", index_col=0)
 
-# The 8 columns read by the SOC and land use code (see artifacts/soc/D3-missing-transition-key.md)
+# The 8 columns read by the SOC and land use code (README, "Required transition-matrix columns")
 REQUIRED = [
     "Grassland_to_Grassland", "Grassland_to_Cropland", "Wetland_to_Wetland",
     "Cropland_to_Grassland", "Cropland_to_Cropland", "Forest_to_Grassland",
