@@ -331,7 +331,7 @@ NID by `tests/soc_inventory_test.py`.
 | `land_use_features` | forest 1.04 (FLU) | NID 2026 Table 6.21 p.239, Tier 2 average FLU for forest | matches |
 | `national_forest_inventory_2017` | age classes | National Forest Inventory 2017 | not used by the calculations since F6 |
 | `UN_comtrade_exported_peat` | kg exported, 2011-2024 | UN Comtrade HS 2703 | see "Horticultural peat, off-site CO2 (P1)" |
-| `slam_nutrient_export_rates` | N and P kg/ha/yr by land cover (geo tree eutrophication only; not an inventory factor) | https://doi.org/10.1007/s10666-020-09711-z (reference supplied by the package owner) | the values have not been checked against the paper |
+| `slam_nutrient_export_rates` | N and P kg/ha/yr by land cover (geo tree eutrophication only; not an inventory factor) | Mockler et al. (2020), Environ. Model. Assess. 25:591-607, https://doi.org/10.1007/s10666-020-09711-z, Table 1 p.598 (SLAM rates, from Mockler et al. 2017, Sci. Total Environ. 601-602:326-339) | all 12 match: urban N 5, P 1.4 (continuous fabric, CORINE 111; green areas 141-142), 0.86 (discontinuous, 112), 1.88 (industrial/commercial, 121-124), 2.15 (mine/dump/construction, 131-133); forest 311-313 N 5.42, P 0.33 (broad_leaf, conifer, mixed, default); transitional woodland-shrub 324 N 3.71, P 0.565; inland marsh 411 N 2, P 0.325; peat bogs 412 N 2, P 0.2 |
 
 ## Inventory alignment fixtures (tests only)
 
