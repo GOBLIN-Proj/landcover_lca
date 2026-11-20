@@ -7,10 +7,13 @@ Requirements
 ------------
 The software requires the following:
 
-- Python 3.9 or higher
-- pandas 2.1.4
-- numpy 1.25.0 or higher
-- sqlalchemy 1.4.0 or higher
+- Python 3.9 or higher (tested on 3.10 and 3.12)
+- pandas 2.1.4 to 3.x
+- numpy 1.25 to 2.x
+- SQLAlchemy 1.4 to 2.x
+
+CI tests both ends: the oldest supported set (pandas 2.1.4, numpy 1.26, SQLAlchemy 1.4, as goblin_lite pins) and the
+latest releases.
 
 
 Install with pip

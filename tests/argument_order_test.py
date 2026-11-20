@@ -47,8 +47,10 @@ class TestArgumentOrder(unittest.TestCase):
             ld = model.load_land_use_data(pd.read_csv(land_use, index_col=0), 2020)
             for k in (-2020, 0):
                 with self.subTest(tree=module.__name__, dataset=k):
-                    self.assertEqual(module.total_ch4_emission_cropland(ld[k], ld[-2020], tm[k], "ireland"), ch4)
-                    self.assertEqual(module.total_n2o_emission_cropland(ld[k], ld[-2020], tm[k], "ireland"), n2o)
+                    self.assertAlmostEqual(module.total_ch4_emission_cropland(ld[k], ld[-2020], tm[k], "ireland"), ch4,
+                                           delta=abs(ch4) * 1e-9)  # float summation order differs across pandas
+                    self.assertAlmostEqual(module.total_n2o_emission_cropland(ld[k], ld[-2020], tm[k], "ireland"), n2o,
+                                           delta=abs(n2o) * 1e-9)
                     for function in (module.total_ch4_emission_cropland, module.total_n2o_emission_cropland):
                         with self.assertRaises(TypeError) as cm:
                             function("ireland", tm[k], ld[k], ld[-2020])

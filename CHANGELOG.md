@@ -28,6 +28,12 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
   `tests/forest_fire_switch_test.py` (in CI).
 
 ### Changed
+- **Dependencies widened; tested on the oldest and latest stacks.** `python >=3.9`, `pandas >=2.1.4,<4`,
+  `numpy >=1.25,<3`, `sqlalchemy >=1.4,<3` (were pandas ==2.1.4, numpy ^1.25, SQLAlchemy ^1.4), so the package installs
+  next to goblin_lite (pandas 2.1.4) and on pandas 3 / numpy 2 / SQLAlchemy 2. CI runs every test file on both
+  ("oldest": Python 3.10, pandas 2.1.4, numpy 1.26, SQLAlchemy 1.4; "latest": Python 3.12, current releases). Results
+  are equal on both (one exact float comparison loosened to 1e-9, for summation order). `requirements.txt` synced (it
+  said numpy <1.24). Database queries use bound parameters instead of `%` string formatting (DB1).
 - **Docs on Read the Docs.** `.readthedocs.yml` and `docs/requirements.txt` (and a `docs` dependency group); the
   version comes from `pyproject.toml`; the emission factor provenance page is in the docs; the build has no warnings
   (`sphinx-build -W`): docstring formatting fixed in both trees, and napoleon set so each class member is described

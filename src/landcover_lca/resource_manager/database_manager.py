@@ -71,7 +71,7 @@ class DataManager:
         """
         table = "land_use_features"
         dataframe = pd.read_sql(
-            "SELECT * FROM '%s'" % (table),
+            f'SELECT * FROM "{table}"',
             self.engine,
             index_col=["land_use"],
         )
@@ -87,9 +87,10 @@ class DataManager:
         """
         table = "emission_factors_land_use"
         dataframe = pd.read_sql(
-            "SELECT * FROM '%s' WHERE ef_country = '%s'" % (table, self.ef_country),
+            sqa.text(f'SELECT * FROM "{table}" WHERE ef_country = :ef_country'),
             self.engine,
             index_col=["ef_country"],
+            params={"ef_country": self.ef_country},
         )
 
         return dataframe
@@ -118,9 +119,10 @@ class DataManager:
         """
         table = "ipcc_soil_class_SOC"
         dataframe = pd.read_sql(
-            "SELECT * FROM '%s' WHERE ef_country = '%s'" % (table, self.ef_country),
+            sqa.text(f'SELECT * FROM "{table}" WHERE ef_country = :ef_country'),
             self.engine,
             index_col=["ef_country"],
+            params={"ef_country": self.ef_country},
         )
 
         return dataframe
@@ -133,7 +135,7 @@ class DataManager:
             pandas.DataFrame: The national forest inventory data.
         """
         table = "national_forest_inventory_2017"
-        dataframe = pd.read_sql("SELECT * FROM '%s'" % (table), self.engine)
+        dataframe = pd.read_sql(f'SELECT * FROM "{table}"', self.engine)
 
         return dataframe
 
@@ -146,7 +148,7 @@ class DataManager:
         """
         table = "UN_comtrade_exported_peat"
         dataframe = pd.read_sql(
-            "SELECT * FROM '%s'" % (table),
+            f'SELECT * FROM "{table}"',
             self.engine,
             index_col=["Year"],
         )
@@ -162,7 +164,7 @@ class DataManager:
         """
         table = "slam_nutrient_export_rates"
         dataframe = pd.read_sql(
-            "SELECT * FROM '%s'" % (table),
+            f'SELECT * FROM "{table}"',
             self.engine,  
             index_col=["ef_country"],
         )

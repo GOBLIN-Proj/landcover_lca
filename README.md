@@ -2,7 +2,7 @@
 
 [![license](https://img.shields.io/badge/License-MIT-red)](https://github.com/GOBLIN-Proj/landcover_lca/blob/main/LICENSE)
 [![docs](https://readthedocs.org/projects/landcover-lca/badge/?version=latest)](https://landcover-lca.readthedocs.io/en/latest/)
-[![python](https://img.shields.io/badge/python-3.9-blue?logo=python&logoColor=white)](https://github.com/GOBLIN-Proj/landcover_lca)
+[![python](https://img.shields.io/badge/python-3.9%2B-blue?logo=python&logoColor=white)](https://github.com/GOBLIN-Proj/landcover_lca)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
  Based on the [GOBLIN](https://gmd.copernicus.org/articles/15/2239/2022/) (**G**eneral **O**verview for a **B**ackcasting approach of **L**ivestock **IN**tensification) land use tool module

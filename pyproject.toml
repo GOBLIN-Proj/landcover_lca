@@ -7,10 +7,12 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.9"
-pandas = "2.1.4"
-numpy = "^1.25.0"
-sqlalchemy = "^1.4.0"
+# Wide ranges on purpose: goblin_lite pins pandas==2.1.4, and newer stacks use pandas 3 / numpy 2 / SQLAlchemy 2.
+# CI tests both ends (oldest and latest). See the dependency upgrade plan before narrowing.
+python = ">=3.9,<4"
+pandas = ">=2.1.4,<4"
+numpy = ">=1.25,<3"
+sqlalchemy = ">=1.4,<3"
 
 [tool.poetry.group.dev.dependencies]
 # used only by tools/extract_*.py to rebuild test fixtures from the EPA workbooks
