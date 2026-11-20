@@ -159,8 +159,9 @@ class TestDatabaseIsThePublishedTable(unittest.TestCase):
     def test_database_file_is_named_for_the_package_version(self):
         """The bundled database is landcover_lca_database_<version>.db; bump it with pyproject's version."""
         from landcover_lca.database import DATABASE_FILE
-        root = os.path.join(HERE, "..", "..")
-        version = re.search(r'^version = "([^"]+)"', open(os.path.join(root, "pyproject.toml")).read(), re.M).group(1)
+        repo = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")  # works with an installed package too
+        with open(os.path.join(repo, "pyproject.toml")) as f:
+            version = re.search(r'^version = "([^"]+)"', f.read(), re.M).group(1)
         self.assertEqual(DATABASE_FILE, f"landcover_lca_database_{version}.db")
         self.assertTrue(os.path.isfile(DB))
 
@@ -171,7 +172,8 @@ class TestDatabaseIsThePublishedTable(unittest.TestCase):
         for root, _, files in os.walk(HERE):
             for f in files:
                 if f.endswith(".py"):
-                    code += open(os.path.join(root, f)).read()
+                    with open(os.path.join(root, f)) as fh:
+                        code += fh.read()
         for name, r in published_csv().items():
             with self.subTest(name=name):
                 read = re.search(rf"\b{name}\b", code) is not None
