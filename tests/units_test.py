@@ -9,6 +9,7 @@
 import csv
 import math
 import os
+import re
 import sqlite3
 import unittest
 
@@ -20,6 +21,15 @@ HERE = os.path.dirname(models.__file__)
 DB = os.path.join(HERE, "database", "landcover_lca_database.db")
 CSV = os.path.join(HERE, "database", "emission_factors_land_use.csv")
 
+# EF3: factors no code reads, kept on purpose (reason in each source cell). Anything else unread is removed and
+# archived (artifacts/ef/archive, local; and git history).
+KEPT_UNREAD = {
+    "ef_co2_forest_rewetting_on_site", "ef_co2_forest_rewetting_DOC", "ef_ch4_forest_rewetting",  # not modelled yet
+    "ef_co2_cropland_Gef",  # records: no cropland fire CO2 (NID s.6.4.8)
+    "ef_wildfire_GEF_co2_mineral_soil_grassland",  # NID Table 6.34; not counted (FIRE-2)
+    "ef_co2_implied_forest_to_grassland_SOC_per_ha",  # CRT reference for D4b
+}
+
 # What Emissions_Factors returned before UNITS (kg CO2, kg CH4, kg N2O per ha; g per kg DM; fractions).
 BEFORE = {
     "ef_co2_forest_drainage_on_site": 6165.6,
@@ -28,8 +38,6 @@ BEFORE = {
     "ef_ch4_forest_drainage_ditch": 217.0,
     "ef_n2o_forest_drainage_rich": 4.4,
     "ef_n2o_forest_drainage_poor": 1.1,
-    "share_forest_drainage_rich": 0.125542835,
-    "share_forest_drainage_poor": 0.874457165,
     "ef_co2_grassland_drainage_on_site_poor": 4771.0,
     "ef_co2_grassland_drainage_on_site_rich": 22387.0,
     "ef_co2_grassland_drainage_off_site": 1137.7,
@@ -61,7 +69,6 @@ BEFORE = {
     "ef_ch4_forest_rewetting": 92.0,
     "ef_co2_forest_to_settlement_mineral_soil": 80666.66667,
     "ef_co2_forest_to_settlement_drainage": 3410.0,
-    "ef_co2_forest_to_other_land": 3410.0,
     "ef_co2_grassland_rewetting_on_site_poor": 3119.5,
     "ef_co2_grassland_rewetting_on_site_rich": 1835.0,
     "ef_co2_grassland_rewetting_DOC": 880.0,
@@ -79,8 +86,6 @@ BEFORE = {
     "ef_wildfire_GEF_ch4_mineral_soil_grassland": 2.3,
     "ef_wildfire_GEF_ch4_wet_in_organic_soil_grassland": 9.0,
     "ef_wildfire_GEF_ch4_drained_in_organic_grassland": 9.0,
-    "ef_co2_deforestation_biomass": 305433.3333,
-    "ef_co2_deforestation_DOM": 60133.33333,
     "ef_co2_implied_wildfire_forest": 104427.25352567247,
     "ef_ch4_implied_wildfire_forest": 312.8158646084511,
     "ef_n2o_implied_wildfire_forest": 17.304707403871166,
@@ -92,10 +97,7 @@ BEFORE = {
     "ef_co2_cropland_Gef": 0.0,
     "ef_ch4_cropland_Gef": 2.7,
     "ef_n2o_cropland_Gef": 0.07,
-    "ef_co2_forest_share_harvested": 0.838,
-    "ef_co2_forest_share_natural": 0.162,
     "ef_offsite_carbon_conversion_nutrient_poor": 1.6515,
-    "ef_forest_Cf": 0.45,
     "ef_co2_peatland_to_wetland_biomass": -11000.0,
     "ef_co2_implied_grassland_remaining_SOC_per_ha": -392.73460806269964,
     "ef_co2_implied_forest_to_grassland_SOC_per_ha": 3285.338380912789,
@@ -147,6 +149,23 @@ class TestDatabaseIsThePublishedTable(unittest.TestCase):
                 self.assertEqual(float(rows["ireland"][name]), float(r["value"]))
                 self.assertEqual(rows["units"][name], r["unit"])
                 self.assertEqual(rows["source"][name], r["source"])
+
+    def test_every_factor_is_read_or_kept_on_purpose(self):
+        """EF3: no dead rows. Each factor is read somewhere in src/, or is in KEPT_UNREAD with its reason in the
+        source cell. Removed factors are archived locally (artifacts/ef/archive) and in git history."""
+        code = ""
+        for root, _, files in os.walk(HERE):
+            for f in files:
+                if f.endswith(".py"):
+                    code += open(os.path.join(root, f)).read()
+        for name, r in published_csv().items():
+            with self.subTest(name=name):
+                read = re.search(rf"\b{name}\b", code) is not None
+                if name in KEPT_UNREAD:
+                    self.assertFalse(read, "now read by code: take it off KEPT_UNREAD")
+                    self.assertIn("Not ", r["source"])
+                else:
+                    self.assertTrue(read, "not read by any code: delete (archive) it or add it to KEPT_UNREAD")
 
     def test_every_unit_is_known(self):
         for name, r in published_csv().items():

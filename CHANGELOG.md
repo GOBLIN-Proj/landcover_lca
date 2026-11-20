@@ -28,6 +28,13 @@ dossier (D1, D2, ...) in `artifacts/soc/` (local working folder, not in the repo
   `tests/forest_fire_switch_test.py` (in CI).
 
 ### Changed
+- **EF3: factors no code reads (no result changes).** 8 removed from `emission_factors_land_use` (CSV and database):
+  `share_forest_drainage_rich`/`_poor` (the split comes from the land-use input), `ef_co2_forest_share_harvested`/
+  `_natural`, `ef_forest_Cf`, `ef_co2_forest_to_other_land`, `ef_co2_deforestation_biomass`/`_DOM` (forest carbon is
+  CBM's). No package that uses landcover_lca reads them; they remain in git history. 6 unread factors are kept on
+  purpose, each with the reason in its source cell (forest rewetting x3, cropland fire CO2 0, grassland mineral-soil
+  fire CO2, the forest-to-grassland CRT reference). `units_test` now fails on any factor that no code reads and is
+  not on that list.
 - **EF1: sources for every database factor (no result changes).** `ef_co2_forest_to_settlement_mineral_soil` now
   cites NID 2026 s.6.3.6.2 p.239 (20% of 110 t C/ha over 20 years); `ef_co2_forest_to_settlement_drainage` is marked
   "not in NID 2026" (both only on the unreachable settlement path). The tables without a source column are documented in

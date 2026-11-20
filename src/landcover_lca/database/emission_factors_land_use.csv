@@ -6,8 +6,6 @@ ef_ch4_forest_drainage_land,2.5,kg CH4/ha/yr,"NID 2026 s.6.3.4.7 b p.221: EFCH4l
 ef_ch4_forest_drainage_ditch,217.0,kg CH4/ha/yr,"NID 2026 s.6.3.4.7 b p.221: EFCH4ditch, IPCC 2013 Wetlands Suppl. Table 2.4"
 ef_n2o_forest_drainage_rich,2.8,kg N2O-N/ha/yr,"NID 2026 s.6.3.4.7 a p.220: IPCC 2013 Wetlands Suppl. Table 2.5, drained temperate forest"
 ef_n2o_forest_drainage_poor,0.7,kg N2O-N/ha/yr,"NID 2026 s.6.3.4.7 a p.220: country-specific, Yamulki et al. 2013 (CRT 2026 4(II) implied factors reproduce it as N2O-N)"
-share_forest_drainage_rich,0.125542835,fraction,NIR 2020
-share_forest_drainage_poor,0.874457165,fraction,NIR 2020
 ef_co2_grassland_drainage_on_site_poor,1.3,t CO2-C/ha/yr,"NID 2026 s.6.5.2 p.271: nutrient poor, Aitova et al. 2023 Table 2"
 ef_co2_grassland_drainage_on_site_rich,6.1,t CO2-C/ha/yr,"NID 2026 s.6.5.2 p.271: nutrient rich, IPCC 2013 Wetlands Suppl. Table 2.1"
 ef_co2_grassland_drainage_off_site,0.3024,t CO2-C/ha/yr,"IPCC 2013 Wetlands Suppl. eq 2.5, Table 2.2 temperate: 0.21 x (1 + 0.60) x 0.9, as NID 2026 s.6.5.2 p.271 and CRT 2026 4(II) C.1 (implied 1108.8 kg CO2/ha; the NID text quotes the rounded table value 0.31)"
@@ -32,12 +30,11 @@ ef_co2_near_natural_wetland_runoff,0.17,t CO2-C/ha/yr,"NID 2026 s.6.6.4.2 p.281:
 ef_ch4_near_natural_wetland,54.7,kg CH4-C/ha/yr,"NID 2026 s.6.6.4.2 p.281: near-natural CH4, Aitova et al. 2023"
 ef_ch4_wetland_rewet_industrial,216.0,kg CH4/ha/yr,"NID 2026 s.6.6.4.2 p.281: rewetted, nutrient rich, 'kg CH4' as the NID applies it (IPCC 2013 Wetlands Suppl. Table 3.3). Applied to rewetted industrial peat (one factor: no rich/poor split published); CRT 2026 4(II) rewetted industrial implied 208-221 kg CH4/ha"
 ef_ch4_wetland_rewet_domestic,106.4,kg CH4/ha/yr,"CRT 2026 4(II) 'Other Domestic Peat Extraction' (= rewetted domestic) implied factor, constant 2020-2024. Not stated in the NID: a weighted average of the NID's 216 (rich) and 92 (poor) kg CH4/ha (s.6.6.4.2), about 12% rich; no rich/poor area split is published, so one factor is applied"
-ef_co2_forest_rewetting_on_site,-0.23,t CO2-C/ha/yr,"NID 2026 s.6.3.6 p.240: forest to rewetted wetland, IPCC 2013 Wetlands Suppl. Table 3.1"
-ef_co2_forest_rewetting_DOC,0.24,t CO2-C/ha/yr,"NID 2026 s.6.3.6 p.240: EFDOC_rewetted, IPCC 2013 Wetlands Suppl. Table 3.2 (the NID prints -0.24; DOC is an emission)"
-ef_ch4_forest_rewetting,92.0,kg CH4/ha/yr,"NID 2026 s.6.3.6 p.240: '92 kg CH4 ha-1', IPCC 2013 Wetlands Suppl. Table 3.3"
+ef_co2_forest_rewetting_on_site,-0.23,t CO2-C/ha/yr,"NID 2026 s.6.3.6 p.240: forest to rewetted wetland, IPCC 2013 Wetlands Suppl. Table 3.1. Not read by the calculations: forest to rewetted wetland is not modelled yet"
+ef_co2_forest_rewetting_DOC,0.24,t CO2-C/ha/yr,"NID 2026 s.6.3.6 p.240: EFDOC_rewetted, IPCC 2013 Wetlands Suppl. Table 3.2 (the NID prints -0.24; DOC is an emission). Not read by the calculations: forest to rewetted wetland is not modelled yet"
+ef_ch4_forest_rewetting,92.0,kg CH4/ha/yr,"NID 2026 s.6.3.6 p.240: '92 kg CH4 ha-1', IPCC 2013 Wetlands Suppl. Table 3.3. Not read by the calculations: forest to rewetted wetland is not modelled yet"
 ef_co2_forest_to_settlement_mineral_soil,22.0,t C/ha,"NID 2026 s.6.3.6.2 p.239: 20% of a 110 t C/ha SOC stock (highest SOCref, Table 6.19) emitted over 20 years, one-off. Read only by the settlement path, which no total reaches"
 ef_co2_forest_to_settlement_drainage,0.93,t CO2-C/ha/yr,"NIR 2019 (on-site and off-site); not in NID 2026. Read only by the settlement path, which no total reaches"
-ef_co2_forest_to_other_land,0.93,t CO2-C/ha/yr,NIR 2019
 ef_co2_grassland_rewetting_on_site_poor,0.85,t CO2-C/ha/yr,"NID 2026 s.6.5.2 p.272: rewet status, nutrient poor, Aitova et al. 2023"
 ef_co2_grassland_rewetting_on_site_rich,0.5,t CO2-C/ha/yr,"NID 2026 s.6.5.2 p.272: rewet status, nutrient rich, IPCC 2013 Wetlands Suppl. Table 3.1"
 ef_co2_grassland_rewetting_DOC,0.24,t CO2-C/ha/yr,"NID 2026 s.6.5.2 p.272: EFDOC_REWETTED, IPCC 2013 Wetlands Suppl. Table 3.2"
@@ -55,8 +52,6 @@ ef_wildfire_GEF_co2_wet_organic_soil_grassland,362.0,g CO2-C/kg dm,IPCC 2013 Wet
 ef_wildfire_GEF_ch4_mineral_soil_grassland,2.3,g CH4/kg dm,NID 2026 Table 6.34 (IPCC 2006 Vol 4 Table 2.5)
 ef_wildfire_GEF_ch4_wet_in_organic_soil_grassland,9.0,g CH4/kg dm,NID 2026 Table 6.34 (IPCC 2013 Wetlands Suppl. Table 2.7)
 ef_wildfire_GEF_ch4_drained_in_organic_grassland,9.0,g CH4/kg dm,NID 2026 Table 6.34 (IPCC 2013 Wetlands Suppl. Table 2.7)
-ef_co2_deforestation_biomass,83.3,t C/ha,NIR 2019
-ef_co2_deforestation_DOM,16.4,t C/ha,NIR 2019 (litter and deadwood)
 ef_co2_implied_wildfire_forest,104427.25352567247,kg CO2/ha burnt,"CRT 2026 Table 4(IV).A.1 + A.2 wildfire emissions / CRF 2024 Table4(V) area burnt (4.A.1 + 4.A.2), 2020-2022, sum/sum (tools/derive_implied_forest_fire_factor.py; docs/emission_factor_provenance.md)"
 ef_ch4_implied_wildfire_forest,312.8158646084511,kg CH4/ha burnt,"CRT 2026 Table 4(IV).A.1 + A.2 wildfire emissions / CRF 2024 Table4(V) area burnt (4.A.1 + 4.A.2), 2020-2022, sum/sum (tools/derive_implied_forest_fire_factor.py; docs/emission_factor_provenance.md)"
 ef_n2o_implied_wildfire_forest,17.304707403871166,kg N2O/ha burnt,"CRT 2026 Table 4(IV).A.1 + A.2 wildfire emissions / CRF 2024 Table4(V) area burnt (4.A.1 + 4.A.2), 2020-2022, sum/sum (tools/derive_implied_forest_fire_factor.py; docs/emission_factor_provenance.md)"
@@ -65,14 +60,11 @@ ef_co2_wetland_Gef,342.0,g CO2-C/kg dm,"NID 2026 s.6.6.5 p.283: country specific
 ef_ch4_wetland_Gef,8.35,g CH4/kg dm,"NID 2026 s.6.6.5 p.283: country specific, Wilson et al. 2015"
 ef_n2o_wetland_Gef,0.21,g N2O/kg dm,NID 2026 s.6.6.5 p.283: IPCC 2006 default
 ef_wildfire_MB_time_CF_cropland,4.0,t dm/ha,NID 2026 s.6.4.8 p.263
-ef_co2_cropland_Gef,0.0,g CO2/kg dm,NID 2026 s.6.4.8: CH4 and N2O only (no cropland fire CO2)
+ef_co2_cropland_Gef,0.0,g CO2/kg dm,NID 2026 s.6.4.8: CH4 and N2O only (no cropland fire CO2). Not read by the calculations: kept to record that the NID counts no cropland fire CO2
 ef_ch4_cropland_Gef,2.7,g CH4/kg dm,NID 2026 s.6.4.8 p.263 (IPCC 2006 Vol 4 Table 2.5)
 ef_n2o_cropland_Gef,0.07,g N2O/kg dm,NID 2026 s.6.4.8 p.263 (IPCC 2006 Vol 4 Table 2.5)
-ef_co2_forest_share_harvested,0.838,fraction,NFI FAWS (2017)
-ef_co2_forest_share_natural,0.162,fraction,NFI FAWS (2017)
 ef_offsite_carbon_conversion_nutrient_poor,0.45,t C/t air-dry peat,"IPCC 2006 Vol 4 Ch 7 Table 7.5: carbon fraction of air-dry peat, nutrient poor; NID 2026 s.6.6.4.2 (horticultural peat, off-site)"
 frac_horticultural_peat_exported,0.85,fraction,"NID 2026 s.6.6.3 p.279: 85% of horticultural peat is exported; export tonnage is scaled to total use (exports / 0.85). CRT 2026 4.D industrial organic-soil C reproduces it exactly, 2020-2024"
-ef_forest_Cf,0.45,fraction,IPCC 2006
 ef_co2_peatland_to_wetland_biomass,-3.0,t C/ha,"NID 2026 s.6.6.4.1 p.279-280: vegetation 3 t C/ha (Cruickshank et al. 2000), re-established at 0.6 t C/ha/yr over 5 years; negative = removal"
 ef_co2_implied_grassland_remaining_SOC_per_ha,-392.73460806269964,kg CO2/ha/yr,"CRT 4.C.1 mineral, 2026 submission, 2020-2024 (tools/derive_implied_grassland_factor.py; docs/emission_factor_provenance.md)"
-ef_co2_implied_forest_to_grassland_SOC_per_ha,3285.338380912789,kg CO2/ha/yr,"CRT 4.C.2 mineral, 2026 submission, 2020-2024 (tools/derive_implied_grassland_factor.py; docs/emission_factor_provenance.md)"
+ef_co2_implied_forest_to_grassland_SOC_per_ha,3285.338380912789,kg CO2/ha/yr,"CRT 4.C.2 mineral, 2026 submission, 2020-2024 (tools/derive_implied_grassland_factor.py; docs/emission_factor_provenance.md). Not read by the calculations: CRT reference for the forest-to-grassland gap (D4b), tested in implied_factor_test"

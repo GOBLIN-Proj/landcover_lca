@@ -318,6 +318,12 @@ Matches the inventory, no method deviation:
 
 80,666.67 kg CO2 per hectare, **one-off over 20 years**, not per year. This is a rule, not an implied value: 20% of a 110 t C/ha stock is emitted over 20 years (NID s.6.3.6.2, p.239) = 22 t C = 80,667 kg CO2. Not reachable from the goblin_lite totals.
 
+## Factors no code reads (EF3)
+
+Every factor in the table is read by the calculations, except six kept on purpose, each with "Not read by the
+calculations" (or "Not used") and the reason in its source cell; `tests/units_test.py` (`KEPT_UNREAD`) enforces this.
+Eight legacy factors (NIR 2019/2020, NFI 2017, IPCC 2006 sources) were removed in EF3; they are in git history.
+
 ## Other database tables (no source column)
 
 These tables have no `source` column, so their sources are recorded here (EF1). The SOC tables are checked against the
