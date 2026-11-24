@@ -41,15 +41,11 @@ class TestN2ODrainageFactors(unittest.TestCase):
                 self.assertAlmostEqual(value(name), n2o_n * N2O_N_to_N2O, places=6, msg=where)
 
     def test_units_label_says_kg_n2o_n_per_ha_per_year(self):
-        con = sqlite3.connect(DB)
-        cur = con.execute("select * from emission_factors_land_use")
-        cols = [d[0] for d in cur.description]
-        rows = cur.fetchall()
-        con.close()
-        unit_row = [r for r in rows if r[0] == "units"][0]
+        with sqlite3.connect(DB) as con:
+            unit = dict(con.execute("select name, unit from emission_factors_land_use where ef_country = 'ireland'"))
         for name in PUBLISHED:
             with self.subTest(name=name):
-                self.assertEqual(unit_row[cols.index(name)], UNIT)
+                self.assertEqual(unit[name], UNIT)
 
     def test_database_holds_the_published_n2o_n_value(self):
         ef = Emissions_Factors("ireland")

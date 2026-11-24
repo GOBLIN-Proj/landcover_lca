@@ -80,33 +80,44 @@ class DataManager:
         """
         Retrieves the land use emissions factors from the database.
 
+        The table is in long format (ef_country, name, value, unit, source); this
+        returns one row for the country with one column per factor.
+
         Returns:
             pandas.DataFrame: The land use emissions factors data.
         """
-        table = "emission_factors_land_use"
-        dataframe = pd.read_sql(
-            sqa.text(f'SELECT * FROM "{table}" WHERE ef_country = :ef_country'),
+        long = pd.read_sql(
+            sqa.text(
+                "SELECT ef_country, name, value FROM emission_factors_land_use"
+                " WHERE ef_country = :ef_country"
+            ),
             self.engine,
-            index_col=["ef_country"],
             params={"ef_country": self.ef_country},
         )
+        dataframe = long.pivot(index="ef_country", columns="name", values="value")
+        dataframe.columns.name = None
 
         return dataframe
 
     def get_landuse_emissions_factor_units(self):
         """
-        Retrieves the published unit of each land use emission factor (the 'units' row).
+        Retrieves the published unit of each land use emission factor (the
+        'unit' column of emission_factors_land_use).
 
         Returns:
             pandas.Series: unit by factor name.
         """
         dataframe = pd.read_sql(
-            "SELECT * FROM emission_factors_land_use WHERE ef_country = 'units'",
+            sqa.text(
+                "SELECT name, unit FROM emission_factors_land_use"
+                " WHERE ef_country = :ef_country"
+            ),
             self.engine,
-            index_col=["ef_country"],
+            index_col=["name"],
+            params={"ef_country": self.ef_country},
         )
 
-        return dataframe.loc["units"]
+        return dataframe["unit"]
 
     def get_ipcc_soc_factors(self):
         """
