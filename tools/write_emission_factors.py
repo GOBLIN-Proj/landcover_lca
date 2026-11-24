@@ -1,7 +1,10 @@
-"""Write data/emission_factors_land_use.csv into the database table emission_factors_land_use.
+"""Write data/emission_factors_land_use.csv into the database.
 
-The CSV is the readable record of the table (the database is binary in git): one row per factor with the value and
-unit as published and the source. This writes the three database rows 'ireland' (value), 'units' and 'source'.
+The CSV is the readable record of the tables (the database is binary in git): one row per factor with the value and
+unit as published and the source. This rebuilds the table emission_factors_land_use from it, in the same long
+format: one row per country and factor (ef_country TEXT, name TEXT, value REAL, unit TEXT, source TEXT), all
+rows with ef_country 'ireland'.
+
 Every unit must be listed in landcover_lca.resource_manager.units.UNITS. tests/units_test.py checks that the
 database equals the CSV.
 
@@ -30,21 +33,20 @@ def read_csv(path=CSV):
 
 def write(path=CSV, db=DB):
     rows = read_csv(path)
-    con = sqlite3.connect(db)
-    present = {r[1] for r in con.execute("pragma table_info(emission_factors_land_use)")} - {"ef_country"}
-    names = {r["name"] for r in rows}
-    if names != present:
-        raise ValueError(f"CSV and database columns differ: only in CSV {sorted(names - present)}, "
-                         f"only in database {sorted(present - names)}")
+    names = [r["name"] for r in rows]
+    if len(set(names)) != len(names):
+        raise ValueError("duplicate factor names in the CSV")
     for r in rows:
         if r["unit"] not in UNITS:
             raise ValueError(f"{r['name']}: unit {r['unit']!r} not in units.UNITS")
-        for country, value in (("ireland", float(r["value"])), ("units", r["unit"]), ("source", r["source"])):
-            cur = con.execute(f"update emission_factors_land_use set [{r['name']}] = ? where ef_country = ?",
-                              (value, country))
-            if cur.rowcount != 1:
-                raise ValueError(f"{r['name']}: row {country} not found")
-    con.commit()
+    con = sqlite3.connect(db)
+    with con:
+        con.execute("drop table if exists emission_factors_land_use")
+        con.execute("create table emission_factors_land_use (ef_country TEXT NOT NULL, name TEXT NOT NULL, "
+                    "value REAL NOT NULL, unit TEXT NOT NULL, source TEXT NOT NULL, PRIMARY KEY (ef_country, name))")
+        con.executemany("insert into emission_factors_land_use values ('ireland', ?, ?, ?, ?)",
+                        [(r["name"], float(r["value"]), r["unit"], r["source"]) for r in rows])
+    con.execute("vacuum")
     con.close()
     return len(rows)
 

@@ -1,7 +1,8 @@
 """UNITS: the database stores every factor as published; resource_manager/units.py converts on read.
 
-- The database (binary in git) equals data/emission_factors_land_use.csv (readable, diffable):
-  value, unit and source of every column.
+- The database table emission_factors_land_use (binary in git) is in long format and equals
+  data/emission_factors_land_use.csv (readable, diffable): value, unit and source of every factor.
+- Every database column holds the type it declares.
 - Every unit is one that units.py knows how to convert.
 - Regression: what the calculations receive is unchanged from before (pinned below), except the changes listed in
   CHANGED, each with its reason. Both code trees (main and geo_goblin) read the same converted values.
@@ -131,25 +132,32 @@ def published_csv():
 
 
 def db_rows():
+    """emission_factors_land_use (long format): {name: row} for ireland, and the table's column names."""
     with sqlite3.connect(DB) as con:
-        cur = con.execute("select * from emission_factors_land_use")
+        cur = con.execute("select * from emission_factors_land_use where ef_country = 'ireland'")
         cols = [d[0] for d in cur.description]
-        return {r[0]: dict(zip(cols, r)) for r in cur.fetchall()}, cols[1:]
+        rows = [dict(zip(cols, r)) for r in cur.fetchall()]
+    return {r["name"]: r for r in rows}, cols
 
 
 class TestDatabaseIsThePublishedTable(unittest.TestCase):
-    def test_csv_and_database_have_the_same_columns(self):
+    def test_csv_and_database_have_the_same_factors(self):
+        rows, _ = db_rows()
+        self.assertEqual(sorted(rows), sorted(published_csv()))
+        self.assertEqual(sorted(rows), sorted(BEFORE))
+
+    def test_database_is_long_format(self):
+        """One row per country and factor; unit and source in their own columns, as in the CSV."""
         _, cols = db_rows()
-        self.assertEqual(sorted(cols), sorted(published_csv()))
-        self.assertEqual(sorted(cols), sorted(BEFORE))
+        self.assertEqual(cols, ["ef_country", "name", "value", "unit", "source"])
 
     def test_database_equals_csv(self):
-        rows, cols = db_rows()
+        rows, _ = db_rows()
         for name, r in published_csv().items():
             with self.subTest(name=name):
-                self.assertEqual(float(rows["ireland"][name]), float(r["value"]))
-                self.assertEqual(rows["units"][name], r["unit"])
-                self.assertEqual(rows["source"][name], r["source"])
+                self.assertEqual(rows[name]["value"], float(r["value"]))
+                self.assertEqual(rows[name]["unit"], r["unit"])
+                self.assertEqual(rows[name]["source"], r["source"])
 
     def test_factor_csv_is_not_shipped(self):
         """The readable copy of the factor table lives in data/ at the repository root, outside the package."""

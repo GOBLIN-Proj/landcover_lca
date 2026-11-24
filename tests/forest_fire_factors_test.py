@@ -34,10 +34,11 @@ def derived(gas):
     return kg / ha
 
 
-def database_cell(name, row):
-    """A cell of emission_factors_land_use; row is 'source' or 'units'."""
+def database_cell(name, column):
+    """A cell of emission_factors_land_use (ireland); column is 'source' or 'unit'."""
     with sqlite3.connect(DB) as con:
-        return con.execute(f'select [{name}] from emission_factors_land_use where ef_country = ?', (row,)).fetchone()[0]
+        return con.execute(f"select {column} from emission_factors_land_use where ef_country = 'ireland' and name = ?",
+                           (name,)).fetchone()[0]
 
 
 class TestForestFireFactors(unittest.TestCase):
@@ -66,7 +67,7 @@ class TestForestFireFactors(unittest.TestCase):
         for gas, name in NAMES.items():
             with self.subTest(gas=gas):
                 source = database_cell(name, "source")
-                units = database_cell(name, "units")
+                units = database_cell(name, "unit")
                 for text in ("CRT 2026", "4(IV)", "CRF 2024", "2020-2022"):
                     self.assertIn(text, source)
                 self.assertEqual(units, f"kg {gas}/ha burnt")

@@ -16,6 +16,10 @@ inventory's own areas (`tests/inventory_alignment_test.py`). goblin_lite pins `l
 ### Upgrading from 0.2.x (goblin_lite, geo_goblin_py, forest_sim)
 - The readable copy of the factor table moved to `data/emission_factors_land_use.csv` (repository only; no longer
   shipped in the package). Edit it and run `tools/write_emission_factors.py`; `units_test` checks the database equals it.
+- The database table `emission_factors_land_use` is in long format, one row per factor (`ef_country`, `name`, `value`,
+  `unit`, `source`), like the CSV; it was one column per factor with `source` and `units` as text rows. Every column's
+  declared type now matches what it holds (decimals REAL, `ef_country` TEXT), so a typed load neither fails nor rounds.
+  `Emissions_Factors` returns the same values. No result changes.
 - The bundled database is now `landcover_lca_database_0.3.0.db` (was `landcover_lca_database.db`); its name follows
   the package version and is set once in `landcover_lca.database.DATABASE_FILE` (`get_database_path()`). Nothing outside
   landcover_lca opens the file directly.

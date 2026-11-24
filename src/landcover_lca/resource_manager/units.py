@@ -1,7 +1,7 @@
 """Unit conversions for landcover_lca, kept in one place.
 
 The database table ``emission_factors_land_use`` stores every factor **as published** (the number printed in the NID,
-CRT or IPCC table, in that source's unit). Its ``units`` row names that unit. ``Emissions_Factors`` converts on read,
+CRT or IPCC table, in that source's unit), one row per factor with its ``unit`` and ``source``. ``Emissions_Factors`` converts on read,
 using the table below, to the unit the calculations use. So a number in the database can be checked against its
 source by eye, and every conversion happens here.
 
@@ -13,7 +13,7 @@ Model units (what the calculations receive):
     implied fire factors        kg gas per ha burnt
     fractions                   dimensionless
 
-To add a factor: store the published value and unit, and cite the source in the ``source`` row
+To add a factor: store the published value and unit, and cite the source in the ``source`` column
 (see docs/emission_factor_provenance.md). If the unit is not listed in UNITS, add it here with its conversion.
 """
 

@@ -9,7 +9,8 @@ An **implied** emission factor is worked back from reported inventory totals (kt
 unit, with the source cited. Nothing in the database has to be converted by hand to check it against its source.
 
 - `data/emission_factors_land_use.csv` is the readable copy of the table (the database is binary in
-  git): one row per factor with `value`, `unit`, `source`. **To change a factor:** edit the CSV, run
+  git): one row per factor with `value`, `unit`, `source`. The database table has the same long format, plus
+  `ef_country`. **To change a factor:** edit the CSV, run
   `tools/write_emission_factors.py`, run the tests. `tests/units_test.py` checks the database equals the CSV.
 - `src/landcover_lca/resource_manager/units.py` holds every conversion (44/12, 16/12, 44/28, t to kg) and the list of
   units the table may use. `Emissions_Factors.get_emission_factor_in_emission_factor_data_base` converts on read, so the
